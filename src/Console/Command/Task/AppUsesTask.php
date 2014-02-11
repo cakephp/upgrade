@@ -30,6 +30,8 @@ class AppUsesTask extends Shell {
 
 	use ChangeTrait;
 
+	public $tasks = ['Stage'];
+
 /**
  * implicitMap
  *

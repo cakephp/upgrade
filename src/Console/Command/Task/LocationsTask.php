@@ -30,6 +30,8 @@ class LocationsTask extends Shell {
 
 	use ChangeTrait;
 
+	public $tasks = ['Stage'];
+
 /**
  * check all moves, and stage moving the file to new location
  *

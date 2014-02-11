@@ -30,6 +30,8 @@ class NamespacesTask extends Shell {
 
 	use ChangeTrait;
 
+	public $tasks = ['Stage'];
+
 /**
  * Adds the namespace to a given file.
  *

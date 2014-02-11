@@ -30,6 +30,8 @@ class RenameCollectionsTask extends Shell {
 
 	use ChangeTrait;
 
+	public $tasks = ['Stage'];
+
 	protected function _process($path) {
 		$patterns = [
 			[

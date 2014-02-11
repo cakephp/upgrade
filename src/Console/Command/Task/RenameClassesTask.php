@@ -30,6 +30,8 @@ class RenameClassesTask extends Shell {
 
 	use ChangeTrait;
 
+	public $tasks = ['Stage'];
+
 /**
  * Rename the classes in a given file.
  *

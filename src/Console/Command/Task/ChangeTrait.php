@@ -14,12 +14,34 @@
 namespace Cake\Upgrade\Console\Command\Task;
 
 use Cake\Console\Shell;
+use Cake\Utility\Debugger;
 
 /**
  * Provides features for modifying the contents of a file
  *
  */
 trait ChangeTrait {
+
+/**
+ * Make tasks callable
+ *
+ * @return void
+ */
+	public function main() {
+		if (!empty($this->params['dryRun'])) {
+			$this->out(__d('cake_console', '<warning>Dry-run mode enabled!</warning>'), 1, Shell::QUIET);
+		}
+
+		$exclude = ['.git', '.svn', 'vendor', 'Vendor', 'webroot', 'tmp'];
+		$files = $this->Stage->files($exclude);
+
+		foreach($files as $file) {
+			$this->out(__d('cake_console', '<info>Processing %s</info>', Debugger::trimPath($file)));
+			$this->process($file);
+		}
+
+		$this->Stage->commit();
+	}
 
 /**
  * process

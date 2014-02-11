@@ -30,6 +30,8 @@ class FixturesTask extends Shell {
 
 	use ChangeTrait;
 
+	public $tasks = ['Stage'];
+
 /**
  * Process fixture content and update it for 3.x
  *

@@ -38,27 +38,13 @@ class UpgradeShell extends Shell {
 		'Stage',
 	);
 
-/**
- * Files
- *
- * @var array
- */
-	protected $_files = [];
-
-/**
- * Paths
- *
- * @var array
- */
-	protected $_paths = [];
-
 	public function main() {
 		if (!empty($this->params['dryRun'])) {
 			$this->out(__d('cake_console', '<warning>Dry-run mode enabled!</warning>'), 1, Shell::QUIET);
 		}
 
 		$exclude = ['.git', '.svn', 'vendor', 'Vendor', 'webroot', 'tmp'];
-		$files = $this->files($exclude);
+		$files = $this->Stage->files($exclude);
 
 		$actions = $this->_getActions();
 
@@ -72,51 +58,6 @@ class UpgradeShell extends Shell {
 		}
 
 		$this->Stage->commit();
-	}
-
-/**
- * Searches the paths and finds files based on extension.
- *
- * @param array $excludes
- * @param bool $reset
- * @return array
- */
-	public function files($excludes = [], $reset = false) {
-		if ($reset) {
-			$this->_files = [];
-		}
-
-		if (!$this->_files) {
-			if (!$this->_paths) {
-				$this->_paths = [$this->_getPath()];
-			}
-
-			foreach ($excludes as &$exclude) {
-				$exclude = preg_quote($exclude);
-			}
-			$excludePattern = '@[\\/](' . implode($excludes, '|') . ')([\\/]|$)@';
-
-			foreach ($this->_paths as $path) {
-				if (!is_dir($path)) {
-					if (is_file($path)) {
-						$this->_files[] = $path;
-					}
-					continue;
-				}
-				$Iterator = new \RecursiveIteratorIterator(
-					new \RecursiveDirectoryIterator($path)
-				);
-				foreach ($Iterator as $file) {
-					$path = $file->getPathname();
-					if (!$file->isFile() || preg_match($excludePattern, $path)) {
-						continue;
-					}
-					$this->_files[] = $path;
-				}
-			}
-		}
-
-		return $this->_files;
 	}
 
 /**
@@ -138,20 +79,6 @@ class UpgradeShell extends Shell {
 			$all[$name] = $className;
 		}
 		return $all;
-	}
-
-/**
- * Get the path to operate on. Uses either the first argument,
- * or the plugin parameter if its set.
- *
- * @return string
- */
-	protected function _getPath() {
-		if (count($this->args) === 1) {
-			return realpath($this->args[0]);
-		}
-
-		return realpath($this->args[1]);
 	}
 
 /**
