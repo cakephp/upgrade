@@ -9,9 +9,9 @@
         "php": ">=5.4"
     },
     "autoload": {
-        "psr-4": {
-            "Upgrade\\": "Upgrade",
-            "Upgrade\\Test\\": "Test"
-        }
+		"psr-4": {
+			"CakePHP\\Upgrade\\": "src",
+			"CakePHP\\Upgrade\\Test\\": "tests"
+		}
     }
 }
