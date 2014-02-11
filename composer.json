@@ -10,8 +10,8 @@
     },
     "autoload": {
 		"psr-4": {
-			"CakePHP\\Upgrade\\": "src",
-			"CakePHP\\Upgrade\\Test\\": "tests"
+			"Cake\\Upgrade\\": "src",
+			"Cake\\Upgrade\\Test\\": "tests"
 		}
     }
 }
