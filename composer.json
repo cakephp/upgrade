@@ -1,0 +1,17 @@
+{
+    "name": "cakephp/upgrade",
+    "description": "CakePHP upgrade tool",
+    "homepage": "http://cakephp.org",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "cakephp/cakephp": "3.0.*-dev",
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Upgrade\\": "Upgrade",
+            "Upgrade\\Test\\": "Test"
+        }
+    }
+}
