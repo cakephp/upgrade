@@ -74,6 +74,9 @@ class UpgradeShellTest extends TestCase {
 			'Console/cake.php'
 		];
 
+		sort($files);
+		sort($expected);
 		$this->assertSame($expected, $files, 'The files to process should be all files in the src folder');
 	}
+
 }
