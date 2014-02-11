@@ -15,23 +15,7 @@
  * @since         CakePHP(tm) v 1.2.0.5012
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-$cakeRoot = dirname(dirname(dirname(__DIR__)));
 
-$app = 'App';
-$appIndex = array_search('-app', $argv);
-if ($appIndex !== false) {
-	$app = $argv[$appIndex + 1];
-}
+require dirname(__DIR__) . '/Config/bootstrap.php';
 
-// Path to default App skeleton.
-$path = $cakeRoot . '/../../' . $app . '/Config/bootstrap.php';
-
-if (!file_exists($path)) {
-	fwrite(STDERR, "Unable to load CakePHP libraries. If you are not using the default App directory, you will need to use the -app flag.\n");
-	exit(10);
-}
-
-require $path;
-
-unset($cakeRoot, $path, $app, $appIndex);
 exit(Cake\Console\ShellDispatcher::run($argv));
