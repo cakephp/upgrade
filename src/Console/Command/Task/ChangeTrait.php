@@ -11,7 +11,7 @@
  * @since         CakePHP(tm) v 3.0.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-namespace Cake\Upgrade\Console\Command\Task\Upgrade;
+namespace Cake\Upgrade\Console\Command\Task;
 
 use Cake\Console\Shell;
 
