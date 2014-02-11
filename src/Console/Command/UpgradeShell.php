@@ -189,7 +189,7 @@ class UpgradeShell extends Shell {
 		$options = compact(['plugin', 'dry-run', 'git']);
 
 		return parent::getOptionParser()
-			->description(__d('cake_console', "A shell to help automate upgrading from CakePHP 3.0 to 2.x. \n" .
+			->description(__d('cake_console', "A shell to help automate upgrading from CakePHP 2.x to 3.x. \n" .
 				"Be sure to have a backup of your application before running these commands."))
 			->addArgument('path', [
 				'help' => __d('cake_console', 'Path to code to upgrade'),
