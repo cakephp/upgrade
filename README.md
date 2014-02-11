@@ -5,7 +5,7 @@ A tool for upgrading from 2.x CakePHP code to 3.x
 # Behold
 
 ```
--> src/Console/cake upgrade locations
+-> src/Console/cake upgrade
 A shell to help automate upgrading from CakePHP 3.0 to 2.x.
 Be sure to
 have a backup of your application before running these commands.
