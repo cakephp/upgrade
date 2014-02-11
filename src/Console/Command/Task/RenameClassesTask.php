@@ -36,7 +36,7 @@ class RenameClassesTask extends Shell {
  * Rename the classes in a given file.
  *
  * @param string $path The path to operate on.
- * @return bool
+ * @return boolean
  */
 	protected function _process($path) {
 		$replacements = [

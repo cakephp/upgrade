@@ -82,7 +82,7 @@ class UpgradeShell extends Shell {
 	}
 
 /**
- * get the option parser
+ * Get the option parser
  *
  * @return ConsoleOptionParser
  */

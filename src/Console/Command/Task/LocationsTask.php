@@ -33,10 +33,10 @@ class LocationsTask extends Shell {
 	public $tasks = ['Stage'];
 
 /**
- * check all moves, and stage moving the file to new location
+ * Check all moves, and stage moving the file to new location
  *
  * @param mixed $path
- * @return bool
+ * @return boolean
  */
 	protected function _process($path) {
 		$new = $path;
@@ -57,7 +57,7 @@ class LocationsTask extends Shell {
  * Is the current path within the scope of any move?
  *
  * @param string $path
- * @return bool
+ * @return boolean
  */
 	protected function _shouldProcess($path) {
 		foreach (array_keys($this->_moves()) as $substr) {
@@ -70,7 +70,7 @@ class LocationsTask extends Shell {
 	}
 
 /**
- * key value map of from and to
+ * Key value map of from and to
  *
  * @return array
  */

@@ -68,7 +68,7 @@ class AppUsesTask extends Shell {
 	];
 
 /**
- * rename classes
+ * Rename classes
  *
  * A list of classes which have had the Cake prefix removed
  *
@@ -125,7 +125,7 @@ class AppUsesTask extends Shell {
 			$matches = $this->_mapClassName($matches);
 			if (count($matches) === 4) {
 				$use = $matches[2] . '\\' . $matches[3] . '\\' . $matches[1];
-			} elseif ($matches[2] == 'Vendor') {
+			} elseif ($matches[2] === 'Vendor') {
 				$this->out(
 					__d('cake_console', '<info>Skip %s as it is a vendor library.</info>', $matches[1]),
 					1,
@@ -202,7 +202,7 @@ class AppUsesTask extends Shell {
 		preg_match_all('/use .+;[\n]/', $contents, $useMatches);
 		$useStatements = $useMatches[0];
 
-		foreach($toCheck as $check) {
+		foreach ($toCheck as $check) {
 			if (preg_match("/use .+\b$check;/", $contents)) {
 				continue;
 			}
@@ -255,7 +255,7 @@ class AppUsesTask extends Shell {
  */
 	protected function _replaceReferences($contents) {
 		$rename = $this->rename;
-		foreach($rename as &$val) {
+		foreach ($rename as &$val) {
 			$val = substr($val, 4);
 		}
 		$regex = '/\bCake(' . implode($rename, '|') . ')\b/';
@@ -284,7 +284,7 @@ class AppUsesTask extends Shell {
  * If App::uses is nowhere - bail, otherwise use the default (php files only)
  *
  * @param string $path
- * @return bool
+ * @return boolean
  */
 	protected function _shouldProcess($path) {
 		$contents = $this->Stage->source($path);

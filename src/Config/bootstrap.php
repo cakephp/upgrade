@@ -93,7 +93,7 @@ mb_internal_encoding(Configure::read('App.encoding'));
 /**
  * Register application error and exception handlers.
  */
-if (php_sapi_name() == 'cli') {
+if (php_sapi_name() === 'cli') {
 	(new ConsoleErrorHandler(Configure::consume('Error')))->register();
 } else {
 	(new ErrorHandler(Configure::consume('Error')))->register();

@@ -35,7 +35,7 @@ trait ChangeTrait {
 		$exclude = ['.git', '.svn', 'vendor', 'Vendor', 'webroot', 'tmp'];
 		$files = $this->Stage->files($exclude);
 
-		foreach($files as $file) {
+		foreach ($files as $file) {
 			$this->out(__d('cake_console', '<info>Processing %s</info>', Debugger::trimPath($file)));
 			$this->process($file);
 		}
@@ -80,7 +80,7 @@ trait ChangeTrait {
  * Default to php files only
  *
  * @param string $path
- * @return bool
+ * @return boolean
  */
 	protected function _shouldProcess($path) {
 		return (substr($path, -4) === '.php');

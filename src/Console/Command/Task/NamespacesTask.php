@@ -37,7 +37,7 @@ class NamespacesTask extends Shell {
  *
  * @param string $filePath The file to add a namespace to.
  * @param string $ns The base namespace to use.
- * @param bool $dry Whether or not to operate in dry-run mode.
+ * @param boolean $dry Whether or not to operate in dry-run mode.
  * @return boolean
  */
 	protected function _process($path) {
@@ -79,7 +79,7 @@ class NamespacesTask extends Shell {
  * If it already has a namespace - bail, otherwise use the default (php files only)
  *
  * @param string $path
- * @return bool
+ * @return boolean
  */
 	protected function _shouldProcess($path) {
 		$contents = $this->Stage->source($path);

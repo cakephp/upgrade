@@ -36,7 +36,7 @@ class FixturesTask extends Shell {
  * Process fixture content and update it for 3.x
  *
  * @param string $content Fixture content.
- * @return bool
+ * @return boolean
  */
 	protected function _process($path) {
 		$original = $contents = $this->Stage->source($path);
@@ -130,7 +130,7 @@ class FixturesTask extends Shell {
  * Only process files in fixture folders
  *
  * @param string $path
- * @return bool
+ * @return boolean
  */
 	protected function _shouldProcess($path) {
 		return (

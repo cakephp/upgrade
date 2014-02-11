@@ -28,7 +28,6 @@ use Cake\Utility\Folder;
 /**
  * Base class for Bake Tasks.
  *
- * @package       Cake.Console.Command.Task
  */
 class StageTask extends Shell {
 
@@ -58,7 +57,7 @@ class StageTask extends Shell {
 	];
 
 /**
- * write staged changes
+ * Write staged changes
  *
  * If it's a dry run though - only show what will be done, don't do anything
  *
@@ -202,7 +201,7 @@ class StageTask extends Shell {
  * delete
  *
  * @param string $path
- * @return bool
+ * @return boolean
  */
 	public function delete($path) {
 		$this->_staged['delete'][] = $path;
@@ -214,7 +213,7 @@ class StageTask extends Shell {
  *
  * @param string $from
  * @param string $to
- * @return bool
+ * @return boolean
  */
 	public function move($from, $to) {
 		if (is_dir($from)) {
@@ -287,7 +286,7 @@ class StageTask extends Shell {
  * Searches the paths and finds files based on extension.
  *
  * @param array $excludes
- * @param bool $reset
+ * @param boolean $reset
  * @return array
  */
 	public function files($excludes = [], $reset = false) {
@@ -341,6 +340,5 @@ class StageTask extends Shell {
 
 		return realpath($this->args[1]);
 	}
-
 
 }
