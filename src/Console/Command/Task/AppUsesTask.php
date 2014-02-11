@@ -267,6 +267,7 @@ class AppUsesTask extends Shell {
  * Strips the Cake prefix off of classes that no longer have it.
  *
  * @param array $matches
+ * @return array
  */
 	protected function _mapClassName($matches) {
 		if (empty($matches[3])) {
