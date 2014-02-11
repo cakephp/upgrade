@@ -32,30 +32,36 @@ class RenameCollectionsTask extends Shell {
 
 	public $tasks = ['Stage'];
 
+	/**
+	 * RenameCollectionsTask::_process()
+	 *
+	 * @param string $path
+	 * @return void
+	 */
 	protected function _process($path) {
 		$patterns = [
 			[
-				' Replace $this->_Collection with $this->_registry',
+				'Replace $this->_Collection with $this->_registry',
 				'#\$this->_Collection#',
 				'$this->_registry',
 			],
 			[
-				' Replace ComponentCollection arguments',
+				'Replace ComponentCollection arguments',
 				'#ComponentCollection#',
 				'ComponentRegistry',
 			],
 			[
-				' Rename ComponentCollection',
+				'Rename ComponentCollection',
 				'#ComponentCollection#',
 				"ComponentRegistry",
 			],
 			[
-				' Rename HelperCollection',
+				'Rename HelperCollection',
 				'#HelperCollection#',
 				"HelperRegistry",
 			],
 			[
-				' Rename TaskCollection',
+				'Rename TaskCollection',
 				'#TaskCollection#',
 				"TaskRegistry",
 			],

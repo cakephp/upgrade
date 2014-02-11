@@ -46,7 +46,7 @@ class NamespacesTask extends Shell {
 
 		$patterns = [
 			[
-				' namespace to ' . $namespace,
+				'Namespace to ' . $namespace,
 				'#^(<\?(?:php)?\s+(?:\/\*.*?\*\/\s{0,1})?)#s',
 				"\\1namespace " . $namespace . ";\n",
 			]
