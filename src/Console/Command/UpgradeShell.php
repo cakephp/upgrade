@@ -39,7 +39,7 @@ class UpgradeShell extends Shell {
 	);
 
 	public function main() {
-		if (!empty($this->params['dryRun'])) {
+		if ($this->params['dry-run']) {
 			$this->out(__d('cake_console', '<warning>Dry-run mode enabled!</warning>'), 1, Shell::QUIET);
 		}
 
