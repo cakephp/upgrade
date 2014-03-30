@@ -39,7 +39,7 @@ class UpgradeShell extends Shell {
 	);
 
 	public function main() {
-		if (!empty($this->params['dryRun'])) {
+		if ($this->params['dry-run']) {
 			$this->out(__d('cake_console', '<warning>Dry-run mode enabled!</warning>'), 1, Shell::QUIET);
 		}
 
@@ -87,34 +87,6 @@ class UpgradeShell extends Shell {
  * @return ConsoleOptionParser
  */
 	public function getOptionParser() {
-		$plugin = [
-			'short' => 'p',
-			'help' => __d('cake_console', 'The plugin to update. Only the specified plugin will be updated.')
-		];
-		${'dry-run'} = [
-			'short' => 'd',
-			'help' => __d('cake_console', 'Dry run the update, no files will actually be modified.'),
-			'boolean' => true
-		];
-		$git = [
-			'help' => __d('cake_console', 'Perform git operations. eg. git mv instead of just moving files.'),
-			'boolean' => true
-		];
-		$namespace = [
-			'help' => __d('cake_console', 'Set the base namespace you want to use. Defaults to App or the plugin name.'),
-			'default' => '',
-		];
-		$exclude = [
-			'help' => __d('cake_console', 'Comma separated list of top level diretories to exclude.'),
-			'default' => '',
-		];
-		$path = [
-			'help' => __d('cake_console', 'The path to operate on. Will default to APP or the plugin option.'),
-			'required' => false,
-		];
-
-		$options = compact(['plugin', 'dry-run', 'git']);
-
 		return parent::getOptionParser()
 			->description(__d('cake_console', "A shell to help automate upgrading from CakePHP 2.x to 3.x. \n" .
 				"Be sure to have a backup of your application before running these commands."))
@@ -122,7 +94,29 @@ class UpgradeShell extends Shell {
 				'help' => __d('cake_console', 'Path to code to upgrade'),
 				'required' => true
 			])
-			->addOptions($options + compact('namespace', 'exclude'))
+			->addOptions([
+				'plugin' => [
+					'short' => 'p',
+					'help' => __d('cake_console', 'The plugin to update. Only the specified plugin will be updated.')
+				],
+				'dry-run' => [
+					'short' => 'd',
+					'help' => __d('cake_console', 'Dry run the update, no files will actually be modified.'),
+					'boolean' => true
+				],
+				'git' => [
+					'help' => __d('cake_console', 'Perform git operations. eg. git mv instead of just moving files.'),
+					'boolean' => true
+				],
+				'namespace' => [
+					'help' => __d('cake_console', 'Set the base namespace you want to use. Defaults to App or the plugin name.'),
+					'default' => '',
+				],
+				'exclude' => [
+					'help' => __d('cake_console', 'Comma separated list of top level diretories to exclude.'),
+					'default' => '',
+				]
+			])
 			->addSubcommand('locations', [
 				'help' => __d('cake_console', 'Move files/directories around. Run this *before* adding namespaces with the namespaces command.'),
 			])
