@@ -28,14 +28,14 @@ class UpgradeShellTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$out = $this->getMock('Cake\Console\ConsoleOutput', [], [], '', false);
-		$in = $this->getMock('Cake\Console\ConsoleInput', [], [], '', false);
+		$io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
 
 		$this->sut = $this->getMock(
 			'Cake\Upgrade\Console\Command\UpgradeShell',
 			['in', 'out', 'hr', 'err', '_stop'],
-			[$out, $out, $in]
+			[$io]
 		);
+		$this->sut->loadTasks();
 	}
 
 /**
@@ -50,7 +50,7 @@ class UpgradeShellTest extends TestCase {
 
 		$this->sut->args = [$repoSrc];
 
-		$files = $this->sut->files();
+		$files = $this->sut->Stage->files();
 		foreach($files as &$file) {
 			$file = str_replace(DS, '/', substr($file, strlen($repoSrc) + 1));
 		}
