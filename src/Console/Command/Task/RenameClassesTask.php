@@ -1,11 +1,5 @@
 <?php
 /**
- * Upgrade stage task
- *
- * Handles staging changes for the upgrade process
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -15,7 +9,7 @@
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @since         CakePHP(tm) v 3.0
+ * @since         3.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Upgrade\Console\Command\Task;
@@ -23,8 +17,9 @@ namespace Cake\Upgrade\Console\Command\Task;
 use Cake\Console\Shell;
 
 /**
- * Base class for Bake Tasks.
+ * Upgrade stage task
  *
+ * Handles staging changes for the upgrade process
  */
 class RenameClassesTask extends Shell {
 
