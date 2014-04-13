@@ -38,13 +38,13 @@ class UpdateMethodNamesTask extends Shell {
 		$patterns = [
 			[
 				'Replace $this->Paginator->url() with $this->Paginator->generateUrl',
-				'#\$this->Paginator->url#',
-				'$this->Paginator->generateUrl',
+				'#\$this->Paginator->url\(#',
+				'$this->Paginator->generateUrl(',
 			],
 			[
 				'Replace $this->Cookie->type() with $this->Cookie->encryption()',
-				'#\$this->Cookie->type#',
-				'$this->Cookie->encryption',
+				'#\$this->Cookie->type\(#',
+				'$this->Cookie->encryption(',
 			],
 		];
 
