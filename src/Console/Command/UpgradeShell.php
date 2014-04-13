@@ -36,6 +36,7 @@ class UpgradeShell extends Shell {
 		'RenameClasses',
 		'RenameCollections',
 		'Stage',
+		'UpdateMethodNames',
 	);
 
 	public function main() {
@@ -131,6 +132,9 @@ class UpgradeShell extends Shell {
 			])
 			->addSubcommand('app_uses', [
 				'help' => __d('cake_console', 'Replace App::uses() with use statements'),
+			])
+			->addSubcommand('update_method_names', [
+				'help' => __d('cake_console', 'Update many of the methods that were renamed during 2.x -> 3.0'),
 			])
 			->addSubcommand('fixtures', [
 				'help' => __d('cake_console', 'Update fixtures to use new index/constraint features. This is necessary before running tests.'),
