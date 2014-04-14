@@ -56,7 +56,6 @@ class UpgradeShellTest extends TestCase {
 		}
 
 		$expected = [
-			'Config/app.default.php',
 			'Config/app.php',
 			'Config/bootstrap.php',
 			'Config/paths.php',
