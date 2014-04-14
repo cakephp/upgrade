@@ -28,6 +28,11 @@ use Cake\Utility\Inflector;
  */
 class UpgradeShell extends Shell {
 
+/**
+ * Tasks loaded.
+ *
+ * @var array
+ */
 	public $tasks = array(
 		'AppUses',
 		'Fixtures',
