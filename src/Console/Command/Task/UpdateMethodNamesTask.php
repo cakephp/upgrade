@@ -35,18 +35,26 @@ class UpdateMethodNamesTask extends Shell {
  * @return void
  */
 	protected function _process($path) {
-		$patterns = [
+		$templatePatterns = [
 			[
 				'Replace $this->Paginator->url() with $this->Paginator->generateUrl',
 				'#\$this->Paginator->url\(#',
 				'$this->Paginator->generateUrl(',
 			],
+		];
+		$otherPatterns = [
 			[
 				'Replace $this->Cookie->type() with $this->Cookie->encryption()',
 				'#\$this->Cookie->type\(#',
 				'$this->Cookie->encryption(',
 			],
 		];
+		$patterns = [];
+		if (strpos($path, '.ctp') !== false) {
+			$patterns = $templatePatterns;
+		} else {
+			$patterns = $otherPatterns;
+		}
 
 		$original = $contents = $this->Stage->source($path);
 		$contents = $this->_updateContents($contents, $patterns);
