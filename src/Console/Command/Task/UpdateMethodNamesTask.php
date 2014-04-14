@@ -35,7 +35,7 @@ class UpdateMethodNamesTask extends Shell {
  * @return void
  */
 	protected function _process($path) {
-		$templatePatterns = [
+		$helperPatterns = [
 			[
 				'Replace $this->Paginator->url() with $this->Paginator->generateUrl',
 				'#\$this->Paginator->url\(#',
@@ -50,8 +50,11 @@ class UpdateMethodNamesTask extends Shell {
 			],
 		];
 		$patterns = [];
-		if (strpos($path, '.ctp') !== false) {
-			$patterns = $templatePatterns;
+		if (
+			strpos($path, DS . 'Template') !== false ||
+			strpos($path, DS . 'View') !== false
+		) {
+			$patterns = $helperPatterns;
 		} else {
 			$patterns = $otherPatterns;
 		}
