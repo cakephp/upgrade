@@ -82,7 +82,7 @@ class StageTask extends Shell {
 			return;
 		}
 
-		$dryRun = $this->params['dry-run'];
+		$dryRun = !empty($this->params['dry-run']);
 		$isMove = isset($this->_staged['move'][$path]);
 		$isChanged = (isset($this->_staged['change'][$path]) && count($this->_staged['change'][$path]) > 1);
 		$isDelete = in_array($path, $this->_staged['delete']);
