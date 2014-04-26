@@ -28,7 +28,7 @@ trait ChangeTrait {
  * @return void
  */
 	public function main() {
-		if ($this->params['dry-run']) {
+		if (!empty($this->params['dry-run'])) {
 			$this->out(__d('cake_console', '<warning>Dry-run mode enabled!</warning>'), 1, Shell::QUIET);
 		}
 

@@ -42,6 +42,7 @@ class UpdateMethodNamesTask extends Shell {
 				'$this->Paginator->generateUrl(',
 			],
 		];
+
 		$otherPatterns = [
 			[
 				'Replace $this->Cookie->type() with $this->Cookie->encryption()',
@@ -49,13 +50,36 @@ class UpdateMethodNamesTask extends Shell {
 				'$this->Cookie->encryption(',
 			],
 		];
+
+		$taskPatterns = [
+			[
+				'Replace function execute() with main()',
+				'#function execute\(\)#',
+				'function main()',
+			],
+			[
+				'Replace parent::execute() with parent::main()',
+				'#parent\:\:execute\(\)#',
+				'parent::main()',
+			],
+			[
+				'Replace calls to execute() with main()',
+				'#->execute\(#',
+				'->main(',
+			],
+		];
+
 		$patterns = [];
 		if (
-			strpos($path, DS . 'Template') !== false ||
-			strpos($path, DS . 'View') !== false
+			strpos($path, DS . 'Template' . DS) !== false ||
+			strpos($path, DS . 'View' . DS) !== false
 		) {
 			$patterns = $helperPatterns;
-		} else {
+		}
+		if (strpos($path, DS . 'Command' . DS . 'Task' . DS)) {
+			$patterns = $taskPatterns;
+		}
+		if (empty($patterns)) {
 			$patterns = $otherPatterns;
 		}
 
