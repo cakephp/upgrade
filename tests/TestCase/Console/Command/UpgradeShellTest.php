@@ -66,6 +66,7 @@ class UpgradeShellTest extends TestCase {
 			'Console/Command/Task/AppUsesTask.php',
 			'Console/Command/Task/FixturesTask.php',
 			'Console/Command/Task/RenameClassesTask.php',
+			'Console/Command/Task/UpdateMethodNamesTask.php',
 			'Console/Command/Task/ChangeTrait.php',
 			'Console/Command/Task/LocationsTask.php',
 			'Console/cake.bat',
