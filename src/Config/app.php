@@ -108,5 +108,9 @@ $config = [
 			'file' => 'error',
 			'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
 		],
-	]
+	],
+
+	'Session' => [
+		'defaults' => 'php',
+	],
 ];
