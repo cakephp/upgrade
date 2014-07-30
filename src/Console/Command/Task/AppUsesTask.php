@@ -118,7 +118,10 @@ class AppUsesTask extends BaseTask {
 
 		$replacement = function ($matches) {
 			$matches = $this->_mapClassName($matches);
-			if (count($matches) === 4) {
+			// Chop Lib out as locations moves those files to the top level.
+			if (isset($matches[3]) && $matches[3] === 'Lib') {
+				$use = $matches[2] . '\\' . $matches[1];
+			} elseif (count($matches) === 4) {
 				$use = $matches[2] . '\\' . $matches[3] . '\\' . $matches[1];
 			} elseif ($matches[2] === 'Vendor') {
 				$this->out(
