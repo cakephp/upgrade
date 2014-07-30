@@ -14,14 +14,12 @@
  */
 namespace Cake\Upgrade\Console\Command\Task;
 
-use Cake\Console\Shell;
+use Cake\Upgrade\Console\Command\Task\BaseTask;
 
 /**
- * Upgrade stage task
- *
- * Handles staging changes for the upgrade process
+ * Move files around as directories have changed in 3.0
  */
-class LocationsTask extends Shell {
+class LocationsTask extends BaseTask {
 
 	use ChangeTrait;
 

@@ -14,14 +14,12 @@
  */
 namespace Cake\Upgrade\Console\Command\Task;
 
-use Cake\Console\Shell;
+use Cake\Upgrade\Console\Command\Task\BaseTask;
 
 /**
- * Upgrade stage task
- *
- * Handles staging changes for the upgrade process
+ * Updates fixtures for 3.0
  */
-class FixturesTask extends Shell {
+class FixturesTask extends BaseTask {
 
 	use ChangeTrait;
 

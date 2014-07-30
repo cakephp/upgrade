@@ -14,14 +14,14 @@
  */
 namespace Cake\Upgrade\Console\Command\Task;
 
-use Cake\Console\Shell;
+use Cake\Upgrade\Console\Command\Task\BaseTask;
 
 /**
- * Upgrade stage task
+ * App Uses Task.
  *
- * Handles staging changes for the upgrade process
+ * Updates App::uses() calls.
  */
-class AppUsesTask extends Shell {
+class AppUsesTask extends BaseTask {
 
 	use ChangeTrait;
 

@@ -94,55 +94,36 @@ class UpgradeShell extends Shell {
  */
 	public function getOptionParser() {
 		return parent::getOptionParser()
-			->description(__d('cake_console', "A shell to help automate upgrading from CakePHP 2.x to 3.x. \n" .
-				"Be sure to have a backup of your application before running these commands."))
-			->addArgument('path', [
-				'help' => __d('cake_console', 'Path to code to upgrade'),
-				'required' => true
-			])
-			->addOptions([
-				'plugin' => [
-					'short' => 'p',
-					'help' => __d('cake_console', 'The plugin to update. Only the specified plugin will be updated.')
-				],
-				'dry-run' => [
-					'short' => 'd',
-					'help' => __d('cake_console', 'Dry run the update, no files will actually be modified.'),
-					'boolean' => true
-				],
-				'git' => [
-					'help' => __d('cake_console', 'Perform git operations. eg. git mv instead of just moving files.'),
-					'boolean' => true
-				],
-				'namespace' => [
-					'help' => __d('cake_console', 'Set the base namespace you want to use. Defaults to App or the plugin name.'),
-					'default' => '',
-				],
-				'exclude' => [
-					'help' => __d('cake_console', 'Comma separated list of top level diretories to exclude.'),
-					'default' => '',
-				]
-			])
+			->description(__d('cake_console', "A shell to help automate upgrading from CakePHP 2.x to 3.x. " .
+				"Be sure to have a backup of your application before running these commands.")
+			)
 			->addSubcommand('locations', [
 				'help' => __d('cake_console', 'Move files/directories around. Run this *before* adding namespaces with the namespaces command.'),
+				'parser' => $this->Locations->getOptionParser(),
 			])
 			->addSubcommand('namespaces', [
 				'help' => __d('cake_console', 'Add namespaces to files based on their file path. Only run this *after* you have moved files.'),
+				'parser' => $this->Namespaces->getOptionParser(),
 			])
 			->addSubcommand('rename_classes', [
 				'help' => __d('cake_console', 'Rename classes that have been moved/renamed. Run after replacing App::uses().'),
+				'parser' => $this->RenameClasses->getOptionParser(),
 			])
 			->addSubcommand('rename_collections', [
 				'help' => __d('cake_console', "Rename HelperCollection, ComponentCollection, and TaskCollection. Will also rename component constructor arguments and _Collection properties on all objects."),
+				'parser' => $this->RenameCollections->getOptionParser(),
 			])
 			->addSubcommand('app_uses', [
 				'help' => __d('cake_console', 'Replace App::uses() with use statements'),
+				'parser' => $this->AppUses->getOptionParser(),
 			])
 			->addSubcommand('update_method_names', [
 				'help' => __d('cake_console', 'Update many of the methods that were renamed during 2.x -> 3.0'),
+				'parser' => $this->UpdateMethodNames->getOptionParser(),
 			])
 			->addSubcommand('fixtures', [
 				'help' => __d('cake_console', 'Update fixtures to use new index/constraint features. This is necessary before running tests.'),
+				'parser' => $this->Fixtures->getOptionParser(),
 			]);
 	}
 

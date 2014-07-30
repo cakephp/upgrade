@@ -14,14 +14,12 @@
  */
 namespace Cake\Upgrade\Console\Command\Task;
 
-use Cake\Console\Shell;
+use Cake\Upgrade\Console\Command\Task\BaseTask;
 
 /**
- * Upgrade stage task
- *
- * Handles staging changes for the upgrade process
+ * Update namespaces.
  */
-class NamespacesTask extends Shell {
+class NamespacesTask extends BaseTask {
 
 	use ChangeTrait;
 

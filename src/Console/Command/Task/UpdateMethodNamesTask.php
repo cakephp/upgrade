@@ -14,7 +14,7 @@
  */
 namespace Cake\Upgrade\Console\Command\Task;
 
-use Cake\Console\Shell;
+use Cake\Upgrade\Console\Command\Task\BaseTask;
 
 /**
  * Update method names task.
@@ -22,7 +22,7 @@ use Cake\Console\Shell;
  * Handles updating method names that have been changed.
  *
  */
-class UpdateMethodNamesTask extends Shell {
+class UpdateMethodNamesTask extends BaseTask {
 
 	use ChangeTrait;
 
