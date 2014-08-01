@@ -53,7 +53,7 @@ Move files/directories around. Run this *before* adding namespaces with the name
 
 Add namespaces to files based on their file path. Only run this *after* you have moved files.
 
-## app_uses
+### app_uses
 
 Replace App::uses() with use statements
 
