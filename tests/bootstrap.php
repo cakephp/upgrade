@@ -2,4 +2,4 @@
 error_reporting(-1);
 date_default_timezone_set('UTC');
 
-require __DIR__ . '/../src/Config/bootstrap.php';
+require __DIR__ . '/../config/bootstrap.php';

@@ -69,6 +69,7 @@ class LocationsTask extends BaseTask {
  */
 	protected function _moves() {
 		return array(
+			'Config' => '..' . DS . 'config',
 			'Lib' . DS => '',
 			'Test' . DS . 'Case' => 'Test' . DS . 'TestCase',
 			'View' . DS . 'Elements' => 'Template' . DS . 'Element',
