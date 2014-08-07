@@ -1,10 +1,11 @@
-# CakePHP Upgrade tool
+# CakePHP Upgrade tool [![Build Status](https://api.travis-ci.org/cakephp/upgrade.png)](https://travis-ci.org/cakephp/upgrade)
+
 
 Upgrade tools for CakePHP meant to facilitate migrating from CakePHP 2.x to 3.0.0.
 
 **Warning** This tool is still under development and doesn't handle all aspects of migrating.
 
-# Installation
+## Installation
 
 After downloading/cloning the upgrade tool, you need to install dependencies with `composer`
 
@@ -14,7 +15,7 @@ php composer.phar install
 
 Once dependencies are installed you can start using the `upgrade` shell.
 
-# Usage
+## Usage
 
 The upgrade tool provides a standalone application that can be used to upgrade
 other applications or cakephp plugins. Each of the subcommands accepts a path
@@ -30,7 +31,7 @@ The above would run the `locations` task on `/home/mark/Sites/my-app`.
 It is recommended that you keep your application in version control, and keep
 backups of before using the upgrade tool.
 
-## Order matters
+### Order matters
 
 Several of the commands have dependencies on each other and should be run in a specific order. It
 is recommended that you run the following commands first before using other commands:
@@ -43,7 +44,7 @@ src/Console/cake upgrade app_uses [path]
 
 Once these three commands have been run, you can use the other commands in any order.
 
-# Tasks Available
+## Tasks Available
 
 ### locations
 
