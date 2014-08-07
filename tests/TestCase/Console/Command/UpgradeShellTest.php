@@ -1,5 +1,4 @@
 <?php
-
 namespace Cake\Upgrade\Test\TestCase\Console\Command;
 
 use Cake\TestSuite\TestCase;
@@ -56,10 +55,8 @@ class UpgradeShellTest extends TestCase {
 		}
 
 		$expected = [
-			'Config/app.php',
-			'Config/bootstrap.php',
-			'Config/paths.php',
 			'Console/Command/UpgradeShell.php',
+			'Console/Command/Task/BaseTask.php',
 			'Console/Command/Task/RenameCollectionsTask.php',
 			'Console/Command/Task/NamespacesTask.php',
 			'Console/Command/Task/StageTask.php',

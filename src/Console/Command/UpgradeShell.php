@@ -46,7 +46,7 @@ class UpgradeShell extends Shell {
 
 	public function main() {
 		if ($this->params['dry-run']) {
-			$this->out(__d('cake_console', '<warning>Dry-run mode enabled!</warning>'), 1, Shell::QUIET);
+			$this->out('<warning>Dry-run mode enabled!</warning>', 1, Shell::QUIET);
 		}
 
 		$exclude = ['.git', '.svn', 'vendor', 'Vendor', 'webroot', 'tmp'];
@@ -55,9 +55,9 @@ class UpgradeShell extends Shell {
 		$actions = $this->_getActions();
 
 		foreach ($files as $file) {
-			$this->out(__d('cake_console', '<info>Processing %s</info>', Debugger::trimPath($file)));
+			$this->out(sprintf('<info>Processing %s</info>', Debugger::trimPath($file)));
 			foreach ($actions as $action) {
-				$this->out(__d('cake_console', '<info> * upgrade step %s</info>', $action), 0, Shell::VERBOSE);
+				$this->out(sprintf('<info> * upgrade step %s</info>', $action), 0, Shell::VERBOSE);
 				$this->$action->Stage = $this->Stage;
 				$this->$action->process($file);
 			}
@@ -94,35 +94,35 @@ class UpgradeShell extends Shell {
  */
 	public function getOptionParser() {
 		return parent::getOptionParser()
-			->description(__d('cake_console', "A shell to help automate upgrading from CakePHP 2.x to 3.x. " .
-				"Be sure to have a backup of your application before running these commands.")
+			->description('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .
+				'Be sure to have a backup of your application before running these commands.'
 			)
 			->addSubcommand('locations', [
-				'help' => __d('cake_console', 'Move files/directories around. Run this *before* adding namespaces with the namespaces command.'),
+				'help' => 'Move files/directories around. Run this *before* adding namespaces with the namespaces command.',
 				'parser' => $this->Locations->getOptionParser(),
 			])
 			->addSubcommand('namespaces', [
-				'help' => __d('cake_console', 'Add namespaces to files based on their file path. Only run this *after* you have moved files.'),
+				'help' => 'Add namespaces to files based on their file path. Only run this *after* you have moved files.',
 				'parser' => $this->Namespaces->getOptionParser(),
 			])
 			->addSubcommand('rename_classes', [
-				'help' => __d('cake_console', 'Rename classes that have been moved/renamed. Run after replacing App::uses().'),
+				'help' => 'Rename classes that have been moved/renamed. Run after replacing App::uses().',
 				'parser' => $this->RenameClasses->getOptionParser(),
 			])
 			->addSubcommand('rename_collections', [
-				'help' => __d('cake_console', "Rename HelperCollection, ComponentCollection, and TaskCollection. Will also rename component constructor arguments and _Collection properties on all objects."),
+				'help' => 'Rename HelperCollection, ComponentCollection, and TaskCollection. Will also rename component constructor arguments and _Collection properties on all objects.',
 				'parser' => $this->RenameCollections->getOptionParser(),
 			])
 			->addSubcommand('app_uses', [
-				'help' => __d('cake_console', 'Replace App::uses() with use statements'),
+				'help' => 'Replace App::uses() with use statements',
 				'parser' => $this->AppUses->getOptionParser(),
 			])
 			->addSubcommand('update_method_names', [
-				'help' => __d('cake_console', 'Update many of the methods that were renamed during 2.x -> 3.0'),
+				'help' => 'Update many of the methods that were renamed during 2.x -> 3.0',
 				'parser' => $this->UpdateMethodNames->getOptionParser(),
 			])
 			->addSubcommand('fixtures', [
-				'help' => __d('cake_console', 'Update fixtures to use new index/constraint features. This is necessary before running tests.'),
+				'help' => 'Update fixtures to use new index/constraint features. This is necessary before running tests.',
 				'parser' => $this->Fixtures->getOptionParser(),
 			]);
 	}

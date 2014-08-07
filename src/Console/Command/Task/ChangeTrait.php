@@ -29,14 +29,14 @@ trait ChangeTrait {
  */
 	public function main() {
 		if (!empty($this->params['dry-run'])) {
-			$this->out(__d('cake_console', '<warning>Dry-run mode enabled!</warning>'), 1, Shell::QUIET);
+			$this->out('<warning>Dry-run mode enabled!</warning>', 1, Shell::QUIET);
 		}
 
 		$exclude = ['.git', '.svn', 'vendor', 'Vendor', 'webroot', 'tmp'];
 		$files = $this->Stage->files($exclude);
 
 		foreach ($files as $file) {
-			$this->out(__d('cake_console', '<info>Processing %s</info>', Debugger::trimPath($file)));
+			$this->out(sprintf('<info>Processing %s</info>', Debugger::trimPath($file)));
 			$this->process($file);
 		}
 
@@ -51,15 +51,15 @@ trait ChangeTrait {
  */
 	public function process($path) {
 		if (!$this->_shouldProcess($path)) {
-			$this->out(__d('cake_console', ' <info>skipping</info>'), 1, Shell::VERBOSE);
+			$this->out('<info>skipping</info>', 1, Shell::VERBOSE);
 			return false;
 		}
 
 		$return = $this->_process($path);
 		if ($return) {
-			$this->out(__d('cake_console', ' <warning>updated</warning>'), 1, Shell::VERBOSE);
+			$this->out('<warning>updated</warning>', 1, Shell::VERBOSE);
 		} else {
-			$this->out(__d('cake_console', ' <info>no change</info>'), 1, Shell::VERBOSE);
+			$this->out('<info>no change</info>', 1, Shell::VERBOSE);
 		}
 
 		return $return;

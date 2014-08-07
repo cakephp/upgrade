@@ -125,7 +125,7 @@ class AppUsesTask extends BaseTask {
 				$use = $matches[2] . '\\' . $matches[3] . '\\' . $matches[1];
 			} elseif ($matches[2] === 'Vendor') {
 				$this->out(
-					__d('cake_console', '<info>Skip %s as it is a vendor library.</info>', $matches[1]),
+					sprintf('<info>Skip %s as it is a vendor library.</info>', $matches[1]),
 					1,
 					Shell::VERBOSE
 				);
