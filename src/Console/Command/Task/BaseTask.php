@@ -28,29 +28,29 @@ class BaseTask extends Shell {
 	public function getOptionParser() {
 		return parent::getOptionParser()
 			->addArgument('path', [
-				'help' => __d('cake_console', 'Path to code to upgrade'),
+				'help' => 'Path to code to upgrade',
 				'required' => true
 			])
 			->addOptions([
 				'plugin' => [
 					'short' => 'p',
-					'help' => __d('cake_console', 'The plugin to update. Only the specified plugin will be updated.')
+					'help' => 'The plugin to update. Only the specified plugin will be updated.'
 				],
 				'dry-run' => [
 					'short' => 'd',
-					'help' => __d('cake_console', 'Dry run the update, no files will actually be modified.'),
+					'help' => 'Dry run the update, no files will actually be modified.',
 					'boolean' => true
 				],
 				'git' => [
-					'help' => __d('cake_console', 'Perform git operations. eg. git mv instead of just moving files.'),
+					'help' => 'Perform git operations. eg. git mv instead of just moving files.',
 					'boolean' => true
 				],
 				'namespace' => [
-					'help' => __d('cake_console', 'Set the base namespace you want to use. Defaults to App or the plugin name.'),
+					'help' => 'Set the base namespace you want to use. Defaults to App or the plugin name.',
 					'default' => '',
 				],
 				'exclude' => [
-					'help' => __d('cake_console', 'Comma separated list of top level diretories to exclude.'),
+					'help' => 'Comma separated list of top level diretories to exclude.',
 					'default' => '',
 				]
 			]);

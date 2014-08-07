@@ -95,8 +95,7 @@ class StageTask extends Shell {
 
 		if ($isDelete) {
 			$this->out(
-				__d(
-					'cake_console',
+				sprintf(
 					'<info>Delete %s</info>',
 					Debugger::trimPath($path)
 				)
@@ -122,8 +121,7 @@ class StageTask extends Shell {
 		if ($isMove && !$isChanged) {
 			$to = $this->_staged['move'][$path];
 			$this->out(
-				__d(
-					'cake_console',
+				sprintf(
 					'<info>Move %s to %s</info>',
 					Debugger::trimPath($path),
 					Debugger::trimPath($to)
@@ -164,15 +162,14 @@ class StageTask extends Shell {
 		if ($isMove) {
 			$to = $this->_staged['move'][$path];
 			$this->out(
-				__d(
-					'cake_console',
+				sprintf(
 					'<info>Move %s to %s and update</info>',
 					Debugger::trimPath($path),
 					Debugger::trimPath($to)
 				)
 			);
 		} else {
-			$this->out(__d('cake_console', '<info>Update %s</info>', Debugger::trimPath($path)));
+			$this->out(sprintf('<info>Update %s</info>', Debugger::trimPath($path)));
 		}
 		$this->out($diff, 1, $dryRun ? Shell::NORMAL : SHELL::VERBOSE);
 
