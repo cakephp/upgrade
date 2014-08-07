@@ -181,7 +181,7 @@ class StageTask extends Shell {
 		}
 
 		if ($isMove) {
-			if ($this->params['git']) {
+			if (!empty($this->params['git'])) {
 				exec($gitCd . 'git mv -f ' . escapeshellarg($path) . ' ' . escapeshellarg($path . '__'));
 				exec($gitCd . 'git mv -f ' . escapeshellarg($path . '__') . ' ' . escapeshellarg($to));
 			} else {
