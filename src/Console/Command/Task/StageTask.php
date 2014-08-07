@@ -132,6 +132,9 @@ class StageTask extends Shell {
 			}
 
 			if (!empty($this->params['git'])) {
+				if (!file_exists(dirname($to))) {
+					exec('mkdir -p ' . escapeshellarg(dirname($to)));
+				}
 				exec($gitCd . 'git mv -f ' . escapeshellarg($path) . ' ' . escapeshellarg($path . '__'));
 				exec($gitCd . 'git mv -f ' . escapeshellarg($path . '__') . ' ' . escapeshellarg($to));
 				return;
