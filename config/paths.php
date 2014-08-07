@@ -24,14 +24,14 @@ define('DS', DIRECTORY_SEPARATOR);
  */
 
 /**
- * The full path to the directory which holds "App", WITHOUT a trailing DS.
+ * The full path to the directory which holds "src", WITHOUT a trailing DS.
  */
-define('ROOT', dirname(dirname(__DIR__)));
+define('ROOT', dirname(__DIR__));
 
 /**
- * The actual directory name for the "App".
+ * The actual directory name for the "src".
  */
-define('APP_DIR', basename(dirname(__DIR__)));
+define('APP_DIR', 'src');
 
 /**
  * The name of the webroot dir.  Defaults to 'webroot'
@@ -44,6 +44,11 @@ define('WEBROOT_DIR', 'webroot');
 define('APP', ROOT . DS . APP_DIR . DS);
 
 /**
+ * Path to the config directory.
+ */
+define('CONFIG', ROOT . DS . 'config' . DS);
+
+/**
  * File path to the webroot directory.
  */
 define('WWW_ROOT', ROOT . DS . WEBROOT_DIR . DS);
@@ -51,7 +56,7 @@ define('WWW_ROOT', ROOT . DS . WEBROOT_DIR . DS);
 /**
  * Path to the tests directory.
  */
-define('TESTS', ROOT . DS . 'Test' . DS);
+define('TESTS', ROOT . DS . 'tests' . DS);
 
 /**
  * Path to the temporary files directory.
