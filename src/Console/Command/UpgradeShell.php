@@ -45,7 +45,7 @@ class UpgradeShell extends Shell {
 	);
 
 	public function main() {
-		if ($this->params['dry-run']) {
+		if (!empty($this->params['dry-run'])) {
 			$this->out('<warning>Dry-run mode enabled!</warning>', 1, Shell::QUIET);
 		}
 
@@ -81,7 +81,7 @@ class UpgradeShell extends Shell {
 			if ($name === 'all') {
 				continue;
 			}
-			$className = ucfirst(Inflector::Camelize($name));
+			$className = ucfirst(Inflector::camelize($name));
 			$all[$name] = $className;
 		}
 		return $all;

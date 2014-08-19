@@ -15,6 +15,7 @@
 namespace Cake\Upgrade\Console\Command\Task;
 
 use Cake\Console\Shell;
+use Cake\Error\InternalErrorException;
 use Cake\Utility\Debugger;
 use Cake\Utility\File;
 use Cake\Utility\Folder;
@@ -330,6 +331,10 @@ class StageTask extends Shell {
  * @return string
  */
 	protected function _getPath() {
+		if (empty($this->args[0]) || !file_exists($this->args[0])) {
+			throw new InternalErrorException('Path not specified or invalid.');
+		}
+
 		if (count($this->args) === 1) {
 			return realpath($this->args[0]);
 		}
