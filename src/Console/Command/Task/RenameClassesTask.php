@@ -36,6 +36,7 @@ class RenameClassesTask extends BaseTask {
 			'Cake\Network\Http\HttpSocket' => 'Cake\Network\Http\Client',
 			'HttpSocket' => 'Client',
 			'Cake\Model\ConnectionManager' => 'Cake\Database\ConnectionManager',
+			'CakeTestCase' => 'TestCase'
 		];
 
 		$original = $contents = $this->Stage->source($path);
