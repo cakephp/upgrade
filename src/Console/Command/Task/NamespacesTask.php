@@ -52,14 +52,14 @@ class NamespacesTask extends BaseTask {
 /**
  * _getNamespace
  *
- * Derive the root namespace from the path. Use the application root as a basis, and strip
- * Off anything before Plugin directory - the plugin directory is a root of sorts.
+ * Derives the root namespace from the path. Use the application root as a basis, and strip
+ * off anything before Plugin directory - the plugin directory is a root of sorts.
  *
  * @param string $path
  * @return string
  */
 	protected function _getNamespace($path) {
-		$ns = $this->params['namespace'];
+		$ns = $this->param('namespace');
 		$path = str_replace(ROOT, '', dirname($path));
 		$path = preg_replace('@.*(Plugin|plugins)[/\\\\]@', '', $path);
 
