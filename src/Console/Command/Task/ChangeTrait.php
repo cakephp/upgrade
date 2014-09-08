@@ -14,7 +14,7 @@
 namespace Cake\Upgrade\Console\Command\Task;
 
 use Cake\Console\Shell;
-use Cake\Utility\Debugger;
+use Cake\Error\Debugger;
 
 /**
  * Provides features for modifying the contents of a file

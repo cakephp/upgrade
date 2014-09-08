@@ -15,10 +15,10 @@
 namespace Cake\Upgrade\Console\Command\Task;
 
 use Cake\Console\Shell;
-use Cake\Error\InternalErrorException;
-use Cake\Utility\Debugger;
-use Cake\Utility\File;
-use Cake\Utility\Folder;
+use Cake\Error\Debugger;
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
+use Cake\Network\Exception\InternalErrorException;
 
 /**
  * Upgrade stage task

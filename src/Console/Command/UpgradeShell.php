@@ -17,8 +17,8 @@ namespace Cake\Upgrade\Console\Command;
 use Cake\Console\Shell;
 use Cake\Core\App;
 use Cake\Core\Plugin;
-use Cake\Utility\Debugger;
-use Cake\Utility\Folder;
+use Cake\Error\Debugger;
+use Cake\Filesystem\Folder;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
