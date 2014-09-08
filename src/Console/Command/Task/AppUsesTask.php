@@ -49,7 +49,7 @@ class AppUsesTask extends BaseTask {
 		'Configure' => 'Cake\Core\Configure',
 		'ConnectionManager' => 'Cake\Database\ConnectionManager',
 		'Controller' => 'Cake\Controller\Controller',
-		'Debugger' => 'Cake\Utility\Debugger',
+		'Debugger' => 'Cake\Error\Debugger',
 		'ExceptionRenderer' => 'Cake\Error\ExceptionRenderer',
 		'Helper' => 'Cake\View\Helper',
 		'HelperRegistry' => 'Cake\View\HelperRegistry',
