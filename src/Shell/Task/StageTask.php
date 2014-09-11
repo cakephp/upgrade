@@ -12,7 +12,7 @@
  * @since         3.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\Upgrade\Console\Command\Task;
+namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Console\Shell;
 use Cake\Error\Debugger;

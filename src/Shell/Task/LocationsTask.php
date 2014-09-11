@@ -12,9 +12,9 @@
  * @since         3.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\Upgrade\Console\Command\Task;
+namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Console\Command\Task\BaseTask;
+use Cake\Upgrade\Shell\Task\BaseTask;
 
 /**
  * Move files around as directories have changed in 3.0
