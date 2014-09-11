@@ -5,14 +5,17 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "cakephp/cakephp": "3.0.*-dev",
-        "cakephp/app": "dev-master",
-        "php": ">=5.4"
+        "cakephp/cakephp": "3.0.*-dev"
+    },
+    "config" : {
+        "bin-dir" : "bin"
     },
     "autoload": {
         "psr-4": {
             "Cake\\Upgrade\\": "src",
             "Cake\\Upgrade\\Test\\": "tests"
         }
-    }
+    },
+    "minimum-stability" : "dev",
+    "prefer-stable": true
 }
