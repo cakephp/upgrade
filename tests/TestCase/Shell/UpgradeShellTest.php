@@ -1,8 +1,8 @@
 <?php
-namespace Cake\Upgrade\Test\TestCase\Console\Command;
+namespace Cake\Upgrade\Test\TestCase\Shell;
 
 use Cake\TestSuite\TestCase;
-use Cake\Upgrade\Console\Command\UpgradeShell;
+use Cake\Upgrade\Shell\UpgradeShell;
 
 /**
  * UpgradeShellTest
@@ -30,7 +30,7 @@ class UpgradeShellTest extends TestCase {
 		$io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
 
 		$this->sut = $this->getMock(
-			'Cake\Upgrade\Console\Command\UpgradeShell',
+			'Cake\Upgrade\Shell\UpgradeShell',
 			['in', 'out', 'hr', 'err', '_stop'],
 			[$io]
 		);
@@ -50,25 +50,22 @@ class UpgradeShellTest extends TestCase {
 		$this->sut->args = [$repoSrc];
 
 		$files = $this->sut->Stage->files();
-		foreach($files as &$file) {
+		foreach ($files as &$file) {
 			$file = str_replace(DS, '/', substr($file, strlen($repoSrc) + 1));
 		}
 
 		$expected = [
-			'Console/Command/UpgradeShell.php',
-			'Console/Command/Task/BaseTask.php',
-			'Console/Command/Task/RenameCollectionsTask.php',
-			'Console/Command/Task/NamespacesTask.php',
-			'Console/Command/Task/StageTask.php',
-			'Console/Command/Task/AppUsesTask.php',
-			'Console/Command/Task/FixturesTask.php',
-			'Console/Command/Task/RenameClassesTask.php',
-			'Console/Command/Task/UpdateMethodNamesTask.php',
-			'Console/Command/Task/ChangeTrait.php',
-			'Console/Command/Task/LocationsTask.php',
-			'Console/cake.bat',
-			'Console/cake',
-			'Console/cake.php'
+			'Shell/UpgradeShell.php',
+			'Shell/Task/BaseTask.php',
+			'Shell/Task/RenameCollectionsTask.php',
+			'Shell/Task/NamespacesTask.php',
+			'Shell/Task/StageTask.php',
+			'Shell/Task/AppUsesTask.php',
+			'Shell/Task/FixturesTask.php',
+			'Shell/Task/RenameClassesTask.php',
+			'Shell/Task/UpdateMethodNamesTask.php',
+			'Shell/Task/ChangeTrait.php',
+			'Shell/Task/LocationsTask.php',
 		];
 
 		sort($files);
