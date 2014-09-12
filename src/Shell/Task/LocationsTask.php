@@ -71,7 +71,8 @@ class LocationsTask extends BaseTask {
 		return array(
 			'Config' => '..' . DS . 'config',
 			'Controller' . DS . 'Component' . DS . 'Auth' => 'Auth',
-			'Lib' . DS => '',
+			'Console' . DS . 'Command' => 'Shell',
+			'Lib' => 'src',
 			'Test' . DS . 'Case' => 'Test' . DS . 'TestCase',
 			'View' . DS . 'Elements' => 'Template' . DS . 'Element',
 			'View' . DS . 'Emails' => 'Template' . DS . 'Email',
@@ -80,6 +81,13 @@ class LocationsTask extends BaseTask {
 			'View' . DS . 'Scaffolds' => 'Template' . DS . 'Scaffold',
 			'View' . DS . 'Errors' => 'Template' . DS . 'Error',
 			'View' . DS . 'Themed' => 'Template' . DS . 'Themed',
+
+			'Auth' => 'src' . DS . 'Auth',
+			'Controller' => 'src' . DS . 'Controller',
+			'Model' => 'src' . DS . 'Model',
+			'Template' => 'src' . DS . 'Template',
+			'View' => 'src' . DS . 'View',
+			'Test' => 'tests'
 		);
 	}
 }
