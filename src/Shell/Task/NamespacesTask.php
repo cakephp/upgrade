@@ -62,6 +62,7 @@ class NamespacesTask extends BaseTask {
 		$ns = $this->param('namespace');
 		$path = str_replace(ROOT, '', dirname($path));
 		$path = preg_replace('@.*(Plugin|plugins)[/\\\\]@', '', $path);
+		$path = preg_replace('@src[/\\\\]@', '', $path);
 
 		return $ns . trim(str_replace(DS, '\\', $path), '\\');
 	}
