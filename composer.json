@@ -1,21 +1,24 @@
 {
-    "name": "cakephp/upgrade",
-    "description": "CakePHP upgrade tool",
-    "homepage": "http://cakephp.org",
-    "type": "project",
-    "license": "MIT",
-    "require": {
-        "cakephp/cakephp": "3.0.*-dev"
-    },
-    "config" : {
-        "bin-dir" : "bin"
-    },
-    "autoload": {
-        "psr-4": {
-            "Cake\\Upgrade\\": "src",
-            "Cake\\Upgrade\\Test\\": "tests"
-        }
-    },
-    "minimum-stability" : "dev",
-    "prefer-stable": true
+	"name": "cakephp/upgrade",
+	"description": "CakePHP upgrade tool",
+	"homepage": "http://cakephp.org",
+	"type": "project",
+	"license": "MIT",
+	"require": {
+		"cakephp/cakephp": "3.0.*-dev"
+	},
+	"config" : {
+		"bin-dir" : "bin"
+	},
+	"autoload": {
+		"psr-4": {
+			"Cake\\Upgrade\\": "src",
+			"Cake\\Upgrade\\Test\\": "tests"
+		}
+	},
+	"minimum-stability" : "dev",
+	"prefer-stable": true,
+	"support": {
+		"source": "https://github.com/cakephp/upgrade"
+	}
 }
