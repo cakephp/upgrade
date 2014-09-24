@@ -266,7 +266,7 @@ class StageTask extends Shell {
 	}
 
 /**
- * Get the source of a file, taking account that there may be incremental diffs
+ * Get the source of a file, taking into account that there may be incremental diffs
  *
  * @param string $path
  * @return string
