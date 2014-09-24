@@ -55,7 +55,7 @@ trait ChangeTrait {
 			return false;
 		}
 
-		$return = $this->_process($path);
+		$return = $this->_process($path);debug($return);debug($path);
 		if ($return) {
 			$this->out('<warning>updated</warning>', 1, Shell::VERBOSE);
 		} else {
@@ -77,7 +77,7 @@ trait ChangeTrait {
 /**
  * _shouldProcess
  *
- * Default to php files only
+ * Default to PHP files only
  *
  * @param string $path
  * @return boolean

@@ -42,7 +42,8 @@ class UpgradeShell extends Shell {
 		'RenameCollections',
 		'Stage',
 		'UpdateMethodNames',
-		'I18n'
+		'I18n',
+		'Tests'
 	);
 
 	public function main() {
@@ -128,6 +129,9 @@ class UpgradeShell extends Shell {
 			])
 			->addSubcommand('i18n', [
 				'help' => 'Update translation functions regarding placeholders.',
+				'parser' => $this->I18n->getOptionParser(),
+			])->addSubcommand('tests', [
+				'help' => 'Update test cases regarding fixtures.',
 				'parser' => $this->I18n->getOptionParser(),
 			]);
 	}

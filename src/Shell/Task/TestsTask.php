@@ -15,21 +15,22 @@
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Upgrade\Shell\Task\BaseTask;
+use Cake\Utility\Inflector;
 
 /**
- * Updates fixtures for 3.0
+ * Updates test cases for 3.0
  */
-class FixturesTask extends BaseTask {
+class TestsTask extends BaseTask {
 
 	use ChangeTrait;
 
 	public $tasks = ['Stage'];
 
 /**
- * Process fixture content and update it for 3.x
+ * Process tests regarding fixture usage and update it for 3.x
  *
  * @param string $content Fixture content.
- * @return boolean
+ * @return bool
  */
 	protected function _process($path) {
 		$original = $contents = $this->Stage->source($path);
@@ -62,53 +63,22 @@ class FixturesTask extends BaseTask {
 		// Process field property.
 		$processor = function ($matches) use ($export) {
 			eval('$data = [' . $matches[2] . '];');
-			$constraints = [];
+
 			$out = [];
-			foreach ($data as $field => $properties) {
-				// Move primary key into a constraint
-				if (isset($properties['key']) && $properties['key'] === 'primary') {
-					$constraints['primary'] = [
-						'type' => 'primary',
-						'columns' => [$field]
-					];
-				}
-				if (isset($properties['key'])) {
-					unset($properties['key']);
-				}
-				if ($field !== 'indexes' && $field !== 'tableParameters') {
-					$out[$field] = $properties;
-				}
+			foreach ($data as $key => $fixture) {
+				$pieces = explode('.', $fixture);
+				$fixtureName = $pieces[count($pieces) - 1];
+				$fixtureName = Inflector::pluralize($fixtureName);
+				$pieces[count($pieces) - 1] = $fixtureName;
+
+				$out[] = implode('.', $pieces);
 			}
 
-			// Process indexes. Unique keys work differently now.
-			if (isset($data['indexes'])) {
-				foreach ($data['indexes'] as $index => $indexProps) {
-					if (isset($indexProps['column'])) {
-						$indexProps['columns'] = $indexProps['column'];
-						unset($indexProps['column']);
-					}
-					// Move unique indexes over
-					if (!empty($indexProps['unique'])) {
-						unset($indexProps['unique']);
-						$constraints[$index] = ['type' => 'unique'] + $indexProps;
-						continue;
-					}
-					$out['_indexes'][$index] = $indexProps;
-				}
-			}
-			if (count($constraints)) {
-				$out['_constraints'] = $constraints;
-			}
-
-			// Process table parameters
-			if (isset($data['tableParameters'])) {
-				$out['_options'] = $data['tableParameters'];
-			}
 			return $matches[1] . "\n\t\t" . implode(",\n\t\t", $export($out)) . "\n\t" . $matches[3];
 		};
 
 		$contents = preg_replace_callback(
-			'/(public \$fields\s+=\s+(?:array\(|\[))(.*?)(\);|\];)/ms',
+			'/(public \$fixtures\s+=\s+(?:array\(|\[))(.*?)(\);|\];)/ms',
 			$processor,
 			$contents,
 			-1,
@@ -118,18 +88,4 @@ class FixturesTask extends BaseTask {
 		return $this->Stage->change($path, $original, $contents);
 	}
 
-/**
- * _shouldProcess
- *
- * Only process files in fixture folders
- *
- * @param string $path
- * @return boolean
- */
-	protected function _shouldProcess($path) {
-		return (
-			substr($path, -4) === '.php' &&
-			strpos($path, DS . 'Test' . DS . 'Fixture' . DS)
-		);
-	}
 }
