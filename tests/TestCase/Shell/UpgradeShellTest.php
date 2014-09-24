@@ -60,6 +60,7 @@ class UpgradeShellTest extends TestCase {
 			'Shell/Task/RenameCollectionsTask.php',
 			'Shell/Task/NamespacesTask.php',
 			'Shell/Task/StageTask.php',
+			'Shell/Task/TestsTask.php',
 			'Shell/Task/AppUsesTask.php',
 			'Shell/Task/FixturesTask.php',
 			'Shell/Task/RenameClassesTask.php',

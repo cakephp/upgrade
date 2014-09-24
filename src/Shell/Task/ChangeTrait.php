@@ -77,7 +77,7 @@ trait ChangeTrait {
 /**
  * _shouldProcess
  *
- * Default to php files only
+ * Default to PHP files only
  *
  * @param string $path
  * @return boolean
