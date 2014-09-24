@@ -55,7 +55,7 @@ trait ChangeTrait {
 			return false;
 		}
 
-		$return = $this->_process($path);debug($return);debug($path);
+		$return = $this->_process($path);
 		if ($return) {
 			$this->out('<warning>updated</warning>', 1, Shell::VERBOSE);
 		} else {
