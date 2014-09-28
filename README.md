@@ -23,7 +23,7 @@ that points to the application you want to upgrade.
 
 ```bash
 cd /path/to/upgrade
-src/Console/cake upgrade locations /home/mark/Sites/my-app
+bin/cake upgrade locations /home/mark/Sites/my-app
 ```
 
 The above would run the `locations` task on `/home/mark/Sites/my-app`.
@@ -37,9 +37,9 @@ Several of the commands have dependencies on each other and should be run in a s
 is recommended that you run the following commands first before using other commands:
 
 ```bash
-src/Console/cake upgrade locations [path]
-src/Console/cake upgrade namespaces [path]
-src/Console/cake upgrade app_uses [path]
+bin/cake upgrade locations [path]
+bin/cake upgrade namespaces [path]
+bin/cake upgrade app_uses [path]
 ```
 
 Once these three commands have been run, you can use the other commands in any order.
