@@ -14,6 +14,7 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
+use Cake\Console\Shell;
 use Cake\Upgrade\Shell\Task\BaseTask;
 
 /**
