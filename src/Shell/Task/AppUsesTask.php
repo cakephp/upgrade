@@ -216,7 +216,7 @@ class AppUsesTask extends BaseTask {
 			$useStatement = "use $class;\n";
 
 			$contents = preg_replace(
-				'/(namespace [\S+]+;[\n]{2})/',
+				'/(namespace [\S+]+;[\n]{1,})/',
 				'\1' . $useStatement,
 				$contents
 			);
