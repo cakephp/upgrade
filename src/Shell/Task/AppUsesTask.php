@@ -45,6 +45,7 @@ class AppUsesTask extends BaseTask {
 		'CakeLog' => 'Cake\Log\Log',
 		'CakePlugin' => 'Cake\Core\Plugin',
 		'CakeTestCase' => 'Cake\TestSuite\TestCase',
+		'CakeTestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
 		'Component' => 'Cake\Controller\Component',
 		'ComponentRegistry' => 'Cake\Controller\ComponentRegistry',
 		'Configure' => 'Cake\Core\Configure',
