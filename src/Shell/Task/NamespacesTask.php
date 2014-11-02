@@ -60,12 +60,12 @@ class NamespacesTask extends BaseTask {
  */
 	protected function _getNamespace($path) {
 		$ns = $this->param('namespace');
-		$path = str_replace(ROOT, '', dirname($path));
+		$path = str_replace(realpath($this->args[0]), '', dirname($path));
 		$path = preg_replace('@.*(Plugin|plugins)[/\\\\]@', '', $path);
 		$path = preg_replace('@[/\\\\]src@', '', $path);
 		$path = preg_replace('@tests[/\\\\]@', 'Test' . DS, $path);
 
-		return $ns . trim(str_replace(DS, '\\', $path), '\\');
+		return trim(implode('\\', [$ns, str_replace(DS, '\\', $path)]), '\\');
 	}
 
 /**
