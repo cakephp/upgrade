@@ -86,7 +86,8 @@ class LocationsTask extends BaseTask {
 			'Controller' => 'src' . DS . 'Controller',
 			'Model' => 'src' . DS . 'Model',
 			'Template' => 'src' . DS . 'Template',
-			'View' => 'src' . DS . 'View',
+			'View' . DS . 'Helper' => 'src' . DS . 'View' . DS . 'Helper',
+			'View' => 'src' . DS . 'Template',
 			'Test' => 'tests'
 		);
 	}

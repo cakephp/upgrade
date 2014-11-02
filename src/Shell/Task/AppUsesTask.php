@@ -14,6 +14,7 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
+use Cake\Console\Shell;
 use Cake\Upgrade\Shell\Task\BaseTask;
 
 /**
@@ -44,6 +45,7 @@ class AppUsesTask extends BaseTask {
 		'CakeLog' => 'Cake\Log\Log',
 		'CakePlugin' => 'Cake\Core\Plugin',
 		'CakeTestCase' => 'Cake\TestSuite\TestCase',
+		'CakeTestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
 		'Component' => 'Cake\Controller\Component',
 		'ComponentRegistry' => 'Cake\Controller\ComponentRegistry',
 		'Configure' => 'Cake\Core\Configure',
@@ -159,8 +161,9 @@ class AppUsesTask extends BaseTask {
  * Add implicit uses
  *
  * Account for:
+ *
  * + parent classes and interfaces are frequently just assumed to exist in useland code
- * + also in funciton arguments
+ * + also in function arguments
  * + static class calls for basic Cake classes
  *
  * @param string $contents
@@ -214,7 +217,7 @@ class AppUsesTask extends BaseTask {
 			$useStatement = "use $class;\n";
 
 			$contents = preg_replace(
-				'/(namespace [\S+]+;[\n]{2})/',
+				'/(namespace [\S+]+;[\n]{1,})/',
 				'\1' . $useStatement,
 				$contents
 			);
