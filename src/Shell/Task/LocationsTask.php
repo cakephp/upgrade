@@ -29,7 +29,7 @@ class LocationsTask extends BaseTask {
  * Check all moves, and stage moving the file to new location
  *
  * @param mixed $path
- * @return boolean
+ * @return bool
  */
 	protected function _process($path) {
 		$new = $path;
@@ -50,7 +50,7 @@ class LocationsTask extends BaseTask {
  * Is the current path within the scope of any move?
  *
  * @param string $path
- * @return boolean
+ * @return bool
  */
 	protected function _shouldProcess($path) {
 		foreach (array_keys($this->_moves()) as $substr) {

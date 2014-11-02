@@ -80,7 +80,7 @@ trait ChangeTrait {
  * Default to PHP files only
  *
  * @param string $path
- * @return boolean
+ * @return bool
  */
 	protected function _shouldProcess($path) {
 		return (substr($path, -4) === '.php');

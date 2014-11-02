@@ -198,7 +198,7 @@ class StageTask extends Shell {
  * delete
  *
  * @param string $path
- * @return boolean
+ * @return bool
  */
 	public function delete($path) {
 		$this->_staged['delete'][] = $path;
@@ -210,7 +210,7 @@ class StageTask extends Shell {
  *
  * @param string $from
  * @param string $to
- * @return boolean
+ * @return bool
  */
 	public function move($from, $to) {
 		if (is_dir($from)) {
@@ -235,7 +235,7 @@ class StageTask extends Shell {
  * @params string $filePath (unused, for future reference)
  * @param string $original
  * @param string $updated
- * @return boolean
+ * @return bool
  */
 	public function change($filePath, $original, $updated) {
 		if ($original === $updated) {
@@ -283,7 +283,7 @@ class StageTask extends Shell {
  * Searches the paths and finds files based on extension.
  *
  * @param array $excludes
- * @param boolean $reset
+ * @param bool $reset
  * @return array
  */
 	public function files($excludes = [], $reset = false) {
