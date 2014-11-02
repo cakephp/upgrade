@@ -160,8 +160,9 @@ class AppUsesTask extends BaseTask {
  * Add implicit uses
  *
  * Account for:
+ *
  * + parent classes and interfaces are frequently just assumed to exist in useland code
- * + also in funciton arguments
+ * + also in function arguments
  * + static class calls for basic Cake classes
  *
  * @param string $contents
