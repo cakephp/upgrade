@@ -5,10 +5,8 @@
 	"type": "project",
 	"license": "MIT",
 	"require": {
-		"cakephp/cakephp": "3.0.*-dev"
-	},
-	"config" : {
-		"bin-dir" : "bin"
+		"cakephp/cakephp": "3.0.*-dev",
+		"cakephp/app": "3.0.*"
 	},
 	"autoload": {
 		"psr-4": {
