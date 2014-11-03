@@ -14,6 +14,7 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
+use Cake\Console\Shell;
 use Cake\Upgrade\Shell\Task\BaseTask;
 
 /**
@@ -26,13 +27,58 @@ class SkeletonTask extends BaseTask {
 	public $tasks = ['Stage'];
 
 /**
- * Add files.
+ * Add missing files and folders in the root app dir.
  *
  * @param mixed $path
  * @return bool
  */
 	protected function _process($path) {
-		//TODO
+		$path = dirname($path) . DS;
+
+		$dirs = array('logs', 'bin', 'config', 'webroot', 'tests');
+		foreach ($dirs as $dir) {
+			if (!is_dir($path . $dir) && !$this->params['dry-run']) {
+				mkdir($path . DS . $dir);
+			}
+		}
+
+		if (!is_file($path . 'logs' . DS . 'empty') && !$this->params['dry-run']) {
+			touch($path . 'logs' . DS . 'empty');
+		}
+
+		$sourcePath = ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'app' . DS;
+		$files = array('bin' . DS . 'cake', 'bin' . DS . 'cake.bat', 'bin' . DS . 'cake.php',
+			'index.php', 'webroot' . DS . 'index.php', 'config' . DS . 'paths.php', 'tests' . DS . 'boostrap.php',
+			'phpunit.xml.dist');
+		$ret = false;
+		foreach ($files as $file) {
+			$ret |= $this->_addFile($file, $sourcePath, $path);
+		}
+		$ret |= $this->_addFile('app.default.php', $sourcePath, $path, 'app.php');
+		return $ret;
+	}
+
+/**
+ * _addFile()
+ *
+ * @param string $file
+ * @param string $sourcePath
+ * @param string $targetPath
+ * @return bool
+ */
+	protected function _addFile($file, $sourcePath, $targetPath, $targetFile = null) {
+		$result = false;
+		if (!is_file($targetPath . $file) || $this->params['overwrite']) {
+			$result = true;
+			if (!$this->params['dry-run']) {
+				if ($targetFile === null) {
+					$targetFile = $file;
+				}
+				$result = copy($sourcePath . $file, $targetPath . $targetFile);
+			}
+			$this->out('Adding ' . $file, 1, Shell::VERBOSE);
+		}
+		return $result;
 	}
 
 /**
@@ -44,10 +90,26 @@ class SkeletonTask extends BaseTask {
  * @return bool
  */
 	protected function _shouldProcess($path) {
-		if ($path === APP) {
+		if (basename($path) === 'composer.json') {
 			return true;
 		}
 		return false;
+	}
+
+/**
+ * Get the option parser for this shell.
+ *
+ * @return \Cake\Console\ConsoleOptionParser
+ */
+	public function getOptionParser() {
+		return parent::getOptionParser()
+			->addOptions([
+				'overwrite' => [
+					'short' => 'o',
+					'boolean' => true,
+					'help' => 'Overwrite files even if they already exist.'
+				]
+			]);
 	}
 
 }

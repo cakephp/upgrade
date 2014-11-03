@@ -43,7 +43,8 @@ class UpgradeShell extends Shell {
 		'Stage',
 		'UpdateMethodNames',
 		'I18n',
-		'Tests'
+		'Tests',
+		'Skeleton'
 	);
 
 	public function main() {
@@ -107,17 +108,21 @@ class UpgradeShell extends Shell {
 				'help' => 'Add namespaces to files based on their file path. Only run this *after* you have moved files.',
 				'parser' => $this->Namespaces->getOptionParser(),
 			])
+			->addSubcommand('app_uses', [
+				'help' => 'Replace App::uses() with use statements',
+				'parser' => $this->AppUses->getOptionParser(),
+			])
 			->addSubcommand('rename_classes', [
-				'help' => 'Rename classes that have been moved/renamed. Run after replacing App::uses().',
+				'help' => 'Rename classes that have been moved/renamed. Run after replacing App::uses() with use statements.',
 				'parser' => $this->RenameClasses->getOptionParser(),
 			])
 			->addSubcommand('rename_collections', [
 				'help' => 'Rename HelperCollection, ComponentCollection, and TaskCollection. Will also rename component constructor arguments and _Collection properties on all objects.',
 				'parser' => $this->RenameCollections->getOptionParser(),
 			])
-			->addSubcommand('app_uses', [
-				'help' => 'Replace App::uses() with use statements',
-				'parser' => $this->AppUses->getOptionParser(),
+			->addSubcommand('skeleton', [
+				'help' => 'Add basic skeleton files and folders from the "app" repository.',
+				'parser' => $this->Skeleton->getOptionParser(),
 			])
 			->addSubcommand('update_method_names', [
 				'help' => 'Update many of the methods that were renamed during 2.x -> 3.0',
@@ -130,7 +135,8 @@ class UpgradeShell extends Shell {
 			->addSubcommand('i18n', [
 				'help' => 'Update translation functions regarding placeholders.',
 				'parser' => $this->I18n->getOptionParser(),
-			])->addSubcommand('tests', [
+			])
+			->addSubcommand('tests', [
 				'help' => 'Update test cases regarding fixtures.',
 				'parser' => $this->I18n->getOptionParser(),
 			]);
