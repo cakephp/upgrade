@@ -286,7 +286,7 @@ class AppUsesTask extends BaseTask {
  * If App::uses is nowhere - bail, otherwise use the default (php files only)
  *
  * @param string $path
- * @return boolean
+ * @return bool
  */
 	protected function _shouldProcess($path) {
 		$contents = $this->Stage->source($path);
