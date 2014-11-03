@@ -37,25 +37,25 @@ class SkeletonTask extends BaseTask {
 
 		$dirs = array('logs', 'bin', 'config', 'webroot', 'tests');
 		foreach ($dirs as $dir) {
-			if (!is_dir($path . $dir) && !$this->params['dry-run']) {
-				mkdir($path . DS . $dir);
+			if (!is_dir($path . $dir) && empty($this->params['dry-run'])) {
+				mkdir($path . DS . $dir, 0770, true);
 			}
 		}
 
-		if (!is_file($path . 'logs' . DS . 'empty') && !$this->params['dry-run']) {
+		if (!is_file($path . 'logs' . DS . 'empty') && empty($this->params['dry-run'])) {
 			touch($path . 'logs' . DS . 'empty');
 		}
 
 		$sourcePath = ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'app' . DS;
 		$files = array('bin' . DS . 'cake', 'bin' . DS . 'cake.bat', 'bin' . DS . 'cake.php',
-			'index.php', 'webroot' . DS . 'index.php', 'config' . DS . 'paths.php', 'tests' . DS . 'boostrap.php',
+			'index.php', 'webroot' . DS . 'index.php', 'config' . DS . 'paths.php', 'tests' . DS . 'bootstrap.php',
 			'phpunit.xml.dist');
-		$ret = false;
+		$ret = 0;
 		foreach ($files as $file) {
 			$ret |= $this->_addFile($file, $sourcePath, $path);
 		}
-		$ret |= $this->_addFile('app.default.php', $sourcePath, $path, 'app.php');
-		return $ret;
+		$ret |= $this->_addFile('config' . DS . 'app.default.php', $sourcePath, $path, 'config' . DS . 'app.php');
+		return (bool)$ret;
 	}
 
 /**
@@ -68,9 +68,9 @@ class SkeletonTask extends BaseTask {
  */
 	protected function _addFile($file, $sourcePath, $targetPath, $targetFile = null) {
 		$result = false;
-		if (!is_file($targetPath . $file) || $this->params['overwrite']) {
+		if (!is_file($targetPath . $file) || !empty($this->params['overwrite'])) {
 			$result = true;
-			if (!$this->params['dry-run']) {
+			if (empty($this->params['dry-run'])) {
 				if ($targetFile === null) {
 					$targetFile = $file;
 				}
