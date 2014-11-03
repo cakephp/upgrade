@@ -51,7 +51,7 @@ class UpgradeShell extends Shell {
 			$this->out('<warning>Dry-run mode enabled!</warning>', 1, Shell::QUIET);
 		}
 
-		$exclude = ['.git', '.svn', 'vendor', 'Vendor', 'webroot', 'tmp'];
+		$exclude = ['.git', '.svn', 'vendor', 'Vendor', 'plugins', 'Plugin', 'webroot', 'tmp', 'logs'];
 		$files = $this->Stage->files($exclude);
 
 		$actions = $this->_getActions();
