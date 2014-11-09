@@ -330,7 +330,7 @@ class StageTask extends Shell {
  *
  * @return string
  */
-	public function _getPath() {
+	protected function _getPath() {
 		if (empty($this->args[0]) || !file_exists($this->args[0])) {
 			throw new InternalErrorException('Path not specified or invalid.');
 		}
