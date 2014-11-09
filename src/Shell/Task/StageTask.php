@@ -78,7 +78,7 @@ class StageTask extends Shell {
 				$this->commit($path);
 			}
 
-			$Folder = new Folder(TMP . 'upgrade/');
+			$Folder = new Folder(TMP . 'upgrade');
 			$Folder->delete();
 			return;
 		}
@@ -154,8 +154,8 @@ class StageTask extends Shell {
 		end($this->_staged['change'][$path]);
 		$final = end($this->_staged['change'][$path]);
 
-		$oPath = TMP . 'upgrade/' . $start;
-		$uPath = TMP . 'upgrade/' . $final;
+		$oPath = TMP . 'upgrade' . DS . $start;
+		$uPath = TMP . 'upgrade' . DS . $final;
 
 		exec("git diff --no-index '$oPath' '$uPath'", $output);
 
@@ -245,7 +245,7 @@ class StageTask extends Shell {
 		$oHash = sha1($original);
 		if (empty($this->_staged['change'][$filePath])) {
 			$this->_staged['change'][$filePath][] = $oHash;
-			$o = new File(TMP . 'upgrade/' . $oHash, true);
+			$o = new File(TMP . 'upgrade' . DS . $oHash, true);
 			$oPath = $o->path;
 			$o->write($original);
 		} else {
@@ -257,7 +257,7 @@ class StageTask extends Shell {
 			return false;
 		}
 
-		$u = new File(TMP . 'upgrade/' . $uHash, true);
+		$u = new File(TMP . 'upgrade' . DS . $uHash, true);
 		$uPath = $u->path;
 		$u->write($updated);
 
@@ -273,7 +273,7 @@ class StageTask extends Shell {
  */
 	public function source($path) {
 		if (isset($this->_staged['change'][$path])) {
-			$path = TMP . 'upgrade/' . end($this->_staged['change'][$path]);
+			$path = TMP . 'upgrade' . DS . end($this->_staged['change'][$path]);
 		}
 
 		return file_get_contents($path);
@@ -299,7 +299,7 @@ class StageTask extends Shell {
 			foreach ($excludes as &$exclude) {
 				$exclude = preg_quote($exclude);
 			}
-			$excludePattern = '@[\\/](' . implode($excludes, '|') . ')([\\/]|$)@';
+			$excludePattern = '@[\\\\/](' . implode($excludes, '|') . ')[\\\\/]@';
 
 			foreach ($this->_paths as $path) {
 				if (!is_dir($path)) {
@@ -330,7 +330,7 @@ class StageTask extends Shell {
  *
  * @return string
  */
-	protected function _getPath() {
+	public function _getPath() {
 		if (empty($this->args[0]) || !file_exists($this->args[0])) {
 			throw new InternalErrorException('Path not specified or invalid.');
 		}

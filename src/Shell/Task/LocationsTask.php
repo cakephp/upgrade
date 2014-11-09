@@ -26,7 +26,7 @@ class LocationsTask extends BaseTask {
 	public $tasks = ['Stage'];
 
 /**
- * Check all moves, and stage moving the file to new location
+ * Check all moves, and stage moving the file to new location.
  *
  * @param mixed $path
  * @return bool
