@@ -37,9 +37,29 @@ class UpdateMethodNamesTask extends BaseTask {
 	protected function _process($path) {
 		$helperPatterns = [
 			[
-				'Replace $this->Paginator->url() with $this->Paginator->generateUrl',
+				'Replace $this->Paginator->url() with $this->Paginator->generateUrl()',
 				'#\$this->Paginator->url\(#',
 				'$this->Paginator->generateUrl(',
+			],
+			[
+				'Replace $this->Html->url() with $this->Url->build()',
+				'#\$this->Html->url\(#',
+				'$this->Url->build(',
+			],
+			[
+				'Replace $this->Html->assetTimestamp() with $this->Url->assetTimestamp()',
+				'#\$this->Html->assetTimestamp\(#',
+				'$this->Url->assetTimestamp(',
+			],
+			[
+				'Replace $this->Html->assetUrl() with $this->Url->assetUrl()',
+				'#\$this->Html->assetUrl\(#',
+				'$this->Url->assetUrl(',
+			],
+			[
+				'Replace $this->Html->webroot() with $this->Url->webroot()',
+				'#\$this->Html->webroot\(#',
+				'$this->Url->webroot(',
 			],
 		];
 
