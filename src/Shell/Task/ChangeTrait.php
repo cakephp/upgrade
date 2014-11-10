@@ -32,7 +32,11 @@ trait ChangeTrait {
 			$this->out('<warning>Dry-run mode enabled!</warning>', 1, Shell::QUIET);
 		}
 
-		$exclude = ['.git', '.svn', 'vendor', 'Vendor', 'plugins', 'Plugin', 'webroot', 'tmp', 'logs'];
+		$exclude = ['.git', '.svn', 'vendor', 'Vendor', 'webroot', 'tmp', 'logs'];
+		if (empty($this->params['plugin']) && $this->params['namespace'] === 'App') {
+			$exclude[] = 'plugins';
+			$exclude[] = 'Plugin';
+		}
 		$files = $this->Stage->files($exclude);
 
 		foreach ($files as $file) {
