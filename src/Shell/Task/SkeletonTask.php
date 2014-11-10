@@ -49,7 +49,8 @@ class SkeletonTask extends BaseTask {
 		$sourcePath = ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'app' . DS;
 		$files = array('bin' . DS . 'cake', 'bin' . DS . 'cake.bat', 'bin' . DS . 'cake.php',
 			'phpunit.xml.dist', 'index.php', 'webroot' . DS . 'index.php', 'config' . DS . 'paths.php', 'tests' . DS . 'bootstrap.php',
-			'src' . DS . 'Template' . DS . 'Error' . DS . 'error400.ctp', 'src' . DS . 'Template' . DS . 'Error' . DS . 'error500.ctp');
+			'src' . DS . 'Template' . DS . 'Error' . DS . 'error400.ctp', 'src' . DS . 'Template' . DS . 'Error' . DS . 'error500.ctp',
+			'src' . DS . 'Template' . DS . 'Layout' . DS . 'error.ctp');
 		$ret = 0;
 		foreach ($files as $file) {
 			$ret |= $this->_addFile($file, $sourcePath, $path);
