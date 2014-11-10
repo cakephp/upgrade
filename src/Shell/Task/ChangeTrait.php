@@ -33,7 +33,7 @@ trait ChangeTrait {
 		}
 
 		$exclude = ['.git', '.svn', 'vendor', 'Vendor', 'webroot', 'tmp', 'logs'];
-		if (empty($this->params['plugin']) && $this->params['namespace'] === 'App') {
+		if (empty($this->params['plugin']) && !empty($this->params['namespace']) && $this->params['namespace'] === 'App') {
 			$exclude[] = 'plugins';
 			$exclude[] = 'Plugin';
 		}
