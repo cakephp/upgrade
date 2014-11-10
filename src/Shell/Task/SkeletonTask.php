@@ -91,7 +91,7 @@ class SkeletonTask extends BaseTask {
  * @return bool
  */
 	protected function _shouldProcess($path) {
-		if (basename($path) === 'composer.json') {
+		if (basename($path) === 'composer.json' && empty($this->params['plugin'])) {
 			return true;
 		}
 		return false;
