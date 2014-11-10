@@ -47,6 +47,13 @@ class UpgradeShell extends Shell {
 		'Skeleton'
 	);
 
+/**
+ * Main command.
+ *
+ * Careful: this will only work without any options.
+ *
+ * @return void
+ */
 	public function main() {
 		if (!empty($this->params['dry-run'])) {
 			$this->out('<warning>Dry-run mode enabled!</warning>', 1, Shell::QUIET);
