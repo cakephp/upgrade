@@ -69,6 +69,11 @@ class UpdateMethodNamesTask extends BaseTask {
 				'#\$this->Cookie->type\(#',
 				'$this->Cookie->encryption(',
 			],
+			[
+				'Replace ConnectionManager::getDataSource() with ConnectionManager::get()',
+				'#ConnectionManager\:\:getDataSource\(#',
+				'ConnectionManager::get(',
+			],
 		];
 
 		$taskPatterns = [
@@ -99,9 +104,7 @@ class UpdateMethodNamesTask extends BaseTask {
 		if (strpos($path, DS . 'Command' . DS . 'Task' . DS)) {
 			$patterns = $taskPatterns;
 		}
-		if (empty($patterns)) {
-			$patterns = $otherPatterns;
-		}
+		$patterns = array_merge($patterns, $otherPatterns);
 
 		$original = $contents = $this->Stage->source($path);
 		$contents = $this->_updateContents($contents, $patterns);
