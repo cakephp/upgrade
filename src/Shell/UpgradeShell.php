@@ -44,7 +44,8 @@ class UpgradeShell extends Shell {
 		'UpdateMethodNames',
 		'I18n',
 		'Tests',
-		'Skeleton'
+		'Skeleton',
+		'Templates'
 	);
 
 /**
@@ -142,6 +143,10 @@ class UpgradeShell extends Shell {
 			->addSubcommand('fixtures', [
 				'help' => 'Update fixtures to use new index/constraint features. This is necessary before running tests.',
 				'parser' => $this->Fixtures->getOptionParser(),
+			])
+			->addSubcommand('templates', [
+				'help' => 'Update view templates.',
+				'parser' => $this->Templates->getOptionParser(),
 			])
 			->addSubcommand('i18n', [
 				'help' => 'Update translation functions regarding placeholders.',
