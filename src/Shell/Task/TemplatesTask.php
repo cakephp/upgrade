@@ -67,11 +67,9 @@ class TemplatesTask extends BaseTask {
 		}
 
 		$pattern = '/\\$([a-z][a-z0-9]+)\[["\']([a-z][a-z0-9]+)["\']](\[.+?\])/i';
-
 		$replacement = function ($matches) {
 			return '$' . $matches[1] . '->' . lcfirst($matches[2]) . $matches[3];
 		};
-
 		return preg_replace_callback($pattern, $replacement, $contents);
 	}
 
@@ -83,6 +81,19 @@ class TemplatesTask extends BaseTask {
  * @return string
  */
 	protected function _replaceCustom($contents, $path) {
+		$pattern = '/-\>Behaviors->(attach|load)\(/i';
+		$replacement = function ($matches) {
+			return '->addBehavior(';
+		};
+		$contents = preg_replace_callback($pattern, $replacement, $contents);
+
+		$pattern = '/-\>Behaviors->(deattach|unload)\(/i';
+		$replacement = function ($matches) {
+			return '->removeBehavior(';
+		};
+		$contents = preg_replace_callback($pattern, $replacement, $contents);
+
+		// The following is only for Controllers
 		if (strpos($path, DS . 'Controller' . DS) === false) {
 			return $contents;
 		}
@@ -124,13 +135,13 @@ class TemplatesTask extends BaseTask {
 			$contents = preg_replace_callback($pattern, $replacement, $contents);
 		}
 
-		$pattern = '/\brequest-\>allowMethod\(([^\[)]+)\)/';
+		$pattern = '/-\>request-\>(allowMethod|onlyAllow)\(([^\[)]+)\)/';
 		$replacement = function ($matches) {
-			$methods = String::tokenize($matches[1]);
+			$methods = String::tokenize($matches[2]);
 			if (count($methods) < 2) {
 				return $matches[0];
 			}
-			return 'request->allowMethod([' . implode(', ', $methods) . '])';
+			return '->request->allowMethod([' . implode(', ', $methods) . '])';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
 
