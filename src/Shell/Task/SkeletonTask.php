@@ -84,6 +84,10 @@ class SkeletonTask extends BaseTask {
 				if ($targetFile === null) {
 					$targetFile = $file;
 				}
+				$targetPathName = $targetPath . dirname($targetFile);
+				if (!is_dir($targetPathName)) {
+					mkdir($targetPathName, 0755, true);
+				}
 				$result = copy($sourcePath . $file, $targetPath . $targetFile);
 			}
 			$this->out('Adding ' . $file, 1, Shell::VERBOSE);

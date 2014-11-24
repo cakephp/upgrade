@@ -38,6 +38,11 @@ class SkeletonTaskTest extends TestCase {
 		$this->sut->loadTasks();
 	}
 
+/**
+ * Teardown
+ *
+ * @return void
+ */
 	public function tearDown() {
 		$Folder = new Folder(TMP . 'skeleton_test' . DS);
 		$Folder->delete();
@@ -59,11 +64,7 @@ class SkeletonTaskTest extends TestCase {
 		$this->assertTrue($result);
 
 		$this->assertTrue(file_exists($path . 'logs' . DS . 'empty'));
-
-		return;
-		$result = $this->sut->Stage->source($path . 'tests_before.php');
-		$expected = file_get_contents($path . 'tests_after.php');
-		$this->assertTextEquals($expected, $result);
+		$this->assertTrue(file_exists($path . 'tests' . DS . 'bootstrap.php'));
 	}
 
 }
