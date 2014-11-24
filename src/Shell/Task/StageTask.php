@@ -232,7 +232,7 @@ class StageTask extends Shell {
 /**
  * Store a change for a file
  *
- * @params string $filePath (unused, for future reference)
+ * @param string $filePath (unused, for future reference)
  * @param string $original
  * @param string $updated
  * @return bool
