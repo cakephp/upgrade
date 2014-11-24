@@ -66,7 +66,7 @@ class FixturesTask extends BaseTask {
 			$out = [];
 			foreach ($data as $field => $properties) {
 				// Move primary key into a constraint
-				if (isset($properties['key']) && $properties['key'] === 'primary') {
+				if (isset($properties['key']) && strtolower($properties['key']) === 'primary') {
 					$constraints['primary'] = [
 						'type' => 'primary',
 						'columns' => [$field]
@@ -87,6 +87,11 @@ class FixturesTask extends BaseTask {
 						$indexProps['columns'] = $indexProps['column'];
 						unset($indexProps['column']);
 					}
+
+					if (strtolower($index) === 'primary' && isset($constraints['primary'])) {
+						continue;
+					}
+
 					// Move unique indexes over
 					if (!empty($indexProps['unique'])) {
 						unset($indexProps['unique']);
