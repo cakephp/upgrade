@@ -232,7 +232,7 @@ class StageTask extends Shell {
 /**
  * Store a change for a file
  *
- * @params string $filePath (unused, for future reference)
+ * @param string $filePath (unused, for future reference)
  * @param string $original
  * @param string $updated
  * @return bool
@@ -246,7 +246,6 @@ class StageTask extends Shell {
 		if (empty($this->_staged['change'][$filePath])) {
 			$this->_staged['change'][$filePath][] = $oHash;
 			$o = new File(TMP . 'upgrade' . DS . $oHash, true);
-			$oPath = $o->path;
 			$o->write($original);
 		} else {
 			$oHash = reset($this->_staged['change'][$filePath]);
@@ -258,7 +257,6 @@ class StageTask extends Shell {
 		}
 
 		$u = new File(TMP . 'upgrade' . DS . $uHash, true);
-		$uPath = $u->path;
 		$u->write($updated);
 
 		$this->_staged['change'][$filePath][] = $uHash;
