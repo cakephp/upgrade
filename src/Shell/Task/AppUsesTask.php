@@ -200,9 +200,6 @@ class AppUsesTask extends BaseTask {
 
 		$toCheck = array_filter(array_unique(array_merge($toCheck, $matches[1])));
 
-		preg_match_all('/use .+;[\n]/', $contents, $useMatches);
-		$useStatements = $useMatches[0];
-
 		foreach ($toCheck as $check) {
 			if (preg_match("/use .+\b$check;/", $contents)) {
 				continue;
