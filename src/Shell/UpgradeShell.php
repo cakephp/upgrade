@@ -48,13 +48,11 @@ class UpgradeShell extends Shell {
 	);
 
 /**
- * Main command.
- *
- * Careful: this will only work without any options.
+ * All command.
  *
  * @return void
  */
-	public function main() {
+	public function all() {
 		if (!empty($this->params['dry-run'])) {
 			$this->out('<warning>Dry-run mode enabled!</warning>', 1, Shell::QUIET);
 		}
@@ -107,7 +105,7 @@ class UpgradeShell extends Shell {
  * @return ConsoleOptionParser
  */
 	public function getOptionParser() {
-		return parent::getOptionParser()
+		$parser = parent::getOptionParser()
 			->description('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .
 				'Be sure to have a backup of your application before running these commands.'
 			)
@@ -150,6 +148,21 @@ class UpgradeShell extends Shell {
 			->addSubcommand('tests', [
 				'help' => 'Update test cases regarding fixtures.',
 				'parser' => $this->I18n->getOptionParser(),
+			]);
+
+			$subcommands = $parser->subcommands();
+			$allParser = null;
+			foreach ($subcommands as $subcommand) {
+				if ($allParser === null) {
+					$allParser = $subcommand->parser();
+					continue;
+				}
+				$allParser->merge($subcommand->parser());
+			}
+
+			return $parser->addSubcommand('all', [
+				'help' => 'Run all tasks',
+				'parser' => $allParser,
 			]);
 	}
 
