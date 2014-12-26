@@ -81,6 +81,31 @@ class TemplatesTask extends BaseTask {
  * @return string
  */
 	protected function _replaceCustom($contents, $path) {
+		// View
+		$pattern = '/\$this-\>Form-\>create\(\'(.+?)\'\)/i';
+		$replacement = function ($matches) {
+			$entity = lcfirst($matches[1]);
+			return '$this->Form->create($' . $entity . ')';
+		};
+		$contents = preg_replace_callback($pattern, $replacement, $contents);
+
+		// Model
+		$pattern = '/public \$uses = (array\(|\[)([^\]]+?)(\]|\))/i';
+		$replacement = function ($matches) {
+			$models = String::tokenize($matches[2]);
+			$class = array_shift($models);
+			return 'public $modelClass = ' . $class;
+		};
+		$contents = preg_replace_callback($pattern, $replacement, $contents);
+
+
+		// Mainly controller
+		$pattern = '/catch \(Exception $(.+?)\)/i';
+		$replacement = function ($matches) {
+			return 'catch (\\Exception $\1)';
+		};
+		$contents = preg_replace_callback($pattern, $replacement, $contents);
+
 		$pattern = '/-\>Behaviors->(attach|load)\(/i';
 		$replacement = function ($matches) {
 			return '->addBehavior(';
