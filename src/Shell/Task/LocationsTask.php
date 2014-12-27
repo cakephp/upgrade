@@ -38,11 +38,11 @@ class LocationsTask extends BaseTask {
 			if (!$this->_isInRoot($to)) {
 				$to = 'src' . DS . $to;
 			}
-			if ($from === 'Lib' && !empty($this->params['lib'])) {
+			if ($from === 'Lib') {
 				$pieces = explode(DS . $from . DS, $new);
 				$ending = array_pop($pieces);
 				if (strpos($ending, DS) === false) {
-					$to .= DS . str_replace('/', DS, $this->params['lib']);
+					$to .= DS . 'Lib';
 				}
 			}
 
@@ -161,10 +161,6 @@ class LocationsTask extends BaseTask {
 	public function getOptionParser() {
 		return parent::getOptionParser()
 			->addOptions([
-				'lib' => [
-					'default' => '',
-					'help' => 'Define where Lib class files should go that have not a namespaced subfolder, e.g. `Lib` for `src/Lib`. By default they go into `src`.'
-				],
 				'root' => [
 					'default' => '',
 					'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.'
