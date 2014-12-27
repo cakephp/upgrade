@@ -57,10 +57,10 @@ class LocationsTask extends BaseTask {
  * @return bool
  */
 	protected function _shouldProcess($path) {
-		if (strpos($path, DS . 'Plugin' . DS)) {
+		if (strpos($path, DS . 'Plugin' . DS) || strpos($path, DS . 'plugins' . DS)) {
 			return false;
 		}
-		if (strpos($path, DS . 'Vendor' . DS)) {
+		if (strpos($path, DS . 'Vendor' . DS) || strpos($path, DS . 'vendors' . DS)) {
 			return false;
 		}
 
