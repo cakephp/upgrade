@@ -38,6 +38,14 @@ class LocationsTask extends BaseTask {
 			if (!$this->_isInRoot($to)) {
 				$to = 'src' . DS . $to;
 			}
+			if ($from === 'Lib') {
+				$pieces = explode(DS . $from . DS, $new);
+				$ending = array_pop($pieces);
+				if (strpos($ending, DS) === false) {
+					$to .= DS . 'Lib';
+				}
+			}
+
 			$new = str_replace(DS . $from . DS, DS . $to . DS, $new);
 		}
 
@@ -85,7 +93,7 @@ class LocationsTask extends BaseTask {
 			'Console' . DS . 'Command' => 'Shell',
 			'Console' . DS . 'Command' . DS . 'Task' => 'Shell' . DS . 'Task',
 			'Controller' . DS . 'Component' . DS . 'Auth' => 'Auth',
-			'Lib' => 'src', // TODO: Unless it's a class inside Lib directly!
+			'Lib' => 'src', // Unless it's a class inside Lib directly
 			'Test' . DS . 'Case' => 'tests' . DS . 'TestCase',
 			'View' . DS . 'Elements' => 'Template' . DS . 'Element',
 			'View' . DS . 'Emails' => 'Template' . DS . 'Email',
