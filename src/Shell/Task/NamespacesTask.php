@@ -89,7 +89,7 @@ class NamespacesTask extends BaseTask {
 		}
 
 		// Skip boostrap files and alike
-		$filename = pathinfo($path, PATHINFO_BASENAME);
+		$filename = basename($path);
 		$excludes = array(
 			'bootstrap.php',
 			'routes.php',
