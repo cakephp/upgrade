@@ -29,7 +29,7 @@ bin/cake upgrade skeleton /home/mark/Sites/my-app
 The first command would run all the tasks at once on `/home/mark/Sites/my-app`,
 which is probably the way most people will want to use it.
 Additionally the second command would run the `skeleton` task on `/home/mark/Sites/my-app`.
-This command is not included in "all" as it is only necessary for apps. Plugins don't need it.
+This command is not included in `all` as it is only necessary for apps. Plugins don't need it.
 
 It is recommended that you keep your application in version control, and keep
 backups of before using the upgrade tool.
@@ -73,11 +73,11 @@ Updates the method names/signatures for a number of methods.
 ### fixtures
 Update fixtures to use new index/constraint features. This is necessary before running tests.
 
-### i18n
-Update translation functions regarding placeholders.
-
 ### tests
 Update test cases regarding fixtures.
+
+### i18n
+Update translation functions regarding placeholders.
 
 ### skeleton
 Add basic skeleton files and folders from the "app" repository.
