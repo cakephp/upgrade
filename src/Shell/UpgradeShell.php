@@ -129,10 +129,6 @@ class UpgradeShell extends Shell {
 				'help' => 'Rename HelperCollection, ComponentCollection, and TaskCollection. Will also rename component constructor arguments and _Collection properties on all objects.',
 				'parser' => $this->RenameCollections->getOptionParser(),
 			])
-			->addSubcommand('skeleton', [
-				'help' => 'Add basic skeleton files and folders from the "app" repository.',
-				'parser' => $this->Skeleton->getOptionParser(),
-			])
 			->addSubcommand('update_method_names', [
 				'help' => 'Update many of the methods that were renamed during 2.x -> 3.0',
 				'parser' => $this->UpdateMethodNames->getOptionParser(),
@@ -141,13 +137,17 @@ class UpgradeShell extends Shell {
 				'help' => 'Update fixtures to use new index/constraint features. This is necessary before running tests.',
 				'parser' => $this->Fixtures->getOptionParser(),
 			])
+			->addSubcommand('tests', [
+				'help' => 'Update test cases regarding fixtures.',
+				'parser' => $this->I18n->getOptionParser(),
+			])
 			->addSubcommand('i18n', [
 				'help' => 'Update translation functions regarding placeholders.',
 				'parser' => $this->I18n->getOptionParser(),
 			])
-			->addSubcommand('tests', [
-				'help' => 'Update test cases regarding fixtures.',
-				'parser' => $this->I18n->getOptionParser(),
+			->addSubcommand('skeleton', [
+				'help' => 'Add basic skeleton files and folders from the "app" repository.',
+				'parser' => $this->Skeleton->getOptionParser(),
 			]);
 
 		$subcommands = $parser->subcommands();
