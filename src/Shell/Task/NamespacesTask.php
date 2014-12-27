@@ -35,6 +35,10 @@ class NamespacesTask extends BaseTask {
  */
 	protected function _process($path) {
 		$namespace = $this->_getNamespace($path);
+		if (!$namespace) {
+			return false;
+		}
+
 		$original = $contents = $this->Stage->source($path);
 
 		$patterns = [
@@ -77,6 +81,25 @@ class NamespacesTask extends BaseTask {
  * @return bool
  */
 	protected function _shouldProcess($path) {
+		if (strpos($path, DS . 'Plugin' . DS) || strpos($path, DS . 'plugins' . DS)) {
+			return false;
+		}
+		if (strpos($path, DS . 'Vendor' . DS) || strpos($path, DS . 'vendors' . DS)) {
+			return false;
+		}
+
+		// Skip boostrap files and alike
+		$filename = pathinfo($path, PATHINFO_BASENAME);
+		$excludes = array(
+			'bootstrap.php',
+			'routes.php',
+			'core.php',
+			'configs.php'
+		);
+		if (in_array($filename, $excludes, true)) {
+			return false;
+		}
+
 		$contents = $this->Stage->source($path);
 		if (preg_match('/namespace\s+[a-z0-9\\\\]+;/i', $contents)) {
 			return false;
