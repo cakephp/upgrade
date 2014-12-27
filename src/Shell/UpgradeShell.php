@@ -150,20 +150,20 @@ class UpgradeShell extends Shell {
 				'parser' => $this->I18n->getOptionParser(),
 			]);
 
-			$subcommands = $parser->subcommands();
-			$allParser = null;
-			foreach ($subcommands as $subcommand) {
-				if ($allParser === null) {
-					$allParser = $subcommand->parser();
-					continue;
-				}
-				$allParser->merge($subcommand->parser());
+		$subcommands = $parser->subcommands();
+		$allParser = null;
+		foreach ($subcommands as $subcommand) {
+			if ($allParser === null) {
+				$allParser = $subcommand->parser();
+				continue;
 			}
+			$allParser->merge($subcommand->parser());
+		}
 
-			return $parser->addSubcommand('all', [
-				'help' => 'Run all tasks',
-				'parser' => $allParser,
-			]);
+		return $parser->addSubcommand('all', [
+			'help' => 'Run all tasks',
+			'parser' => $allParser,
+		]);
 	}
 
 }
