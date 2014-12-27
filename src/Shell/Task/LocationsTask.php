@@ -153,7 +153,7 @@ class LocationsTask extends BaseTask {
 	public function getOptionParser() {
 		return parent::getOptionParser()
 			->addOptions([
-				'app' => [
+				'root' => [
 					'default' => '',
 					'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.'
 				]
