@@ -81,7 +81,7 @@ class UpgradeShell extends Shell {
 /**
  * _getActions
  *
- * If the main function is called, derive which tasks to call, and in what order based on the
+ * If the all function is called, derive which tasks to call, and in what order based on the
  * option parser info
  *
  * @return array
@@ -90,7 +90,7 @@ class UpgradeShell extends Shell {
 		$all = [];
 		foreach ($this->OptionParser->subcommands() as $command) {
 			$name = $command->name();
-			if ($name === 'all') {
+			if ($name === 'all' || $name === 'skeleton') {
 				continue;
 			}
 			$className = ucfirst(Inflector::camelize($name));
@@ -161,7 +161,7 @@ class UpgradeShell extends Shell {
 		}
 
 		return $parser->addSubcommand('all', [
-			'help' => 'Run all tasks',
+			'help' => 'Run all tasks expect for sleketon. That task should only be run manually, and only for apps (not plugins).',
 			'parser' => $allParser,
 		]);
 	}
