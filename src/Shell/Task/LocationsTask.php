@@ -38,11 +38,11 @@ class LocationsTask extends BaseTask {
 			if (!$this->_isInRoot($to)) {
 				$to = 'src' . DS . $to;
 			}
-			if ($from === 'Lib') {
+			if ($from === 'Lib' && !empty($this->params['lib'])) {
 				$pieces = explode(DS . $from . DS, $new);
 				$ending = array_pop($pieces);
 				if (strpos($ending, DS) === false) {
-					$to .= DS . 'Lib';
+					$to .= DS . str_replace('/', DS, $this->params['lib']);
 				}
 			}
 
@@ -93,7 +93,7 @@ class LocationsTask extends BaseTask {
 			'Console' . DS . 'Command' => 'Shell',
 			'Console' . DS . 'Command' . DS . 'Task' => 'Shell' . DS . 'Task',
 			'Controller' . DS . 'Component' . DS . 'Auth' => 'Auth',
-			'Lib' => 'src', // Unless it's a class inside Lib directly
+			'Lib' => 'src',
 			'Test' . DS . 'Case' => 'tests' . DS . 'TestCase',
 			'View' . DS . 'Elements' => 'Template' . DS . 'Element',
 			'View' . DS . 'Emails' => 'Template' . DS . 'Email',
@@ -161,6 +161,10 @@ class LocationsTask extends BaseTask {
 	public function getOptionParser() {
 		return parent::getOptionParser()
 			->addOptions([
+				'lib' => [
+					'default' => '',
+					'help' => 'Define where Lib class files should go that have not a namespaced subfolder, e.g. `Lib` for `src/Lib`. By default they go into `src`.'
+				],
 				'root' => [
 					'default' => '',
 					'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.'
