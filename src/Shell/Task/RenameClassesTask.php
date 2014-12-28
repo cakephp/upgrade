@@ -38,6 +38,7 @@ class RenameClassesTask extends BaseTask {
 			'Cake\Model\ConnectionManager' => 'Cake\Database\ConnectionManager',
 			'CakeTestCase' => 'TestCase',
 			'CakeTestFixture' => 'TestFixture',
+			'CakePlugin' => 'Plugin',
 			'CakeException' => '\Exception'
 		];
 
