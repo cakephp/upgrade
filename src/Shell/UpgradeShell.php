@@ -41,8 +41,8 @@ class UpgradeShell extends Shell {
 		'RenameClasses',
 		'RenameCollections',
 		'Stage',
-		'UpdateMethodNames',
-		'UpdateMethodSignatures',
+		'MethodNames',
+		'MethodSignatures',
 		'I18n',
 		'Tests',
 		'Skeleton'
@@ -132,11 +132,11 @@ class UpgradeShell extends Shell {
 			])
 			->addSubcommand('update_method_names', [
 				'help' => 'Update many of the methods that were renamed during 2.x -> 3.0',
-				'parser' => $this->UpdateMethodNames->getOptionParser(),
+				'parser' => $this->MethodNames->getOptionParser(),
 			])
 			->addSubcommand('update_method_signatures', [
 				'help' => 'Update many of the method signatures that were changed during 2.x -> 3.0',
-				'parser' => $this->UpdateMethodSignatures->getOptionParser(),
+				'parser' => $this->MethodSignatures->getOptionParser(),
 			])
 			->addSubcommand('fixtures', [
 				'help' => 'Update fixtures to use new index/constraint features. This is necessary before running tests.',

@@ -22,7 +22,7 @@ use Cake\Upgrade\Shell\Task\BaseTask;
  * Handles updating method signatures that have been changed.
  *
  */
-class UpdateMethodSignaturesTask extends BaseTask {
+class MethodSignaturesTask extends BaseTask {
 
 	use ChangeTrait;
 
