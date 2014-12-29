@@ -65,6 +65,7 @@ class UpgradeShellTest extends TestCase {
 			'Shell/Task/FixturesTask.php',
 			'Shell/Task/RenameClassesTask.php',
 			'Shell/Task/UpdateMethodNamesTask.php',
+			'Shell/Task/UpdateMethodSignaturesTask.php',
 			'Shell/Task/ChangeTrait.php',
 			'Shell/Task/LocationsTask.php',
 			'Shell/Task/I18nTask.php',
