@@ -34,7 +34,19 @@ class LocationsTask extends BaseTask {
 	protected function _process($path) {
 		$new = $path;
 		foreach ($this->_moves() as $from => $to) {
-			$new = str_replace(DS . $from, DS . $to, $new);
+			$from = $this->_relativeFromRoot($from, $new);
+			if (!$this->_isInRoot($to)) {
+				$to = 'src' . DS . $to;
+			}
+			if ($from === 'Lib') {
+				$pieces = explode(DS . $from . DS, $new);
+				$ending = array_pop($pieces);
+				if (strpos($ending, DS) === false) {
+					$to .= DS . 'Lib';
+				}
+			}
+
+			$new = str_replace(DS . $from . DS, DS . $to . DS, $new);
 		}
 
 		if ($new === $path) {
@@ -53,8 +65,15 @@ class LocationsTask extends BaseTask {
  * @return bool
  */
 	protected function _shouldProcess($path) {
+		if (strpos($path, DS . 'Plugin' . DS) || strpos($path, DS . 'plugins' . DS)) {
+			return false;
+		}
+		if (strpos($path, DS . 'Vendor' . DS) || strpos($path, DS . 'vendors' . DS)) {
+			return false;
+		}
+
 		foreach (array_keys($this->_moves()) as $substr) {
-			if (strpos($path, $substr) !== false) {
+			if (strpos($path, DS . $substr . DS) !== false) {
 				return true;
 			}
 		}
@@ -69,12 +88,13 @@ class LocationsTask extends BaseTask {
  */
 	protected function _moves() {
 		return array(
-			'Config' => '..' . DS . 'config',
+			'Config' => 'config',
+			'Console' => 'bin',
 			'Console' . DS . 'Command' => 'Shell',
 			'Console' . DS . 'Command' . DS . 'Task' => 'Shell' . DS . 'Task',
 			'Controller' . DS . 'Component' . DS . 'Auth' => 'Auth',
 			'Lib' => 'src',
-			'Test' . DS . 'Case' => 'Test' . DS . 'TestCase',
+			'Test' . DS . 'Case' => 'tests' . DS . 'TestCase',
 			'View' . DS . 'Elements' => 'Template' . DS . 'Element',
 			'View' . DS . 'Emails' => 'Template' . DS . 'Email',
 			'View' . DS . 'Layouts' => 'Template' . DS . 'Layout',
@@ -83,13 +103,69 @@ class LocationsTask extends BaseTask {
 			'View' . DS . 'Errors' => 'Template' . DS . 'Error',
 			'View' . DS . 'Themed' => 'Template' . DS . 'Themed',
 
-			'Auth' => 'src' . DS . 'Auth',
-			'Controller' => 'src' . DS . 'Controller',
-			'Model' => 'src' . DS . 'Model',
-			'Template' => 'src' . DS . 'Template',
-			'View' . DS . 'Helper' => 'src' . DS . 'View' . DS . 'Helper',
-			'View' => 'src' . DS . 'Template',
+			'Auth' => 'Auth',
+			'Controller' => 'Controller',
+			'Model' => 'Model',
+			'Template' => 'Template',
+			'View' . DS . 'Helper' => 'View' . DS . 'Helper',
+			'View' => 'Template',
 			'Test' => 'tests'
 		);
 	}
+
+/**
+ * Get the relative path from ROOT for a specific folder.
+ *
+ * @param string $folder
+ * @param string $path
+ * @return string $path
+ */
+	protected function _relativeFromRoot($folder, $path) {
+		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
+
+		$split = explode(DS . $folder . DS, $path);
+		if (empty($split[0]) || strpos($split[0], $root) !== 0) {
+			return $folder;
+		}
+
+		$relativePath = substr($split[0], strlen($root));
+		if (!$relativePath) {
+			return $folder;
+		}
+
+		return $relativePath . DS . $folder;
+	}
+
+/**
+ * Detect if a target folder should be in ROOT.
+ *
+ * @param string $folder
+ * @return bool Success
+ */
+	protected function _isInRoot($folder) {
+		$rootFolders = array(
+			'config',
+			'bin',
+			'tests',
+		);
+		$pieces = explode(DS, $folder);
+		$firstFolder = !empty($pieces[0]) ? $pieces[0] : $folder;
+		return in_array($firstFolder, $rootFolders, true);
+	}
+
+/**
+ * Get the option parser for this shell.
+ *
+ * @return \Cake\Console\ConsoleOptionParser
+ */
+	public function getOptionParser() {
+		return parent::getOptionParser()
+			->addOptions([
+				'root' => [
+					'default' => '',
+					'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.'
+				]
+			]);
+	}
+
 }
