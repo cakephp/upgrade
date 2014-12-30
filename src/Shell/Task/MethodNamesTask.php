@@ -22,7 +22,7 @@ use Cake\Upgrade\Shell\Task\BaseTask;
  * Handles updating method names that have been changed.
  *
  */
-class UpdateMethodNamesTask extends BaseTask {
+class MethodNamesTask extends BaseTask {
 
 	use ChangeTrait;
 

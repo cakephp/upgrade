@@ -67,8 +67,11 @@ Rename HelperCollection, ComponentCollection, and TaskCollection. Will also
 rename component constructor arguments and \_Collection properties on all
 objects.
 
-### update_method_names
-Updates the method names/signatures for a number of methods.
+### method_names
+Updates the method names for a number of methods.
+
+### method_signatures
+Updates the method signatures for a number of methods.
 
 ### fixtures
 Update fixtures to use new index/constraint features. This is necessary before running tests.
