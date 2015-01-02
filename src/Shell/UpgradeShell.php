@@ -45,7 +45,8 @@ class UpgradeShell extends Shell {
 		'MethodSignatures',
 		'I18n',
 		'Tests',
-		'Skeleton'
+		'Skeleton',
+		'PrefixedTemplates',
 	);
 
 /**
@@ -153,6 +154,10 @@ class UpgradeShell extends Shell {
 			->addSubcommand('skeleton', [
 				'help' => 'Add basic skeleton files and folders from the "app" repository.',
 				'parser' => $this->Skeleton->getOptionParser(),
+			])
+			->addSubcommand('prefixed_templates', [
+				'help' => 'Move view templates for prefixed actions.',
+				'parser' => $this->PrefixedTemplates->getOptionParser(),
 			]);
 
 		$subcommands = $parser->subcommands();
