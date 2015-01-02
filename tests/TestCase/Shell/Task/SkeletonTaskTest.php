@@ -3,7 +3,7 @@ namespace Cake\Upgrade\Test\TestCase\Shell\Task;
 
 use Cake\TestSuite\TestCase;
 use Cake\Upgrade\Shell\Task\SkeletonTask;
-use Cake\Utility\Folder;
+use Cake\Filesystem\Folder;
 
 /**
  * SkeletonTaskTest
