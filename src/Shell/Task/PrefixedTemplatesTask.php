@@ -60,10 +60,10 @@ class PrefixedTemplatesTask extends BaseTask {
 			strpos($path, 'Template'. DS) &&
 			substr($path, -4) === '.ctp' &&
 			strpos($path, $this->params['prefix'] . '_') &&
-			strpos($path, 'Template'. DS . 'Element' . DS) == false &&
-			strpos($path, 'Template'. DS . 'Email'. DS) == false &&
-			strpos($path, 'Template'. DS. 'Error'. DS) == false &&
-			strpos($path, 'Template'. DS. 'Layout'. DS) == false
+			strpos($path, 'Template'. DS . 'Element' . DS) === false &&
+			strpos($path, 'Template'. DS . 'Email'. DS) === false &&
+			strpos($path, 'Template'. DS. 'Error'. DS) === false &&
+			strpos($path, 'Template'. DS. 'Layout'. DS) === false
 		);
 	}
 
