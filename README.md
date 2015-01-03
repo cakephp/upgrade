@@ -84,3 +84,7 @@ Update translation functions regarding placeholders.
 
 ### skeleton
 Add basic skeleton files and folders from the "app" repository.
+
+### prefixed_templates
+Move view templates for prefixed actions to prefix subfolder. eg. Users/admin_index.ctp becomes Admin/Users/index.ctp.
+By default `admin` prefix is handled, you can run this task for other routing prefixes using `--prefix=other` as well.

@@ -69,7 +69,8 @@ class UpgradeShellTest extends TestCase {
 			'Shell/Task/ChangeTrait.php',
 			'Shell/Task/LocationsTask.php',
 			'Shell/Task/I18nTask.php',
-			'Shell/Task/SkeletonTask.php'
+			'Shell/Task/SkeletonTask.php',
+			'Shell/Task/PrefixedTemplatesTask.php',
 		];
 
 		sort($files);
