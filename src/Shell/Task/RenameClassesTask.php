@@ -39,16 +39,32 @@ class RenameClassesTask extends BaseTask {
 			'CakeTestCase' => 'TestCase',
 			'CakeTestFixture' => 'TestFixture',
 			'CakePlugin' => 'Plugin',
-			'CakeException' => '\Exception'
+			'CakeException' => '\Exception',
+			'Cake\Utility\String' => 'Cake\Utility\Text',
 		];
 
 		$original = $contents = $this->Stage->source($path);
 
+		// Replace class name as it is
 		$contents = str_replace(
 			array_keys($replacements),
 			array_values($replacements),
 			$contents
 		);
+
+		// Replace static calls
+		foreach ($replacements as $oldName => $newName) {
+			$oldNamePos = strrpos($oldName, '\\');
+			$newNamePos = strrpos($newName, '\\');
+			if ($oldNamePos !== false) {
+				$oldName = substr($oldName, $oldNamePos + 1);
+			}
+			if ($newNamePos !== false) {
+				$newName = substr($newName, $newNamePos + 1);
+			}
+
+			$contents = str_replace($oldName . '::', $newName . '::', $contents);
+		}
 
 		return $this->Stage->change($path, $original, $contents);
 	}
