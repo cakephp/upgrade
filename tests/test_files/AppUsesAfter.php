@@ -10,4 +10,9 @@ use MyPlugin\Console\Command\FooShell;
 use PluginName\Currency\CurrencyLib;
 
 class AppUsesTest {
+
+	public function test() {
+		$this->Controller = new Controller(new Request, new Response());
+	}
+
 }

@@ -10,4 +10,9 @@ App::uses('CurrencyLib', 'PluginName.Lib/Currency');
 App::uses('FooShell', 'MyPlugin.Console/Command');
 
 class AppUsesTest {
+
+	public function test() {
+		$this->Controller = new Controller(new CakeRequest, new CakeResponse());
+	}
+
 }
