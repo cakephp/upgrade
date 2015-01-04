@@ -45,7 +45,7 @@ class NamespacesTask extends BaseTask {
 			[
 				'Namespace to ' . $namespace,
 				'#^(<\?(?:php)?\s+(?:\/\*.*?\*\/\s{0,1})?)#s',
-				"\\1namespace " . $namespace . ";\n",
+				"\\1namespace " . $namespace . ";\n\n",
 			]
 		];
 		$contents = $this->_updateContents($contents, $patterns);
@@ -81,10 +81,14 @@ class NamespacesTask extends BaseTask {
  * @return bool
  */
 	protected function _shouldProcess($path) {
-		if (strpos($path, DS . 'Plugin' . DS) || strpos($path, DS . 'plugins' . DS)) {
+		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
+		$root = rtrim($root, DS);
+		$relativeFromRoot = str_replace($root, '', $path);
+
+		if (strpos($relativeFromRoot, DS . 'Plugin' . DS) || strpos($relativeFromRoot, DS . 'plugins' . DS)) {
 			return false;
 		}
-		if (strpos($path, DS . 'Vendor' . DS) || strpos($path, DS . 'vendors' . DS)) {
+		if (strpos($relativeFromRoot, DS . 'Vendor' . DS) || strpos($relativeFromRoot, DS . 'vendors' . DS)) {
 			return false;
 		}
 
