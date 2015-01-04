@@ -93,7 +93,7 @@ class AppUsesTask extends BaseTask {
 /**
  * Convert App::uses() to normal use statements.
  * Order App::uses statements
- * andreplace the class in the source if it appears
+ * and replace the class in the source if it appears
  *
  * @return void
  */
