@@ -68,16 +68,34 @@ class UpgradeShell extends Shell {
 
 		$actions = $this->_getActions();
 
-		foreach ($files as $file) {
-			$this->out(sprintf('<info>Processing %s</info>', Debugger::trimPath($file)));
-			foreach ($actions as $action) {
-				$this->out(sprintf('<info> * upgrade step %s</info>', $action), 0, Shell::VERBOSE);
+		foreach ($actions as $action) {
+			$this->out(sprintf('<info>*** Upgrade step %s ***</info>', $action));
+			if (!empty($this->params['interactive'])) {
+				$continue = $this->in('Continue with `' . $action . '`?', array('y', 'n', 'q'), 'y');
+				if ($continue === 'q') {
+					return $this->error('Aborted. Changes are not commited.');
+				}
+				if ($continue === 'n') {
+					$this->out('Skipping this step.');
+					continue;
+				}
+			}
+
+			foreach ($files as $file) {
+				$this->out(sprintf('<info> * Processing %s</info>', Debugger::trimPath($file)), 1, Shell::VERBOSE);
 				$this->$action->Stage = $this->Stage;
 				$this->$action->process($file);
+
+				if (!empty($this->params['interactive'])) {
+					$this->Stage->commit();
+					$this->Stage->clear();
+				}
 			}
 		}
 
-		$this->Stage->commit();
+		if (empty($this->params['interactive'])) {
+			$this->Stage->commit();
+		}
 	}
 
 /**
@@ -169,6 +187,11 @@ class UpgradeShell extends Shell {
 			}
 			$allParser->merge($subcommand->parser());
 		}
+		$allParser->addOption('interactive', array(
+				'short' => 'i',
+				'help' => 'Interactive commands.',
+				'boolean' => true
+			));
 
 		return $parser->addSubcommand('all', [
 			'help' => 'Run all tasks expect for skeleton. That task should only be run manually, and only for apps (not plugins).',

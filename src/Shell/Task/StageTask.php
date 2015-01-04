@@ -54,6 +54,19 @@ class StageTask extends Shell {
 	];
 
 /**
+ * Clears the change log.
+ *
+ * @return void
+ */
+	public function clear() {
+		$this->_staged = [
+			'change' => [],
+			'delete' => [],
+			'move' => []
+		];
+	}
+
+/**
  * Write staged changes
  *
  * If it's a dry run though - only show what will be done, don't do anything
