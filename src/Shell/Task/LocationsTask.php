@@ -65,15 +65,19 @@ class LocationsTask extends BaseTask {
  * @return bool
  */
 	protected function _shouldProcess($path) {
-		if (strpos($path, DS . 'Plugin' . DS) || strpos($path, DS . 'plugins' . DS)) {
+		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
+		$root = rtrim($root, DS);
+		$relativeFromRoot = str_replace($root, '', $path);
+
+		if (strpos($relativeFromRoot, DS . 'Plugin' . DS) || strpos($relativeFromRoot, DS . 'plugins' . DS)) {
 			return false;
 		}
-		if (strpos($path, DS . 'Vendor' . DS) || strpos($path, DS . 'vendors' . DS)) {
+		if (strpos($relativeFromRoot, DS . 'Vendor' . DS) || strpos($relativeFromRoot, DS . 'vendors' . DS)) {
 			return false;
 		}
 
 		foreach (array_keys($this->_moves()) as $substr) {
-			if (strpos($path, DS . $substr . DS) !== false) {
+			if (strpos($relativeFromRoot, DS . $substr . DS) !== false) {
 				return true;
 			}
 		}
@@ -147,6 +151,7 @@ class LocationsTask extends BaseTask {
 			'config',
 			'bin',
 			'tests',
+			'src'
 		);
 		$pieces = explode(DS, $folder);
 		$firstFolder = !empty($pieces[0]) ? $pieces[0] : $folder;
