@@ -189,7 +189,7 @@ class UpgradeShell extends Shell {
 		}
 		$allParser->addOption('interactive', array(
 				'short' => 'i',
-				'help' => 'Interactive commands.',
+				'help' => 'Run all commands in an interactive mode. Allows you to selectively apply specific steps.',
 				'boolean' => true
 			));
 
