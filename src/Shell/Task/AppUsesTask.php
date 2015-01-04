@@ -88,6 +88,7 @@ class AppUsesTask extends BaseTask {
 		'CakeEmail',
 		'CakeLogInterface',
 		'CakeSessionHandlerInterface',
+		'CakeTestCase'
 	];
 
 /**
@@ -234,10 +235,13 @@ class AppUsesTask extends BaseTask {
  * @return string
  */
 	protected function _orderUses($contents) {
-		preg_match_all('/use .+;[\n]/', $contents, $matches);
-		sort($matches[0]);
-		$matches[0] = array_unique($matches[0]);
+		preg_match_all('/[\t ]*\buse .+;[\n]/', $contents, $matches);
+
 		$contents = str_replace($matches[0], '', $contents);
+
+		array_walk($matches[0], create_function('&$val', '$val = ltrim($val);'));
+		$matches[0] = array_unique($matches[0]);
+		sort($matches[0]);
 
 		return preg_replace(
 			'/(namespace [\S+]+;[\n]{2})/',

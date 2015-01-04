@@ -13,6 +13,11 @@ class AppUsesTest {
 
 	public function test() {
 		$this->Controller = new Controller(new CakeRequest, new CakeResponse());
+
+		App::uses('HtmlDomLib', 'Foo.Lib');
+		$HtmlDom = new HtmlDomLib();
+		App::uses('HtmlDomLibExt', 'Foo.Lib');
+		$HtmlDom = new HtmlDomLibExt();
 	}
 
 }
