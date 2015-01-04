@@ -121,8 +121,9 @@ class AppUsesTask extends BaseTask {
 		$replacement = function ($matches) {
 			$matches = $this->_mapClassName($matches);
 			// Chop Lib out as locations moves those files to the top level.
-			if (isset($matches[3]) && $matches[3] === 'Lib') {
-				$use = $matches[2] . '\\' . $matches[1];
+			// But only if Lib is not the last folder.
+			if (isset($matches[3]) && substr($matches[3], 0, 4) === 'Lib/') {
+				$use = $matches[2] . '\\' . substr($matches[3], 4) . '\\' .$matches[1];
 			} elseif (count($matches) === 4) {
 				$use = $matches[2] . '\\' . $matches[3] . '\\' . $matches[1];
 			} elseif ($matches[2] === 'Vendor') {
@@ -227,7 +228,7 @@ class AppUsesTask extends BaseTask {
  * Order use statements
  *
  * For code standards, use statements should be alphabetical but in addition, this
- * Moves all use staements to the top of the class
+ * Moves all use statements to the top of the class
  *
  * @param string $contents
  * @return string
