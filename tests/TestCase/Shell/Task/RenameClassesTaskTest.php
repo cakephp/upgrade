@@ -42,9 +42,26 @@ class RenameClassesTaskTest extends TestCase {
  *
  * @return void
  */
+	public function testRenameClasses() {
+		$this->sut->method('_shouldProcess')
+			->will($this->returnValue(true));
+
+		$path = TESTS . 'test_files' . DS;
+		$result = $this->sut->process($path . 'RenameClasses.php');
+		$this->assertTrue($result);
+
+		$result = $this->sut->Stage->source($path . 'RenameClasses.php');
+		$expected = file_get_contents($path . 'RenameClassesAfter.php');
+		$this->assertTextEquals($expected, $result);
+	}
+
+/**
+ * Testing the rename of string class
+ *
+ * @return void
+ */
 	public function testRenameStringClass() {
-		$this->sut->expects($this->any())
-			->method('_shouldProcess')
+		$this->sut->method('_shouldProcess')
 			->will($this->returnValue(true));
 
 		$path = TESTS . 'test_files' . DS;
