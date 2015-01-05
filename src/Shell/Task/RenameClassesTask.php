@@ -36,10 +36,10 @@ class RenameClassesTask extends BaseTask {
 			'Cake\Network\Http\HttpSocket' => 'Cake\Network\Http\Client',
 			'Cake\Model\ConnectionManager' => 'Cake\Database\ConnectionManager',
 			'Cake\TestSuite\CakeTestCase' => 'Cake\TestSuite\TestCase',
-			'CakeTestFixture' => 'TestFixture',
+			'Cake\TestSuite\Fixture\CakeTestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
+			'Cake\Utility\String' => 'Cake\Utility\Text',
 			'CakePlugin' => 'Plugin',
 			'CakeException' => '\Exception',
-			'Cake\Utility\String' => 'Cake\Utility\Text',
 		];
 
 		$original = $contents = $this->Stage->source($path);
