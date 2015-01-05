@@ -38,7 +38,7 @@ class AppUsesTaskTest extends TestCase {
 	}
 
 /**
- * Testing the rename of string class
+ * Testing the `use` transformation.
  *
  * @return void
  */
@@ -53,6 +53,24 @@ class AppUsesTaskTest extends TestCase {
 
 		$result = $this->sut->Stage->source($path . 'AppUses.php');
 		$expected = file_get_contents($path . 'AppUsesAfter.php');
+		$this->assertTextEquals($expected, $result);
+	}
+
+/**
+ * Testing the implicit `use` adding.
+ *
+ * @return void
+ */
+	public function testAppUsesImplicit() {
+		$this->sut->method('_shouldProcess')
+			->will($this->returnValue(true));
+
+		$path = TESTS . 'test_files' . DS;
+		$result = $this->sut->process($path . 'AppUsesImplicit.php');
+		$this->assertTrue($result);
+
+		$result = $this->sut->Stage->source($path . 'AppUsesImplicit.php');
+		$expected = file_get_contents($path . 'AppUsesImplicitAfter.php');
 		$this->assertTextEquals($expected, $result);
 	}
 

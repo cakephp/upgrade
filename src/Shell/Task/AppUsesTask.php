@@ -215,9 +215,10 @@ class AppUsesTask extends BaseTask {
 			$class = $this->implicitMap[$check];
 			$useStatement = "use $class;\n";
 
+			$containsUseStatements = preg_match("/use .+;/", $contents);
 			$contents = preg_replace(
 				'/(namespace [\S+]+;[\n]{1,})/',
-				'\1' . $useStatement,
+				'\1' . $useStatement . (!$containsUseStatements ? "\n" : ''),
 				$contents
 			);
 		}
@@ -245,7 +246,7 @@ class AppUsesTask extends BaseTask {
 
 		return preg_replace(
 			'/(namespace [\S+]+;[\n]{2})/',
-			'\1' . implode($matches[0], ''),
+			'\1' . implode('', $matches[0]),
 			$contents
 		);
 	}
