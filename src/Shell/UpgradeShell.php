@@ -149,11 +149,11 @@ class UpgradeShell extends Shell {
 				'help' => 'Rename HelperCollection, ComponentCollection, and TaskCollection. Will also rename component constructor arguments and _Collection properties on all objects.',
 				'parser' => $this->RenameCollections->getOptionParser(),
 			])
-			->addSubcommand('update_method_names', [
+			->addSubcommand('method_names', [
 				'help' => 'Update many of the methods that were renamed during 2.x -> 3.0',
 				'parser' => $this->MethodNames->getOptionParser(),
 			])
-			->addSubcommand('update_method_signatures', [
+			->addSubcommand('method_signatures', [
 				'help' => 'Update many of the method signatures that were changed during 2.x -> 3.0',
 				'parser' => $this->MethodSignatures->getOptionParser(),
 			])
