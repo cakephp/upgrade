@@ -34,13 +34,12 @@ class RenameClassesTask extends BaseTask {
 	protected function _process($path) {
 		$replacements = [
 			'Cake\Network\Http\HttpSocket' => 'Cake\Network\Http\Client',
-			'HttpSocket' => 'Client',
 			'Cake\Model\ConnectionManager' => 'Cake\Database\ConnectionManager',
-			'CakeTestCase' => 'TestCase',
-			'CakeTestFixture' => 'TestFixture',
+			'Cake\TestSuite\CakeTestCase' => 'Cake\TestSuite\TestCase',
+			'Cake\TestSuite\Fixture\CakeTestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
+			'Cake\Utility\String' => 'Cake\Utility\Text',
 			'CakePlugin' => 'Plugin',
 			'CakeException' => '\Exception',
-			'Cake\Utility\String' => 'Cake\Utility\Text',
 		];
 
 		$original = $contents = $this->Stage->source($path);
@@ -52,7 +51,7 @@ class RenameClassesTask extends BaseTask {
 			$contents
 		);
 
-		// Replace static calls
+		// Replace static and dynamic calls
 		foreach ($replacements as $oldName => $newName) {
 			$oldNamePos = strrpos($oldName, '\\');
 			$newNamePos = strrpos($newName, '\\');
@@ -63,7 +62,9 @@ class RenameClassesTask extends BaseTask {
 				$newName = substr($newName, $newNamePos + 1);
 			}
 
-			$contents = str_replace($oldName . '::', $newName . '::', $contents);
+			$contents = preg_replace('#\b(new|extends|implements) ' . $oldName . '\b#i', '\1 ' . $newName, $contents);
+
+			$contents = preg_replace('#\b' . $oldName . '::#i', $newName . '::', $contents);
 		}
 
 		return $this->Stage->change($path, $original, $contents);
