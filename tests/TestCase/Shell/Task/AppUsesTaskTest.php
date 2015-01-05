@@ -38,7 +38,7 @@ class AppUsesTaskTest extends TestCase {
 	}
 
 /**
- * Testing the rename of string class
+ * Testing the `use` transformation.
  *
  * @return void
  */
@@ -53,6 +53,45 @@ class AppUsesTaskTest extends TestCase {
 
 		$result = $this->sut->Stage->source($path . 'AppUses.php');
 		$expected = file_get_contents($path . 'AppUsesAfter.php');
+		$this->assertTextEquals($expected, $result);
+	}
+
+/**
+ * Testing the implicit `use` adding.
+ *
+ * @return void
+ */
+	public function testAppUsesImplicit() {
+		$this->sut->method('_shouldProcess')
+			->will($this->returnValue(true));
+
+		$path = TESTS . 'test_files' . DS;
+		$result = $this->sut->process($path . 'AppUsesImplicit.php');
+		$this->assertTrue($result);
+
+		$result = $this->sut->Stage->source($path . 'AppUsesImplicit.php');
+		$expected = file_get_contents($path . 'AppUsesImplicitAfter.php');
+		$this->assertTextEquals($expected, $result);
+	}
+
+/**
+ * Testing the implicit `use` adding.
+ *
+ * Asserts that TestCase (former CakeTestCase) gets also added, and that
+ * already existing use statements are skipped.
+ *
+ * @return void
+ */
+	public function testAppUsesImplicitTestCase() {
+		$this->sut->method('_shouldProcess')
+			->will($this->returnValue(true));
+
+		$path = TESTS . 'test_files' . DS;
+		$result = $this->sut->process($path . 'AppUsesImplicitTestCase.php');
+		$this->assertTrue($result);
+
+		$result = $this->sut->Stage->source($path . 'AppUsesImplicitTestCase.php');
+		$expected = file_get_contents($path . 'AppUsesImplicitTestCaseAfter.php');
 		$this->assertTextEquals($expected, $result);
 	}
 

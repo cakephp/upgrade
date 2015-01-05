@@ -62,6 +62,11 @@ class AppUsesTask extends BaseTask {
 		'Router' => 'Cake\Routing\Router',
 		'Shell' => 'Cake\Console\Shell',
 		'View' => 'Cake\View\View',
+		// Also apply to already renamed ones
+		'Log' => 'Cake\Log\Log',
+		'Plugin' => 'Cake\Core\Plugin',
+		'TestCase' => 'Cake\TestSuite\TestCase',
+		'TestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
 	];
 
 /**
@@ -215,9 +220,10 @@ class AppUsesTask extends BaseTask {
 			$class = $this->implicitMap[$check];
 			$useStatement = "use $class;\n";
 
+			$containsUseStatements = preg_match("/use .+;/", $contents);
 			$contents = preg_replace(
 				'/(namespace [\S+]+;[\n]{1,})/',
-				'\1' . $useStatement,
+				'\1' . $useStatement . (!$containsUseStatements ? "\n" : ''),
 				$contents
 			);
 		}
@@ -245,7 +251,7 @@ class AppUsesTask extends BaseTask {
 
 		return preg_replace(
 			'/(namespace [\S+]+;[\n]{2})/',
-			'\1' . implode($matches[0], ''),
+			'\1' . implode('', $matches[0]),
 			$contents
 		);
 	}
@@ -291,11 +297,6 @@ class AppUsesTask extends BaseTask {
  * @return bool
  */
 	protected function _shouldProcess($path) {
-		$contents = $this->Stage->source($path);
-		if (!strpos($contents, 'App::uses')) {
-			return false;
-		}
-
 		return (substr($path, -4) === '.php');
 	}
 
