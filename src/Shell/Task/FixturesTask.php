@@ -15,6 +15,7 @@
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Upgrade\Shell\Task\BaseTask;
+use Cake\Utility\Inflector;
 
 /**
  * Updates fixtures for 3.0
@@ -120,7 +121,35 @@ class FixturesTask extends BaseTask {
 			$count
 		);
 
-		return $this->Stage->change($path, $original, $contents);
+		// Pluralize fixtures
+		$name = pathinfo($path, PATHINFO_FILENAME);
+		$name = substr($name, 0, -7);
+		$fixtureName = Inflector::pluralize($name);
+
+		// We do not want to run it more than once.
+		$isAlreadyPlural = Inflector::pluralize(Inflector::singularize($fixtureName)) === $name;
+		$className = $fixtureName . 'Fixture';
+
+		$pluralProcessor = function ($matches) use ($className) {
+			return $matches[1] . ' ' . $className;
+		};
+
+		$result = true;
+		if (!$isAlreadyPlural) {
+			// Replace both in doc block and class declaration.
+			$contents = preg_replace_callback(
+				'/(\bclass|\\*) ([a-z]+)Fixture\b/msi',
+				$pluralProcessor,
+				$contents,
+				-1,
+				$count
+			);
+			$newPath = dirname($path) . DS . $className . '.php';
+		}
+
+		$result = $this->Stage->change($path, $original, $contents);
+		$result &= $this->Stage->move($path, $newPath);
+		return $result;
 	}
 
 /**
