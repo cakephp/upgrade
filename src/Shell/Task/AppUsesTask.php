@@ -62,6 +62,11 @@ class AppUsesTask extends BaseTask {
 		'Router' => 'Cake\Routing\Router',
 		'Shell' => 'Cake\Console\Shell',
 		'View' => 'Cake\View\View',
+		// Also apply to already renamed ones
+		'Log' => 'Cake\Log\Log',
+		'Plugin' => 'Cake\Core\Plugin',
+		'TestCase' => 'Cake\TestSuite\TestCase',
+		'TestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
 	];
 
 /**
@@ -292,11 +297,6 @@ class AppUsesTask extends BaseTask {
  * @return bool
  */
 	protected function _shouldProcess($path) {
-		$contents = $this->Stage->source($path);
-		if (!strpos($contents, 'App::uses')) {
-			return false;
-		}
-
 		return (substr($path, -4) === '.php');
 	}
 
