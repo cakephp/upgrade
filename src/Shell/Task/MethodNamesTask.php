@@ -61,6 +61,11 @@ class MethodNamesTask extends BaseTask {
 				'#\$this->Html->webroot\(#',
 				'$this->Url->webroot(',
 			],
+			[
+				'Replace $this->Session->flash() with $this->Flash->render()',
+				'#\$this->Session->flash\(#',
+				'$this->Flash->render(',
+			]
 		];
 
 		$otherPatterns = [
