@@ -42,14 +42,34 @@ class MethodSignaturesTask extends BaseTask {
 				'function beforeFilter(Event $event)',
 			],
 			[
+				'parent::beforeFilter(Event $event) call',
+				'#\bparent::beforeFilter\(\)#i',
+				'parent::beforeFilter($event)',
+			],
+			[
 				'beforeRender(Event $event) callback',
 				'#\bfunction beforeRender\(\)#i',
 				'function beforeRender(Event $event)',
 			],
 			[
+				'parent::beforeRender(Event $event) call',
+				'#\bparent::beforeRender\(\)#i',
+				'parent::beforeRender($event)',
+			],
+			[
 				'afterFilter(Event $event) callback',
 				'#\bfunction afterFilter\(\)#i',
 				'function afterFilter(Event $event)',
+			],
+			[
+				'parent::afterFilter(Event $event) call',
+				'#\bparent::afterFilter\(\)#i',
+				'parent::afterFilter($event)',
+			],
+			[
+				'constructClasses() method',
+				'#\bfunction constructClasses\(\)#i',
+				'function initialize()',
 			],
 		];
 		$componentPatterns = [
@@ -113,9 +133,9 @@ class MethodSignaturesTask extends BaseTask {
 		];
 		$modelPatterns = [
 			[
-				'beforeValidate(Event $event, Entity $entity, ArrayObject $options) callback',
+				'beforeRules(Event $event, Entity $entity, ArrayObject $options) callback',
 				'#\bfunction beforeValidate\(array $options\s*=\s*array\(\)\)#i',
-				'function beforeValidate(Event $event, Entity $entity, ArrayObject $options)',
+				'function beforeRules(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
 				'beforeSave(Event $event, Entity $entity, ArrayObject $options) callback',
@@ -128,9 +148,9 @@ class MethodSignaturesTask extends BaseTask {
 				'function beforeDelete(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
-				'afterValidate(Event $event, Entity $entity, ArrayObject $options) callback',
+				'afterRules(Event $event, Entity $entity, ArrayObject $options) callback',
 				'#\bfunction afterValidate\(\)#i',
-				'function afterValidate(Event $event, Entity $entity, ArrayObject $options)',
+				'function afterRules(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
 				'afterSave(Event $event, Entity $entity, ArrayObject $options) callback',
@@ -145,9 +165,9 @@ class MethodSignaturesTask extends BaseTask {
 		];
 		$behaviorPatterns = [
 			[
-				'beforeValidate(Event $event, Entity $entity, ArrayObject $options) callback',
+				'beforeRules(Event $event, Entity $entity, ArrayObject $options) callback',
 				'#\bfunction beforeValidate\(Model $Model,\s*$options\s*=\s*array\(\)\)#i',
-				'function beforeValidate(Event $event, Entity $entity, ArrayObject $options)',
+				'function beforeRules(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
 				'beforeSave(Event $event, Entity $entity, ArrayObject $options) callback',
@@ -160,9 +180,9 @@ class MethodSignaturesTask extends BaseTask {
 				'function beforeDelete(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
-				'afterValidate(Event $event, Entity $entity, ArrayObject $options) callback',
+				'afterRules(Event $event, Entity $entity, ArrayObject $options) callback',
 				'#\bfunction afterValidate\(Model $Model\)#i',
-				'function afterValidate(Event $event, Entity $entity, ArrayObject $options)',
+				'function afterRules(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
 				'afterSave(Event $event, Entity $entity, ArrayObject $options) callback',
