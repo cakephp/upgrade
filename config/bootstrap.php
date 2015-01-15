@@ -69,7 +69,7 @@ use Cake\Utility\Inflector;
  */
 try {
 	Configure::config('default', new PhpConfig());
-	Configure::load('app.php', 'default', false);
+	Configure::load('app', 'default', false);
 
 	// Load an environment local configuration file.
 	// You can use this file to provide local overrides to your
