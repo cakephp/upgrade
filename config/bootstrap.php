@@ -69,12 +69,12 @@ use Cake\Utility\Inflector;
  */
 try {
 	Configure::config('default', new PhpConfig());
-	Configure::load('app.php', 'default', false);
+	Configure::load('app', 'default', false);
 
 	// Load an environment local configuration file.
 	// You can use this file to provide local overrides to your
 	// shared configuration.
-	// Configure::load('app.local.php', 'default');
+	// Configure::load('app.local', 'default');
 } catch (\Exception $e) {
 	die('Unable to load Config/app.php. Create it by copying Config/app.default.php to Config/app.php.');
 }
