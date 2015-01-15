@@ -68,7 +68,7 @@ class SkeletonTask extends BaseTask {
 		foreach ($files as $file) {
 			$ret |= $this->_addFile($file, $sourcePath, $path);
 		}
-		$ret |= $this->_addFile('config' . DS . 'app.default.php', $sourcePath, $path, 'config' . DS . 'app.php');
+		$ret |= $this->_addFile('config' . DS . 'app.default.php', $sourcePath, $path, 'config' . DS . 'app.default.php');
 		return (bool)$ret;
 	}
 
