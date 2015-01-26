@@ -133,9 +133,9 @@ class MethodSignaturesTask extends BaseTask {
 		];
 		$modelPatterns = [
 			[
-				'beforeRules(Event $event, Entity $entity, ArrayObject $options) callback',
+				'beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options) callback',
 				'#\bfunction beforeValidate\(array $options\s*=\s*array\(\)\)#i',
-				'function beforeRules(Event $event, Entity $entity, ArrayObject $options)',
+				'function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)',
 			],
 			[
 				'beforeSave(Event $event, Entity $entity, ArrayObject $options) callback',
@@ -165,9 +165,9 @@ class MethodSignaturesTask extends BaseTask {
 		];
 		$behaviorPatterns = [
 			[
-				'beforeRules(Event $event, Entity $entity, ArrayObject $options) callback',
+				'beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options) callback',
 				'#\bfunction beforeValidate\(Model $Model,\s*$options\s*=\s*array\(\)\)#i',
-				'function beforeRules(Event $event, Entity $entity, ArrayObject $options)',
+				'function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)',
 			],
 			[
 				'beforeSave(Event $event, Entity $entity, ArrayObject $options) callback',
