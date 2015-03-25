@@ -5,7 +5,7 @@
 	"type": "project",
 	"license": "MIT",
 	"require": {
-		"cakephp/cakephp": "3.0.*-dev",
+		"cakephp/cakephp": "~3.0",
 		"cakephp/app": "3.0.*"
 	},
 	"autoload": {
