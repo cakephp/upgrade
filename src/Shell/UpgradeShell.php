@@ -46,6 +46,7 @@ class UpgradeShell extends Shell {
 		'I18n',
 		'Tests',
 		'Skeleton',
+		'Templates',
 		'PrefixedTemplates',
 		'ModelToTable'
 	);
@@ -165,6 +166,9 @@ class UpgradeShell extends Shell {
 			->addSubcommand('tests', [
 				'help' => 'Update test cases regarding fixtures.',
 				'parser' => $this->I18n->getOptionParser(),
+			->addSubcommand('templates', [
+				'help' => 'Update view templates.',
+				'parser' => $this->Templates->getOptionParser(),
 			])
 			->addSubcommand('i18n', [
 				'help' => 'Update translation functions regarding placeholders.',
