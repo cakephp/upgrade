@@ -47,6 +47,7 @@ class UpgradeShell extends Shell {
 		'Tests',
 		'Skeleton',
 		'PrefixedTemplates',
+		'ModelToTable'
 	);
 
 /**
@@ -172,6 +173,10 @@ class UpgradeShell extends Shell {
 			->addSubcommand('skeleton', [
 				'help' => 'Add basic skeleton files and folders from the "app" repository.',
 				'parser' => $this->Skeleton->getOptionParser(),
+			])
+			->addSubcommand('model_to_table', [
+				'help' => 'Make models to tables.',
+				'parser' => $this->ModelToTable->getOptionParser(),
 			])
 			->addSubcommand('prefixed_templates', [
 				'help' => 'Move view templates for prefixed actions.',

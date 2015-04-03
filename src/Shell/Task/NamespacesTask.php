@@ -64,6 +64,10 @@ class NamespacesTask extends BaseTask {
  */
 	protected function _getNamespace($path) {
 		$ns = $this->param('namespace');
+		if (!$ns) {
+			$ns = 'App';
+		}
+
 		$path = str_replace(realpath($this->args[0]), '', dirname($path));
 		$path = preg_replace('@.*(Plugin|plugins)[/\\\\]@', '', $path);
 		$path = preg_replace('@[/\\\\]src@', '', $path);
@@ -92,13 +96,14 @@ class NamespacesTask extends BaseTask {
 			return false;
 		}
 
-		// Skip boostrap files and alike
+		// Skip bootstrap files and alike
 		$filename = basename($path);
 		$excludes = array(
 			'bootstrap.php',
 			'routes.php',
 			'core.php',
-			'configs.php'
+			'configs.php',
+			'index.php'
 		);
 		if (in_array($filename, $excludes, true)) {
 			return false;
