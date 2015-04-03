@@ -310,7 +310,9 @@ class StageTask extends Shell {
 			foreach ($excludes as &$exclude) {
 				$exclude = preg_quote($exclude);
 			}
+
 			$excludePattern = '@[\\\\/](' . implode($excludes, '|') . ')[\\\\/]@';
+			$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
 
 			foreach ($this->_paths as $path) {
 				if (!is_dir($path)) {
@@ -324,7 +326,8 @@ class StageTask extends Shell {
 				);
 				foreach ($Iterator as $file) {
 					$path = $file->getPathname();
-					if (!$file->isFile() || preg_match($excludePattern, $path)) {
+					$searchPath = str_replace($root, '', $path);
+					if (!$file->isFile() || preg_match($excludePattern, $searchPath)) {
 						continue;
 					}
 					$this->_files[] = $path;

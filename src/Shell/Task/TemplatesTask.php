@@ -148,7 +148,7 @@ class TemplatesTask extends BaseTask {
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
 
 		preg_match('#' . preg_quote(DS . 'Controller' . DS) .'([a-z][a-z0-9]+)Controller\.php#i', $path, $matches);
-		if (!$matches) {
+		if ($matches) {
 			$controllerName = $matches[1];
 			$model = Inflector::singularize($controllerName);
 
