@@ -149,7 +149,7 @@ class FixturesTask extends BaseTask {
 
 		$result = $this->Stage->change($path, $original, $contents);
 		$result &= $this->Stage->move($path, $newPath);
-		return $result;
+		return (bool)$result;
 	}
 
 /**

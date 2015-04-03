@@ -1,8 +1,8 @@
 <?php
 /**
- * ArticleFixture
+ * ArticlesFixture
  */
-class ArticleFixture extends CakeTestFixture {
+class ArticlesFixture extends CakeTestFixture {
 
 /**
  * Fields

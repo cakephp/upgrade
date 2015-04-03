@@ -166,6 +166,7 @@ class UpgradeShell extends Shell {
 			->addSubcommand('tests', [
 				'help' => 'Update test cases regarding fixtures.',
 				'parser' => $this->I18n->getOptionParser(),
+			])
 			->addSubcommand('templates', [
 				'help' => 'Update view templates.',
 				'parser' => $this->Templates->getOptionParser(),
