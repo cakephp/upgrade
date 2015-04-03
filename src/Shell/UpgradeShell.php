@@ -49,7 +49,8 @@ class UpgradeShell extends Shell {
 		'Templates',
 		'PrefixedTemplates',
 		'ModelToTable',
-		'Cleanup'
+		'Custom',
+		'Cleanup',
 	);
 
 /**
@@ -191,6 +192,10 @@ class UpgradeShell extends Shell {
 			->addSubcommand('cleanup', [
 				'help' => 'Remove empty namespace folders after location changes. Should be run last.',
 				'parser' => $this->Cleanup->getOptionParser(),
+			])
+			->addSubcommand('custom', [
+				'help' => 'Custom stuff.',
+				'parser' => $this->PrefixedTemplates->getOptionParser(),
 			]);
 
 		$subcommands = $parser->subcommands();

@@ -74,6 +74,7 @@ class UpgradeShellTest extends TestCase {
 			'Shell/Task/ModelToTableTask.php',
 			'Shell/Task/CleanupTask.php',
 			'Shell/Task/PrefixedTemplatesTask.php',
+			'Shell/Task/CustomTask.php',
 		];
 
 		sort($files);
