@@ -70,6 +70,8 @@ class UpgradeShellTest extends TestCase {
 			'Shell/Task/LocationsTask.php',
 			'Shell/Task/I18nTask.php',
 			'Shell/Task/SkeletonTask.php',
+			'Shell/Task/TemplatesTask.php',
+			'Shell/Task/ModelToTableTask.php',
 			'Shell/Task/PrefixedTemplatesTask.php',
 		];
 
