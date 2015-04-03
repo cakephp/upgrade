@@ -40,7 +40,7 @@ trait ChangeTrait {
 		$files = $this->Stage->files($exclude);
 
 		foreach ($files as $file) {
-			$this->out(sprintf('<info>Processing %s</info>', Debugger::trimPath($file)));
+			$this->out(sprintf('<info>Processing %s</info>', Debugger::trimPath($file)), 1, Shell::VERBOSE);
 			$this->process($file);
 		}
 
