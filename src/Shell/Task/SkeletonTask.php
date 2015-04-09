@@ -63,6 +63,9 @@ class SkeletonTask extends BaseTask {
 			'src' . DS . 'Template' . DS . 'Error' . DS . 'error500.ctp',
 			'src' . DS . 'Template' . DS . 'Layout' . DS . 'error.ctp',
 			'src' . DS . 'Controller' . DS . 'PagesController.php',
+			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'default.ctp',
+			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'error.ctp',
+			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'success.ctp',
 		);
 		$ret = 0;
 		foreach ($files as $file) {

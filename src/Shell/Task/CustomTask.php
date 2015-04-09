@@ -99,6 +99,31 @@ class CustomTask extends BaseTask {
 				'/\bTools.Tiny\b/',
 				'TinyAuth.Tiny'
 			],
+			[
+				'$this->Common->flash() to $this->Flash->render()',
+				'/\$this-\>Common-\>flash\(/',
+				'$this->Flash->render('
+			],
+			[
+				'$this->Datetime-> to $this->Time->',
+				'/\$this-\>Datetime-\>(.+)\(/',
+				'$this->Time->\1('
+			],
+			[
+				'$this->Numeric-> to $this->Number->',
+				'/\$this-\>Numeric-\>(.+)\(/',
+				'$this->Number->\1('
+			],
+			[
+				'Tools\Network\Email\Email',
+				'/\buse Tools\\\\Lib\\\\EmailLib;/',
+				'use Tools\Network\Email\Email;'
+			],
+			[
+				'return $this->flash(..., ...) to $this->Flash->message(\1); return $this->redirect(\2);',
+				'/\breturn \$this-\>flash\((.+),\s*(.+)\);/',
+				'$this->Flash->message(\1); return $this->redirect(\2);'
+			],
 		];
 
 		$original = $contents = $this->Stage->source($path);

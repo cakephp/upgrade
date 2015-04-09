@@ -117,4 +117,17 @@ class MethodNamesTask extends BaseTask {
 		return $this->Stage->change($path, $original, $contents);
 	}
 
+	/**
+	 * _shouldProcess
+	 *
+	 * Bail for invalid files (php/ctp files only)
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
+	protected function _shouldProcess($path) {
+		$ending = substr($path, -4);
+		return $ending === '.php' || $ending === '.ctp';
+	}
+
 }
