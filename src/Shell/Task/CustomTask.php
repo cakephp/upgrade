@@ -124,6 +124,11 @@ class CustomTask extends BaseTask {
 				'/\breturn \$this-\>flash\((.+),\s*(.+)\);/',
 				'$this->Flash->message(\1); return $this->redirect(\2);'
 			],
+			[
+				'$this->Session->setFlash() to $this->Flash->message();',
+				'/\$this-\>Session-\>setFlash\(/',
+				'$this->Flash->message('
+			],
 		];
 
 		$original = $contents = $this->Stage->source($path);
