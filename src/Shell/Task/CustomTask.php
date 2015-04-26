@@ -129,6 +129,16 @@ class CustomTask extends BaseTask {
 				'/\$this-\>Session-\>setFlash\(/',
 				'$this->Flash->message('
 			],
+			[
+				'use Cake\\Utility\\Folder to use Cake\\Filesystem\\Folder',
+				'/\bCake\\\\Utility\\\\Folder\b/',
+				'Cake\\Filesystem\\Folder'
+			],
+			[
+				'use Cake\\Utility\\File to use Cake\\Filesystem\\File',
+				'/\bCake\\\\Utility\\\\File\b/',
+				'Cake\\Filesystem\\File'
+			],
 		];
 
 		$original = $contents = $this->Stage->source($path);

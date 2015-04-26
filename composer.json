@@ -6,7 +6,8 @@
 	"license": "MIT",
 	"require": {
 		"cakephp/cakephp": "~3.0",
-		"cakephp/app": "3.0.*"
+		"cakephp/app": "3.0.*",
+		"phpunit/phpunit": "*"
 	},
 	"autoload": {
 		"psr-4": {
