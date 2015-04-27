@@ -28,12 +28,12 @@ class MethodNamesTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Processes a path.
- *
- * @param string $path
- * @return void
- */
+	/**
+	 * Processes a path.
+	 *
+	 * @param string $path
+	 * @return void
+	 */
 	protected function _process($path) {
 		$helperPatterns = [
 			[
@@ -105,8 +105,7 @@ class MethodNamesTask extends BaseTask {
 			strpos($path, DS . 'View' . DS) !== false
 		) {
 			$patterns = $helperPatterns;
-		}
-		if (strpos($path, DS . 'Command' . DS . 'Task' . DS)) {
+		} elseif (strpos($path, DS . 'Command' . DS . 'Task' . DS)) {
 			$patterns = $taskPatterns;
 		}
 		$patterns = array_merge($patterns, $otherPatterns);
