@@ -21,11 +21,12 @@ use Cake\Upgrade\Shell\Task\BaseTask;
  *
  * Handles staging changes for the upgrade process
  */
-class RenameCollectionsTask extends BaseTask {
+class RenameCollectionsTask extends BaseTask
+{
 
-	use ChangeTrait;
+    use ChangeTrait;
 
-	public $tasks = ['Stage'];
+    public $tasks = ['Stage'];
 
 /**
  * RenameCollectionsTask::_process()
@@ -33,39 +34,39 @@ class RenameCollectionsTask extends BaseTask {
  * @param string $path
  * @return void
  */
-	protected function _process($path) {
-		$patterns = [
-			[
-				'Replace $this->_Collection with $this->_registry',
-				'#\$this->_Collection#',
-				'$this->_registry',
-			],
-			[
-				'Replace ComponentCollection arguments',
-				'#ComponentCollection#',
-				'ComponentRegistry',
-			],
-			[
-				'Rename ComponentCollection',
-				'#ComponentCollection#',
-				"ComponentRegistry",
-			],
-			[
-				'Rename HelperCollection',
-				'#HelperCollection#',
-				"HelperRegistry",
-			],
-			[
-				'Rename TaskCollection',
-				'#TaskCollection#',
-				"TaskRegistry",
-			],
-		];
+    protected function _process($path)
+    {
+        $patterns = [
+            [
+                'Replace $this->_Collection with $this->_registry',
+                '#\$this->_Collection#',
+                '$this->_registry',
+            ],
+            [
+                'Replace ComponentCollection arguments',
+                '#ComponentCollection#',
+                'ComponentRegistry',
+            ],
+            [
+                'Rename ComponentCollection',
+                '#ComponentCollection#',
+                "ComponentRegistry",
+            ],
+            [
+                'Rename HelperCollection',
+                '#HelperCollection#',
+                "HelperRegistry",
+            ],
+            [
+                'Rename TaskCollection',
+                '#TaskCollection#',
+                "TaskRegistry",
+            ],
+        ];
 
-		$original = $contents = $this->Stage->source($path);
-		$contents = $this->_updateContents($contents, $patterns);
+        $original = $contents = $this->Stage->source($path);
+        $contents = $this->_updateContents($contents, $patterns);
 
-		return $this->Stage->change($path, $original, $contents);
-	}
-
+        return $this->Stage->change($path, $original, $contents);
+    }
 }

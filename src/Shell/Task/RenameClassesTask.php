@@ -19,11 +19,12 @@ use Cake\Upgrade\Shell\Task\BaseTask;
 /**
  * Renames classes
  */
-class RenameClassesTask extends BaseTask {
+class RenameClassesTask extends BaseTask
+{
 
-	use ChangeTrait;
+    use ChangeTrait;
 
-	public $tasks = ['Stage'];
+    public $tasks = ['Stage'];
 
 /**
  * Rename the classes in a given file.
@@ -31,43 +32,43 @@ class RenameClassesTask extends BaseTask {
  * @param string $path The path to operate on.
  * @return bool
  */
-	protected function _process($path) {
-		$replacements = [
-			'Cake\Network\Http\HttpSocket' => 'Cake\Network\Http\Client',
-			'Cake\Model\ConnectionManager' => 'Cake\Database\ConnectionManager',
-			'Cake\TestSuite\CakeTestCase' => 'Cake\TestSuite\TestCase',
-			'Cake\TestSuite\Fixture\CakeTestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
-			'Cake\Utility\String' => 'Cake\Utility\Text',
-			'CakePlugin' => 'Plugin',
-			'CakeException' => '\Exception',
-		];
+    protected function _process($path)
+    {
+        $replacements = [
+            'Cake\Network\Http\HttpSocket' => 'Cake\Network\Http\Client',
+            'Cake\Model\ConnectionManager' => 'Cake\Database\ConnectionManager',
+            'Cake\TestSuite\CakeTestCase' => 'Cake\TestSuite\TestCase',
+            'Cake\TestSuite\Fixture\CakeTestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
+            'Cake\Utility\String' => 'Cake\Utility\Text',
+            'CakePlugin' => 'Plugin',
+            'CakeException' => '\Exception',
+        ];
 
-		$original = $contents = $this->Stage->source($path);
+        $original = $contents = $this->Stage->source($path);
 
-		// Replace class name as it is
-		$contents = str_replace(
-			array_keys($replacements),
-			array_values($replacements),
-			$contents
-		);
+        // Replace class name as it is
+        $contents = str_replace(
+            array_keys($replacements),
+            array_values($replacements),
+            $contents
+        );
 
-		// Replace static and dynamic calls
-		foreach ($replacements as $oldName => $newName) {
-			$oldNamePos = strrpos($oldName, '\\');
-			$newNamePos = strrpos($newName, '\\');
-			if ($oldNamePos !== false) {
-				$oldName = substr($oldName, $oldNamePos + 1);
-			}
-			if ($newNamePos !== false) {
-				$newName = substr($newName, $newNamePos + 1);
-			}
+        // Replace static and dynamic calls
+        foreach ($replacements as $oldName => $newName) {
+            $oldNamePos = strrpos($oldName, '\\');
+            $newNamePos = strrpos($newName, '\\');
+            if ($oldNamePos !== false) {
+                $oldName = substr($oldName, $oldNamePos + 1);
+            }
+            if ($newNamePos !== false) {
+                $newName = substr($newName, $newNamePos + 1);
+            }
 
-			$contents = preg_replace('#\b(new|extends|implements) ' . $oldName . '\b#i', '\1 ' . $newName, $contents);
+            $contents = preg_replace('#\b(new|extends|implements) ' . $oldName . '\b#i', '\1 ' . $newName, $contents);
 
-			$contents = preg_replace('#\b' . $oldName . '::#i', $newName . '::', $contents);
-		}
+            $contents = preg_replace('#\b' . $oldName . '::#i', $newName . '::', $contents);
+        }
 
-		return $this->Stage->change($path, $original, $contents);
-	}
-
+        return $this->Stage->change($path, $original, $contents);
+    }
 }

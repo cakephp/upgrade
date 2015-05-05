@@ -19,11 +19,12 @@ use Cake\Utility\Inflector;
 /**
  * Move prefix_action.ctp to Prefix/action.ctp
  */
-class PrefixedTemplatesTask extends BaseTask {
+class PrefixedTemplatesTask extends BaseTask
+{
 
-	use ChangeTrait;
+    use ChangeTrait;
 
-	public $tasks = ['Stage'];
+    public $tasks = ['Stage'];
 
 /**
  * Process
@@ -37,49 +38,51 @@ class PrefixedTemplatesTask extends BaseTask {
  * @param mixed $path
  * @return bool
  */
-	protected function _process($path = null) {
-		$new = str_replace(
-			'Template' . DS,
-			'Template' . DS . Inflector::Camelize($this->params['prefix']) . DS,
-			$path
-		);
-		$new = str_replace($this->params['prefix'] . '_', '', $new);
-		return $this->Stage->move($path, $new);
-	}
+    protected function _process($path = null)
+    {
+        $new = str_replace(
+            'Template' . DS,
+            'Template' . DS . Inflector::Camelize($this->params['prefix']) . DS,
+            $path
+        );
+        $new = str_replace($this->params['prefix'] . '_', '', $new);
+        return $this->Stage->move($path, $new);
+    }
 
-	/**
-	 * _shouldProcess
-	 *
-	 * Only process .ctp files for current prefix
-	 *
-	 * @param string $path
-	 * @return bool
-	 */
-	protected function _shouldProcess($path) {
-		return (
-			strpos($path, 'Template'. DS) &&
-			substr($path, -4) === '.ctp' &&
-			strpos($path, $this->params['prefix'] . '_') &&
-			strpos($path, 'Template'. DS . 'Element' . DS) === false &&
-			strpos($path, 'Template'. DS . 'Email'. DS) === false &&
-			strpos($path, 'Template'. DS. 'Error'. DS) === false &&
-			strpos($path, 'Template'. DS. 'Layout'. DS) === false
-		);
-	}
+    /**
+     * _shouldProcess
+     *
+     * Only process .ctp files for current prefix
+     *
+     * @param string $path
+     * @return bool
+     */
+    protected function _shouldProcess($path)
+    {
+        return (
+            strpos($path, 'Template'. DS) &&
+            substr($path, -4) === '.ctp' &&
+            strpos($path, $this->params['prefix'] . '_') &&
+            strpos($path, 'Template'. DS . 'Element' . DS) === false &&
+            strpos($path, 'Template'. DS . 'Email'. DS) === false &&
+            strpos($path, 'Template'. DS. 'Error'. DS) === false &&
+            strpos($path, 'Template'. DS. 'Layout'. DS) === false
+        );
+    }
 
 /**
  * Get the option parser for this shell.
  *
  * @return \Cake\Console\ConsoleOptionParser
  */
-	public function getOptionParser() {
-		return parent::getOptionParser()
-			->addOptions([
-				'prefix' => [
-					'help' => 'Routing prefix to migrate.',
-					'default' => 'admin'
-				]
-			]);
-	}
-
+    public function getOptionParser()
+    {
+        return parent::getOptionParser()
+            ->addOptions([
+                'prefix' => [
+                    'help' => 'Routing prefix to migrate.',
+                    'default' => 'admin'
+                ]
+            ]);
+    }
 }

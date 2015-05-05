@@ -21,23 +21,25 @@ use Cake\Upgrade\Shell\Task\BaseTask;
  *
  * Updates __() calls.
  */
-class I18nTask extends BaseTask {
+class I18nTask extends BaseTask
+{
 
-	use ChangeTrait;
+    use ChangeTrait;
 
-	public $tasks = ['Stage'];
+    public $tasks = ['Stage'];
 
 /**
  * Converts placeholders from 2.x to 3.x syntax.
  *
  * @return void
  */
-	protected function _process($path) {
-		$original = $contents = $this->Stage->source($path);
+    protected function _process($path)
+    {
+        $original = $contents = $this->Stage->source($path);
 
-		$contents = $this->_adjustI18n($contents);
-		return $this->Stage->change($path, $original, $contents);
-	}
+        $contents = $this->_adjustI18n($contents);
+        return $this->Stage->change($path, $original, $contents);
+    }
 
 /**
  * Adjusts __() to use {n} instead of %s.
@@ -45,46 +47,47 @@ class I18nTask extends BaseTask {
  * @param string $contents
  * @return string
  */
-	protected function _adjustI18n($contents) {
-		// Basic functions
-		$pattern = '#__(n|c)?\((\'|")(.*?)(?<!\\\\)\2,#';
+    protected function _adjustI18n($contents)
+    {
+        // Basic functions
+        $pattern = '#__(n|c)?\((\'|")(.*?)(?<!\\\\)\2,#';
 
-		$replacement = function ($matches) {
-			$string = $matches[3];
-			$count = 0;
+        $replacement = function ($matches) {
+            $string = $matches[3];
+            $count = 0;
 
-			$c = 1;
-			while ($c) {
-				$repString = '{' . $count . '}';
-				$string = preg_replace('/%[sdefc]/', $repString, $string, 1, $c);
-				$count++;
-			}
-			return '__' . $matches[1] . '(' . $matches[2] . $string . $matches[2] . ',';
-		};
+            $c = 1;
+            while ($c) {
+                $repString = '{' . $count . '}';
+                $string = preg_replace('/%[sdefc]/', $repString, $string, 1, $c);
+                $count++;
+            }
+            return '__' . $matches[1] . '(' . $matches[2] . $string . $matches[2] . ',';
+        };
 
-		$contents = preg_replace_callback($pattern, $replacement, $contents, -1, $count);
+        $contents = preg_replace_callback($pattern, $replacement, $contents, -1, $count);
 
-		// Domain functions
-		$pattern = '#__(|d|dc|dn|dcn)?\((\'|")(.*?)(?<!\\\\)\2,\s*(\'|")(.*?)(?<!\\\\)\4,#';
+        // Domain functions
+        $pattern = '#__(|d|dc|dn|dcn)?\((\'|")(.*?)(?<!\\\\)\2,\s*(\'|")(.*?)(?<!\\\\)\4,#';
 
-		$replacement = function ($matches) {
-			$string = $matches[5];
-			$count = 0;
+        $replacement = function ($matches) {
+            $string = $matches[5];
+            $count = 0;
 
-			$c = 1;
-			while ($c) {
-				$repString = '{' . $count . '}';
-				$string = preg_replace('/%[sdefc]/', $repString, $string, 1, $c);
-				$count++;
-			}
-			return '__' . $matches[1] . '(' . $matches[2] . $matches[3] . $matches[2] . ', ' .
-				$matches[4] . $string . $matches[4] . ',';
-		};
+            $c = 1;
+            while ($c) {
+                $repString = '{' . $count . '}';
+                $string = preg_replace('/%[sdefc]/', $repString, $string, 1, $c);
+                $count++;
+            }
+            return '__' . $matches[1] . '(' . $matches[2] . $matches[3] . $matches[2] . ', ' .
+                $matches[4] . $string . $matches[4] . ',';
+        };
 
-		$contents = preg_replace_callback($pattern, $replacement, $contents, -1, $count);
+        $contents = preg_replace_callback($pattern, $replacement, $contents, -1, $count);
 
-		return $contents;
-	}
+        return $contents;
+    }
 
 /**
  * _shouldProcess
@@ -94,9 +97,9 @@ class I18nTask extends BaseTask {
  * @param string $path
  * @return bool
  */
-	protected function _shouldProcess($path) {
-		$ending = substr($path, -4);
-		return $ending === '.php' || $ending === '.ctp';
-	}
-
+    protected function _shouldProcess($path)
+    {
+        $ending = substr($path, -4);
+        return $ending === '.php' || $ending === '.ctp';
+    }
 }

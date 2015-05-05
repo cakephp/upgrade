@@ -19,11 +19,12 @@ use Cake\Upgrade\Shell\Task\BaseTask;
 /**
  * Move files around as directories have changed in 3.0
  */
-class LocationsTask extends BaseTask {
+class LocationsTask extends BaseTask
+{
 
-	use ChangeTrait;
+    use ChangeTrait;
 
-	public $tasks = ['Stage'];
+    public $tasks = ['Stage'];
 
 /**
  * Check all moves, and stage moving the file to new location.
@@ -31,30 +32,31 @@ class LocationsTask extends BaseTask {
  * @param mixed $path
  * @return bool
  */
-	protected function _process($path) {
-		$new = $path;
-		foreach ($this->_moves() as $from => $to) {
-			$from = $this->_relativeFromRoot($from, $new);
-			if (!$this->_isInRoot($to)) {
-				$to = 'src' . DS . $to;
-			}
-			if ($from === 'Lib') {
-				$pieces = explode(DS . $from . DS, $new);
-				$ending = array_pop($pieces);
-				if (strpos($ending, DS) === false) {
-					$to .= DS . 'Lib';
-				}
-			}
+    protected function _process($path)
+    {
+        $new = $path;
+        foreach ($this->_moves() as $from => $to) {
+            $from = $this->_relativeFromRoot($from, $new);
+            if (!$this->_isInRoot($to)) {
+                $to = 'src' . DS . $to;
+            }
+            if ($from === 'Lib') {
+                $pieces = explode(DS . $from . DS, $new);
+                $ending = array_pop($pieces);
+                if (strpos($ending, DS) === false) {
+                    $to .= DS . 'Lib';
+                }
+            }
 
-			$new = str_replace(DS . $from . DS, DS . $to . DS, $new);
-		}
+            $new = str_replace(DS . $from . DS, DS . $to . DS, $new);
+        }
 
-		if ($new === $path) {
-			return false;
-		}
+        if ($new === $path) {
+            return false;
+        }
 
-		return $this->Stage->move($path, $new);
-	}
+        return $this->Stage->move($path, $new);
+    }
 
 /**
  * _shouldProcess
@@ -64,58 +66,60 @@ class LocationsTask extends BaseTask {
  * @param string $path
  * @return bool
  */
-	protected function _shouldProcess($path) {
-		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
-		$root = rtrim($root, DS);
-		$relativeFromRoot = str_replace($root, '', $path);
+    protected function _shouldProcess($path)
+    {
+        $root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
+        $root = rtrim($root, DS);
+        $relativeFromRoot = str_replace($root, '', $path);
 
-		if (strpos($relativeFromRoot, DS . 'Plugin' . DS) || strpos($relativeFromRoot, DS . 'plugins' . DS)) {
-			return false;
-		}
-		if (strpos($relativeFromRoot, DS . 'Vendor' . DS) || strpos($relativeFromRoot, DS . 'vendors' . DS)) {
-			return false;
-		}
+        if (strpos($relativeFromRoot, DS . 'Plugin' . DS) || strpos($relativeFromRoot, DS . 'plugins' . DS)) {
+            return false;
+        }
+        if (strpos($relativeFromRoot, DS . 'Vendor' . DS) || strpos($relativeFromRoot, DS . 'vendors' . DS)) {
+            return false;
+        }
 
-		foreach (array_keys($this->_moves()) as $substr) {
-			if (strpos($relativeFromRoot, DS . $substr . DS) !== false) {
-				return true;
-			}
-		}
+        foreach (array_keys($this->_moves()) as $substr) {
+            if (strpos($relativeFromRoot, DS . $substr . DS) !== false) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 /**
  * Key value map of from and to
  *
  * @return array
  */
-	protected function _moves() {
-		return array(
-			'Config' => 'config',
-			'Console' => 'bin',
-			'Console' . DS . 'Command' => 'Shell',
-			'Console' . DS . 'Command' . DS . 'Task' => 'Shell' . DS . 'Task',
-			'Controller' . DS . 'Component' . DS . 'Auth' => 'Auth',
-			'Lib' => 'src',
-			'Test' . DS . 'Case' => 'tests' . DS . 'TestCase',
-			'View' . DS . 'Elements' => 'Template' . DS . 'Element',
-			'View' . DS . 'Emails' => 'Template' . DS . 'Email',
-			'View' . DS . 'Layouts' => 'Template' . DS . 'Layout',
-			'Template' . DS . 'Layout' . DS . 'Emails' => 'Template' . DS . 'Layout' . DS . 'Email',
-			'View' . DS . 'Scaffolds' => 'Template' . DS . 'Scaffold',
-			'View' . DS . 'Errors' => 'Template' . DS . 'Error',
-			'View' . DS . 'Themed' => 'Template' . DS . 'Themed',
+    protected function _moves()
+    {
+        return array(
+            'Config' => 'config',
+            'Console' => 'bin',
+            'Console' . DS . 'Command' => 'Shell',
+            'Console' . DS . 'Command' . DS . 'Task' => 'Shell' . DS . 'Task',
+            'Controller' . DS . 'Component' . DS . 'Auth' => 'Auth',
+            'Lib' => 'src',
+            'Test' . DS . 'Case' => 'tests' . DS . 'TestCase',
+            'View' . DS . 'Elements' => 'Template' . DS . 'Element',
+            'View' . DS . 'Emails' => 'Template' . DS . 'Email',
+            'View' . DS . 'Layouts' => 'Template' . DS . 'Layout',
+            'Template' . DS . 'Layout' . DS . 'Emails' => 'Template' . DS . 'Layout' . DS . 'Email',
+            'View' . DS . 'Scaffolds' => 'Template' . DS . 'Scaffold',
+            'View' . DS . 'Errors' => 'Template' . DS . 'Error',
+            'View' . DS . 'Themed' => 'Template' . DS . 'Themed',
 
-			'Auth' => 'Auth',
-			'Controller' => 'Controller',
-			'Model' => 'Model',
-			'Template' => 'Template',
-			'View' . DS . 'Helper' => 'View' . DS . 'Helper',
-			'View' => 'Template',
-			'Test' => 'tests'
-		);
-	}
+            'Auth' => 'Auth',
+            'Controller' => 'Controller',
+            'Model' => 'Model',
+            'Template' => 'Template',
+            'View' . DS . 'Helper' => 'View' . DS . 'Helper',
+            'View' => 'Template',
+            'Test' => 'tests'
+        );
+    }
 
 /**
  * Get the relative path from ROOT for a specific folder.
@@ -124,21 +128,22 @@ class LocationsTask extends BaseTask {
  * @param string $path
  * @return string $path
  */
-	protected function _relativeFromRoot($folder, $path) {
-		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
+    protected function _relativeFromRoot($folder, $path)
+    {
+        $root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
 
-		$split = explode(DS . $folder . DS, $path);
-		if (empty($split[0]) || strpos($split[0], $root) !== 0) {
-			return $folder;
-		}
+        $split = explode(DS . $folder . DS, $path);
+        if (empty($split[0]) || strpos($split[0], $root) !== 0) {
+            return $folder;
+        }
 
-		$relativePath = substr($split[0], strlen($root));
-		if (!$relativePath) {
-			return $folder;
-		}
+        $relativePath = substr($split[0], strlen($root));
+        if (!$relativePath) {
+            return $folder;
+        }
 
-		return $relativePath . DS . $folder;
-	}
+        return $relativePath . DS . $folder;
+    }
 
 /**
  * Detect if a target folder should be in ROOT.
@@ -146,31 +151,32 @@ class LocationsTask extends BaseTask {
  * @param string $folder
  * @return bool Success
  */
-	protected function _isInRoot($folder) {
-		$rootFolders = array(
-			'config',
-			'bin',
-			'tests',
-			'src'
-		);
-		$pieces = explode(DS, $folder);
-		$firstFolder = !empty($pieces[0]) ? $pieces[0] : $folder;
-		return in_array($firstFolder, $rootFolders, true);
-	}
+    protected function _isInRoot($folder)
+    {
+        $rootFolders = array(
+            'config',
+            'bin',
+            'tests',
+            'src'
+        );
+        $pieces = explode(DS, $folder);
+        $firstFolder = !empty($pieces[0]) ? $pieces[0] : $folder;
+        return in_array($firstFolder, $rootFolders, true);
+    }
 
 /**
  * Get the option parser for this shell.
  *
  * @return \Cake\Console\ConsoleOptionParser
  */
-	public function getOptionParser() {
-		return parent::getOptionParser()
-			->addOptions([
-				'root' => [
-					'default' => '',
-					'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.'
-				]
-			]);
-	}
-
+    public function getOptionParser()
+    {
+        return parent::getOptionParser()
+            ->addOptions([
+                'root' => [
+                    'default' => '',
+                    'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.'
+                ]
+            ]);
+    }
 }

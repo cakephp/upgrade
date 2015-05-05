@@ -19,11 +19,12 @@ use Cake\Upgrade\Shell\Task\BaseTask;
 /**
  * Update namespaces.
  */
-class NamespacesTask extends BaseTask {
+class NamespacesTask extends BaseTask
+{
 
-	use ChangeTrait;
+    use ChangeTrait;
 
-	public $tasks = ['Stage'];
+    public $tasks = ['Stage'];
 
 /**
  * Adds the namespace to a given file.
@@ -33,25 +34,26 @@ class NamespacesTask extends BaseTask {
  * @param bool $dry Whether or not to operate in dry-run mode.
  * @return bool
  */
-	protected function _process($path) {
-		$namespace = $this->_getNamespace($path);
-		if (!$namespace) {
-			return false;
-		}
+    protected function _process($path)
+    {
+        $namespace = $this->_getNamespace($path);
+        if (!$namespace) {
+            return false;
+        }
 
-		$original = $contents = $this->Stage->source($path);
+        $original = $contents = $this->Stage->source($path);
 
-		$patterns = [
-			[
-				'Namespace to ' . $namespace,
-				'#^(<\?(?:php)?\s+(?:\/\*.*?\*\/\s{0,1})?)#s',
-				"\\1namespace " . $namespace . ";\n\n",
-			]
-		];
-		$contents = $this->_updateContents($contents, $patterns);
+        $patterns = [
+            [
+                'Namespace to ' . $namespace,
+                '#^(<\?(?:php)?\s+(?:\/\*.*?\*\/\s{0,1})?)#s',
+                "\\1namespace " . $namespace . ";\n\n",
+            ]
+        ];
+        $contents = $this->_updateContents($contents, $patterns);
 
-		return $this->Stage->change($path, $original, $contents);
-	}
+        return $this->Stage->change($path, $original, $contents);
+    }
 
 /**
  * _getNamespace
@@ -62,15 +64,16 @@ class NamespacesTask extends BaseTask {
  * @param string $path
  * @return string
  */
-	protected function _getNamespace($path) {
-		$ns = $this->param('namespace');
-		$path = str_replace(realpath($this->args[0]), '', dirname($path));
-		$path = preg_replace('@.*(Plugin|plugins)[/\\\\]@', '', $path);
-		$path = preg_replace('@[/\\\\]src@', '', $path);
-		$path = preg_replace('@tests[/\\\\]@', 'Test' . DS, $path);
+    protected function _getNamespace($path)
+    {
+        $ns = $this->param('namespace');
+        $path = str_replace(realpath($this->args[0]), '', dirname($path));
+        $path = preg_replace('@.*(Plugin|plugins)[/\\\\]@', '', $path);
+        $path = preg_replace('@[/\\\\]src@', '', $path);
+        $path = preg_replace('@tests[/\\\\]@', 'Test' . DS, $path);
 
-		return trim(implode('\\', [$ns, str_replace(DS, '\\', $path)]), '\\');
-	}
+        return trim(implode('\\', [$ns, str_replace(DS, '\\', $path)]), '\\');
+    }
 
 /**
  * _shouldProcess
@@ -80,35 +83,36 @@ class NamespacesTask extends BaseTask {
  * @param string $path
  * @return bool
  */
-	protected function _shouldProcess($path) {
-		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
-		$root = rtrim($root, DS);
-		$relativeFromRoot = str_replace($root, '', $path);
+    protected function _shouldProcess($path)
+    {
+        $root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
+        $root = rtrim($root, DS);
+        $relativeFromRoot = str_replace($root, '', $path);
 
-		if (strpos($relativeFromRoot, DS . 'Plugin' . DS) || strpos($relativeFromRoot, DS . 'plugins' . DS)) {
-			return false;
-		}
-		if (strpos($relativeFromRoot, DS . 'Vendor' . DS) || strpos($relativeFromRoot, DS . 'vendors' . DS)) {
-			return false;
-		}
+        if (strpos($relativeFromRoot, DS . 'Plugin' . DS) || strpos($relativeFromRoot, DS . 'plugins' . DS)) {
+            return false;
+        }
+        if (strpos($relativeFromRoot, DS . 'Vendor' . DS) || strpos($relativeFromRoot, DS . 'vendors' . DS)) {
+            return false;
+        }
 
-		// Skip boostrap files and alike
-		$filename = basename($path);
-		$excludes = array(
-			'bootstrap.php',
-			'routes.php',
-			'core.php',
-			'configs.php'
-		);
-		if (in_array($filename, $excludes, true)) {
-			return false;
-		}
+        // Skip boostrap files and alike
+        $filename = basename($path);
+        $excludes = array(
+            'bootstrap.php',
+            'routes.php',
+            'core.php',
+            'configs.php'
+        );
+        if (in_array($filename, $excludes, true)) {
+            return false;
+        }
 
-		$contents = $this->Stage->source($path);
-		if (preg_match('/namespace\s+[a-z0-9\\\\]+;/i', $contents)) {
-			return false;
-		}
+        $contents = $this->Stage->source($path);
+        if (preg_match('/namespace\s+[a-z0-9\\\\]+;/i', $contents)) {
+            return false;
+        }
 
-		return (substr($path, -4) === '.php');
-	}
+        return (substr($path, -4) === '.php');
+    }
 }
