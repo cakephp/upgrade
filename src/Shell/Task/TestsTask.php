@@ -20,11 +20,12 @@ use Cake\Utility\Inflector;
 /**
  * Updates test cases for 3.0
  */
-class TestsTask extends BaseTask {
+class TestsTask extends BaseTask
+{
 
-	use ChangeTrait;
+    use ChangeTrait;
 
-	public $tasks = ['Stage'];
+    public $tasks = ['Stage'];
 
 /**
  * Process tests regarding fixture usage and update it for 3.x
@@ -32,60 +33,60 @@ class TestsTask extends BaseTask {
  * @param string $content Fixture content.
  * @return bool
  */
-	protected function _process($path) {
-		$original = $contents = $this->Stage->source($path);
+    protected function _process($path)
+    {
+        $original = $contents = $this->Stage->source($path);
 
-		// Serializes data from PHP data into PHP code.
-		// Basically a code style conformant version of var_export()
-		$export = function ($values) use (&$export) {
-			$vals = [];
-			if (!is_array($values)) {
-				return $vals;
-			}
-			foreach ($values as $key => $val) {
-				if (is_array($val)) {
-					$vals[] = "'{$key}' => [" . implode(", ", $export($val)) . "]";
-				} else {
-					$val = var_export($val, true);
-					if ($val === 'NULL') {
-						$val = 'null';
-					}
-					if (!is_numeric($key)) {
-						$vals[] = "'{$key}' => {$val}";
-					} else {
-						$vals[] = "{$val}";
-					}
-				}
-			}
-			return $vals;
-		};
+        // Serializes data from PHP data into PHP code.
+        // Basically a code style conformant version of var_export()
+        $export = function ($values) use (&$export) {
+            $vals = [];
+            if (!is_array($values)) {
+                return $vals;
+            }
+            foreach ($values as $key => $val) {
+                if (is_array($val)) {
+                    $vals[] = "'{$key}' => [" . implode(", ", $export($val)) . "]";
+                } else {
+                    $val = var_export($val, true);
+                    if ($val === 'NULL') {
+                        $val = 'null';
+                    }
+                    if (!is_numeric($key)) {
+                        $vals[] = "'{$key}' => {$val}";
+                    } else {
+                        $vals[] = "{$val}";
+                    }
+                }
+            }
+            return $vals;
+        };
 
-		// Process field property.
-		$processor = function ($matches) use ($export) {
-			eval('$data = [' . $matches[2] . '];');
+        // Process field property.
+        $processor = function ($matches) use ($export) {
+            eval('$data = [' . $matches[2] . '];');
 
-			$out = [];
-			foreach ($data as $key => $fixture) {
-				$pieces = explode('.', $fixture);
-				$fixtureName = $pieces[count($pieces) - 1];
-				$fixtureName = Inflector::pluralize($fixtureName);
-				$pieces[count($pieces) - 1] = $fixtureName;
+            $out = [];
+            foreach ($data as $key => $fixture) {
+                $pieces = explode('.', $fixture);
+                $fixtureName = $pieces[count($pieces) - 1];
+                $fixtureName = Inflector::pluralize($fixtureName);
+                $pieces[count($pieces) - 1] = $fixtureName;
 
-				$out[] = implode('.', $pieces);
-			}
+                $out[] = implode('.', $pieces);
+            }
 
-			return $matches[1] . "\n\t\t" . implode(",\n\t\t", $export($out)) . "\n\t" . $matches[3];
-		};
+            return $matches[1] . "\n\t\t" . implode(",\n\t\t", $export($out)) . "\n\t" . $matches[3];
+        };
 
-		$contents = preg_replace_callback(
-			'/(public \$fixtures\s+=\s+(?:array\(|\[))(.*?)(\);|\];)/ms',
-			$processor,
-			$contents,
-			-1,
-			$count
-		);
+        $contents = preg_replace_callback(
+            '/(public \$fixtures\s+=\s+(?:array\(|\[))(.*?)(\);|\];)/ms',
+            $processor,
+            $contents,
+            -1,
+            $count
+        );
 
-		return $this->Stage->change($path, $original, $contents);
-	}
-
+        return $this->Stage->change($path, $original, $contents);
+    }
 }

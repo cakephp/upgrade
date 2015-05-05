@@ -22,11 +22,12 @@ use Cake\Upgrade\Shell\Task\BaseTask;
  *
  * Updates App::uses() calls.
  */
-class AppUsesTask extends BaseTask {
+class AppUsesTask extends BaseTask
+{
 
-	use ChangeTrait;
+    use ChangeTrait;
 
-	public $tasks = ['Stage'];
+    public $tasks = ['Stage'];
 
 /**
  * implicitMap
@@ -35,39 +36,39 @@ class AppUsesTask extends BaseTask {
  *
  * @var array
  */
-	public $implicitMap = [
-		'App' => 'Cake\Core\App',
-		'AppController' => 'App\Controller\AppController',
-		'AppHelper' => 'App\View\Helper\AppHelper',
-		'AppModel' => 'App\Model\AppModel',
-		'Cache' => 'Cake\Cache\Cache',
-		'CakeEventListener' => 'Cake\Event\EventListener',
-		'CakeLog' => 'Cake\Log\Log',
-		'CakePlugin' => 'Cake\Core\Plugin',
-		'CakeTestCase' => 'Cake\TestSuite\TestCase',
-		'CakeTestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
-		'Component' => 'Cake\Controller\Component',
-		'ComponentRegistry' => 'Cake\Controller\ComponentRegistry',
-		'Configure' => 'Cake\Core\Configure',
-		'ConnectionManager' => 'Cake\Database\ConnectionManager',
-		'Controller' => 'Cake\Controller\Controller',
-		'Debugger' => 'Cake\Error\Debugger',
-		'ExceptionRenderer' => 'Cake\Error\ExceptionRenderer',
-		'Helper' => 'Cake\View\Helper',
-		'HelperRegistry' => 'Cake\View\HelperRegistry',
-		'Inflector' => 'Cake\Utility\Inflector',
-		'Model' => 'Cake\Model\Model',
-		'ModelBehavior' => 'Cake\Model\Behavior',
-		'Object' => 'Cake\Core\Object',
-		'Router' => 'Cake\Routing\Router',
-		'Shell' => 'Cake\Console\Shell',
-		'View' => 'Cake\View\View',
-		// Also apply to already renamed ones
-		'Log' => 'Cake\Log\Log',
-		'Plugin' => 'Cake\Core\Plugin',
-		'TestCase' => 'Cake\TestSuite\TestCase',
-		'TestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
-	];
+    public $implicitMap = [
+        'App' => 'Cake\Core\App',
+        'AppController' => 'App\Controller\AppController',
+        'AppHelper' => 'App\View\Helper\AppHelper',
+        'AppModel' => 'App\Model\AppModel',
+        'Cache' => 'Cake\Cache\Cache',
+        'CakeEventListener' => 'Cake\Event\EventListener',
+        'CakeLog' => 'Cake\Log\Log',
+        'CakePlugin' => 'Cake\Core\Plugin',
+        'CakeTestCase' => 'Cake\TestSuite\TestCase',
+        'CakeTestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
+        'Component' => 'Cake\Controller\Component',
+        'ComponentRegistry' => 'Cake\Controller\ComponentRegistry',
+        'Configure' => 'Cake\Core\Configure',
+        'ConnectionManager' => 'Cake\Database\ConnectionManager',
+        'Controller' => 'Cake\Controller\Controller',
+        'Debugger' => 'Cake\Error\Debugger',
+        'ExceptionRenderer' => 'Cake\Error\ExceptionRenderer',
+        'Helper' => 'Cake\View\Helper',
+        'HelperRegistry' => 'Cake\View\HelperRegistry',
+        'Inflector' => 'Cake\Utility\Inflector',
+        'Model' => 'Cake\Model\Model',
+        'ModelBehavior' => 'Cake\Model\Behavior',
+        'Object' => 'Cake\Core\Object',
+        'Router' => 'Cake\Routing\Router',
+        'Shell' => 'Cake\Console\Shell',
+        'View' => 'Cake\View\View',
+        // Also apply to already renamed ones
+        'Log' => 'Cake\Log\Log',
+        'Plugin' => 'Cake\Core\Plugin',
+        'TestCase' => 'Cake\TestSuite\TestCase',
+        'TestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
+    ];
 
 /**
  * Rename classes
@@ -76,25 +77,25 @@ class AppUsesTask extends BaseTask {
  *
  * @var mixed
  */
-	public $rename = [
-		'CakePlugin',
-		'CakeEvent',
-		'CakeEventListener',
-		'CakeEventManager',
-		'CakeValidationRule',
-		'CakeSocket',
-		'CakeRoute',
-		'CakeRequest',
-		'CakeResponse',
-		'CakeSession',
-		'CakeLog',
-		'CakeNumber',
-		'CakeTime',
-		'CakeEmail',
-		'CakeLogInterface',
-		'CakeSessionHandlerInterface',
-		'CakeTestCase'
-	];
+    public $rename = [
+        'CakePlugin',
+        'CakeEvent',
+        'CakeEventListener',
+        'CakeEventManager',
+        'CakeValidationRule',
+        'CakeSocket',
+        'CakeRoute',
+        'CakeRequest',
+        'CakeResponse',
+        'CakeSession',
+        'CakeLog',
+        'CakeNumber',
+        'CakeTime',
+        'CakeEmail',
+        'CakeLogInterface',
+        'CakeSessionHandlerInterface',
+        'CakeTestCase'
+    ];
 
 /**
  * Convert App::uses() to normal use statements.
@@ -103,17 +104,18 @@ class AppUsesTask extends BaseTask {
  *
  * @return void
  */
-	protected function _process($path) {
-		$original = $contents = $this->Stage->source($path);
+    protected function _process($path)
+    {
+        $original = $contents = $this->Stage->source($path);
 
-		$contents = $this->_replaceAppUses($contents);
-		$contents = $this->_removeDynamicAppUses($contents);
-		$contents = $this->_addImplicitUses($contents);
-		$contents = $this->_orderUses($contents);
-		$contents = $this->_replaceReferences($contents);
+        $contents = $this->_replaceAppUses($contents);
+        $contents = $this->_removeDynamicAppUses($contents);
+        $contents = $this->_addImplicitUses($contents);
+        $contents = $this->_orderUses($contents);
+        $contents = $this->_replaceReferences($contents);
 
-		return $this->Stage->change($path, $original, $contents);
-	}
+        return $this->Stage->change($path, $original, $contents);
+    }
 
 /**
  * Replace App::uses with use <Classname>;
@@ -121,37 +123,38 @@ class AppUsesTask extends BaseTask {
  * @param string $contents
  * @return string
  */
-	protected function _replaceAppUses($contents) {
-		$pattern = '#App::uses\(\s*[\'"]([a-z0-9_]+)[\'"]\s*,\s*[\'"]([a-z0-9/_]+)(?:\.([a-z0-9/_]+))?[\'"]\)#i';
+    protected function _replaceAppUses($contents)
+    {
+        $pattern = '#App::uses\(\s*[\'"]([a-z0-9_]+)[\'"]\s*,\s*[\'"]([a-z0-9/_]+)(?:\.([a-z0-9/_]+))?[\'"]\)#i';
 
-		$replacement = function ($matches) {
-			$matches = $this->_mapClassName($matches);
-			// Chop Lib out as locations moves those files to the top level.
-			// But only if Lib is not the last folder.
-			if (isset($matches[3]) && substr($matches[3], 0, 4) === 'Lib/') {
-				$use = $matches[2] . '\\' . substr($matches[3], 4) . '\\' .$matches[1];
-			} elseif (count($matches) === 4) {
-				$use = $matches[2] . '\\' . $matches[3] . '\\' . $matches[1];
-			} elseif ($matches[2] === 'Vendor') {
-				$this->out(
-					sprintf('<info>Skip %s as it is a vendor library.</info>', $matches[1]),
-					1,
-					Shell::VERBOSE
-				);
-				return $matches[0];
-			} else {
-				$use = 'Cake\\' . $matches[2] . '\\' . $matches[1];
-				if (!class_exists($use) && !interface_exists($use)) {
-					$use = 'App\\' . substr($use, 5);
-				}
-			}
+        $replacement = function ($matches) {
+            $matches = $this->_mapClassName($matches);
+            // Chop Lib out as locations moves those files to the top level.
+            // But only if Lib is not the last folder.
+            if (isset($matches[3]) && substr($matches[3], 0, 4) === 'Lib/') {
+                $use = $matches[2] . '\\' . substr($matches[3], 4) . '\\' .$matches[1];
+            } elseif (count($matches) === 4) {
+                $use = $matches[2] . '\\' . $matches[3] . '\\' . $matches[1];
+            } elseif ($matches[2] === 'Vendor') {
+                $this->out(
+                    sprintf('<info>Skip %s as it is a vendor library.</info>', $matches[1]),
+                    1,
+                    Shell::VERBOSE
+                );
+                return $matches[0];
+            } else {
+                $use = 'Cake\\' . $matches[2] . '\\' . $matches[1];
+                if (!class_exists($use) && !interface_exists($use)) {
+                    $use = 'App\\' . substr($use, 5);
+                }
+            }
 
-			$use = str_replace('/', '\\', $use);
-			return 'use ' . $use;
-		};
+            $use = str_replace('/', '\\', $use);
+            return 'use ' . $use;
+        };
 
-		return preg_replace_callback($pattern, $replacement, $contents, -1, $count);
-	}
+        return preg_replace_callback($pattern, $replacement, $contents, -1, $count);
+    }
 
 /**
  * _removeDynamicAppUses
@@ -159,10 +162,11 @@ class AppUsesTask extends BaseTask {
  * @param string $contents
  * @return string
  */
-	protected function _removeDynamicAppUses($contents) {
-		$pattern = '#(App::uses\(.+\);?)#';
-		return preg_replace($pattern, '/* TODO: \1 */', $contents);
-	}
+    protected function _removeDynamicAppUses($contents)
+    {
+        $pattern = '#(App::uses\(.+\);?)#';
+        return preg_replace($pattern, '/* TODO: \1 */', $contents);
+    }
 
 /**
  * Add implicit uses
@@ -176,60 +180,61 @@ class AppUsesTask extends BaseTask {
  * @param string $contents
  * @return string
  */
-	protected function _addImplicitUses($contents) {
-		preg_match(
-			'/class\s+\S+(\s+extends\s+(\S+))?(\s+implements\s+(\S+))?/',
-			$contents,
-			$matches
-		);
+    protected function _addImplicitUses($contents)
+    {
+        preg_match(
+            '/class\s+\S+(\s+extends\s+(\S+))?(\s+implements\s+(\S+))?/',
+            $contents,
+            $matches
+        );
 
-		$toCheck = [];
-		if (isset($matches[2])) {
-			$toCheck[] = $matches[2];
-		}
-		if (isset($matches[4])) {
-			$toCheck[] = $matches[4];
-		}
+        $toCheck = [];
+        if (isset($matches[2])) {
+            $toCheck[] = $matches[2];
+        }
+        if (isset($matches[4])) {
+            $toCheck[] = $matches[4];
+        }
 
-		preg_match_all(
-			'/function.*\(.*\b(\S+)\b\s+\$/',
-			$contents,
-			$matches
-		);
+        preg_match_all(
+            '/function.*\(.*\b(\S+)\b\s+\$/',
+            $contents,
+            $matches
+        );
 
-		$toCheck = array_filter(array_unique(array_merge($toCheck, $matches[1])));
+        $toCheck = array_filter(array_unique(array_merge($toCheck, $matches[1])));
 
-		preg_match_all(
-			'/\b([A-Z][a-zA-Z0-9]+)::/',
-			$contents,
-			$matches
-		);
+        preg_match_all(
+            '/\b([A-Z][a-zA-Z0-9]+)::/',
+            $contents,
+            $matches
+        );
 
-		$toCheck = array_filter(array_unique(array_merge($toCheck, $matches[1])));
+        $toCheck = array_filter(array_unique(array_merge($toCheck, $matches[1])));
 
-		foreach ($toCheck as $check) {
-			if (preg_match("/use .+\b$check;/", $contents)) {
-				continue;
-			}
+        foreach ($toCheck as $check) {
+            if (preg_match("/use .+\b$check;/", $contents)) {
+                continue;
+            }
 
-			if (!isset($this->implicitMap[$check])) {
-				$this->out(sprintf('<warning>%s is not in the implicit class map</warning>', $check));
-				continue;
-			}
+            if (!isset($this->implicitMap[$check])) {
+                $this->out(sprintf('<warning>%s is not in the implicit class map</warning>', $check));
+                continue;
+            }
 
-			$class = $this->implicitMap[$check];
-			$useStatement = "use $class;\n";
+            $class = $this->implicitMap[$check];
+            $useStatement = "use $class;\n";
 
-			$containsUseStatements = preg_match("/use .+;/", $contents);
-			$contents = preg_replace(
-				'/(namespace [\S+]+;[\n]{1,})/',
-				'\1' . $useStatement . (!$containsUseStatements ? "\n" : ''),
-				$contents
-			);
-		}
+            $containsUseStatements = preg_match("/use .+;/", $contents);
+            $contents = preg_replace(
+                '/(namespace [\S+]+;[\n]{1,})/',
+                '\1' . $useStatement . (!$containsUseStatements ? "\n" : ''),
+                $contents
+            );
+        }
 
-		return $contents;
-	}
+        return $contents;
+    }
 
 /**
  * Order use statements
@@ -240,21 +245,22 @@ class AppUsesTask extends BaseTask {
  * @param string $contents
  * @return string
  */
-	protected function _orderUses($contents) {
-		preg_match_all('/[\t ]*\buse .+;[\n]/', $contents, $matches);
+    protected function _orderUses($contents)
+    {
+        preg_match_all('/[\t ]*\buse .+;[\n]/', $contents, $matches);
 
-		$contents = str_replace($matches[0], '', $contents);
+        $contents = str_replace($matches[0], '', $contents);
 
-		array_walk($matches[0], create_function('&$val', '$val = ltrim($val);'));
-		$matches[0] = array_unique($matches[0]);
-		sort($matches[0]);
+        array_walk($matches[0], create_function('&$val', '$val = ltrim($val);'));
+        $matches[0] = array_unique($matches[0]);
+        sort($matches[0]);
 
-		return preg_replace(
-			'/(namespace [\S+]+;[\n]{2})/',
-			'\1' . implode('', $matches[0]),
-			$contents
-		);
-	}
+        return preg_replace(
+            '/(namespace [\S+]+;[\n]{2})/',
+            '\1' . implode('', $matches[0]),
+            $contents
+        );
+    }
 
 /**
  * Replace references to old classes
@@ -262,14 +268,15 @@ class AppUsesTask extends BaseTask {
  * @param string $contents
  * @return string
  */
-	protected function _replaceReferences($contents) {
-		$rename = $this->rename;
-		foreach ($rename as &$val) {
-			$val = substr($val, 4);
-		}
-		$regex = '/\bCake(' . implode($rename, '|') . ')\b/';
-		return preg_replace($regex, '\1', $contents);
-	}
+    protected function _replaceReferences($contents)
+    {
+        $rename = $this->rename;
+        foreach ($rename as &$val) {
+            $val = substr($val, 4);
+        }
+        $regex = '/\bCake(' . implode($rename, '|') . ')\b/';
+        return preg_replace($regex, '\1', $contents);
+    }
 
 /**
  * Convert old classnames to new ones.
@@ -278,15 +285,16 @@ class AppUsesTask extends BaseTask {
  * @param array $matches
  * @return array
  */
-	protected function _mapClassName($matches) {
-		if (empty($matches[3])) {
-			unset($matches[3]);
-		}
-		if (in_array($matches[1], $this->rename)) {
-			$matches[1] = substr($matches[1], 4);
-		}
-		return $matches;
-	}
+    protected function _mapClassName($matches)
+    {
+        if (empty($matches[3])) {
+            unset($matches[3]);
+        }
+        if (in_array($matches[1], $this->rename)) {
+            $matches[1] = substr($matches[1], 4);
+        }
+        return $matches;
+    }
 
 /**
  * _shouldProcess
@@ -296,8 +304,8 @@ class AppUsesTask extends BaseTask {
  * @param string $path
  * @return bool
  */
-	protected function _shouldProcess($path) {
-		return (substr($path, -4) === '.php');
-	}
-
+    protected function _shouldProcess($path)
+    {
+        return (substr($path, -4) === '.php');
+    }
 }

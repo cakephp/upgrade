@@ -22,11 +22,12 @@ use Cake\Upgrade\Shell\Task\BaseTask;
  * Handles updating method names that have been changed.
  *
  */
-class MethodNamesTask extends BaseTask {
+class MethodNamesTask extends BaseTask
+{
 
-	use ChangeTrait;
+    use ChangeTrait;
 
-	public $tasks = ['Stage'];
+    public $tasks = ['Stage'];
 
 /**
  * Processes a path.
@@ -34,87 +35,86 @@ class MethodNamesTask extends BaseTask {
  * @param string $path
  * @return void
  */
-	protected function _process($path) {
-		$helperPatterns = [
-			[
-				'Replace $this->Paginator->url() with $this->Paginator->generateUrl()',
-				'#\$this->Paginator->url\(#',
-				'$this->Paginator->generateUrl(',
-			],
-			[
-				'Replace $this->Html->url() with $this->Url->build()',
-				'#\$this->Html->url\(#',
-				'$this->Url->build(',
-			],
-			[
-				'Replace $this->Html->assetTimestamp() with $this->Url->assetTimestamp()',
-				'#\$this->Html->assetTimestamp\(#',
-				'$this->Url->assetTimestamp(',
-			],
-			[
-				'Replace $this->Html->assetUrl() with $this->Url->assetUrl()',
-				'#\$this->Html->assetUrl\(#',
-				'$this->Url->assetUrl(',
-			],
-			[
-				'Replace $this->Html->webroot() with $this->Url->webroot()',
-				'#\$this->Html->webroot\(#',
-				'$this->Url->webroot(',
-			],
-			[
-				'Replace $this->Session->flash() with $this->Flash->render()',
-				'#\$this->Session->flash\(#',
-				'$this->Flash->render(',
-			]
-		];
+    protected function _process($path)
+    {
+        $helperPatterns = [
+            [
+                'Replace $this->Paginator->url() with $this->Paginator->generateUrl()',
+                '#\$this->Paginator->url\(#',
+                '$this->Paginator->generateUrl(',
+            ],
+            [
+                'Replace $this->Html->url() with $this->Url->build()',
+                '#\$this->Html->url\(#',
+                '$this->Url->build(',
+            ],
+            [
+                'Replace $this->Html->assetTimestamp() with $this->Url->assetTimestamp()',
+                '#\$this->Html->assetTimestamp\(#',
+                '$this->Url->assetTimestamp(',
+            ],
+            [
+                'Replace $this->Html->assetUrl() with $this->Url->assetUrl()',
+                '#\$this->Html->assetUrl\(#',
+                '$this->Url->assetUrl(',
+            ],
+            [
+                'Replace $this->Html->webroot() with $this->Url->webroot()',
+                '#\$this->Html->webroot\(#',
+                '$this->Url->webroot(',
+            ],
+            [
+                'Replace $this->Session->flash() with $this->Flash->render()',
+                '#\$this->Session->flash\(#',
+                '$this->Flash->render(',
+            ]
+        ];
 
-		$otherPatterns = [
-			[
-				'Replace $this->Cookie->type() with $this->Cookie->encryption()',
-				'#\$this->Cookie->type\(#',
-				'$this->Cookie->encryption(',
-			],
-			[
-				'Replace ConnectionManager::getDataSource() with ConnectionManager::get()',
-				'#ConnectionManager\:\:getDataSource\(#',
-				'ConnectionManager::get(',
-			],
-		];
+        $otherPatterns = [
+            [
+                'Replace $this->Cookie->type() with $this->Cookie->encryption()',
+                '#\$this->Cookie->type\(#',
+                '$this->Cookie->encryption(',
+            ],
+            [
+                'Replace ConnectionManager::getDataSource() with ConnectionManager::get()',
+                '#ConnectionManager\:\:getDataSource\(#',
+                'ConnectionManager::get(',
+            ],
+        ];
 
-		$taskPatterns = [
-			[
-				'Replace function execute() with main()',
-				'#function execute\(\)#',
-				'function main()',
-			],
-			[
-				'Replace parent::execute() with parent::main()',
-				'#parent\:\:execute\(\)#',
-				'parent::main()',
-			],
-			[
-				'Replace calls to execute() with main()',
-				'#->execute\(#',
-				'->main(',
-			],
-		];
+        $taskPatterns = [
+            [
+                'Replace function execute() with main()',
+                '#function execute\(\)#',
+                'function main()',
+            ],
+            [
+                'Replace parent::execute() with parent::main()',
+                '#parent\:\:execute\(\)#',
+                'parent::main()',
+            ],
+            [
+                'Replace calls to execute() with main()',
+                '#->execute\(#',
+                '->main(',
+            ],
+        ];
 
-		$patterns = [];
-		if (
-			strpos($path, DS . 'Template' . DS) !== false ||
-			strpos($path, DS . 'View' . DS) !== false
-		) {
-			$patterns = $helperPatterns;
-		}
-		if (strpos($path, DS . 'Command' . DS . 'Task' . DS)) {
-			$patterns = $taskPatterns;
-		}
-		$patterns = array_merge($patterns, $otherPatterns);
+        $patterns = [];
+        if (strpos($path, DS . 'Template' . DS) !== false ||
+            strpos($path, DS . 'View' . DS) !== false
+        ) {
+            $patterns = $helperPatterns;
+        }
+        if (strpos($path, DS . 'Command' . DS . 'Task' . DS)) {
+            $patterns = $taskPatterns;
+        }
+        $patterns = array_merge($patterns, $otherPatterns);
 
-		$original = $contents = $this->Stage->source($path);
-		$contents = $this->_updateContents($contents, $patterns);
+        $original = $contents = $this->Stage->source($path);
+        $contents = $this->_updateContents($contents, $patterns);
 
-		return $this->Stage->change($path, $original, $contents);
-	}
-
+        return $this->Stage->change($path, $original, $contents);
+    }
 }
