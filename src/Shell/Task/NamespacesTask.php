@@ -26,14 +26,14 @@ class NamespacesTask extends BaseTask
 
     public $tasks = ['Stage'];
 
-/**
- * Adds the namespace to a given file.
- *
- * @param string $filePath The file to add a namespace to.
- * @param string $ns The base namespace to use.
- * @param bool $dry Whether or not to operate in dry-run mode.
- * @return bool
- */
+    /**
+     * Adds the namespace to a given file.
+     *
+     * @param string $filePath The file to add a namespace to.
+     * @param string $ns The base namespace to use.
+     * @param bool $dry Whether or not to operate in dry-run mode.
+     * @return bool
+     */
     protected function _process($path)
     {
         $namespace = $this->_getNamespace($path);
@@ -55,15 +55,15 @@ class NamespacesTask extends BaseTask
         return $this->Stage->change($path, $original, $contents);
     }
 
-/**
- * _getNamespace
- *
- * Derives the root namespace from the path. Use the application root as a basis, and strip
- * off anything before Plugin directory - the plugin directory is a root of sorts.
- *
- * @param string $path
- * @return string
- */
+    /**
+     * _getNamespace
+     *
+     * Derives the root namespace from the path. Use the application root as a basis, and strip
+     * off anything before Plugin directory - the plugin directory is a root of sorts.
+     *
+     * @param string $path
+     * @return string
+     */
     protected function _getNamespace($path)
     {
         $ns = $this->param('namespace');
@@ -75,14 +75,14 @@ class NamespacesTask extends BaseTask
         return trim(implode('\\', [$ns, str_replace(DS, '\\', $path)]), '\\');
     }
 
-/**
- * _shouldProcess
- *
- * If it already has a namespace - bail, otherwise use the default (php files only)
- *
- * @param string $path
- * @return bool
- */
+    /**
+     * _shouldProcess
+     *
+     * If it already has a namespace - bail, otherwise use the default (php files only)
+     *
+     * @param string $path
+     * @return bool
+     */
     protected function _shouldProcess($path)
     {
         $root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];

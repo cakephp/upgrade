@@ -29,12 +29,12 @@ class MethodNamesTask extends BaseTask
 
     public $tasks = ['Stage'];
 
-/**
- * Processes a path.
- *
- * @param string $path
- * @return void
- */
+    /**
+     * Processes a path.
+     *
+     * @param string $path
+     * @return void
+     */
     protected function _process($path)
     {
         $helperPatterns = [

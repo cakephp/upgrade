@@ -29,11 +29,11 @@ use Cake\Utility\Inflector;
 class UpgradeShell extends Shell
 {
 
-/**
- * Tasks loaded.
- *
- * @var array
- */
+    /**
+     * Tasks loaded.
+     *
+     * @var array
+     */
     public $tasks = array(
         'AppUses',
         'Fixtures',
@@ -50,11 +50,11 @@ class UpgradeShell extends Shell
         'PrefixedTemplates',
     );
 
-/**
- * All command.
- *
- * @return void
- */
+    /**
+     * All command.
+     *
+     * @return void
+     */
     public function all()
     {
         if (!empty($this->params['dry-run'])) {
@@ -100,14 +100,14 @@ class UpgradeShell extends Shell
         }
     }
 
-/**
- * _getActions
- *
- * If the all function is called, derive which tasks to call, and in what order based on the
- * option parser info
- *
- * @return array
- */
+    /**
+     * _getActions
+     *
+     * If the all function is called, derive which tasks to call, and in what order based on the
+     * option parser info
+     *
+     * @return array
+     */
     protected function _getActions()
     {
         $all = [];
@@ -122,11 +122,11 @@ class UpgradeShell extends Shell
         return $all;
     }
 
-/**
- * Get the option parser
- *
- * @return ConsoleOptionParser
- */
+    /**
+     * Get the option parser
+     *
+     * @return ConsoleOptionParser
+     */
     public function getOptionParser()
     {
         $parser = parent::getOptionParser()

@@ -29,12 +29,12 @@ class MethodSignaturesTask extends BaseTask
 
     public $tasks = ['Stage'];
 
-/**
- * Processes a path.
- *
- * @param string $path
- * @return void
- */
+    /**
+     * Processes a path.
+     *
+     * @param string $path
+     * @return void
+     */
     protected function _process($path)
     {
         $controllerPatterns = [
@@ -215,14 +215,14 @@ class MethodSignaturesTask extends BaseTask
         return $this->Stage->change($path, $original, $contents);
     }
 
-/**
- * _shouldProcess
- *
- * Default to PHP files only
- *
- * @param string $path
- * @return bool
- */
+    /**
+     * _shouldProcess
+     *
+     * Default to PHP files only
+     *
+     * @param string $path
+     * @return bool
+     */
     protected function _shouldProcess($path)
     {
         return (substr($path, -4) === '.php');

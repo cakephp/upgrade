@@ -29,36 +29,36 @@ use Cake\Network\Exception\InternalErrorException;
 class StageTask extends Shell
 {
 
-/**
- * Files
- *
- * @var array
- */
+    /**
+     * Files
+     *
+     * @var array
+     */
     protected $_files = [];
 
-/**
- * Paths
- *
- * @var array
- */
+    /**
+     * Paths
+     *
+     * @var array
+     */
     protected $_paths = [];
 
-/**
- * Staged changes for processing at the end
- *
- * @var array
- */
+    /**
+     * Staged changes for processing at the end
+     *
+     * @var array
+     */
     protected $_staged = [
         'change' => [],
         'delete' => [],
         'move' => []
     ];
 
-/**
- * Clears the change log.
- *
- * @return void
- */
+    /**
+     * Clears the change log.
+     *
+     * @return void
+     */
     public function clear()
     {
         $this->_staged = [
@@ -68,14 +68,14 @@ class StageTask extends Shell
         ];
     }
 
-/**
- * Write staged changes
- *
- * If it's a dry run though - only show what will be done, don't do anything
- *
- * @param string $path file path
- * @return void
- */
+    /**
+     * Write staged changes
+     *
+     * If it's a dry run though - only show what will be done, don't do anything
+     *
+     * @param string $path file path
+     * @return void
+     */
     public function commit($path = null)
     {
         if (!$path) {
@@ -210,25 +210,25 @@ class StageTask extends Shell
         return $File->write(file_get_contents($uPath));
     }
 
-/**
- * delete
- *
- * @param string $path
- * @return bool
- */
+    /**
+     * delete
+     *
+     * @param string $path
+     * @return bool
+     */
     public function delete($path)
     {
         $this->_staged['delete'][] = $path;
         return true;
     }
 
-/**
- * move
- *
- * @param string $from
- * @param string $to
- * @return bool
- */
+    /**
+     * move
+     *
+     * @param string $from
+     * @param string $to
+     * @return bool
+     */
     public function move($from, $to)
     {
         if (is_dir($from)) {
@@ -247,14 +247,14 @@ class StageTask extends Shell
         return true;
     }
 
-/**
- * Store a change for a file
- *
- * @param string $filePath (unused, for future reference)
- * @param string $original
- * @param string $updated
- * @return bool
- */
+    /**
+     * Store a change for a file
+     *
+     * @param string $filePath (unused, for future reference)
+     * @param string $original
+     * @param string $updated
+     * @return bool
+     */
     public function change($filePath, $original, $updated)
     {
         if ($original === $updated) {
@@ -282,12 +282,12 @@ class StageTask extends Shell
         return true;
     }
 
-/**
- * Get the source of a file, taking into account that there may be incremental diffs
- *
- * @param string $path
- * @return string
- */
+    /**
+     * Get the source of a file, taking into account that there may be incremental diffs
+     *
+     * @param string $path
+     * @return string
+     */
     public function source($path)
     {
         if (isset($this->_staged['change'][$path])) {
@@ -297,13 +297,13 @@ class StageTask extends Shell
         return file_get_contents($path);
     }
 
-/**
- * Searches the paths and finds files based on extension.
- *
- * @param array $excludes
- * @param bool $reset
- * @return array
- */
+    /**
+     * Searches the paths and finds files based on extension.
+     *
+     * @param array $excludes
+     * @param bool $reset
+     * @return array
+     */
     public function files($excludes = [], $reset = false)
     {
         if ($reset) {
@@ -343,12 +343,12 @@ class StageTask extends Shell
         return $this->_files;
     }
 
-/**
- * Get the path to operate on. Uses either the first argument,
- * or the plugin parameter if its set.
- *
- * @return string
- */
+    /**
+     * Get the path to operate on. Uses either the first argument,
+     * or the plugin parameter if its set.
+     *
+     * @return string
+     */
     protected function _getPath()
     {
         if (empty($this->args[0]) || !file_exists($this->args[0])) {

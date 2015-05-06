@@ -26,12 +26,12 @@ class FixturesTask extends BaseTask
 
     public $tasks = ['Stage'];
 
-/**
- * Process fixture content and update it for 3.x
- *
- * @param string $content Fixture content.
- * @return bool
- */
+    /**
+     * Process fixture content and update it for 3.x
+     *
+     * @param string $content Fixture content.
+     * @return bool
+     */
     protected function _process($path)
     {
         $original = $contents = $this->Stage->source($path);
@@ -125,14 +125,14 @@ class FixturesTask extends BaseTask
         return $this->Stage->change($path, $original, $contents);
     }
 
-/**
- * _shouldProcess
- *
- * Only process files in fixture folders
- *
- * @param string $path
- * @return bool
- */
+    /**
+     * _shouldProcess
+     *
+     * Only process files in fixture folders
+     *
+     * @param string $path
+     * @return bool
+     */
     protected function _shouldProcess($path)
     {
         return (
