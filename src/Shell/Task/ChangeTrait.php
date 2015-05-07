@@ -23,11 +23,11 @@ use Cake\Error\Debugger;
 trait ChangeTrait
 {
 
-/**
- * Make tasks callable
- *
- * @return void
- */
+    /**
+     * Make tasks callable
+     *
+     * @return void
+     */
     public function main()
     {
         if (!empty($this->params['dry-run'])) {
@@ -49,12 +49,12 @@ trait ChangeTrait
         $this->Stage->commit();
     }
 
-/**
- * process
- *
- * @param string $path
- * @return void
- */
+    /**
+     * process
+     *
+     * @param string $path
+     * @return void
+     */
     public function process($path)
     {
         if (!$this->_shouldProcess($path)) {
@@ -72,36 +72,36 @@ trait ChangeTrait
         return $return;
     }
 
-/**
- * Default noop
- *
- * @param string $path
- * @return void
- */
+    /**
+     * Default noop
+     *
+     * @param string $path
+     * @return void
+     */
     protected function _process($path)
     {
     }
 
-/**
- * _shouldProcess
- *
- * Default to PHP files only
- *
- * @param string $path
- * @return bool
- */
+    /**
+     * _shouldProcess
+     *
+     * Default to PHP files only
+     *
+     * @param string $path
+     * @return bool
+     */
     protected function _shouldProcess($path)
     {
         return (substr($path, -4) === '.php');
     }
 
-/**
- * Update the contents of a file using an array of find and replace patterns
- *
- * @param string $contents The file contents to update
- * @param array $patterns The replacement patterns to run.
- * @return string
- */
+    /**
+     * Update the contents of a file using an array of find and replace patterns
+     *
+     * @param string $contents The file contents to update
+     * @param array $patterns The replacement patterns to run.
+     * @return string
+     */
     protected function _updateContents($contents, $patterns)
     {
         foreach ($patterns as $pattern) {

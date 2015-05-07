@@ -27,12 +27,12 @@ class SkeletonTask extends BaseTask
 
     public $tasks = ['Stage'];
 
-/**
- * Add missing files and folders in the root app dir.
- *
- * @param mixed $path
- * @return bool
- */
+    /**
+     * Add missing files and folders in the root app dir.
+     *
+     * @param mixed $path
+     * @return bool
+     */
     protected function _process($path)
     {
         $path = dirname($path) . DS;
@@ -74,14 +74,14 @@ class SkeletonTask extends BaseTask
         return (bool)$ret;
     }
 
-/**
- * _addFile()
- *
- * @param string $file
- * @param string $sourcePath
- * @param string $targetPath
- * @return bool
- */
+    /**
+     * _addFile()
+     *
+     * @param string $file
+     * @param string $sourcePath
+     * @param string $targetPath
+     * @return bool
+     */
     protected function _addFile($file, $sourcePath, $targetPath, $targetFile = null)
     {
         $result = false;
@@ -102,14 +102,14 @@ class SkeletonTask extends BaseTask
         return $result;
     }
 
-/**
- * _shouldProcess
- *
- * Is the current path within the scope of this task?
- *
- * @param string $path
- * @return bool
- */
+    /**
+     * _shouldProcess
+     *
+     * Is the current path within the scope of this task?
+     *
+     * @param string $path
+     * @return bool
+     */
     protected function _shouldProcess($path)
     {
         if (basename($path) === 'composer.json' && empty($this->params['plugin'])) {
@@ -118,11 +118,11 @@ class SkeletonTask extends BaseTask
         return false;
     }
 
-/**
- * Get the option parser for this shell.
- *
- * @return \Cake\Console\ConsoleOptionParser
- */
+    /**
+     * Get the option parser for this shell.
+     *
+     * @return \Cake\Console\ConsoleOptionParser
+     */
     public function getOptionParser()
     {
         return parent::getOptionParser()

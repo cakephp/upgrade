@@ -28,11 +28,11 @@ class I18nTask extends BaseTask
 
     public $tasks = ['Stage'];
 
-/**
- * Converts placeholders from 2.x to 3.x syntax.
- *
- * @return void
- */
+    /**
+     * Converts placeholders from 2.x to 3.x syntax.
+     *
+     * @return void
+     */
     protected function _process($path)
     {
         $original = $contents = $this->Stage->source($path);
@@ -41,12 +41,12 @@ class I18nTask extends BaseTask
         return $this->Stage->change($path, $original, $contents);
     }
 
-/**
- * Adjusts __() to use {n} instead of %s.
- *
- * @param string $contents
- * @return string
- */
+    /**
+     * Adjusts __() to use {n} instead of %s.
+     *
+     * @param string $contents
+     * @return string
+     */
     protected function _adjustI18n($contents)
     {
         // Basic functions
@@ -89,14 +89,14 @@ class I18nTask extends BaseTask
         return $contents;
     }
 
-/**
- * _shouldProcess
- *
- * Bail for invalid files (php/ctp files only)
- *
- * @param string $path
- * @return bool
- */
+    /**
+     * _shouldProcess
+     *
+     * Bail for invalid files (php/ctp files only)
+     *
+     * @param string $path
+     * @return bool
+     */
     protected function _shouldProcess($path)
     {
         $ending = substr($path, -4);

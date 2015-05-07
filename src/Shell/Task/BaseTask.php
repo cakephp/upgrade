@@ -21,11 +21,11 @@ use Cake\Console\Shell;
 class BaseTask extends Shell
 {
 
-/**
- * Get the option parser for this shell.
- *
- * @return \Cake\Console\ConsoleOptionParser
- */
+    /**
+     * Get the option parser for this shell.
+     *
+     * @return \Cake\Console\ConsoleOptionParser
+     */
     public function getOptionParser()
     {
         return parent::getOptionParser()
