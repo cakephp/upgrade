@@ -79,6 +79,11 @@ class MethodNamesTask extends BaseTask {
 				'#ConnectionManager\:\:getDataSource\(#',
 				'ConnectionManager::get(',
 			],
+			[
+				'Replace generateTreeList(null, null, null, ...) with find(\'treeList\', [...])',
+				'#\bgenerateTreeList\(null,\s*null,\s*null,\s*(.+)\)#',
+				'find(\'treeList\', [\'spacer\' => \1])',
+			],
 		];
 
 		$taskPatterns = [
