@@ -135,7 +135,7 @@ class TemplatesTask extends BaseTask {
 		$replacement = function ($matches) {
 			$entity = lcfirst($matches[1]);
 			$table = Inflector::pluralize($matches[1]);
-			return '$this->' . $table . '->save($entity)';
+			return '$this->' . $table . '->save($' . $entity . ')';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
 
