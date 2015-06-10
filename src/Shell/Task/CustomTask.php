@@ -120,6 +120,31 @@ class CustomTask extends BaseTask {
 				'use Tools\Network\Email\Email;'
 			],
 			[
+				'new EmailLib() to new Email()',
+				'/\bnew EmailLib\(/',
+				'new Email('
+			],
+			[
+				'Tools\Controller\Controller',
+				'/\buse Tools\\\\Controller\\\\MyController;/',
+				'use Tools\Controller\Controller;'
+			],
+			[
+				'extends MyController to extends Controller',
+				'/\bextends MyController\b/',
+				'extends Controller'
+			],
+			[
+				'extends ControllerTestCase to extends IntegrationTestCase',
+				'/\bextends ControllerTestCase\b/',
+				'extends IntegrationTestCase'
+			],
+			[
+				'$this->testAction( to $this->get(',
+				'/\$this-\>testAction\(/',
+				'$this->get('
+			],
+			[
 				'return $this->flash(..., ...) to $this->Flash->message(\1); return $this->redirect(\2);',
 				'/\breturn \$this-\>flash\((.+),\s*(.+)\);/',
 				'$this->Flash->message(\1); return $this->redirect(\2);'
@@ -128,6 +153,12 @@ class CustomTask extends BaseTask {
 				'$this->Session->setFlash() to $this->Flash->message();',
 				'/\$this-\>Session-\>setFlash\(/',
 				'$this->Flash->message('
+			],
+			# old ones to new sugar
+			[
+				'$this->Flash->message(..., type) ... $this->Flash->type(...)',
+				'/-\>Flash-\>message\((.+),\s*\'(error|warning|success|info)\'\)/',
+				'->Flash->\2(\1)'
 			],
 			[
 				'use Cake\\Utility\\Folder to use Cake\\Filesystem\\Folder',
@@ -138,6 +169,36 @@ class CustomTask extends BaseTask {
 				'use Cake\\Utility\\File to use Cake\\Filesystem\\File',
 				'/\bCake\\\\Utility\\\\File\b/',
 				'Cake\\Filesystem\\File'
+			],
+			[
+				'Auth::...() to $this->AuthUser->...()',
+				'/\bAuth\:\:(\w+)\(/',
+				'$this->AuthUser->\1('
+			],
+			[
+				'$this->Html->defaultLink() to $this->Html->resetLink()',
+				'/\$this-\>Html-\>defaultLink\(/',
+				'$this->Html->resetLink('
+			],
+			[
+				'$this->Html->defaultUrl() to $this->Url->reset()',
+				'/\$this-\>Html-\>defaultUrl\(/',
+				'$this->Url->reset('
+			],
+			[
+				'$this->Html->completeUrl() to $this->Url->complete()',
+				'/\$this-\>Html-\>completeUrl\(/',
+				'$this->Url->complete('
+			],
+			[
+				'$this->Auth->login() to $this->Auth->identify()',
+				'/\$this-\>Auth-\>login\(\)/',
+				'$this->Auth->identify()'
+			],
+			[
+				'ClassRegistry::init( to TableRegistry::get(',
+				'/\bClassRegistry\:\:init\(/', //TODO: pluralize model?
+				'TableRegistry::get('
 			],
 		];
 
