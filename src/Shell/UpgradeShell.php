@@ -44,6 +44,7 @@ class UpgradeShell extends Shell {
 		'MethodNames',
 		'MethodSignatures',
 		'I18n',
+		'Locale',
 		'Tests',
 		'Skeleton',
 		'Templates',
@@ -176,6 +177,10 @@ class UpgradeShell extends Shell {
 			->addSubcommand('i18n', [
 				'help' => 'Update translation functions regarding placeholders.',
 				'parser' => $this->I18n->getOptionParser(),
+			])
+			->addSubcommand('locale', [
+				'help' => 'Update locales.',
+				'parser' => $this->Locale->getOptionParser(),
 			])
 			->addSubcommand('skeleton', [
 				'help' => 'Add basic skeleton files and folders from the "app" repository.',
