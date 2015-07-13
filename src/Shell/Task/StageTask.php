@@ -193,12 +193,15 @@ class StageTask extends Shell
         }
         $this->out($diff, 1, $dryRun ? Shell::NORMAL : SHELL::VERBOSE);
 
-        if ($dryRun) {
+        if ($dryRun || !file_exists($path)) {
             return true;
         }
 
         if ($isMove) {
             if (!empty($this->params['git'])) {
+                if (!file_exists(dirname($to))) {
+                    exec('mkdir -p ' . escapeshellarg(dirname($to)));
+                }
                 exec($gitCd . 'git mv -f ' . escapeshellarg($path) . ' ' . escapeshellarg($path . '__'));
                 exec($gitCd . 'git mv -f ' . escapeshellarg($path . '__') . ' ' . escapeshellarg($to));
             } else {
