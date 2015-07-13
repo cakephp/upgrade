@@ -14,6 +14,7 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
+use Cake\Console\ConsoleIo;
 use Cake\Console\Shell;
 use Cake\Error\Debugger;
 use Cake\Filesystem\File;
@@ -35,6 +36,13 @@ class StageTask extends Shell
      * @var array
      */
     protected $_files = [];
+
+    /**
+     * `mkdir` command to use for creating folders/paths.
+     *
+     * @var string
+     */
+    protected $_mkdirCommand = 'mkdir -p';
 
     /**
      * Paths
@@ -66,6 +74,18 @@ class StageTask extends Shell
             'delete' => [],
             'move' => []
         ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct(ConsoleIo $io = null)
+    {
+        parent::__construct($io);
+
+        if(strtolower(substr(php_uname('s'), 0, 3)) === 'win') {
+            $this->_mkdirCommand = 'mkdir';
+        };
     }
 
     /**
@@ -149,12 +169,7 @@ class StageTask extends Shell
             }
 
             if (!empty($this->params['git'])) {
-                if (!file_exists(dirname($to))) {
-                    exec('mkdir -p ' . escapeshellarg(dirname($to)));
-                }
-                exec($gitCd . 'git mv -f ' . escapeshellarg($path) . ' ' . escapeshellarg($path . '__'));
-                exec($gitCd . 'git mv -f ' . escapeshellarg($path . '__') . ' ' . escapeshellarg($to));
-                return;
+                return $this->_gitMove($gitCd, $path, $to);
             }
 
             if (is_dir($path)) {
@@ -199,11 +214,7 @@ class StageTask extends Shell
 
         if ($isMove) {
             if (!empty($this->params['git'])) {
-                if (!file_exists(dirname($to))) {
-                    exec('mkdir -p ' . escapeshellarg(dirname($to)));
-                }
-                exec($gitCd . 'git mv -f ' . escapeshellarg($path) . ' ' . escapeshellarg($path . '__'));
-                exec($gitCd . 'git mv -f ' . escapeshellarg($path . '__') . ' ' . escapeshellarg($to));
+                $this->_gitMove($gitCd, $path, $to);
             } else {
                 unlink($path);
             }
@@ -348,6 +359,17 @@ class StageTask extends Shell
     }
 
     /**
+     * Creates a directory/path.
+     *
+     * @param string $path The directory/path to create.
+     * @return void
+     */
+    protected function _makeDir($path)
+    {
+        exec($this->_mkdirCommand . ' ' . escapeshellarg($path));
+    }
+
+    /**
      * Get the path to operate on. Uses either the first argument,
      * or the plugin parameter if its set.
      *
@@ -364,5 +386,22 @@ class StageTask extends Shell
         }
 
         return realpath($this->args[1]);
+    }
+
+    /**
+     * Moves files or folders using GIT.
+     *
+     * @param string $gitCd The `cd` command that changes into the files/folder parent directory
+     * @param string $from The source path
+     * @param string $to The target path
+     * @return void
+     */
+    protected function _gitMove($gitCd, $from, $to)
+    {
+        if (!file_exists(dirname($to))) {
+            $this->_makeDir(dirname($to));
+        }
+        exec($gitCd . 'git mv -f ' . escapeshellarg($from) . ' ' . escapeshellarg($from . '__'));
+        exec($gitCd . 'git mv -f ' . escapeshellarg($from . '__') . ' ' . escapeshellarg($to));
     }
 }
