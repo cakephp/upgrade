@@ -131,7 +131,7 @@ class StageTask extends Shell
                 return $Folder->delete();
             }
 
-            $File = new File($to, true);
+            $File = new File($path, true);
             return $File->delete();
         }
 
