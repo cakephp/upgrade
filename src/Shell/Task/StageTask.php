@@ -173,7 +173,7 @@ class StageTask extends Shell
         $oPath = TMP . 'upgrade' . DS . $start;
         $uPath = TMP . 'upgrade' . DS . $final;
 
-        exec("git diff --no-index '$oPath' '$uPath'", $output);
+        exec('git diff --no-index ' . escapeshellarg($oPath) . ' ' . escapeshellarg($uPath), $output);
 
         $output = implode($output, "\n");
         $i = strrpos($output, $final);
