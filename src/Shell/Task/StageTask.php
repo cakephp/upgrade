@@ -108,7 +108,7 @@ class StageTask extends Shell
             return;
         }
 
-        $gitCd = sprintf('cd %s; ', escapeshellarg(dirname($path)));
+        $gitCd = sprintf('cd %s && ', escapeshellarg(dirname($path)));
 
         if ($isDelete) {
             $this->out(
