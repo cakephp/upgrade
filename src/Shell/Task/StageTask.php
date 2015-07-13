@@ -204,6 +204,7 @@ class StageTask extends Shell
             } else {
                 unlink($path);
             }
+            $path = $to;
         }
 
         $File = new File($path, true);
