@@ -83,7 +83,7 @@ class StageTask extends Shell
     {
         parent::__construct($io);
 
-        if(strtolower(substr(php_uname('s'), 0, 3)) === 'win') {
+        if (strtolower(substr(php_uname('s'), 0, 3)) === 'win') {
             $this->_mkdirCommand = 'mkdir';
         };
     }
