@@ -32,7 +32,7 @@ Additionally the second command would run the `skeleton` task on `/home/mark/Sit
 This command is not included in `all` as it is only necessary for apps. Plugins don't need it.
 
 It is recommended that you keep your application in version control, and keep
-backups of before using the upgrade tool.
+backups of it before using the upgrade tool.
 
 ### Order matters
 
