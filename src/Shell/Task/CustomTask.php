@@ -200,6 +200,11 @@ class CustomTask extends BaseTask {
 				'/\bClassRegistry\:\:init\(/', //TODO: pluralize model?
 				'TableRegistry::get('
 			],
+			[
+				'php_sapi_name() to PHP_SAPI',
+				'/\bphp_sapi_name\(\)/',
+				'PHP_SAPI'
+			],
 		];
 
 		$original = $contents = $this->Stage->source($path);
