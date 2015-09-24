@@ -35,6 +35,39 @@ class MethodNamesTask extends BaseTask {
 	 * @return void
 	 */
 	protected function _process($path) {
+		$controllerPatterns = [
+			[
+				'Replace $this->... = with $this->viewBuilder()->...()',
+				'#\-\>(theme|layout|autoLayout|layoutPath)\s*=\s*(.*?);#',
+				'->viewBuilder()->\1(\2);',
+			],
+			[
+				'Replace $this->... with $this->viewBuilder()->...()',
+				'#\-\>(theme|layout|autoLayout|layoutPath)\b(?!\()#',
+				'->viewBuilder()->\1()',
+			],
+			[
+				'Replace $this->viewPath = ... with $this->viewBuilder()->templatePath(...)',
+				'#\-\>viewPath\s*=\s*(.*?);#',
+				'->viewBuilder()->templatePath(\1);',
+			],
+			[
+				'Replace $this->layout with $this->viewBuilder()->layout()',
+				'#\-\>viewPath\b(?!\()#',
+				'->viewBuilder()->templatePath()',
+			],
+			[
+				'Replace $this->view = ... with $this->viewBuilder()->template(...)',
+				'#\-\>view\s*=\s*(.*?);#',
+				'->viewBuilder()->template(\1);',
+			],
+			[
+				'Replace $this->view with $this->viewBuilder()->template()',
+				'#\-\>view\b(?!\()#',
+				'->viewBuilder()->template()',
+			],
+		];
+
 		$helperPatterns = [
 			[
 				'Replace $this->Paginator->url() with $this->Paginator->generateUrl()',
@@ -106,6 +139,10 @@ class MethodNamesTask extends BaseTask {
 
 		$patterns = [];
 		if (
+			strpos($path, DS . 'Controller' . DS) !== false
+		) {
+			$patterns = $controllerPatterns;
+		} elseif (
 			strpos($path, DS . 'Template' . DS) !== false ||
 			strpos($path, DS . 'View' . DS) !== false
 		) {

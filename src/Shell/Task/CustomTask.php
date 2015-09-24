@@ -55,6 +55,16 @@ class CustomTask extends BaseTask {
 				'->behaviors()->has(\1'
 			],
 			[
+				'->Behaviors->load( to ->addBehavior(',
+				'/-\>Behaviors-\>load\(/',
+				'->addBehavior('
+			],
+			[
+				'->Behaviors->unload( to ->removeBehavior(',
+				'/-\>Behaviors-\>unload\(/',
+				'->removeBehavior('
+			],
+			[
 				'validateIdentical compare fields',
 				'/\'validateIdentical\', \'(.+?)\'\$/i',
 				'\'validateIdentical\', [\'compare\' => \'\1\']',
@@ -161,6 +171,39 @@ class CustomTask extends BaseTask {
 				'->Flash->\2(\1)'
 			],
 			[
+				'$this->Flash->message(..., type) ... $this->Flash->type(...)',
+				'/-\>Common-\>flashMessage\((.+),\s*\'(error|warning|success|info)\'\)/',
+				'->Flash->\2(\1)'
+			],
+			// Tools flash
+			array(
+				'$this->Flash->message(...)',
+				'/-\>Common-\>flashMessage\(__\(\'Invalid (.*)\'\)\)/i',
+				'->Flash->error(__(\'Invalid \1\'))'
+			),
+			array(
+				'$this->Flash->message(...)',
+				'/-\>Common-\>flashMessage\(__\(\'(.*) has been saved\'\)\)/',
+				'->Flash->success(__(\'\1 has been saved\'))'
+			),
+			array(
+				'$this->Flash->message(...)',
+				'/-\>Common-\>flashMessage\(__\(\'(.*) could not be saved(.*)\'\)\)/',
+				'->Flash->error(__(\'\1 could not be saved\2\'))'
+			),
+			# old ones to new sugar
+			array(
+				'$this->Flash->message(..., type) ... $this->Flash->type(...)',
+				'/-\>Flash-\>message\((.+),\s*\'(error|warning|success|info)\'\)/',
+				'->Flash->\2(\1)'
+			),
+			# tmp to qickly find unmatching ones
+			array(
+				'$this->Flash->message(...)',
+				'/-\>Common-\>flashMessage\(__\(\'(.*)\'\)\)/',
+				'->Flash->xxxxx(__(\'\1\'))'
+			),
+			[
 				'use Cake\\Utility\\Folder to use Cake\\Filesystem\\Folder',
 				'/\bCake\\\\Utility\\\\Folder\b/',
 				'Cake\\Filesystem\\Folder'
@@ -204,6 +247,18 @@ class CustomTask extends BaseTask {
 				'php_sapi_name() to PHP_SAPI',
 				'/\bphp_sapi_name\(\)/',
 				'PHP_SAPI'
+			],
+			// CakeDC Search
+			[
+				'->parseCriteria(...) to ->find(\'searchable\', ...)',
+				'/-\>parseCriteria\(/',
+				'->find(\'searchable\', '
+			],
+			// Tools
+			[
+				'->loadComponent(array(...)) to ->loadComponent(...)',
+				'/-\>Common-\>loadComponent\(array\(\'(.+?)\'\)\)/',
+				'->Common->loadComponent(\'\1\')'
 			],
 		];
 

@@ -5,9 +5,8 @@
 	"type": "project",
 	"license": "MIT",
 	"require": {
-		"cakephp/cakephp": "~3.0",
-		"cakephp/app": "3.0.*",
-		"phpunit/phpunit": "*"
+		"cakephp/cakephp": "~3.1",
+		"cakephp/app": "~3.1"
 	},
 	"autoload": {
 		"psr-4": {
