@@ -33,7 +33,7 @@ class UpgradeShell extends Shell {
  *
  * @var array
  */
-	public $tasks = array(
+	public $tasks = [
 		'AppUses',
 		'Fixtures',
 		'Locations',
@@ -52,7 +52,7 @@ class UpgradeShell extends Shell {
 		'ModelToTable',
 		'Custom',
 		'Cleanup',
-	);
+	];
 
 /**
  * All command.
@@ -76,7 +76,7 @@ class UpgradeShell extends Shell {
 		foreach ($actions as $action) {
 			$this->out(sprintf('<info>*** Upgrade step %s ***</info>', $action));
 			if (!empty($this->params['interactive'])) {
-				$continue = $this->in('Continue with `' . $action . '`?', array('y', 'n', 'q'), 'y');
+				$continue = $this->in('Continue with `' . $action . '`?', ['y', 'n', 'q'], 'y');
 				if ($continue === 'q') {
 					return $this->error('Aborted. Changes are not commited.');
 				}
@@ -212,11 +212,11 @@ class UpgradeShell extends Shell {
 			}
 			$allParser->merge($subcommand->parser());
 		}
-		$allParser->addOption('interactive', array(
+		$allParser->addOption('interactive', [
 				'short' => 'i',
 				'help' => 'Run all commands in an interactive mode. Allows you to selectively apply specific steps.',
 				'boolean' => true
-			));
+			]);
 
 		return $parser->addSubcommand('all', [
 			'help' => 'Run all tasks expect for skeleton. That task should only be run manually, and only for apps (not plugins).',

@@ -176,33 +176,33 @@ class CustomTask extends BaseTask {
 				'->Flash->\2(\1)'
 			],
 			// Tools flash
-			array(
+			[
 				'$this->Flash->message(...)',
 				'/-\>Common-\>flashMessage\(__\(\'Invalid (.*)\'\)\)/i',
 				'->Flash->error(__(\'Invalid \1\'))'
-			),
-			array(
+			],
+			[
 				'$this->Flash->message(...)',
 				'/-\>Common-\>flashMessage\(__\(\'(.*) has been saved\'\)\)/',
 				'->Flash->success(__(\'\1 has been saved\'))'
-			),
-			array(
+			],
+			[
 				'$this->Flash->message(...)',
 				'/-\>Common-\>flashMessage\(__\(\'(.*) could not be saved(.*)\'\)\)/',
 				'->Flash->error(__(\'\1 could not be saved\2\'))'
-			),
+			],
 			# old ones to new sugar
-			array(
+			[
 				'$this->Flash->message(..., type) ... $this->Flash->type(...)',
 				'/-\>Flash-\>message\((.+),\s*\'(error|warning|success|info)\'\)/',
 				'->Flash->\2(\1)'
-			),
+			],
 			# tmp to qickly find unmatching ones
-			array(
+			[
 				'$this->Flash->message(...)',
 				'/-\>Common-\>flashMessage\(__\(\'(.*)\'\)\)/',
 				'->Flash->xxxxx(__(\'\1\'))'
-			),
+			],
 			[
 				'use Cake\\Utility\\Folder to use Cake\\Filesystem\\Folder',
 				'/\bCake\\\\Utility\\\\Folder\b/',

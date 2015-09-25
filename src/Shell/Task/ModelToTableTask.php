@@ -96,9 +96,9 @@ class ModelToTableTask extends BaseTask {
  * @return array
  */
 	protected function _moves() {
-		return array(
+		return [
 			'Model' => 'Model' . DS . 'Table',
-		);
+		];
 	}
 
 /**

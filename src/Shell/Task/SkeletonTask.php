@@ -35,7 +35,7 @@ class SkeletonTask extends BaseTask {
 	protected function _process($path) {
 		$path = dirname($path) . DS;
 
-		$dirs = array('logs', 'bin', 'config', 'webroot', 'tests');
+		$dirs = ['logs', 'bin', 'config', 'webroot', 'tests'];
 		foreach ($dirs as $dir) {
 			if (!is_dir($path . $dir) && empty($this->params['dry-run'])) {
 				mkdir($path . DS . $dir, 0770, true);
@@ -47,7 +47,7 @@ class SkeletonTask extends BaseTask {
 		}
 
 		$sourcePath = ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'app' . DS;
-		$files = array(
+		$files = [
 			'bin' . DS . 'cake',
 			'bin' . DS . 'cake.bat',
 			'bin' . DS . 'cake.php',
@@ -66,7 +66,7 @@ class SkeletonTask extends BaseTask {
 			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'default.ctp',
 			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'error.ctp',
 			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'success.ctp',
-		);
+		];
 		$ret = 0;
 		foreach ($files as $file) {
 			$ret |= $this->_addFile($file, $sourcePath, $path);

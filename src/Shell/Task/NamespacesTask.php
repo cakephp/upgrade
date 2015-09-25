@@ -98,13 +98,13 @@ class NamespacesTask extends BaseTask {
 
 		// Skip bootstrap files and alike
 		$filename = basename($path);
-		$excludes = array(
+		$excludes = [
 			'bootstrap.php',
 			'routes.php',
 			'core.php',
 			'configs.php',
 			'index.php'
-		);
+		];
 		if (in_array($filename, $excludes, true)) {
 			return false;
 		}

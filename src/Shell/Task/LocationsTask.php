@@ -91,7 +91,7 @@ class LocationsTask extends BaseTask {
  * @return array
  */
 	protected function _moves() {
-		return array(
+		return [
 			'Config' => 'config',
 			'Console' => 'bin',
 			'Console' . DS . 'Command' => 'Shell',
@@ -114,7 +114,7 @@ class LocationsTask extends BaseTask {
 			'View' . DS . 'Helper' => 'View' . DS . 'Helper',
 			'View' => 'Template',
 			'Test' => 'tests'
-		);
+		];
 	}
 
 /**
@@ -147,12 +147,12 @@ class LocationsTask extends BaseTask {
  * @return bool Success
  */
 	protected function _isInRoot($folder) {
-		$rootFolders = array(
+		$rootFolders = [
 			'config',
 			'bin',
 			'tests',
 			'src'
-		);
+		];
 		$pieces = explode(DS, $folder);
 		$firstFolder = !empty($pieces[0]) ? $pieces[0] : $folder;
 		return in_array($firstFolder, $rootFolders, true);
