@@ -66,6 +66,16 @@ class MethodNamesTask extends BaseTask {
 				'#\-\>view\b(?!\()#',
 				'->viewBuilder()->template()',
 			],
+			[
+				'Replace $this->viewClass = ... with $this->viewBuilder()->className(...)',
+				'#\-\>viewClass\s*=\s*(.*?);#',
+				'->viewBuilder()->className(\1);',
+			],
+			[
+				'Replace $this->viewClass with $this->viewBuilder()->className()',
+				'#\-\>viewClass\b(?!\()#',
+				'->viewBuilder()->className()',
+			],
 		];
 
 		$helperPatterns = [
