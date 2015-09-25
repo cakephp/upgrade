@@ -198,7 +198,7 @@ class MethodSignaturesTask extends BaseTask
             ],
         ];
 
-        $patterns = array();
+        $patterns = [];
         if (strpos($path, DS . 'View' . DS) !== false) {
             $patterns = $helperPatterns;
         } elseif (strpos($path, DS . 'Controller' . DS . 'Component' . DS) !== false) {

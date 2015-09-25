@@ -34,7 +34,7 @@ class UpgradeShell extends Shell
      *
      * @var array
      */
-    public $tasks = array(
+    public $tasks = [
         'AppUses',
         'Fixtures',
         'Locations',
@@ -48,7 +48,7 @@ class UpgradeShell extends Shell
         'Tests',
         'Skeleton',
         'PrefixedTemplates',
-    );
+    ];
 
     /**
      * All command.
