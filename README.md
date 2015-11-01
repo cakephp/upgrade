@@ -1,7 +1,7 @@
 # CakePHP Upgrade tool [![Build Status](https://api.travis-ci.org/cakephp/upgrade.png)](https://travis-ci.org/cakephp/upgrade)
 
 
-Upgrade tools for CakePHP meant to facilitate migrating from CakePHP 2.x to 3.0.0.
+Upgrade tools for CakePHP meant to facilitate migrating from CakePHP 2.x to 3.x.
 
 **Warning** This tool is still under development and doesn't handle all aspects of migrating.
 
@@ -14,6 +14,16 @@ php composer.phar install
 ```
 
 Once dependencies are installed you can start using the `upgrade` shell.
+
+
+## IMPORTANT NOTICE
+
+This tool is a split-off off the original CakePHP upgrade tool and provides additional fixers:
+- Locale (fixing locale files)
+- Model to Table (making the model files to Table class files)
+- Custom (tons of custom fixes)
+
+Feel free to manually port those things back into the core one.
 
 ## Usage
 
