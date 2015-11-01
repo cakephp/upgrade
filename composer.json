@@ -14,7 +14,6 @@
 			"Cake\\Upgrade\\Test\\": "tests"
 		}
 	},
-	"minimum-stability" : "dev",
 	"prefer-stable": true,
 	"support": {
 		"source": "https://github.com/cakephp/upgrade"
