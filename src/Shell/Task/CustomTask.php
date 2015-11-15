@@ -105,6 +105,11 @@ class CustomTask extends BaseTask {
 				'Ajax.Ajax'
 			],
 			[
+				'Tools.AuthExt to Auth',
+				'/\bTools.AuthExt\b/',
+				'Auth'
+			],
+			[
 				'Tools.Tiny to TinyAuth.Tiny',
 				'/\bTools.Tiny\b/',
 				'TinyAuth.Tiny'
@@ -125,9 +130,9 @@ class CustomTask extends BaseTask {
 				'$this->Number->\1('
 			],
 			[
-				'Tools\Network\Email\Email',
+				'Tools\Mailer\Email',
 				'/\buse Tools\\\\Lib\\\\EmailLib;/',
-				'use Tools\Network\Email\Email;'
+				'use Tools\Mailer\Email;'
 			],
 			[
 				'new EmailLib() to new Email()',
@@ -204,6 +209,16 @@ class CustomTask extends BaseTask {
 				'->Flash->xxxxx(__(\'\1\'))'
 			],
 			[
+				'use App\\Utility\\Folder to use Cake\\Filesystem\\Folder',
+				'/\bApp\\\\Utility\\\\Folder\b/',
+				'Cake\\Filesystem\\Folder'
+			],
+			[
+				'use App\\Utility\\File to use Cake\\Filesystem\\File',
+				'/\bApp\\\\Utility\\\\File\b/',
+				'Cake\\Filesystem\\File'
+			],
+			[
 				'use Cake\\Utility\\Folder to use Cake\\Filesystem\\Folder',
 				'/\bCake\\\\Utility\\\\Folder\b/',
 				'Cake\\Filesystem\\Folder'
@@ -259,6 +274,23 @@ class CustomTask extends BaseTask {
 				'->loadComponent(array(...)) to ->loadComponent(...)',
 				'/-\>Common-\>loadComponent\(array\(\'(.+?)\'\)\)/',
 				'->Common->loadComponent(\'\1\')'
+			],
+			[
+					'public $order = [\'X.name\' => \'ASC\'];',
+					'/public \$order\s*=\s*\[\'(\w+)\.(\w+)\'\s*=\>/',
+					'public $order = [\'\2\' =>'
+			],
+			[
+					'counter removal',
+					'/echo \$this-\>Paginator-\>counter\(.+?\);/sm',
+					''
+			],
+			[
+					'paginator fix',
+					'/\<div class="paging"\>.+?\<\/div\>/sm',
+					'<div class="pagination-container">
+	<?php echo $this->element(\'Tools.pagination\'); ?>
+</div>'
 			],
 		];
 
