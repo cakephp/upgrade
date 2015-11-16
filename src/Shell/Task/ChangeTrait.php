@@ -56,7 +56,7 @@ trait ChangeTrait {
 	public function process($path) {
 		if (!$this->_shouldProcess($path)) {
 			$this->out('<info>skipping</info>', 1, Shell::VERBOSE);
-			return false;
+			return;
 		}
 
 		$return = $this->_process($path);
@@ -65,15 +65,13 @@ trait ChangeTrait {
 		} else {
 			$this->out('<info>no change</info>', 1, Shell::VERBOSE);
 		}
-
-		return $return;
 	}
 
 /**
  * Default noop
  *
  * @param string $path
- * @return void
+ * @return bool
  */
 	protected function _process($path) {
 	}

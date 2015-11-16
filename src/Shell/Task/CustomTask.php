@@ -27,12 +27,12 @@ class CustomTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Processes a path.
- *
- * @param string $path
- * @return void
- */
+	/**
+	 * Processes a path.
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _process($path) {
 		$configPatterns = [
 			[

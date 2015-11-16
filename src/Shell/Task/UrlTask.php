@@ -27,23 +27,59 @@ class UrlTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Processes a path.
- *
- * @param string $path
- * @return bool
- */
+	/**
+	 * Processes a path.
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _process($path) {
-		$patterns = [
-			[
-				'action => ..., admin => true/false to prefix',
-				'//i',
-				'x'
-			],
-		];
-
 		$original = $contents = $this->Stage->source($path);
 
+		$contents = $this->_fixActions($contents, $path);
+
+		$contents = $this->_fixUrls($contents);
+
+		if (empty($contents)) {
+			$contents = $original;
+		}
+		return $this->Stage->change($path, $original, $contents);
+	}
+
+	/**
+	 * @param string $contents
+	 * @param string $path
+	 * @return string
+	 */
+	protected function _fixActions($contents, $path) {
+		$patterns = [
+			[
+				'public function my_action_name to public function myActionName',
+				'/\bpublic function ([a-z0-9]+\_[a-z0-9_]+)\(/i',
+				function ($matches) {
+					if (strpos($matches[1], 'admin_') === 0) {
+						return $matches[0];
+					}
+
+					$action = lcfirst(Inflector::camelize($matches[1]));
+					return 'public function ' . $action . '(';
+				}
+			]
+		];
+		if (strpos($path, DS . 'Controller' . DS) !== false) {
+			foreach ($patterns as $pattern) {
+				$contents = preg_replace_callback($pattern[1], $pattern[2], $contents);
+			}
+		}
+
+		return $contents;
+	}
+
+	/**
+	 * @param string $contents
+	 * @return string
+	 */
+	protected function _fixUrls($contents) {
 		// Controller and action Names
 		$pattern = '/\'controller\'\s*=\>\s*[\'"](.+?)[\'"](.+?)\'action\'\s*=\>\s*[\'"](.+?)[\'"]/i';
 		$replacement = function ($matches) {
@@ -93,20 +129,17 @@ class UrlTask extends BaseTask {
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
 
-		if (empty($contents)) {
-			$contents = $original;
-		}
-		return $this->Stage->change($path, $original, $contents);
+		return $contents;
 	}
 
-/**
- * _shouldProcess
- *
- * Bail for invalid files (php/ctp files only)
- *
- * @param string $path
- * @return bool
- */
+	/**
+	 * _shouldProcess
+	 *
+	 * Bail for invalid files (php/ctp files only)
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _shouldProcess($path) {
 		$ending = substr($path, -4);
 		return $ending === '.php' || $ending === '.ctp';
