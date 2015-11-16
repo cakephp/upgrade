@@ -14,7 +14,6 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-
 use Cake\Utility\String;
 
 /**

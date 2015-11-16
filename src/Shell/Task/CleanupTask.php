@@ -14,8 +14,6 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\LocationsTask;
-
 /**
  * Move files around as directories have changed in 3.0
  */
@@ -44,7 +42,8 @@ class CleanupTask extends LocationsTask {
 		$dir = $path . DS . $substr;
 
 		if (!is_dir($dir)) {
-			if (($pos = strrpos($substr, DS)) !== false) {
+			$pos = strrpos($substr, DS);
+			if ($pos !== false) {
 				$substr = substr($substr, 0, $pos);
 				$this->_deleteIfEmpty($path, $substr);
 			}
@@ -62,7 +61,8 @@ class CleanupTask extends LocationsTask {
 			rmdir($dir);
 			clearstatcache();
 		}
-		if (($pos = strrpos($substr, DS)) !== false) {
+		$pos = strrpos($substr, DS);
+		if ($pos !== false) {
 			$substr = substr($substr, 0, $pos);
 			$this->_deleteIfEmpty($path, $substr);
 		}

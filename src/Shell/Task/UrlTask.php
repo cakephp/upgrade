@@ -14,12 +14,11 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
 use Cake\Utility\Inflector;
 use Cake\Utility\String;
+
 /**
  * Handles custom stuff
- *
  */
 class UrlTask extends BaseTask {
 
@@ -63,8 +62,8 @@ class UrlTask extends BaseTask {
 
 					$action = lcfirst(Inflector::camelize($matches[1]));
 					return 'public function ' . $action . '(';
-				}
-			]
+				},
+			],
 		];
 		if (strpos($path, DS . 'Controller' . DS) !== false) {
 			foreach ($patterns as $pattern) {
