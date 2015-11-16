@@ -11,19 +11,19 @@ use Cake\Upgrade\Shell\UpgradeShell;
 class UpgradeShellTest extends TestCase {
 
 	/**
- * Upgrade shell instance
- *
- * @var mixed
- */
+	 * Upgrade shell instance
+	 *
+	 * @var mixed
+	 */
 	public $sut;
 
-/**
- * setUp
- *
- * Create a mock for all tests to use
- *
- * @return void
- */
+	/**
+	 * setUp
+	 *
+	 * Create a mock for all tests to use
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 
@@ -37,13 +37,13 @@ class UpgradeShellTest extends TestCase {
 		$this->sut->loadTasks();
 	}
 
-/**
- * Basic test to simulate running on this repo
- *
- * Should return all files in the src directory of this repo
- *
- * @return void
- */
+	/**
+	 * Basic test to simulate running on this repo
+	 *
+	 * Should return all files in the src directory of this repo
+	 *
+	 * @return void
+	 */
 	public function testFiles() {
 		$repoSrc = ROOT . DS . 'src';
 

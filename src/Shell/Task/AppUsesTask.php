@@ -27,13 +27,13 @@ class AppUsesTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * implicitMap
- *
- * A map of old => new for use statements that are missing
- *
- * @var array
- */
+	/**
+	 * implicitMap
+	 *
+	 * A map of old => new for use statements that are missing
+	 *
+	 * @var array
+	 */
 	public $implicitMap = [
 		'App' => 'Cake\Core\App',
 		'AppController' => 'App\Controller\AppController',
@@ -68,13 +68,13 @@ class AppUsesTask extends BaseTask {
 		'TestFixture' => 'Cake\TestSuite\Fixture\TestFixture',
 	];
 
-/**
- * Rename classes
- *
- * A list of classes which have had the Cake prefix removed
- *
- * @var mixed
- */
+	/**
+	 * Rename classes
+	 *
+	 * A list of classes which have had the Cake prefix removed
+	 *
+	 * @var mixed
+	 */
 	public $rename = [
 		'CakePlugin',
 		'CakeEvent',
@@ -95,13 +95,13 @@ class AppUsesTask extends BaseTask {
 		'CakeTestCase',
 	];
 
-/**
- * Convert App::uses() to normal use statements.
- * Order App::uses statements
- * and replace the class in the source if it appears
- *
- * @return void
- */
+	/**
+	 * Convert App::uses() to normal use statements.
+	 * Order App::uses statements
+	 * and replace the class in the source if it appears
+	 *
+	 * @return void
+	 */
 	protected function _process($path) {
 		$original = $contents = $this->Stage->source($path);
 
@@ -114,12 +114,12 @@ class AppUsesTask extends BaseTask {
 		return $this->Stage->change($path, $original, $contents);
 	}
 
-/**
- * Replace App::uses with use <Classname>;
- *
- * @param string $contents
- * @return string
- */
+	/**
+	 * Replace App::uses with use <Classname>;
+	 *
+	 * @param string $contents
+	 * @return string
+	 */
 	protected function _replaceAppUses($contents) {
 		$pattern = '#App::uses\(\s*[\'"]([a-z0-9_]+)[\'"]\s*,\s*[\'"]([a-z0-9/_]+)(?:\.([a-z0-9/_]+))?[\'"]\)#i';
 
@@ -152,29 +152,29 @@ class AppUsesTask extends BaseTask {
 		return preg_replace_callback($pattern, $replacement, $contents, -1, $count);
 	}
 
-/**
- * _removeDynamicAppUses
- *
- * @param string $contents
- * @return string
- */
+	/**
+	 * _removeDynamicAppUses
+	 *
+	 * @param string $contents
+	 * @return string
+	 */
 	protected function _removeDynamicAppUses($contents) {
 		$pattern = '#(App::uses\(.+\);?)#';
 		return preg_replace($pattern, '/* TODO: \1 */', $contents);
 	}
 
-/**
- * Add implicit uses
- *
- * Account for:
- *
- * + parent classes and interfaces are frequently just assumed to exist in useland code
- * + also in function arguments
- * + static class calls for basic Cake classes
- *
- * @param string $contents
- * @return string
- */
+	/**
+	 * Add implicit uses
+	 *
+	 * Account for:
+	 *
+	 * + parent classes and interfaces are frequently just assumed to exist in useland code
+	 * + also in function arguments
+	 * + static class calls for basic Cake classes
+	 *
+	 * @param string $contents
+	 * @return string
+	 */
 	protected function _addImplicitUses($contents) {
 		preg_match(
 			'/class\s+\S+(\s+extends\s+(\S+))?(\s+implements\s+(\S+))?/',
@@ -230,15 +230,15 @@ class AppUsesTask extends BaseTask {
 		return $contents;
 	}
 
-/**
- * Order use statements
- *
- * For code standards, use statements should be alphabetical but in addition, this
- * Moves all use statements to the top of the class
- *
- * @param string $contents
- * @return string
- */
+	/**
+	 * Order use statements
+	 *
+	 * For code standards, use statements should be alphabetical but in addition, this
+	 * Moves all use statements to the top of the class
+	 *
+	 * @param string $contents
+	 * @return string
+	 */
 	protected function _orderUses($contents) {
 		preg_match_all('/[\t ]*\buse .+;[\n]/', $contents, $matches);
 
@@ -255,12 +255,12 @@ class AppUsesTask extends BaseTask {
 		);
 	}
 
-/**
- * Replace references to old classes
- *
- * @param string $contents
- * @return string
- */
+	/**
+	 * Replace references to old classes
+	 *
+	 * @param string $contents
+	 * @return string
+	 */
 	protected function _replaceReferences($contents) {
 		$rename = $this->rename;
 		foreach ($rename as &$val) {
@@ -270,13 +270,13 @@ class AppUsesTask extends BaseTask {
 		return preg_replace($regex, '\1', $contents);
 	}
 
-/**
- * Convert old classnames to new ones.
- * Strips the Cake prefix off of classes that no longer have it.
- *
- * @param array $matches
- * @return array
- */
+	/**
+	 * Convert old classnames to new ones.
+	 * Strips the Cake prefix off of classes that no longer have it.
+	 *
+	 * @param array $matches
+	 * @return array
+	 */
 	protected function _mapClassName($matches) {
 		if (empty($matches[3])) {
 			unset($matches[3]);
@@ -287,14 +287,14 @@ class AppUsesTask extends BaseTask {
 		return $matches;
 	}
 
-/**
- * _shouldProcess
- *
- * If App::uses is nowhere - bail, otherwise use the default (php files only)
- *
- * @param string $path
- * @return bool
- */
+	/**
+	 * _shouldProcess
+	 *
+	 * If App::uses is nowhere - bail, otherwise use the default (php files only)
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _shouldProcess($path) {
 		return (substr($path, -4) === '.php');
 	}

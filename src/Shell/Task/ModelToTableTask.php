@@ -25,12 +25,12 @@ class ModelToTableTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Check all moves, and stage moving the file to new location.
- *
- * @param mixed $path
- * @return bool
- */
+	/**
+	 * Check all moves, and stage moving the file to new location.
+	 *
+	 * @param mixed $path
+	 * @return bool
+	 */
 	protected function _process($path) {
 		$normalizedPath = str_replace(DS, '/', $path);
 		if (!preg_match('#/Model/([a-z0-9]+?)(Test)*\.php#i', $normalizedPath, $matches)) {
@@ -60,14 +60,14 @@ class ModelToTableTask extends BaseTask {
 		return $changed & $moved;
 	}
 
-/**
- * _shouldProcess
- *
- * Is the current path within the scope of any move?
- *
- * @param string $path
- * @return bool
- */
+	/**
+	 * _shouldProcess
+	 *
+	 * Is the current path within the scope of any move?
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _shouldProcess($path) {
 		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
 		$root = rtrim($root, DS);
@@ -89,22 +89,22 @@ class ModelToTableTask extends BaseTask {
 		return false;
 	}
 
-/**
- * Key value map of from and to
- *
- * @return array
- */
+	/**
+	 * Key value map of from and to
+	 *
+	 * @return array
+	 */
 	protected function _moves() {
 		return [
 			'Model' => 'Model' . DS . 'Table',
 		];
 	}
 
-/**
- * Get the option parser for this shell.
- *
- * @return \Cake\Console\ConsoleOptionParser
- */
+	/**
+	 * Get the option parser for this shell.
+	 *
+	 * @return \Cake\Console\ConsoleOptionParser
+	 */
 	public function getOptionParser() {
 		return parent::getOptionParser()
 			->addOptions([

@@ -25,12 +25,12 @@ class TestsTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Process tests regarding fixture usage and update it for 3.x
- *
- * @param string $content Fixture content.
- * @return bool
- */
+	/**
+	 * Process tests regarding fixture usage and update it for 3.x
+	 *
+	 * @param string $content Fixture content.
+	 * @return bool
+	 */
 	protected function _process($path) {
 		$original = $contents = $this->Stage->source($path);
 

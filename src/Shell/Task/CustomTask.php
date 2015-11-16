@@ -300,13 +300,13 @@ class CustomTask extends BaseTask {
 		return $this->Stage->change($path, $original, $contents);
 	}
 
-/**
- * Custom stuff
- *
- * @param string $contents
- * @param string $path
- * @return string
- */
+	/**
+	 * Custom stuff
+	 *
+	 * @param string $contents
+	 * @param string $path
+	 * @return string
+	 */
 	protected function _replaceCustom($contents, $path) {
 		return $contents;
 
@@ -320,14 +320,14 @@ class CustomTask extends BaseTask {
 		return $contents;
 	}
 
-/**
- * _shouldProcess
- *
- * Bail for invalid files (php/ctp files only)
- *
- * @param string $path
- * @return bool
- */
+	/**
+	 * _shouldProcess
+	 *
+	 * Bail for invalid files (php/ctp files only)
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _shouldProcess($path) {
 		$ending = substr($path, -4);
 		return $ending === '.php' || $ending === '.ctp';

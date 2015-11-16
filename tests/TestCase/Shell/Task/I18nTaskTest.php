@@ -10,19 +10,19 @@ use Cake\TestSuite\TestCase;
 class I18nTaskTest extends TestCase {
 
 	/**
- * Task instance
- *
- * @var mixed
- */
+	 * Task instance
+	 *
+	 * @var mixed
+	 */
 	public $sut;
 
-/**
- * setUp
- *
- * Create a mock for all tests to use
- *
- * @return void
- */
+	/**
+	 * setUp
+	 *
+	 * Create a mock for all tests to use
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 

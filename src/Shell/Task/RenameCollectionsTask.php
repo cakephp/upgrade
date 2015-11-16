@@ -25,12 +25,12 @@ class RenameCollectionsTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * RenameCollectionsTask::_process()
- *
- * @param string $path
- * @return void
- */
+	/**
+	 * RenameCollectionsTask::_process()
+	 *
+	 * @param string $path
+	 * @return void
+	 */
 	protected function _process($path) {
 		$patterns = [
 			[

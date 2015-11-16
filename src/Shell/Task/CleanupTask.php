@@ -23,12 +23,12 @@ class CleanupTask extends LocationsTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Cleans out the empty folders after location has been changed for class files.
- *
- * @param mixed $path
- * @return bool
- */
+	/**
+	 * Cleans out the empty folders after location has been changed for class files.
+	 *
+	 * @param mixed $path
+	 * @return bool
+	 */
 	protected function _process($path) {
 		$path = dirname($path);
 
@@ -68,14 +68,14 @@ class CleanupTask extends LocationsTask {
 		}
 	}
 
-/**
- * _shouldProcess
- *
- * Is the current path within the scope of this task?
- *
- * @param string $path
- * @return bool
- */
+	/**
+	 * _shouldProcess
+	 *
+	 * Is the current path within the scope of this task?
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _shouldProcess($path) {
 		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
 		$root = rtrim($root, DS);

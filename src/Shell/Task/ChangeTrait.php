@@ -46,12 +46,12 @@ trait ChangeTrait {
 		$this->Stage->commit();
 	}
 
-/**
- * process
- *
- * @param string $path
- * @return void
- */
+	/**
+	 * process
+	 *
+	 * @param string $path
+	 * @return void
+	 */
 	public function process($path) {
 		if (!$this->_shouldProcess($path)) {
 			$this->out('<info>skipping</info>', 1, Shell::VERBOSE);
@@ -66,34 +66,34 @@ trait ChangeTrait {
 		}
 	}
 
-/**
- * Default noop
- *
- * @param string $path
- * @return bool
- */
+	/**
+	 * Default noop
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _process($path) {
 	}
 
-/**
- * _shouldProcess
- *
- * Default to PHP files only
- *
- * @param string $path
- * @return bool
- */
+	/**
+	 * _shouldProcess
+	 *
+	 * Default to PHP files only
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _shouldProcess($path) {
 		return (substr($path, -4) === '.php');
 	}
 
-/**
- * Update the contents of a file using an array of find and replace patterns
- *
- * @param string $contents The file contents to update
- * @param array $patterns The replacement patterns to run.
- * @return string
- */
+	/**
+	 * Update the contents of a file using an array of find and replace patterns
+	 *
+	 * @param string $contents The file contents to update
+	 * @param array $patterns The replacement patterns to run.
+	 * @return string
+	 */
 	protected function _updateContents($contents, $patterns) {
 		foreach ($patterns as $pattern) {
 			$contents = preg_replace($pattern[1], $pattern[2], $contents);

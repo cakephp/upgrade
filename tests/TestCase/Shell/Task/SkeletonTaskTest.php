@@ -11,19 +11,19 @@ use Cake\Filesystem\Folder;
 class SkeletonTaskTest extends TestCase {
 
 	/**
- * Task instance
- *
- * @var mixed
- */
+	 * Task instance
+	 *
+	 * @var mixed
+	 */
 	public $sut;
 
-/**
- * setUp
- *
- * Create a mock for all tests to use
- *
- * @return void
- */
+	/**
+	 * setUp
+	 *
+	 * Create a mock for all tests to use
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 
@@ -37,11 +37,11 @@ class SkeletonTaskTest extends TestCase {
 		$this->sut->loadTasks();
 	}
 
-/**
- * Teardown
- *
- * @return void
- */
+	/**
+	 * Teardown
+	 *
+	 * @return void
+	 */
 	public function tearDown() {
 		$Folder = new Folder(TMP . 'skeleton_test' . DS);
 		$Folder->delete();
@@ -49,11 +49,11 @@ class SkeletonTaskTest extends TestCase {
 		parent::tearDown();
 	}
 
-/**
- * SkeletonTaskTest::testProcess()
- *
- * @return void
- */
+	/**
+	 * SkeletonTaskTest::testProcess()
+	 *
+	 * @return void
+	 */
 	public function testProcess() {
 		$path = TMP . 'skeleton_test' . DS;
 

@@ -23,12 +23,12 @@ class LocationsTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Check all moves, and stage moving the file to new location.
- *
- * @param mixed $path
- * @return bool
- */
+	/**
+	 * Check all moves, and stage moving the file to new location.
+	 *
+	 * @param mixed $path
+	 * @return bool
+	 */
 	protected function _process($path) {
 		$new = $path;
 		foreach ($this->_moves() as $from => $to) {
@@ -54,14 +54,14 @@ class LocationsTask extends BaseTask {
 		return $this->Stage->move($path, $new);
 	}
 
-/**
- * _shouldProcess
- *
- * Is the current path within the scope of any move?
- *
- * @param string $path
- * @return bool
- */
+	/**
+	 * _shouldProcess
+	 *
+	 * Is the current path within the scope of any move?
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _shouldProcess($path) {
 		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
 		$root = rtrim($root, DS);
@@ -83,11 +83,11 @@ class LocationsTask extends BaseTask {
 		return false;
 	}
 
-/**
- * Key value map of from and to
- *
- * @return array
- */
+	/**
+	 * Key value map of from and to
+	 *
+	 * @return array
+	 */
 	protected function _moves() {
 		return [
 			'Config' => 'config',
@@ -115,13 +115,13 @@ class LocationsTask extends BaseTask {
 		];
 	}
 
-/**
- * Get the relative path from ROOT for a specific folder.
- *
- * @param string $folder
- * @param string $path
- * @return string $path
- */
+	/**
+	 * Get the relative path from ROOT for a specific folder.
+	 *
+	 * @param string $folder
+	 * @param string $path
+	 * @return string $path
+	 */
 	protected function _relativeFromRoot($folder, $path) {
 		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
 
@@ -138,12 +138,12 @@ class LocationsTask extends BaseTask {
 		return $relativePath . DS . $folder;
 	}
 
-/**
- * Detect if a target folder should be in ROOT.
- *
- * @param string $folder
- * @return bool Success
- */
+	/**
+	 * Detect if a target folder should be in ROOT.
+	 *
+	 * @param string $folder
+	 * @return bool Success
+	 */
 	protected function _isInRoot($folder) {
 		$rootFolders = [
 			'config',
@@ -156,11 +156,11 @@ class LocationsTask extends BaseTask {
 		return in_array($firstFolder, $rootFolders, true);
 	}
 
-/**
- * Get the option parser for this shell.
- *
- * @return \Cake\Console\ConsoleOptionParser
- */
+	/**
+	 * Get the option parser for this shell.
+	 *
+	 * @return \Cake\Console\ConsoleOptionParser
+	 */
 	public function getOptionParser() {
 		return parent::getOptionParser()
 			->addOptions([

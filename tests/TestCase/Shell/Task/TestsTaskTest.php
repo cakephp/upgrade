@@ -10,19 +10,19 @@ use Cake\TestSuite\TestCase;
 class TestsTaskTest extends TestCase {
 
 	/**
- * Task instance
- *
- * @var mixed
- */
+	 * Task instance
+	 *
+	 * @var mixed
+	 */
 	public $sut;
 
-/**
- * setUp
- *
- * Create a mock for all tests to use
- *
- * @return void
- */
+	/**
+	 * setUp
+	 *
+	 * Create a mock for all tests to use
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 
@@ -36,11 +36,11 @@ class TestsTaskTest extends TestCase {
 		$this->sut->loadTasks();
 	}
 
-/**
- * TestsTaskTest::testProcess()
- *
- * @return void
- */
+	/**
+	 * TestsTaskTest::testProcess()
+	 *
+	 * @return void
+	 */
 	public function testProcess() {
 		$path = TESTS . 'test_files' . DS;
 		$result = $this->sut->process($path . 'tests_before.php');

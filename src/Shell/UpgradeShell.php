@@ -52,11 +52,11 @@ class UpgradeShell extends Shell {
 		'Cleanup',
 	];
 
-/**
- * All command.
- *
- * @return void
- */
+	/**
+	 * All command.
+	 *
+	 * @return void
+	 */
 	public function all() {
 		if (!empty($this->params['dry-run'])) {
 			$this->out('<warning>Dry-run mode enabled!</warning>', 1, Shell::QUIET);
@@ -101,14 +101,14 @@ class UpgradeShell extends Shell {
 		}
 	}
 
-/**
- * _getActions
- *
- * If the all function is called, derive which tasks to call, and in what order based on the
- * option parser info
- *
- * @return array
- */
+	/**
+	 * _getActions
+	 *
+	 * If the all function is called, derive which tasks to call, and in what order based on the
+	 * option parser info
+	 *
+	 * @return array
+	 */
 	protected function _getActions() {
 		$all = [];
 		foreach ($this->OptionParser->subcommands() as $command) {
@@ -122,11 +122,11 @@ class UpgradeShell extends Shell {
 		return $all;
 	}
 
-/**
- * Get the option parser
- *
- * @return ConsoleOptionParser
- */
+	/**
+	 * Get the option parser
+	 *
+	 * @return ConsoleOptionParser
+	 */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser()
 			->description('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .

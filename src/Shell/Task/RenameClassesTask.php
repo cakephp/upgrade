@@ -23,12 +23,12 @@ class RenameClassesTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Rename the classes in a given file.
- *
- * @param string $path The path to operate on.
- * @return bool
- */
+	/**
+	 * Rename the classes in a given file.
+	 *
+	 * @param string $path The path to operate on.
+	 * @return bool
+	 */
 	protected function _process($path) {
 		$replacements = [
 			'Cake\Network\Http\HttpSocket' => 'Cake\Network\Http\Client',

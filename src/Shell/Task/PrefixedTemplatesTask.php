@@ -25,18 +25,18 @@ class PrefixedTemplatesTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Process
- *
- * Moves view templates for given routing prefix
- *
- * e.g.
- * Move admin_action.ctp to Admin/action.ctp
- * Extract admin_ prefixed actions from controller and create new controller in Admin subfolder
- *
- * @param mixed $path
- * @return bool
- */
+	/**
+	 * Process
+	 *
+	 * Moves view templates for given routing prefix
+	 *
+	 * e.g.
+	 * Move admin_action.ctp to Admin/action.ctp
+	 * Extract admin_ prefixed actions from controller and create new controller in Admin subfolder
+	 *
+	 * @param mixed $path
+	 * @return bool
+	 */
 	protected function _process($path = null) {
 		$new = str_replace(
 			'Template' . DS,
@@ -67,11 +67,11 @@ class PrefixedTemplatesTask extends BaseTask {
 		);
 	}
 
-/**
- * Get the option parser for this shell.
- *
- * @return \Cake\Console\ConsoleOptionParser
- */
+	/**
+	 * Get the option parser for this shell.
+	 *
+	 * @return \Cake\Console\ConsoleOptionParser
+	 */
 	public function getOptionParser() {
 		return parent::getOptionParser()
 			->addOptions([

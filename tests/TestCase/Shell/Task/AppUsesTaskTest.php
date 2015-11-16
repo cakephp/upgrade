@@ -36,11 +36,11 @@ class AppUsesTaskTest extends TestCase {
 		$this->sut->loadTasks();
 	}
 
-/**
- * Testing the `use` transformation.
- *
- * @return void
- */
+	/**
+	 * Testing the `use` transformation.
+	 *
+	 * @return void
+	 */
 	public function testAppUses() {
 		$this->sut->expects($this->any())
 			->method('_shouldProcess')
@@ -55,11 +55,11 @@ class AppUsesTaskTest extends TestCase {
 		$this->assertTextEquals($expected, $result);
 	}
 
-/**
- * Testing the implicit `use` adding.
- *
- * @return void
- */
+	/**
+	 * Testing the implicit `use` adding.
+	 *
+	 * @return void
+	 */
 	public function testAppUsesImplicit() {
 		$this->sut->method('_shouldProcess')
 			->will($this->returnValue(true));
@@ -73,14 +73,14 @@ class AppUsesTaskTest extends TestCase {
 		$this->assertTextEquals($expected, $result);
 	}
 
-/**
- * Testing the implicit `use` adding.
- *
- * Asserts that TestCase (former CakeTestCase) gets also added, and that
- * already existing use statements are skipped.
- *
- * @return void
- */
+	/**
+	 * Testing the implicit `use` adding.
+	 *
+	 * Asserts that TestCase (former CakeTestCase) gets also added, and that
+	 * already existing use statements are skipped.
+	 *
+	 * @return void
+	 */
 	public function testAppUsesImplicitTestCase() {
 		$this->sut->method('_shouldProcess')
 			->will($this->returnValue(true));

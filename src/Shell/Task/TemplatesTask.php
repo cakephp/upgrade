@@ -28,12 +28,12 @@ class TemplatesTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Processes a path.
- *
- * @param string $path
- * @return void
- */
+	/**
+	 * Processes a path.
+	 *
+	 * @param string $path
+	 * @return void
+	 */
 	protected function _process($path) {
 		$patterns = [
 			[
@@ -53,12 +53,12 @@ class TemplatesTask extends BaseTask {
 		return $this->Stage->change($path, $original, $contents);
 	}
 
-/**
- * Replace basic template stuff
- *
- * @param string $contents
- * @return string
- */
+	/**
+	 * Replace basic template stuff
+	 *
+	 * @param string $contents
+	 * @return string
+	 */
 	protected function _replaceRelations($contents, $path) {
 		// Avoid false positives in model/behavior etc
 		if (strpos($path, DS . 'Model' . DS) !== false) {
@@ -72,13 +72,13 @@ class TemplatesTask extends BaseTask {
 		return preg_replace_callback($pattern, $replacement, $contents);
 	}
 
-/**
- * Custom stuff
- *
- * @param string $contents
- * @param string $path
- * @return string
- */
+	/**
+	 * Custom stuff
+	 *
+	 * @param string $contents
+	 * @param string $path
+	 * @return string
+	 */
 	protected function _replaceCustom($contents, $path) {
 		// View
 		$pattern = '/\$this-\>Form-\>create\(\'(.+?)\'\)/i';
@@ -181,14 +181,14 @@ class TemplatesTask extends BaseTask {
 		return $contents;
 	}
 
-/**
- * _shouldProcess
- *
- * Bail for invalid files (php/ctp files only)
- *
- * @param string $path
- * @return bool
- */
+	/**
+	 * _shouldProcess
+	 *
+	 * Bail for invalid files (php/ctp files only)
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
 	protected function _shouldProcess($path) {
 		$ending = substr($path, -4);
 		return $ending === '.php' || $ending === '.ctp';

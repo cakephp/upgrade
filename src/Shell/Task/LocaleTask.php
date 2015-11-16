@@ -25,11 +25,11 @@ class LocaleTask extends BaseTask {
 
 	public $tasks = ['Stage'];
 
-/**
- * Converts placeholders from 2.x to 3.x syntax.
- *
- * @return void
- */
+	/**
+	 * Converts placeholders from 2.x to 3.x syntax.
+	 *
+	 * @return void
+	 */
 	protected function _process($path) {
 		$original = $contents = $this->Stage->source($path);
 
@@ -37,12 +37,12 @@ class LocaleTask extends BaseTask {
 		return $this->Stage->change($path, $original, $contents);
 	}
 
-/**
- * Adjusts msgid and msgstring from %s to {n}.
- *
- * @param string $contents
- * @return string
- */
+	/**
+	 * Adjusts msgid and msgstring from %s to {n}.
+	 *
+	 * @param string $contents
+	 * @return string
+	 */
 	protected function _adjustLocales($contents) {
 		// Basic functions
 		$pattern = '#(msgid|msgstr)\s*"((?:[^\\"]|\\.)*)"#';
