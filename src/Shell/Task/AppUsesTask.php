@@ -15,7 +15,6 @@
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Console\Shell;
-use Cake\Upgrade\Shell\Task\BaseTask;
 
 /**
  * App Uses Task.
@@ -93,7 +92,7 @@ class AppUsesTask extends BaseTask {
 		'CakeEmail',
 		'CakeLogInterface',
 		'CakeSessionHandlerInterface',
-		'CakeTestCase'
+		'CakeTestCase',
 	];
 
 /**
@@ -129,7 +128,7 @@ class AppUsesTask extends BaseTask {
 			// Chop Lib out as locations moves those files to the top level.
 			// But only if Lib is not the last folder.
 			if (isset($matches[3]) && substr($matches[3], 0, 4) === 'Lib/') {
-				$use = $matches[2] . '\\' . substr($matches[3], 4) . '\\' .$matches[1];
+				$use = $matches[2] . '\\' . substr($matches[3], 4) . '\\' . $matches[1];
 			} elseif (count($matches) === 4) {
 				$use = $matches[2] . '\\' . $matches[3] . '\\' . $matches[1];
 			} elseif ($matches[2] === 'Vendor') {
@@ -220,7 +219,7 @@ class AppUsesTask extends BaseTask {
 			$class = $this->implicitMap[$check];
 			$useStatement = "use $class;\n";
 
-			$containsUseStatements = preg_match("/use .+;/", $contents);
+			$containsUseStatements = preg_match('/use .+;/', $contents);
 			$contents = preg_replace(
 				'/(namespace [\S+]+;[\n]{1,})/',
 				'\1' . $useStatement . (!$containsUseStatements ? "\n" : ''),

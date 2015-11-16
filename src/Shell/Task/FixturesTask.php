@@ -14,7 +14,6 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
 use Cake\Utility\Inflector;
 
 /**
@@ -44,7 +43,7 @@ class FixturesTask extends BaseTask {
 			}
 			foreach ($values as $key => $val) {
 				if (is_array($val)) {
-					$vals[] = "'{$key}' => [" . implode(", ", $export($val)) . "]";
+					$vals[] = "'{$key}' => [" . implode(', ', $export($val)) . ']';
 				} else {
 					$val = var_export($val, true);
 					if ($val === 'NULL') {
@@ -70,7 +69,7 @@ class FixturesTask extends BaseTask {
 				if (isset($properties['key']) && strtolower($properties['key']) === 'primary') {
 					$constraints['primary'] = [
 						'type' => 'primary',
-						'columns' => [$field]
+						'columns' => [$field],
 					];
 				}
 				if (isset($properties['key'])) {
@@ -168,4 +167,5 @@ class FixturesTask extends BaseTask {
 			strpos($path, DS . 'tests' . DS . 'Fixture' . DS)
 		);
 	}
+
 }

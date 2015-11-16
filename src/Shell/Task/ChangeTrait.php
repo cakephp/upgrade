@@ -18,7 +18,6 @@ use Cake\Error\Debugger;
 
 /**
  * Provides features for modifying the contents of a file
- *
  */
 trait ChangeTrait {
 
@@ -101,4 +100,5 @@ trait ChangeTrait {
 		}
 		return $contents;
 	}
+
 }

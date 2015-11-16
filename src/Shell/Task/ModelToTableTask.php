@@ -14,7 +14,6 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
 use Cake\Utility\Inflector;
 
 /**
@@ -111,8 +110,8 @@ class ModelToTableTask extends BaseTask {
 			->addOptions([
 				'root' => [
 					'default' => '',
-					'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.'
-				]
+					'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.',
+				],
 			]);
 	}
 

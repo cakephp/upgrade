@@ -14,8 +14,6 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
-
 /**
  * Move files around as directories have changed in 3.0
  */
@@ -113,7 +111,7 @@ class LocationsTask extends BaseTask {
 			'Template' => 'Template',
 			'View' . DS . 'Helper' => 'View' . DS . 'Helper',
 			'View' => 'Template',
-			'Test' => 'tests'
+			'Test' => 'tests',
 		];
 	}
 
@@ -151,7 +149,7 @@ class LocationsTask extends BaseTask {
 			'config',
 			'bin',
 			'tests',
-			'src'
+			'src',
 		];
 		$pieces = explode(DS, $folder);
 		$firstFolder = !empty($pieces[0]) ? $pieces[0] : $folder;
@@ -168,8 +166,8 @@ class LocationsTask extends BaseTask {
 			->addOptions([
 				'root' => [
 					'default' => '',
-					'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.'
-				]
+					'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.',
+				],
 			]);
 	}
 

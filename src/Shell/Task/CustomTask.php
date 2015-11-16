@@ -14,12 +14,11 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
-use Cake\Utility\Inflector;
+
 use Cake\Utility\String;
+
 /**
  * Handles custom stuff
- *
  */
 class CustomTask extends BaseTask {
 
@@ -38,8 +37,8 @@ class CustomTask extends BaseTask {
 			[
 				'<?php $config = [ to return $config = [',
 				'/\<\?php(\s+\s*)\$config = \[/',
-				'<?php\1return ['
-			]
+				'<?php\1return [',
+			],
 		];
 		if (strpos($path, DS . 'config' . DS) !== false) {
 			$original = $contents = $this->Stage->source($path);
@@ -52,17 +51,17 @@ class CustomTask extends BaseTask {
 			[
 				'->_table->behaviors()->loaded( to has(',
 				'/-\>behaviors\(\)-\>loaded\(([^\)]+)/',
-				'->behaviors()->has(\1'
+				'->behaviors()->has(\1',
 			],
 			[
 				'->Behaviors->load( to ->addBehavior(',
 				'/-\>Behaviors-\>load\(/',
-				'->addBehavior('
+				'->addBehavior(',
 			],
 			[
 				'->Behaviors->unload( to ->removeBehavior(',
 				'/-\>Behaviors-\>unload\(/',
-				'->removeBehavior('
+				'->removeBehavior(',
 			],
 			[
 				'validateIdentical compare fields',
@@ -92,205 +91,205 @@ class CustomTask extends BaseTask {
 			[
 				'Tools.GoogleMapV3 to Geo.GoogleMapV3',
 				'/\bTools.GoogleMapV3\b/',
-				'Geo.GoogleMapV3'
+				'Geo.GoogleMapV3',
 			],
 			[
 				'Tools.Geocoder to Geo.Geocoder',
 				'/\bTools.Geocoder\b/',
-				'Geo.Geocoder'
+				'Geo.Geocoder',
 			],
 			[
 				'Tools.Ajax to Ajax.Ajax',
 				'/\bTools.Ajax\b/',
-				'Ajax.Ajax'
+				'Ajax.Ajax',
 			],
 			[
 				'Tools.AuthExt to Auth',
 				'/\bTools.AuthExt\b/',
-				'Auth'
+				'Auth',
 			],
 			[
 				'Tools.Tiny to TinyAuth.Tiny',
 				'/\bTools.Tiny\b/',
-				'TinyAuth.Tiny'
+				'TinyAuth.Tiny',
 			],
 			[
 				'$this->Common->flash() to $this->Flash->render()',
 				'/\$this-\>Common-\>flash\(/',
-				'$this->Flash->render('
+				'$this->Flash->render(',
 			],
 			[
 				'$this->Datetime-> to $this->Time->',
 				'/\$this-\>Datetime-\>(.+)\(/',
-				'$this->Time->\1('
+				'$this->Time->\1(',
 			],
 			[
 				'$this->Numeric-> to $this->Number->',
 				'/\$this-\>Numeric-\>(.+)\(/',
-				'$this->Number->\1('
+				'$this->Number->\1(',
 			],
 			[
 				'Tools\Mailer\Email',
 				'/\buse Tools\\\\Lib\\\\EmailLib;/',
-				'use Tools\Mailer\Email;'
+				'use Tools\Mailer\Email;',
 			],
 			[
 				'new EmailLib() to new Email()',
 				'/\bnew EmailLib\(/',
-				'new Email('
+				'new Email(',
 			],
 			[
 				'Tools\Controller\Controller',
 				'/\buse Tools\\\\Controller\\\\MyController;/',
-				'use Tools\Controller\Controller;'
+				'use Tools\Controller\Controller;',
 			],
 			[
 				'extends MyController to extends Controller',
 				'/\bextends MyController\b/',
-				'extends Controller'
+				'extends Controller',
 			],
 			[
 				'extends ControllerTestCase to extends IntegrationTestCase',
 				'/\bextends ControllerTestCase\b/',
-				'extends IntegrationTestCase'
+				'extends IntegrationTestCase',
 			],
 			[
 				'$this->testAction( to $this->get(',
 				'/\$this-\>testAction\(/',
-				'$this->get('
+				'$this->get(',
 			],
 			[
 				'return $this->flash(..., ...) to $this->Flash->message(\1); return $this->redirect(\2);',
 				'/\breturn \$this-\>flash\((.+),\s*(.+)\);/',
-				'$this->Flash->message(\1); return $this->redirect(\2);'
+				'$this->Flash->message(\1); return $this->redirect(\2);',
 			],
 			[
 				'$this->Session->setFlash() to $this->Flash->message();',
 				'/\$this-\>Session-\>setFlash\(/',
-				'$this->Flash->message('
+				'$this->Flash->message(',
 			],
 			# old ones to new sugar
 			[
 				'$this->Flash->message(..., type) ... $this->Flash->type(...)',
 				'/-\>Flash-\>message\((.+),\s*\'(error|warning|success|info)\'\)/',
-				'->Flash->\2(\1)'
+				'->Flash->\2(\1)',
 			],
 			[
 				'$this->Flash->message(..., type) ... $this->Flash->type(...)',
 				'/-\>Common-\>flashMessage\((.+),\s*\'(error|warning|success|info)\'\)/',
-				'->Flash->\2(\1)'
+				'->Flash->\2(\1)',
 			],
 			// Tools flash
 			[
 				'$this->Flash->message(...)',
 				'/-\>Common-\>flashMessage\(__\(\'Invalid (.*)\'\)\)/i',
-				'->Flash->error(__(\'Invalid \1\'))'
+				'->Flash->error(__(\'Invalid \1\'))',
 			],
 			[
 				'$this->Flash->message(...)',
 				'/-\>Common-\>flashMessage\(__\(\'(.*) has been saved\'\)\)/',
-				'->Flash->success(__(\'\1 has been saved\'))'
+				'->Flash->success(__(\'\1 has been saved\'))',
 			],
 			[
 				'$this->Flash->message(...)',
 				'/-\>Common-\>flashMessage\(__\(\'(.*) could not be saved(.*)\'\)\)/',
-				'->Flash->error(__(\'\1 could not be saved\2\'))'
+				'->Flash->error(__(\'\1 could not be saved\2\'))',
 			],
 			# old ones to new sugar
 			[
 				'$this->Flash->message(..., type) ... $this->Flash->type(...)',
 				'/-\>Flash-\>message\((.+),\s*\'(error|warning|success|info)\'\)/',
-				'->Flash->\2(\1)'
+				'->Flash->\2(\1)',
 			],
 			# tmp to qickly find unmatching ones
 			[
 				'$this->Flash->message(...)',
 				'/-\>Common-\>flashMessage\(__\(\'(.*)\'\)\)/',
-				'->Flash->xxxxx(__(\'\1\'))'
+				'->Flash->xxxxx(__(\'\1\'))',
 			],
 			[
 				'use App\\Utility\\Folder to use Cake\\Filesystem\\Folder',
 				'/\bApp\\\\Utility\\\\Folder\b/',
-				'Cake\\Filesystem\\Folder'
+				'Cake\\Filesystem\\Folder',
 			],
 			[
 				'use App\\Utility\\File to use Cake\\Filesystem\\File',
 				'/\bApp\\\\Utility\\\\File\b/',
-				'Cake\\Filesystem\\File'
+				'Cake\\Filesystem\\File',
 			],
 			[
 				'use Cake\\Utility\\Folder to use Cake\\Filesystem\\Folder',
 				'/\bCake\\\\Utility\\\\Folder\b/',
-				'Cake\\Filesystem\\Folder'
+				'Cake\\Filesystem\\Folder',
 			],
 			[
 				'use Cake\\Utility\\File to use Cake\\Filesystem\\File',
 				'/\bCake\\\\Utility\\\\File\b/',
-				'Cake\\Filesystem\\File'
+				'Cake\\Filesystem\\File',
 			],
 			[
 				'Auth::...() to $this->AuthUser->...()',
 				'/\bAuth\:\:(\w+)\(/',
-				'$this->AuthUser->\1('
+				'$this->AuthUser->\1(',
 			],
 			[
 				'$this->Html->defaultLink() to $this->Html->resetLink()',
 				'/\$this-\>Html-\>defaultLink\(/',
-				'$this->Html->resetLink('
+				'$this->Html->resetLink(',
 			],
 			[
 				'$this->Html->defaultUrl() to $this->Url->reset()',
 				'/\$this-\>Html-\>defaultUrl\(/',
-				'$this->Url->reset('
+				'$this->Url->reset(',
 			],
 			[
 				'$this->Html->completeUrl() to $this->Url->complete()',
 				'/\$this-\>Html-\>completeUrl\(/',
-				'$this->Url->complete('
+				'$this->Url->complete(',
 			],
 			[
 				'$this->Auth->login() to $this->Auth->identify()',
 				'/\$this-\>Auth-\>login\(\)/',
-				'$this->Auth->identify()'
+				'$this->Auth->identify()',
 			],
 			[
 				'ClassRegistry::init( to TableRegistry::get(',
 				'/\bClassRegistry\:\:init\(/', //TODO: pluralize model?
-				'TableRegistry::get('
+				'TableRegistry::get(',
 			],
 			[
 				'php_sapi_name() to PHP_SAPI',
 				'/\bphp_sapi_name\(\)/',
-				'PHP_SAPI'
+				'PHP_SAPI',
 			],
 			// CakeDC Search
 			[
 				'->parseCriteria(...) to ->find(\'searchable\', ...)',
 				'/-\>parseCriteria\(/',
-				'->find(\'searchable\', '
+				'->find(\'searchable\', ',
 			],
 			// Tools
 			[
 				'->loadComponent(array(...)) to ->loadComponent(...)',
 				'/-\>Common-\>loadComponent\(array\(\'(.+?)\'\)\)/',
-				'->Common->loadComponent(\'\1\')'
+				'->Common->loadComponent(\'\1\')',
 			],
 			[
 					'public $order = [\'X.name\' => \'ASC\'];',
 					'/public \$order\s*=\s*\[\'(\w+)\.(\w+)\'\s*=\>/',
-					'public $order = [\'\2\' =>'
+					'public $order = [\'\2\' =>',
 			],
 			[
 					'counter removal',
 					'/echo \$this-\>Paginator-\>counter\(.+?\);/sm',
-					''
+					'',
 			],
 			[
 					'paginator fix',
 					'/\<div class="paging"\>.+?\<\/div\>/sm',
 					'<div class="pagination-container">
 	<?php echo $this->element(\'Tools.pagination\'); ?>
-</div>'
+</div>',
 			],
 		];
 
@@ -321,7 +320,6 @@ class CustomTask extends BaseTask {
 
 		return $contents;
 	}
-
 
 /**
  * _shouldProcess

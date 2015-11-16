@@ -14,8 +14,6 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
-
 /**
  * Locale Task.
  *

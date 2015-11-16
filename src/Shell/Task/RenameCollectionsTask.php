@@ -14,8 +14,6 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
-
 /**
  * Upgrade stage task
  *
@@ -48,17 +46,17 @@ class RenameCollectionsTask extends BaseTask {
 			[
 				'Rename ComponentCollection',
 				'#ComponentCollection#',
-				"ComponentRegistry",
+				'ComponentRegistry',
 			],
 			[
 				'Rename HelperCollection',
 				'#HelperCollection#',
-				"HelperRegistry",
+				'HelperRegistry',
 			],
 			[
 				'Rename TaskCollection',
 				'#TaskCollection#',
-				"TaskRegistry",
+				'TaskRegistry',
 			],
 		];
 

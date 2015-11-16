@@ -14,13 +14,10 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
-
 /**
  * Update method signatures task.
  *
  * Handles updating method signatures that have been changed.
- *
  */
 class MethodSignaturesTask extends BaseTask {
 

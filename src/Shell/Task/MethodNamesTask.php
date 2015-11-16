@@ -14,13 +14,10 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
-
 /**
  * Update method names task.
  *
  * Handles updating method names that have been changed.
- *
  */
 class MethodNamesTask extends BaseTask {
 
@@ -108,7 +105,7 @@ class MethodNamesTask extends BaseTask {
 				'Replace $this->Session->flash() with $this->Flash->render()',
 				'#\$this->Session->flash\(#',
 				'$this->Flash->render(',
-			]
+			],
 		];
 
 		$otherPatterns = [

@@ -14,8 +14,6 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
-
 /**
  * Update namespaces.
  */
@@ -45,8 +43,8 @@ class NamespacesTask extends BaseTask {
 			[
 				'Namespace to ' . $namespace,
 				'#^(<\?(?:php)?\s+(?:\/\*.*?\*\/\s{0,1})?)#s',
-				"\\1namespace " . $namespace . ";\n\n",
-			]
+				'\\1namespace ' . $namespace . ";\n\n",
+			],
 		];
 		$contents = $this->_updateContents($contents, $patterns);
 
@@ -103,7 +101,7 @@ class NamespacesTask extends BaseTask {
 			'routes.php',
 			'core.php',
 			'configs.php',
-			'index.php'
+			'index.php',
 		];
 		if (in_array($filename, $excludes, true)) {
 			return false;
@@ -116,4 +114,5 @@ class NamespacesTask extends BaseTask {
 
 		return (substr($path, -4) === '.php');
 	}
+
 }

@@ -15,7 +15,6 @@
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Console\Shell;
-use Cake\Upgrade\Shell\Task\BaseTask;
 
 /**
  * Create and setup missing files and folders via app repo.
@@ -128,8 +127,8 @@ class SkeletonTask extends BaseTask {
 				'overwrite' => [
 					'short' => 'o',
 					'boolean' => true,
-					'help' => 'Overwrite files even if they already exist.'
-				]
+					'help' => 'Overwrite files even if they already exist.',
+				],
 			]);
 	}
 

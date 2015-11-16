@@ -57,13 +57,13 @@ class PrefixedTemplatesTask extends BaseTask {
 	 */
 	protected function _shouldProcess($path) {
 		return (
-			strpos($path, 'Template'. DS) &&
+			strpos($path, 'Template' . DS) &&
 			substr($path, -4) === '.ctp' &&
 			strpos($path, $this->params['prefix'] . '_') &&
-			strpos($path, 'Template'. DS . 'Element' . DS) === false &&
-			strpos($path, 'Template'. DS . 'Email'. DS) === false &&
-			strpos($path, 'Template'. DS. 'Error'. DS) === false &&
-			strpos($path, 'Template'. DS. 'Layout'. DS) === false
+			strpos($path, 'Template' . DS . 'Element' . DS) === false &&
+			strpos($path, 'Template' . DS . 'Email' . DS) === false &&
+			strpos($path, 'Template' . DS . 'Error' . DS) === false &&
+			strpos($path, 'Template' . DS . 'Layout' . DS) === false
 		);
 	}
 
@@ -77,8 +77,8 @@ class PrefixedTemplatesTask extends BaseTask {
 			->addOptions([
 				'prefix' => [
 					'help' => 'Routing prefix to migrate.',
-					'default' => 'admin'
-				]
+					'default' => 'admin',
+				],
 			]);
 	}
 

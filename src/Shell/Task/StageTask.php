@@ -25,10 +25,8 @@ use Cake\Network\Exception\InternalErrorException;
  * Upgrade stage task
  *
  * Handles staging changes for the upgrade process
- *
  */
-class StageTask extends Shell
-{
+class StageTask extends Shell {
 
 	/**
 	 * Files
@@ -59,7 +57,7 @@ class StageTask extends Shell
 	protected $_staged = [
 		'change' => [],
 		'delete' => [],
-		'move' => []
+		'move' => [],
 	];
 
 	/**
@@ -67,20 +65,18 @@ class StageTask extends Shell
 	 *
 	 * @return void
 	 */
-	public function clear()
-	{
+	public function clear() {
 		$this->_staged = [
 			'change' => [],
 			'delete' => [],
-			'move' => []
+			'move' => [],
 		];
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function __construct(ConsoleIo $io = null)
-	{
+	public function __construct(ConsoleIo $io = null) {
 		parent::__construct($io);
 
 		if (strtolower(substr(php_uname('s'), 0, 3)) === 'win') {
@@ -96,8 +92,7 @@ class StageTask extends Shell
 	 * @param string $path file path
 	 * @return void
 	 */
-	public function commit($path = null)
-	{
+	public function commit($path = null) {
 		if (!$path) {
 			foreach (array_keys($this->_staged['change']) as $path) {
 				$this->commit($path);
@@ -231,8 +226,7 @@ class StageTask extends Shell
 	 * @param string $path
 	 * @return bool
 	 */
-	public function delete($path)
-	{
+	public function delete($path) {
 		$this->_staged['delete'][] = $path;
 		return true;
 	}
@@ -244,8 +238,7 @@ class StageTask extends Shell
 	 * @param string $to
 	 * @return bool
 	 */
-	public function move($from, $to)
-	{
+	public function move($from, $to) {
 		if (is_dir($from)) {
 			$this->_findFiles('.*');
 			foreach ($this->_files as $fromFile) {
@@ -270,8 +263,7 @@ class StageTask extends Shell
 	 * @param string $updated
 	 * @return bool
 	 */
-	public function change($filePath, $original, $updated)
-	{
+	public function change($filePath, $original, $updated) {
 		if ($original === $updated) {
 			return false;
 		}
@@ -303,8 +295,7 @@ class StageTask extends Shell
 	 * @param string $path
 	 * @return string
 	 */
-	public function source($path)
-	{
+	public function source($path) {
 		if (isset($this->_staged['change'][$path])) {
 			$path = TMP . 'upgrade' . DS . end($this->_staged['change'][$path]);
 		}
@@ -319,8 +310,7 @@ class StageTask extends Shell
 	 * @param bool $reset
 	 * @return array
 	 */
-	public function files($excludes = [], $reset = false)
-	{
+	public function files($excludes = [], $reset = false) {
 		if ($reset) {
 			$this->_files = [];
 		}
@@ -366,8 +356,7 @@ class StageTask extends Shell
 	 * @param string $path The directory/path to create.
 	 * @return void
 	 */
-	protected function _makeDir($path)
-	{
+	protected function _makeDir($path) {
 		exec($this->_mkdirCommand . ' ' . escapeshellarg($path));
 	}
 
@@ -377,8 +366,7 @@ class StageTask extends Shell
 	 *
 	 * @return string
 	 */
-	protected function _getPath()
-	{
+	protected function _getPath() {
 		if (empty($this->args[0]) || !file_exists($this->args[0])) {
 			throw new InternalErrorException('Path not specified or invalid.');
 		}
@@ -398,12 +386,12 @@ class StageTask extends Shell
 	 * @param string $to The target path
 	 * @return void
 	 */
-	protected function _gitMove($gitCd, $from, $to)
-	{
+	protected function _gitMove($gitCd, $from, $to) {
 		if (!file_exists(dirname($to))) {
 			$this->_makeDir(dirname($to));
 		}
 		exec($gitCd . 'git mv -f ' . escapeshellarg($from) . ' ' . escapeshellarg($from . '__'));
 		exec($gitCd . 'git mv -f ' . escapeshellarg($from . '__') . ' ' . escapeshellarg($to));
 	}
+
 }

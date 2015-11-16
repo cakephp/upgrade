@@ -14,14 +14,13 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Shell\Task\BaseTask;
 use Cake\Utility\Inflector;
 use Cake\Utility\String;
+
 /**
  * Update method names task.
  *
  * Handles updating baked templates
- *
  */
 class TemplatesTask extends BaseTask {
 
@@ -98,7 +97,6 @@ class TemplatesTask extends BaseTask {
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
 
-
 		// Mainly controller
 		$pattern = '/catch \(Exception $(.+?)\)/i';
 		$replacement = function ($matches) {
@@ -127,7 +125,7 @@ class TemplatesTask extends BaseTask {
 		$replacement = function ($matches) {
 			$entity = lcfirst($matches[1]);
 			$table = Inflector::pluralize($matches[1]);
-			return '$' . $entity .' = $this->' . $table . '->newEntity($this->request->data)';
+			return '$' . $entity . ' = $this->' . $table . '->newEntity($this->request->data)';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
 
@@ -143,11 +141,11 @@ class TemplatesTask extends BaseTask {
 		$replacement = function ($matches) {
 			$entity = lcfirst($matches[1]);
 			$table = Inflector::pluralize($matches[1]);
-			return '$this->' . $table . '->delete($' . $entity. ')';
+			return '$this->' . $table . '->delete($' . $entity . ')';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
 
-		preg_match('#' . preg_quote(DS . 'Controller' . DS) .'([a-z][a-z0-9]+)Controller\.php#i', $path, $matches);
+		preg_match('#' . preg_quote(DS . 'Controller' . DS) . '([a-z][a-z0-9]+)Controller\.php#i', $path, $matches);
 		if ($matches) {
 			$controllerName = $matches[1];
 			$model = Inflector::singularize($controllerName);
@@ -182,7 +180,6 @@ class TemplatesTask extends BaseTask {
 
 		return $contents;
 	}
-
 
 /**
  * _shouldProcess

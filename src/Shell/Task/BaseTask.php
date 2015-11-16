@@ -20,30 +20,30 @@ use Cake\Console\Shell;
  */
 class BaseTask extends Shell {
 
-/**
- * Get the option parser for this shell.
- *
- * @return \Cake\Console\ConsoleOptionParser
- */
+	/**
+	 * Get the option parser for this shell.
+	 *
+	 * @return \Cake\Console\ConsoleOptionParser
+	 */
 	public function getOptionParser() {
 		return parent::getOptionParser()
 			->addArgument('path', [
 				'help' => 'Path to code to upgrade',
-				'required' => true
+				'required' => true,
 			])
 			->addOptions([
 				'plugin' => [
 					'short' => 'p',
-					'help' => 'The plugin to update. Only the specified plugin will be updated.'
+					'help' => 'The plugin to update. Only the specified plugin will be updated.',
 				],
 				'dry-run' => [
 					'short' => 'd',
 					'help' => 'Dry run the update, no files will actually be modified.',
-					'boolean' => true
+					'boolean' => true,
 				],
 				'git' => [
 					'help' => 'Perform git operations. eg. git mv instead of just moving files.',
-					'boolean' => true
+					'boolean' => true,
 				],
 				'namespace' => [
 					'help' => 'Set the base namespace you want to use. Defaults to App or the plugin name.',
@@ -52,7 +52,8 @@ class BaseTask extends Shell {
 				'exclude' => [
 					'help' => 'Comma separated list of top level diretories to exclude.',
 					'default' => '',
-				]
+				],
 			]);
 	}
+
 }
