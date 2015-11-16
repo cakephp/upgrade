@@ -18,21 +18,18 @@ use Cake\Console\Shell;
 use Cake\Core\App;
 use Cake\Core\Plugin;
 use Cake\Error\Debugger;
-use Cake\Filesystem\Folder;
-use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
 /**
  * A shell class to help developers upgrade applications to CakePHP 3.0
- *
  */
 class UpgradeShell extends Shell {
 
-/**
- * Tasks loaded.
- *
- * @var array
- */
+	/**
+	 * Tasks loaded.
+	 *
+	 * @var array
+	 */
 	public $tasks = [
 		'AppUses',
 		'Fixtures',
@@ -220,7 +217,7 @@ class UpgradeShell extends Shell {
 		$allParser->addOption('interactive', [
 				'short' => 'i',
 				'help' => 'Run all commands in an interactive mode. Allows you to selectively apply specific steps.',
-				'boolean' => true
+				'boolean' => true,
 			]);
 
 		return $parser->addSubcommand('all', [

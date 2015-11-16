@@ -1,4 +1,5 @@
 <?php
+
 namespace Cake\Upgrade\Test\TestCase\Shell;
 
 use Cake\TestSuite\TestCase;
@@ -6,11 +7,10 @@ use Cake\Upgrade\Shell\UpgradeShell;
 
 /**
  * UpgradeShellTest
- *
  */
 class UpgradeShellTest extends TestCase {
 
-/**
+	/**
  * Upgrade shell instance
  *
  * @var mixed

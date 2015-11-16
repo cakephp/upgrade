@@ -1,17 +1,16 @@
 <?php
+
 namespace Cake\Upgrade\Test\TestCase\Shell\Task;
 
 use Cake\TestSuite\TestCase;
-use Cake\Upgrade\Shell\Task\SkeletonTask;
 use Cake\Filesystem\Folder;
 
 /**
  * SkeletonTaskTest
- *
  */
 class SkeletonTaskTest extends TestCase {
 
-/**
+	/**
  * Task instance
  *
  * @var mixed

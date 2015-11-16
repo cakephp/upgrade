@@ -6,24 +6,23 @@ use Cake\TestSuite\TestCase;
 
 /**
  * AppUsesTaskTest
- *
  */
 class AppUsesTaskTest extends TestCase {
 
-/**
- * Task instance
- *
- * @var mixed
- */
+	/**
+	 * Task instance
+	 *
+	 * @var mixed
+	 */
 	public $sut;
 
-/**
- * setUp
- *
- * Create a mock for all tests to use
- *
- * @return void
- */
+	/**
+	 * setUp
+	 *
+	 * Create a mock for all tests to use
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 

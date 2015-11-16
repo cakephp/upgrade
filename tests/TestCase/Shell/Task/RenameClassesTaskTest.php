@@ -6,24 +6,23 @@ use Cake\TestSuite\TestCase;
 
 /**
  * RenameClassesTaskTest
- *
  */
 class RenameClassesTaskTest extends TestCase {
 
-/**
- * Task instance
- *
- * @var mixed
- */
+	/**
+	 * Task instance
+	 *
+	 * @var mixed
+	 */
 	public $sut;
 
-/**
- * setUp
- *
- * Create a mock for all tests to use
- *
- * @return void
- */
+	/**
+	 * setUp
+	 *
+	 * Create a mock for all tests to use
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 
@@ -37,11 +36,11 @@ class RenameClassesTaskTest extends TestCase {
 		$this->sut->loadTasks();
 	}
 
-/**
- * Testing the rename of string class
- *
- * @return void
- */
+	/**
+	 * Testing the rename of string class
+	 *
+	 * @return void
+	 */
 	public function testRenameClasses() {
 		$this->sut->method('_shouldProcess')
 			->will($this->returnValue(true));
@@ -55,11 +54,11 @@ class RenameClassesTaskTest extends TestCase {
 		$this->assertTextEquals($expected, $result);
 	}
 
-/**
- * Testing the rename of string class
- *
- * @return void
- */
+	/**
+	 * Testing the rename of string class
+	 *
+	 * @return void
+	 */
 	public function testRenameStringClass() {
 		$this->sut->method('_shouldProcess')
 			->will($this->returnValue(true));

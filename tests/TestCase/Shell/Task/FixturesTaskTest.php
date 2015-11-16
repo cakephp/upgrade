@@ -1,30 +1,28 @@
 <?php
+
 namespace Cake\Upgrade\Test\TestCase\Shell\Task;
 
 use Cake\TestSuite\TestCase;
-use Cake\Upgrade\Shell\Task\FixturesTask;
-use Cake\Utility\Folder;
 
 /**
  * FixturesTaskTest
- *
  */
-class FixturesTest extends TestCase {
+class FixturesTaskTest extends TestCase {
 
-/**
- * Task instance
- *
- * @var mixed
- */
+	/**
+	 * Task instance
+	 *
+	 * @var mixed
+	 */
 	public $sut;
 
-/**
- * setUp
- *
- * Create a mock for all tests to use
- *
- * @return void
- */
+	/**
+	 * setUp
+	 *
+	 * Create a mock for all tests to use
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		parent::setUp();
 
@@ -38,11 +36,11 @@ class FixturesTest extends TestCase {
 		$this->sut->loadTasks();
 	}
 
-/**
- * SkeletonTaskTest::testProcess()
- *
- * @return void
- */
+	/**
+	 * SkeletonTaskTest::testProcess()
+	 *
+	 * @return void
+	 */
 	public function testProcess() {
 		$this->sut->expects($this->any())
 			->method('_shouldProcess')

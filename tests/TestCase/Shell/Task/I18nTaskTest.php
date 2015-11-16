@@ -1,16 +1,15 @@
 <?php
+
 namespace Cake\Upgrade\Test\TestCase\Shell\Task;
 
 use Cake\TestSuite\TestCase;
-use Cake\Upgrade\Shell\Task\I18nTask;
 
 /**
  * I18nTaskTest
- *
  */
 class I18nTaskTest extends TestCase {
 
-/**
+	/**
  * Task instance
  *
  * @var mixed
