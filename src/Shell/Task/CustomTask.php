@@ -14,8 +14,6 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Utility\String;
-
 /**
  * Handles custom stuff
  */
@@ -48,9 +46,9 @@ class CustomTask extends BaseTask {
 
 		$patterns = [
 			[
-				'->_table->behaviors()->loaded( to has(',
-				'/-\>behaviors\(\)-\>loaded\(([^\)]+)/',
-				'->behaviors()->has(\1',
+				'->Behaviors->loaded( to ->hasBehavior(',
+				'/-\>Behaviors-\>loaded\(/',
+				'->hasBehavior(',
 			],
 			[
 				'->Behaviors->load( to ->addBehavior(',
