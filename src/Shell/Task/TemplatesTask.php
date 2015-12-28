@@ -15,7 +15,7 @@
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Utility\Inflector;
-use Cake\Utility\String;
+use Cake\Utility\Text;
 
 /**
  * Update method names task.
@@ -91,7 +91,7 @@ class TemplatesTask extends BaseTask {
 		// Model
 		$pattern = '/public \$uses = (array\(|\[)([^\]]+?)(\]|\))/i';
 		$replacement = function ($matches) {
-			$models = String::tokenize($matches[2]);
+			$models = Text::tokenize($matches[2]);
 			$class = array_shift($models);
 			return 'public $modelClass = ' . $class;
 		};
@@ -160,7 +160,7 @@ class TemplatesTask extends BaseTask {
 
 		$pattern = '/-\>request-\>(allowMethod|onlyAllow)\(([^\[)]+)\)/';
 		$replacement = function ($matches) {
-			$methods = String::tokenize($matches[2]);
+			$methods = Text::tokenize($matches[2]);
 			if (count($methods) < 2) {
 				return $matches[0];
 			}
@@ -170,7 +170,7 @@ class TemplatesTask extends BaseTask {
 
 		$pattern = '/\$this-\>Auth-\>(allow|deny)\(([^\[)]+)\)/';
 		$replacement = function ($matches) {
-			$methods = String::tokenize($matches[2]);
+			$methods = Text::tokenize($matches[2]);
 			if (count($methods) < 2) {
 				return $matches[0];
 			}

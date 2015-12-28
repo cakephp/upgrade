@@ -240,6 +240,11 @@ class CustomTask extends BaseTask {
 				'$this->Url->reset(',
 			],
 			[
+				'$this->Html->resetUrl() to $this->Url->reset()',
+				'/\$this-\>Html-\>resetUrl\(/',
+				'$this->Url->reset(',
+			],
+			[
 				'$this->Html->completeUrl() to $this->Url->complete()',
 				'/\$this-\>Html-\>completeUrl\(/',
 				'$this->Url->complete(',
