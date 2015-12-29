@@ -91,9 +91,9 @@ class LocationsTask extends BaseTask {
 	protected function _moves() {
 		return [
 			'Config' => 'config',
-			'Console' => 'bin',
-			'Console' . DS . 'Command' => 'Shell',
 			'Console' . DS . 'Command' . DS . 'Task' => 'Shell' . DS . 'Task',
+			'Console' . DS . 'Command' => 'Shell',
+			'Console' => 'bin',
 			'Controller' . DS . 'Component' . DS . 'Auth' => 'Auth',
 			'Lib' => 'src',
 			'Test' . DS . 'Case' => 'tests' . DS . 'TestCase',
@@ -104,7 +104,6 @@ class LocationsTask extends BaseTask {
 			'View' . DS . 'Scaffolds' => 'Template' . DS . 'Scaffold',
 			'View' . DS . 'Errors' => 'Template' . DS . 'Error',
 			'View' . DS . 'Themed' => 'Template' . DS . 'Themed',
-
 			'Auth' => 'Auth',
 			'Controller' => 'Controller',
 			'Model' => 'Model',
