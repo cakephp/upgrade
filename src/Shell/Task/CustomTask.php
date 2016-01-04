@@ -293,12 +293,57 @@ class CustomTask extends BaseTask {
 	<?php echo $this->element(\'Tools.pagination\'); ?>
 </div>',
 			],
+			// Shim
+			[
+				'Shim saveFieldById() to saveField()',
+				'/\bsaveFieldById\(/',
+				'saveField(',
+			],
+			[
+				'Shim fieldByConditions() to field()',
+				'/\bfieldByConditions\(/',
+				'field(',
+			],
+			[
+				'Shim updateAllJoinless() to updateAll()',
+				'/\bupdateAllJoinless\(/',
+				'updateAll(',
+			],
+			[
+				'Shim deleteAllJoinless() to deleteAll()',
+				'/\bdeleteAllJoinless\(/',
+				'deleteAll(',
+			],
+			[
+				'\'className\' => \'Shim.UrlShim\'',
+				'/\'className\'\s*=\>\s*\'Shim.UrlShim\'/',
+				'\'className\' => \'Tools.Url\'',
+			],
+			/*
+			[
+				'icons',
+				'/-\>Format-\>cIcon\(ICON_YES,/',
+				'$this->Format->icon(\'yes\','
+			],
+			[
+			'icons',
+				'/-\>Format-\>cIcon\(ICON_WARNING,/',
+				'$this->Format->icon(\'warning\','
+			],
+			[
+				'icons',
+				'/-\>Format-\>cIcon\(ICON_NO,/',
+				'$this->Format->icon(\'no\','
+			],
+			*/
 		];
 
 		$original = $contents = $this->Stage->source($path);
 
 		$contents = $this->_updateContents($contents, $patterns);
+		$contents = $this->_fixPagesFileNames($contents, $path);
 		$contents = $this->_replaceCustom($contents, $path);
+		$contents = $this->_replaceIcons($contents, $path);
 
 		return $this->Stage->change($path, $original, $contents);
 	}
@@ -324,6 +369,74 @@ class CustomTask extends BaseTask {
 	}
 
 	/**
+	 * Custom stuff
+	 *
+	 * @param string $contents
+	 * @param string $path
+	 * @return string
+	 */
+	protected function _replaceIcons($contents, $path) {
+		$ending = substr($path, -4);
+		if ($ending !== '.ctp') {
+			return $contents;
+		}
+
+		$pattern = '/-\>Format-\>cIcon\(ICON_(\w+?),\s*\'(.*?)\'/i';
+		$replacement = function ($matches) {
+			$iconName = strtolower($matches[1]);
+			return '->Format->icon(\'' . $iconName . '\', [\'title\' => \'' . $matches[2] . '\']';
+		};
+		$contents = preg_replace_callback($pattern, $replacement, $contents);
+
+		$pattern = '/-\>Format-\>cIcon\(ICON_(\w+?)\)/i';
+		$replacement = function ($matches) {
+			$iconName = strtolower($matches[1]);
+			return '->Format->icon(\'' . $iconName . '\')';
+		};
+		$contents = preg_replace_callback($pattern, $replacement, $contents);
+
+		$pattern = '/-\>Format-\>cIcon\(([a-z.-]+),\s*\'(.*?)\'/i';
+		$replacement = function ($matches) {
+			$iconName = strtolower($matches[1]);
+			return '->Format->icon(\'' . $iconName . '\', [\'title\' => \'' . $matches[2] . '\']';
+		};
+		$contents = preg_replace_callback($pattern, $replacement, $contents);
+
+		$pattern = '/-\>Format-\>cIcon\(\'([a-z.-]+)\',\s*\'(.*?)\'/i';
+		$replacement = function ($matches) {
+			$iconName = $matches[1];
+			return '->Format->icon(\'' . $iconName . '\', [\'title\' => \'' . $matches[2] . '\']';
+		};
+		$contents = preg_replace_callback($pattern, $replacement, $contents);
+
+		return $contents;
+	}
+
+	/**
+	 * Custom stuff
+	 *
+	 * @param string $contents
+	 * @param string $path
+	 * @return string
+	 */
+	protected function _fixPagesFileNames($contents, $path) {
+		$ending = substr($path, -4);
+		if ($ending !== '.ctp' || strpos($path, DS . 'Template' . DS . 'Pages' . DS) === false) {
+			return $contents;
+		}
+
+		$filename = pathinfo($path, PATHINFO_FILENAME);
+
+		$newFilename = str_replace('-', '_', $filename);
+
+		if ($newFilename !== $filename) {
+			$newPath = dirname($path) . DS . $newFilename . $ending;
+			$this->Stage->move($path, $newPath);
+		}
+		return $contents;
+	}
+
+		/**
 	 * _shouldProcess
 	 *
 	 * Bail for invalid files (php/ctp files only)
