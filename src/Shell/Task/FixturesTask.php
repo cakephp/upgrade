@@ -120,6 +120,22 @@ class FixturesTask extends BaseTask {
 			$count
 		);
 
+		// Fix import model => ModelName => table plural table_name
+		$processor = function ($matches) {
+			$name = $matches[3];
+			$newName = Inflector::pluralize(Inflector::underscore($name));
+
+			return $matches[1] . '\'table\' => \'' . $newName . '\'';
+		};
+
+		$contents = preg_replace_callback(
+			'/(public \$import\s+=\s+(?:array\(|\[))(.*?)\'model\'\s*=>\s*\'(\w+)\'/ms',
+			$processor,
+			$contents,
+			-1,
+			$count
+		);
+
 		// Pluralize fixtures
 		$name = pathinfo($path, PATHINFO_FILENAME);
 		$name = substr($name, 0, -7);

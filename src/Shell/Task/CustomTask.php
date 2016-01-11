@@ -277,19 +277,19 @@ class CustomTask extends BaseTask {
 				'->Common->loadComponent(\'\1\')',
 			],
 			[
-					'public $order = [\'X.name\' => \'ASC\'];',
-					'/public \$order\s*=\s*\[\'(\w+)\.(\w+)\'\s*=\>/',
-					'public $order = [\'\2\' =>',
+				'public $order = [\'X.name\' => \'ASC\'];',
+				'/public \$order\s*=\s*\[\'(\w+)\.(\w+)\'\s*=\>/',
+				'public $order = [\'\2\' =>',
 			],
 			[
-					'counter removal',
-					'/echo \$this-\>Paginator-\>counter\(.+?\);/sm',
-					'',
+				'counter removal',
+				'/echo \$this-\>Paginator-\>counter\(.+?\);/sm',
+				'',
 			],
 			[
-					'paginator fix',
-					'/\<div class="paging"\>.+?\<\/div\>/sm',
-					'<div class="pagination-container">
+				'paginator fix',
+				'/\<div class="paging"\>.+?\<\/div\>/sm',
+				'<div class="pagination-container">
 	<?php echo $this->element(\'Tools.pagination\'); ?>
 </div>',
 			],
@@ -380,6 +380,9 @@ class CustomTask extends BaseTask {
 		if ($ending !== '.ctp') {
 			return $contents;
 		}
+
+		// Skip for now
+		return;
 
 		$pattern = '/-\>Format-\>cIcon\(ICON_(\w+?),\s*\'(.*?)\'/i';
 		$replacement = function ($matches) {
