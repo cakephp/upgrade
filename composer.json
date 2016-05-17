@@ -5,11 +5,11 @@
 	"type": "project",
 	"license": "MIT",
 	"require": {
-		"cakephp/cakephp": "~3.1",
-		"cakephp/app": "~3.1"
+		"cakephp/cakephp": "~3.2",
+		"cakephp/app": "~3.2"
 	},
 	"require-dev": {
-		"fig-r/psr-2-r": "dev-master"
+		"fig-r/psr2r-sniffer": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {
@@ -21,11 +21,5 @@
 	"support": {
 		"source": "https://github.com/cakephp/upgrade"
 	},
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "git@bitbucket.org:euromark/psr-2-r.git"
-		}
-	],
 	"post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
 }
