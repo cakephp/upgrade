@@ -28,7 +28,7 @@ class I18nTask extends BaseTask {
 	/**
 	 * Converts placeholders from 2.x to 3.x syntax.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	protected function _process($path) {
 		$original = $contents = $this->Stage->source($path);

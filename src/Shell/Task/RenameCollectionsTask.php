@@ -29,7 +29,7 @@ class RenameCollectionsTask extends BaseTask {
 	 * RenameCollectionsTask::_process()
 	 *
 	 * @param string $path
-	 * @return void
+	 * @return bool
 	 */
 	protected function _process($path) {
 		$patterns = [

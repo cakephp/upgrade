@@ -2,7 +2,9 @@
 
 namespace Cake\Upgrade\Test\TestCase\Shell\Task;
 
+use Cake\Console\ConsoleIo;
 use Cake\TestSuite\TestCase;
+use Cake\Upgrade\Shell\Task\AppUsesTask;
 
 /**
  * AppUsesTaskTest
@@ -12,9 +14,9 @@ class AppUsesTaskTest extends TestCase {
 	/**
 	 * Task instance
 	 *
-	 * @var mixed
+	 * @var \Cake\Upgrade\Shell\Task\AppUsesTask|\PHPUnit_Framework_MockObject_MockObject
 	 */
-	public $sut;
+	public $task;
 
 	/**
 	 * setUp
@@ -26,14 +28,13 @@ class AppUsesTaskTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
+		$io = $this->getMockBuilder(ConsoleIo::class)->getMock();
 
-		$this->sut = $this->getMock(
-			'Cake\Upgrade\Shell\Task\AppUsesTask',
-			['in', 'out', 'hr', 'err', '_shouldProcess'],
-			[$io]
-		);
-		$this->sut->loadTasks();
+		$this->task = $this->getMockBuilder(AppUsesTask::class)
+			->setMethods(['in', 'out', 'hr', 'err', '_shouldProcess'])
+			->setConstructorArgs([$io])
+			->getMock();
+		$this->task->loadTasks();
 	}
 
 	/**
@@ -42,15 +43,14 @@ class AppUsesTaskTest extends TestCase {
 	 * @return void
 	 */
 	public function testAppUses() {
-		$this->sut->expects($this->any())
+		$this->task->expects($this->any())
 			->method('_shouldProcess')
 			->will($this->returnValue(true));
 
 		$path = TESTS . 'test_files' . DS;
-		$result = $this->sut->process($path . 'AppUses.php');
-		$this->assertTrue($result);
+		$this->task->process($path . 'AppUses.php');
 
-		$result = $this->sut->Stage->source($path . 'AppUses.php');
+		$result = $this->task->Stage->source($path . 'AppUses.php');
 		$expected = file_get_contents($path . 'AppUsesAfter.php');
 		$this->assertTextEquals($expected, $result);
 	}
@@ -61,14 +61,13 @@ class AppUsesTaskTest extends TestCase {
 	 * @return void
 	 */
 	public function testAppUsesImplicit() {
-		$this->sut->method('_shouldProcess')
+		$this->task->method('_shouldProcess')
 			->will($this->returnValue(true));
 
 		$path = TESTS . 'test_files' . DS;
-		$result = $this->sut->process($path . 'AppUsesImplicit.php');
-		$this->assertTrue($result);
+		$this->task->process($path . 'AppUsesImplicit.php');
 
-		$result = $this->sut->Stage->source($path . 'AppUsesImplicit.php');
+		$result = $this->task->Stage->source($path . 'AppUsesImplicit.php');
 		$expected = file_get_contents($path . 'AppUsesImplicitAfter.php');
 		$this->assertTextEquals($expected, $result);
 	}
@@ -82,14 +81,13 @@ class AppUsesTaskTest extends TestCase {
 	 * @return void
 	 */
 	public function testAppUsesImplicitTestCase() {
-		$this->sut->method('_shouldProcess')
+		$this->task->method('_shouldProcess')
 			->will($this->returnValue(true));
 
 		$path = TESTS . 'test_files' . DS;
-		$result = $this->sut->process($path . 'AppUsesImplicitTestCase.php');
-		$this->assertTrue($result);
+		$this->task->process($path . 'AppUsesImplicitTestCase.php');
 
-		$result = $this->sut->Stage->source($path . 'AppUsesImplicitTestCase.php');
+		$result = $this->task->Stage->source($path . 'AppUsesImplicitTestCase.php');
 		$expected = file_get_contents($path . 'AppUsesImplicitTestCaseAfter.php');
 		$this->assertTextEquals($expected, $result);
 	}

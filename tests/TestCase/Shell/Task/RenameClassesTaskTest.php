@@ -2,7 +2,9 @@
 
 namespace Cake\Upgrade\Test\TestCase\Shell\Task;
 
+use Cake\Console\ConsoleIo;
 use Cake\TestSuite\TestCase;
+use Cake\Upgrade\Shell\Task\RenameClassesTask;
 
 /**
  * RenameClassesTaskTest
@@ -12,9 +14,9 @@ class RenameClassesTaskTest extends TestCase {
 	/**
 	 * Task instance
 	 *
-	 * @var mixed
+	 * @var \Cake\Upgrade\Shell\Task\RenameClassesTask|\PHPUnit_Framework_MockObject_MockObject
 	 */
-	public $sut;
+	public $task;
 
 	/**
 	 * setUp
@@ -26,14 +28,13 @@ class RenameClassesTaskTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
+		$io = $this->getMockBuilder(ConsoleIo::class)->getMock();
 
-		$this->sut = $this->getMock(
-			'Cake\Upgrade\Shell\Task\RenameClassesTask',
-			['in', 'out', 'hr', 'err', '_shouldProcess'],
-			[$io]
-		);
-		$this->sut->loadTasks();
+		$this->task = $this->getMockBuilder(RenameClassesTask::class)
+			->setMethods(['in', 'out', 'hr', 'err', '_shouldProcess'])
+			->setConstructorArgs([$io])
+			->getMock();
+		$this->task->loadTasks();
 	}
 
 	/**
@@ -42,14 +43,13 @@ class RenameClassesTaskTest extends TestCase {
 	 * @return void
 	 */
 	public function testRenameClasses() {
-		$this->sut->method('_shouldProcess')
+		$this->task->method('_shouldProcess')
 			->will($this->returnValue(true));
 
 		$path = TESTS . 'test_files' . DS;
-		$result = $this->sut->process($path . 'RenameClasses.php');
-		$this->assertTrue($result);
+		$this->task->process($path . 'RenameClasses.php');
 
-		$result = $this->sut->Stage->source($path . 'RenameClasses.php');
+		$result = $this->task->Stage->source($path . 'RenameClasses.php');
 		$expected = file_get_contents($path . 'RenameClassesAfter.php');
 		$this->assertTextEquals($expected, $result);
 	}
@@ -60,14 +60,13 @@ class RenameClassesTaskTest extends TestCase {
 	 * @return void
 	 */
 	public function testRenameStringClass() {
-		$this->sut->method('_shouldProcess')
+		$this->task->method('_shouldProcess')
 			->will($this->returnValue(true));
 
 		$path = TESTS . 'test_files' . DS;
-		$result = $this->sut->process($path . 'RenameString.php');
-		$this->assertTrue($result);
+		$this->task->process($path . 'RenameString.php');
 
-		$result = $this->sut->Stage->source($path . 'RenameString.php');
+		$result = $this->task->Stage->source($path . 'RenameString.php');
 		$expected = file_get_contents($path . 'RenameStringAfter.php');
 		$this->assertTextEquals($expected, $result);
 	}

@@ -28,7 +28,7 @@ class FixturesTask extends BaseTask {
 	/**
 	 * Process fixture content and update it for 3.x
 	 *
-	 * @param string $content Fixture content.
+	 * @param string $path Path.
 	 * @return bool
 	 */
 	protected function _process($path) {

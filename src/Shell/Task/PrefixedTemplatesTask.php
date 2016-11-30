@@ -34,10 +34,10 @@ class PrefixedTemplatesTask extends BaseTask {
 	 * Move admin_action.ctp to Admin/action.ctp
 	 * Extract admin_ prefixed actions from controller and create new controller in Admin subfolder
 	 *
-	 * @param mixed $path
+	 * @param string $path
 	 * @return bool
 	 */
-	protected function _process($path = null) {
+	protected function _process($path) {
 		$new = str_replace(
 			'Template' . DS,
 			'Template' . DS . Inflector::camelize($this->params['prefix']) . DS,

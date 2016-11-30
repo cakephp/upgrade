@@ -2,8 +2,10 @@
 
 namespace Cake\Upgrade\Test\TestCase\Shell\Task;
 
+use Cake\Console\ConsoleIo;
 use Cake\TestSuite\TestCase;
 use Cake\Filesystem\Folder;
+use Cake\Upgrade\Shell\Task\SkeletonTask;
 
 /**
  * SkeletonTaskTest
@@ -13,9 +15,9 @@ class SkeletonTaskTest extends TestCase {
 	/**
 	 * Task instance
 	 *
-	 * @var mixed
+	 * @var \Cake\Upgrade\Shell\Task\SkeletonTask|\PHPUnit_Framework_MockObject_MockObject
 	 */
-	public $sut;
+	public $task;
 
 	/**
 	 * setUp
@@ -27,14 +29,13 @@ class SkeletonTaskTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
+		$io = $this->getMockBuilder(ConsoleIo::class)->getMock();
 
-		$this->sut = $this->getMock(
-			'Cake\Upgrade\Shell\Task\SkeletonTask',
-			['in', 'out', 'hr', 'err', '_stop'],
-			[$io]
-		);
-		$this->sut->loadTasks();
+		$this->task = $this->getMockBuilder(SkeletonTask::class)
+			->setMethods(['in', 'out', 'hr', 'err', '_stop'])
+			->setConstructorArgs([$io])
+			->getMock();
+		$this->task->loadTasks();
 	}
 
 	/**
@@ -59,8 +60,7 @@ class SkeletonTaskTest extends TestCase {
 
 		$this->assertFalse(file_exists($path . 'logs' . DS . 'empty'));
 
-		$result = $this->sut->process($path . 'composer.json');
-		$this->assertTrue($result);
+		$this->task->process($path . 'composer.json');
 
 		$this->assertTrue(file_exists($path . 'logs' . DS . 'empty'));
 		$this->assertTrue(file_exists($path . 'tests' . DS . 'bootstrap.php'));

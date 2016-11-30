@@ -4,21 +4,23 @@ namespace Cake\Upgrade\Test\TestCase\Shell\Task;
 
 use Cake\Console\ConsoleIo;
 use Cake\TestSuite\TestCase;
-use Cake\Upgrade\Shell\Task\I18nTask;
+use Cake\Upgrade\Shell\Task\FixtureLoadingTask;
 
 /**
- * I18nTaskTest
+ * FixtureLoadingTaskTest
  */
-class I18nTaskTest extends TestCase {
+class FixtureLoadingTaskTest extends TestCase {
 
 	/**
 	 * Task instance
 	 *
-	 * @var \Cake\Upgrade\Shell\Task\I18nTask|\PHPUnit_Framework_MockObject_MockObject
+	 * @var \Cake\Upgrade\Shell\Task\FixtureLoadingTask|\PHPUnit_Framework_MockObject_MockObject
 	 */
 	public $task;
 
 	/**
+	 * setUp
+	 *
 	 * Create a mock for all tests to use
 	 *
 	 * @return void
@@ -28,19 +30,24 @@ class I18nTaskTest extends TestCase {
 
 		$io = $this->getMockBuilder(ConsoleIo::class)->getMock();
 
-		$this->task = $this->getMockBuilder(I18nTask::class)
+		$this->task = $this->getMockBuilder(FixtureLoadingTask::class)
 			->setMethods(['in', 'out', 'hr', 'err', '_stop'])
 			->setConstructorArgs([$io])
 			->getMock();
 		$this->task->loadTasks();
 	}
 
+	/**
+	 * FixtureLoadingTaskTest::testProcess()
+	 *
+	 * @return void
+	 */
 	public function testProcess() {
 		$path = TESTS . 'test_files' . DS;
-		$this->task->process($path . 'i18n_before.php');
+		$this->task->process($path . 'fixture_tests_before.php');
 
-		$result = $this->task->Stage->source($path . 'i18n_before.php');
-		$expected = file_get_contents($path . 'i18n_after.php');
+		$result = $this->task->Stage->source($path . 'fixture_tests_before.php');
+		$expected = file_get_contents($path . 'fixture_tests_after.php');
 		$this->assertTextEquals($expected, $result);
 	}
 

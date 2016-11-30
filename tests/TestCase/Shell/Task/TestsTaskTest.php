@@ -2,7 +2,9 @@
 
 namespace Cake\Upgrade\Test\TestCase\Shell\Task;
 
+use Cake\Console\ConsoleIo;
 use Cake\TestSuite\TestCase;
+use Cake\Upgrade\Shell\Task\TestsTask;
 
 /**
  * TestsTaskTest
@@ -12,9 +14,9 @@ class TestsTaskTest extends TestCase {
 	/**
 	 * Task instance
 	 *
-	 * @var mixed
+	 * @var \Cake\Upgrade\Shell\Task\TestsTask|\PHPUnit_Framework_MockObject_MockObject
 	 */
-	public $sut;
+	public $task;
 
 	/**
 	 * setUp
@@ -26,14 +28,13 @@ class TestsTaskTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
+		$io = $this->getMockBuilder(ConsoleIo::class)->getMock();
 
-		$this->sut = $this->getMock(
-			'Cake\Upgrade\Shell\Task\TestsTask',
-			['in', 'out', 'hr', 'err', '_stop'],
-			[$io]
-		);
-		$this->sut->loadTasks();
+		$this->task = $this->getMockBuilder(TestsTask::class)
+			->setMethods(['in', 'out', 'hr', 'err', '_stop'])
+			->setConstructorArgs([$io])
+			->getMock();
+		$this->task->loadTasks();
 	}
 
 	/**
@@ -43,11 +44,11 @@ class TestsTaskTest extends TestCase {
 	 */
 	public function testProcess() {
 		$path = TESTS . 'test_files' . DS;
-		$result = $this->sut->process($path . 'tests_before.php');
-		$this->assertTrue($result);
+		$this->task->process($path . 'tests_before.php');
 
-		$result = $this->sut->Stage->source($path . 'tests_before.php');
+		$result = $this->task->Stage->source($path . 'tests_before.php');
 		$expected = file_get_contents($path . 'tests_after.php');
+
 		$this->assertTextEquals($expected, $result);
 	}
 

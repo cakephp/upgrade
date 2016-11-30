@@ -29,7 +29,7 @@ class MethodNamesTask extends BaseTask {
 	 * Processes a path.
 	 *
 	 * @param string $path
-	 * @return void
+	 * @return bool
 	 */
 	protected function _process($path) {
 		$controllerPatterns = [

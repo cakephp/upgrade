@@ -28,7 +28,7 @@ class SkeletonTask extends BaseTask {
 	/**
 	 * Add missing files and folders in the root app dir.
 	 *
-	 * @param mixed $path
+	 * @param string $path
 	 * @return bool
 	 */
 	protected function _process($path) {

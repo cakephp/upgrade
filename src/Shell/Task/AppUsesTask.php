@@ -20,6 +20,8 @@ use Cake\Console\Shell;
  * App Uses Task.
  *
  * Updates App::uses() calls.
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class AppUsesTask extends BaseTask {
 
@@ -100,7 +102,7 @@ class AppUsesTask extends BaseTask {
 	 * Order App::uses statements
 	 * and replace the class in the source if it appears
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	protected function _process($path) {
 		$original = $contents = $this->Stage->source($path);

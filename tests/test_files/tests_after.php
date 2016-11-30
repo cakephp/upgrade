@@ -1,13 +1,13 @@
 <?php
 
-class Foo {
+use Cake\TestSuite\TestCase;
 
-	public $fixtures = [
-		'app.some_fixtures',
-		'plugin.my_cool_plugin.addresses',
-		'core.comments',
-		'app.feet',
-		'plugin.utils.feedback'
-	];
+class Foo extends TestCase {
+
+	public function test() {
+		$this->getMockBuilder('Cake\Foo\Bar')->getMock();
+
+		$this->getMock('Cake\Foo\Bar', ['method'], ['argument']);
+	}
 
 }

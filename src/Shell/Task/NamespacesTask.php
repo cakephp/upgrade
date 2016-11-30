@@ -26,9 +26,7 @@ class NamespacesTask extends BaseTask {
 	/**
 	 * Adds the namespace to a given file.
 	 *
-	 * @param string $filePath The file to add a namespace to.
-	 * @param string $ns The base namespace to use.
-	 * @param bool $dry Whether or not to operate in dry-run mode.
+	 * @param string $path The file to add a namespace to.
 	 * @return bool
 	 */
 	protected function _process($path) {

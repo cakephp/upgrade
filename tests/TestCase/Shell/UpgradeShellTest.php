@@ -2,6 +2,7 @@
 
 namespace Cake\Upgrade\Test\TestCase\Shell;
 
+use Cake\Console\ConsoleIo;
 use Cake\TestSuite\TestCase;
 use Cake\Upgrade\Shell\UpgradeShell;
 
@@ -13,9 +14,9 @@ class UpgradeShellTest extends TestCase {
 	/**
 	 * Upgrade shell instance
 	 *
-	 * @var mixed
+	 * @var \Cake\Upgrade\Shell\UpgradeShell
 	 */
-	public $sut;
+	public $shell;
 
 	/**
 	 * setUp
@@ -27,14 +28,13 @@ class UpgradeShellTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
+		$io = $this->getMockBuilder(ConsoleIo::class)->getMock();
 
-		$this->sut = $this->getMock(
-			'Cake\Upgrade\Shell\UpgradeShell',
-			['in', 'out', 'hr', 'err', '_stop'],
-			[$io]
-		);
-		$this->sut->loadTasks();
+		$this->shell = $this->getMockBuilder(UpgradeShell::class)
+			->setMethods(['in', 'out', 'hr', 'err', '_stop'])
+			->setConstructorArgs([$io])
+			->getMock();
+		$this->shell->loadTasks();
 	}
 
 	/**
@@ -47,9 +47,9 @@ class UpgradeShellTest extends TestCase {
 	public function testFiles() {
 		$repoSrc = ROOT . DS . 'src';
 
-		$this->sut->args = [$repoSrc];
+		$this->shell->args = [$repoSrc];
 
-		$files = $this->sut->Stage->files();
+		$files = $this->shell->Stage->files();
 		foreach ($files as &$file) {
 			$file = str_replace(DS, '/', substr($file, strlen($repoSrc) + 1));
 		}
@@ -76,6 +76,8 @@ class UpgradeShellTest extends TestCase {
 			'Shell/Task/PrefixedTemplatesTask.php',
 			'Shell/Task/CustomTask.php',
 			'Shell/Task/LocaleTask.php',
+			'Shell/Task/UrlTask.php',
+			'Shell/Task/FixtureLoadingTask.php',
 		];
 
 		sort($files);
