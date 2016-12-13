@@ -1,5 +1,5 @@
 # CakePHP Upgrade tool 
-[![Build Status](https://api.travis-ci.org/dereuromark/upgrade.svg)](https://travis-ci.org/dereuromark/upgrade)
+[![Build Status](https://api.travis-ci.org/dereuromark/upgrade.svg?branch=develop)](https://travis-ci.org/dereuromark/upgrade)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 
 
