@@ -9,7 +9,6 @@ $config = [
  * Development Mode:
  * 1: Errors and warnings shown, model caches refreshed, flash messages halted.
  * 2: As in 1, but also with full debug messages and SQL output.
- *
  */
 	'debug' => 2,
 

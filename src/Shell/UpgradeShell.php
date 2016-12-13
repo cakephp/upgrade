@@ -15,8 +15,6 @@
 namespace Cake\Upgrade\Shell;
 
 use Cake\Console\Shell;
-use Cake\Core\App;
-use Cake\Core\Plugin;
 use Cake\Error\Debugger;
 use Cake\Utility\Inflector;
 
@@ -125,7 +123,7 @@ class UpgradeShell extends Shell {
 	/**
 	 * Get the option parser
 	 *
-	 * @return ConsoleOptionParser
+	 * @return \Cake\Console\ConsoleOptionParser
 	 */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser()

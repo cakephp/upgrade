@@ -14,10 +14,10 @@
  */
 namespace App\Config;
 
-/**
- * Configure paths required to find CakePHP + general filepath
- * constants
- */
+	/**
+	 * Configure paths required to find CakePHP + general filepath
+	 * constants
+	 */
 require __DIR__ . '/paths.php';
 
 // Use composer to load the autoloader.
@@ -30,10 +30,10 @@ if (file_exists(ROOT . '/vendor/autoload.php')) {
 // passing `autoload' => true for `Plugin::loadAll()` or `Plugin::load()`
 if (!class_exists('Cake\Core\Configure')) {
 	require CAKE . 'Core/ClassLoader.php';
-	$loader = new \Cake\Core\ClassLoader;
+	$loader = new ClassLoader();
 	$loader->register();
 	$loader->addNamespace('Cake', CAKE);
-	$loader->addNamespace(\Cake\Core\Configure::read('App.namespace'), APP);
+	$loader->addNamespace(Configure::read('App.namespace'), APP);
 }
 
 /**
@@ -49,15 +49,12 @@ require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorHandler;
 use Cake\Log\Log;
 use Cake\Network\Email\Email;
-use Cake\Utility\Inflector;
 
 /**
  * Read configuration file and inject configuration into various
@@ -79,32 +76,32 @@ try {
 	die('Unable to load config/app.php. Create it by copying config/app.default.php to config/app.php.');
 }
 
-/**
- * Uncomment this line and correct your server timezone to fix
- * any date & time related errors.
- */
+	/**
+	 * Uncomment this line and correct your server timezone to fix
+	 * any date & time related errors.
+	 */
 	//date_default_timezone_set('UTC');
 
-/**
- * Configure the mbstring extension to use the correct encoding.
- */
+	/**
+	 * Configure the mbstring extension to use the correct encoding.
+	 */
 mb_internal_encoding(Configure::read('App.encoding'));
 
-/**
- * Register application error and exception handlers.
- */
-if (php_sapi_name() === 'cli') {
+	/**
+	 * Register application error and exception handlers.
+	 */
+if (PHP_SAPI === 'cli') {
 	(new ConsoleErrorHandler(Configure::consume('Error')))->register();
 } else {
 	(new ErrorHandler(Configure::consume('Error')))->register();
 }
 
-/**
- * Set the full base url.
- * This URL is used as the base of all absolute links.
- *
- * If you define fullBaseUrl in your config file you can remove this.
- */
+	/**
+	 * Set the full base url.
+	 * This URL is used as the base of all absolute links.
+	 *
+	 * If you define fullBaseUrl in your config file you can remove this.
+	 */
 if (!Configure::read('App.fullBaseUrl')) {
 	$s = null;
 	if (env('HTTPS')) {
@@ -130,7 +127,6 @@ Log::config(Configure::consume('Log'));
  *
  * Inflector::rules('singular', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
- *
  */
 
 /**
@@ -140,5 +136,4 @@ Log::config(Configure::consume('Log'));
  *
  * Plugin::loadAll(); // Loads all plugins at once
  * Plugin::load('DebugKit'); //Loads a single plugin named DebugKit
- *
  */

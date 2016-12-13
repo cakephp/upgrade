@@ -23,6 +23,9 @@ class PrefixedTemplatesTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
@@ -56,15 +59,14 @@ class PrefixedTemplatesTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		return (
+		return
 			strpos($path, 'Template' . DS) &&
 			substr($path, -4) === '.ctp' &&
 			strpos($path, $this->params['prefix'] . '_') &&
 			strpos($path, 'Template' . DS . 'Element' . DS) === false &&
 			strpos($path, 'Template' . DS . 'Email' . DS) === false &&
 			strpos($path, 'Template' . DS . 'Error' . DS) === false &&
-			strpos($path, 'Template' . DS . 'Layout' . DS) === false
-		);
+			strpos($path, 'Template' . DS . 'Layout' . DS) === false;
 	}
 
 	/**

@@ -26,6 +26,9 @@ class TemplatesTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
@@ -57,6 +60,7 @@ class TemplatesTask extends BaseTask {
 	 * Replace basic template stuff
 	 *
 	 * @param string $contents
+	 * @param string $path
 	 * @return string
 	 */
 	protected function _replaceRelations($contents, $path) {

@@ -15,7 +15,6 @@
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Utility\Inflector;
-use Cake\Utility\String;
 
 /**
  * Handles custom stuff
@@ -24,6 +23,9 @@ class UrlTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**

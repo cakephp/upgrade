@@ -23,6 +23,9 @@ class MethodSignaturesTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
@@ -219,7 +222,7 @@ class MethodSignaturesTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		return (substr($path, -4) === '.php');
+		return substr($path, -4) === '.php';
 	}
 
 }

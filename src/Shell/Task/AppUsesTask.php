@@ -27,6 +27,9 @@ class AppUsesTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
@@ -75,7 +78,7 @@ class AppUsesTask extends BaseTask {
 	 *
 	 * A list of classes which have had the Cake prefix removed
 	 *
-	 * @var mixed
+	 * @var array
 	 */
 	public $rename = [
 		'CakePlugin',
@@ -102,6 +105,7 @@ class AppUsesTask extends BaseTask {
 	 * Order App::uses statements
 	 * and replace the class in the source if it appears
 	 *
+	 * @param string $path
 	 * @return bool
 	 */
 	protected function _process($path) {
@@ -298,7 +302,7 @@ class AppUsesTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		return (substr($path, -4) === '.php');
+		return substr($path, -4) === '.php';
 	}
 
 }

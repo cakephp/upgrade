@@ -3,8 +3,8 @@
 namespace Cake\Upgrade\Test\TestCase\Shell\Task;
 
 use Cake\Console\ConsoleIo;
-use Cake\TestSuite\TestCase;
 use Cake\Filesystem\Folder;
+use Cake\TestSuite\TestCase;
 use Cake\Upgrade\Shell\Task\SkeletonTask;
 
 /**

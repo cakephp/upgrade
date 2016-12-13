@@ -23,6 +23,9 @@ class FixturesTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
@@ -61,7 +64,9 @@ class FixturesTask extends BaseTask {
 
 		// Process field property.
 		$processor = function ($matches) use ($export) {
+			//@codingStandardsIgnoreStart
 			eval('$data = [' . $matches[2] . '];');
+			//@codingStandardsIgnoreEnd
 			$constraints = [];
 			$out = [];
 			foreach ($data as $field => $properties) {
@@ -178,10 +183,9 @@ class FixturesTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		return (
+		return
 			substr($path, -4) === '.php' &&
-			strpos($path, DS . 'tests' . DS . 'Fixture' . DS)
-		);
+			strpos($path, DS . 'tests' . DS . 'Fixture' . DS);
 	}
 
 }

@@ -14,6 +14,9 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+
 /**
  * Move files around as directories have changed in 3.0
  */
@@ -21,6 +24,9 @@ class CleanupTask extends LocationsTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
@@ -51,7 +57,7 @@ class CleanupTask extends LocationsTask {
 		}
 
 		$this->out('Path: ' . $dir);
-		$iterator = new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS);
+		$iterator = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
 		$isDirEmpty = !$iterator->valid();
 		if (!$isDirEmpty) {
 			return;

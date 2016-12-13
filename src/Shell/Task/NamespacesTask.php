@@ -21,6 +21,9 @@ class NamespacesTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
@@ -110,7 +113,7 @@ class NamespacesTask extends BaseTask {
 			return false;
 		}
 
-		return (substr($path, -4) === '.php');
+		return substr($path, -4) === '.php';
 	}
 
 }

@@ -23,6 +23,9 @@ class SkeletonTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
@@ -80,6 +83,7 @@ class SkeletonTask extends BaseTask {
 	 * @param string $file
 	 * @param string $sourcePath
 	 * @param string $targetPath
+	 * @param string|null $targetFile
 	 * @return bool
 	 */
 	protected function _addFile($file, $sourcePath, $targetPath, $targetFile = null) {

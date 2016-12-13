@@ -84,7 +84,7 @@ trait ChangeTrait {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		return (substr($path, -4) === '.php');
+		return substr($path, -4) === '.php';
 	}
 
 	/**

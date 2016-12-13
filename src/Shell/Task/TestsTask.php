@@ -34,8 +34,7 @@ class TestsTask extends BaseTask {
 	 *
 	 * @return string
 	 */
-	protected function _replaceMock($contents)
-	{
+	protected function _replaceMock($contents) {
 		$processor = function ($matches) {
 			return '$this->getMockBuilder(\'' . $matches[1] . '\')->getMock()';
 		};

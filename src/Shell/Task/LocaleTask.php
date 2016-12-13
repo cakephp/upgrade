@@ -23,12 +23,16 @@ class LocaleTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
 	 * Converts placeholders from 2.x to 3.x syntax.
 	 *
-	 * @return void
+	 * @param string $path
+	 * @return bool
 	 */
 	protected function _process($path) {
 		$original = $contents = $this->Stage->source($path);

@@ -23,11 +23,15 @@ class I18nTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
 	 * Converts placeholders from 2.x to 3.x syntax.
 	 *
+	 * @param string $path
 	 * @return bool
 	 */
 	protected function _process($path) {

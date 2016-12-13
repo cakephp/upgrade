@@ -20,6 +20,8 @@ use Cake\Error\Debugger;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Network\Exception\InternalErrorException;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * Upgrade stage task
@@ -89,8 +91,8 @@ class StageTask extends Shell {
 	 *
 	 * If it's a dry run though - only show what will be done, don't do anything
 	 *
-	 * @param string $path file path
-	 * @return void
+	 * @param string|null $path file path
+	 * @return bool
 	 */
 	public function commit($path = null) {
 		if (!$path) {
@@ -111,7 +113,7 @@ class StageTask extends Shell {
 
 			$Folder = new Folder(TMP . 'upgrade');
 			$Folder->delete();
-			return;
+			return true;
 		}
 
 		$dryRun = !empty($this->params['dry-run']);
@@ -120,7 +122,7 @@ class StageTask extends Shell {
 		$isDelete = in_array($path, $this->_staged['delete']);
 
 		if (!$isMove && !$isChanged && !$isDelete) {
-			return;
+			return true;
 		}
 
 		$gitCd = sprintf('cd %s && ', escapeshellarg(dirname($path)));
@@ -138,7 +140,7 @@ class StageTask extends Shell {
 
 			if (!empty($this->params['git'])) {
 				exec($gitCd . sprintf('git rm -f %s', escapeshellarg($path)));
-				return;
+				return true;
 			}
 
 			if (is_dir($path)) {
@@ -173,7 +175,7 @@ class StageTask extends Shell {
 			}
 
 			$File = new File($to, true);
-			return ($File->write(file_get_contents($path)) && unlink($path));
+			return $File->write(file_get_contents($path)) && unlink($path);
 		}
 
 		$start = reset($this->_staged['change'][$path]);
@@ -333,8 +335,8 @@ class StageTask extends Shell {
 					}
 					continue;
 				}
-				$Iterator = new \RecursiveIteratorIterator(
-					new \RecursiveDirectoryIterator($path)
+				$Iterator = new RecursiveIteratorIterator(
+					new RecursiveDirectoryIterator($path)
 				);
 				foreach ($Iterator as $file) {
 					$path = $file->getPathname();
@@ -384,7 +386,7 @@ class StageTask extends Shell {
 	 * @param string $gitCd The `cd` command that changes into the files/folder parent directory
 	 * @param string $from The source path
 	 * @param string $to The target path
-	 * @return void
+	 * @return bool
 	 */
 	protected function _gitMove($gitCd, $from, $to) {
 		if (!file_exists(dirname($to))) {
@@ -392,6 +394,8 @@ class StageTask extends Shell {
 		}
 		exec($gitCd . 'git mv -f ' . escapeshellarg($from) . ' ' . escapeshellarg($from . '__'));
 		exec($gitCd . 'git mv -f ' . escapeshellarg($from . '__') . ' ' . escapeshellarg($to));
+
+		return true;
 	}
 
 }

@@ -21,6 +21,9 @@ class CustomTask extends BaseTask {
 
 	use ChangeTrait;
 
+	/**
+	 * @var array
+	 */
 	public $tasks = ['Stage'];
 
 	/**
@@ -356,7 +359,10 @@ class CustomTask extends BaseTask {
 	 * @return string
 	 */
 	protected function _replaceCustom($contents, $path) {
-		return $contents;
+		$true = true;
+		if ($true) {
+			return $contents;
+		}
 
 		$pattern = '//i';
 		$replacement = function ($matches) {
@@ -382,7 +388,10 @@ class CustomTask extends BaseTask {
 		}
 
 		// Skip for now
-		return;
+		$true = true;
+		if ($true) {
+			return $contents;
+		}
 
 		$pattern = '/-\>Format-\>cIcon\(ICON_(\w+?),\s*\'(.*?)\'/i';
 		$replacement = function ($matches) {
@@ -439,14 +448,14 @@ class CustomTask extends BaseTask {
 		return $contents;
 	}
 
-		/**
-	 * _shouldProcess
-	 *
-	 * Bail for invalid files (php/ctp files only)
-	 *
-	 * @param string $path
-	 * @return bool
-	 */
+	/**
+ * _shouldProcess
+ *
+ * Bail for invalid files (php/ctp files only)
+ *
+ * @param string $path
+ * @return bool
+ */
 	protected function _shouldProcess($path) {
 		$ending = substr($path, -4);
 		return $ending === '.php' || $ending === '.ctp';
