@@ -5,8 +5,8 @@
 	"type": "project",
 	"license": "MIT",
 	"require": {
-		"cakephp/cakephp": "~3.2",
-		"cakephp/app": "~3.2"
+		"cakephp/cakephp": "dev-3.next as 3.4",
+		"cakephp/app": "dev-3.next as 3.4"
 	},
 	"require-dev": {
 		"fig-r/psr2r-sniffer": "dev-master"

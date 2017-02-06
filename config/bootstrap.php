@@ -76,6 +76,8 @@ try {
 	die('Unable to load config/app.php. Create it by copying config/app.default.php to config/app.php.');
 }
 
+Configure::load('app_custom', 'default');
+
 	/**
 	 * Uncomment this line and correct your server timezone to fix
 	 * any date & time related errors.
