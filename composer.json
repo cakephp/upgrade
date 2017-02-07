@@ -9,7 +9,8 @@
 		"cakephp/app": "dev-3.next as 3.4"
 	},
 	"require-dev": {
-		"fig-r/psr2r-sniffer": "dev-master"
+		"fig-r/psr2r-sniffer": "dev-master",
+		"phpunit/phpunit": "<6.0"
 	},
 	"autoload": {
 		"psr-4": {
