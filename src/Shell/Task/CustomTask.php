@@ -339,6 +339,12 @@ class CustomTask extends BaseTask {
 				'$this->Format->icon(\'no\','
 			],
 			*/
+
+			[
+				'extends MyCakeTestCase',
+				'/\bextends MyCakeTestCase/',
+				'extends TestCase',
+			],
 		];
 
 		$original = $contents = $this->Stage->source($path);
