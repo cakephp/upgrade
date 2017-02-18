@@ -1,6 +1,5 @@
-.idea
-/tmp/*
-/vendor/*
-/composer.lock
-/plugins/DebugKit
+/.idea/
+/tmp/
+/vendor/
 /phpunit.phar
+/logs/
