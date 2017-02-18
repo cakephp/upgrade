@@ -16,6 +16,8 @@ namespace Cake\Upgrade\Shell\Task;
 
 /**
  * Move files around as directories have changed in 3.0
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class LocationsTask extends BaseTask {
 

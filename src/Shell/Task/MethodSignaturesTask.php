@@ -18,6 +18,8 @@ namespace Cake\Upgrade\Shell\Task;
  * Update method signatures task.
  *
  * Handles updating method signatures that have been changed.
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class MethodSignaturesTask extends BaseTask {
 
@@ -32,7 +34,7 @@ class MethodSignaturesTask extends BaseTask {
 	 * Processes a path.
 	 *
 	 * @param string $path
-	 * @return void
+	 * @return bool
 	 */
 	protected function _process($path) {
 		$controllerPatterns = [
@@ -75,76 +77,81 @@ class MethodSignaturesTask extends BaseTask {
 		$componentPatterns = [
 			[
 				'beforeRedirect(Event $event, $url, Response $response) callback',
-				'#\bfunction beforeRedirect\(Controller $controller,#i',
+				'#\bfunction beforeRedirect\(Controller \$controller,#i',
 				'function beforeRedirect(Event $event,',
 			],
 			[
 				'initialize(Event $event) callback',
-				'#\bfunction initialize\(Controller $controller\)#i',
+				'#\bfunction initialize\(Controller \$controller\)#i',
 				'function initialize(Event $event)',
 			],
 			[
 				'startup(Event $event) callback',
-				'#\bfunction startup\(Controller $controller\)#i',
+				'#\bfunction startup\(Controller \$controller\)#i',
 				'function startup(Event $event)',
 			],
 			[
 				'beforeRender(Event $event) callback',
-				'#\bfunction beforeRender\(Controller $controller\)#i',
+				'#\bfunction beforeRender\(Controller \$controller\)#i',
 				'function beforeRender(Event $event)',
 			],
 			[
 				'shutdown(Event $event) callback',
-				'#\bfunction shutdown\(Controller $controller\)#i',
+				'#\bfunction shutdown\(Controller \$controller\)#i',
 				'function shutdown(Event $event)',
 			],
 		];
 		$helperPatterns = [
 			[
 				'beforeRenderFile(Event $event, $viewFile) callback',
-				'#\bfunction beforeRenderFile\($viewFile\)#i',
+				'#\bfunction beforeRenderFile\(\$viewFile\)#i',
 				'function beforeRenderFile(Event $event, $viewFile)',
 			],
 			[
 				'afterRenderFile(Event $event, $viewFile, $content) callback',
-				'#\bfunction afterRenderFile\($viewFile, $content\)#i',
+				'#\bfunction afterRenderFile\(\$viewFile, \$content\)#i',
 				'function afterRenderFile(Event $event, $viewFile, $content)',
 			],
 			[
 				'beforeRender(Event $event, $viewFile) callback',
-				'#\bfunction beforeRender\($viewFile\)#i',
+				'#\bfunction beforeRender\(\$viewFile\)#i',
 				'function beforeRender(Event $event, $viewFile)',
 			],
 			[
 				'afterRender(Event $event, $viewFile) callback',
-				'#\bfunction afterRender\($viewFile\)#i',
+				'#\bfunction afterRender\(\$viewFile\)#i',
 				'function afterRender(Event $event, $viewFile)',
 			],
 			[
 				'beforeLayout(Event $event, $layoutFile) callback',
-				'#\bfunction beforeLayout\($layoutFile\)#i',
+				'#\bfunction beforeLayout\(\$layoutFile\)#i',
 				'function beforeLayout(Event $event, $layoutFile)',
 			],
 			[
 				'afterLayout(Event $event, $layoutFile) callback',
-				'#\bfunction afterLayout\($layoutFile\)#i',
+				'#\bfunction afterLayout\(\$layoutFile\)#i',
 				'function afterLayout(Event $event, $layoutFile)',
 			],
 		];
 		$modelPatterns = [
 			[
 				'beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options) callback',
-				'#\bfunction beforeValidate\(array $options\s*=\s*array\(\)\)#i',
+				'#\bfunction beforeValidate\(array \$options\s*=\s*(array\(\)|\[\])\)#i',
 				'function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)',
 			],
 			[
 				'beforeSave(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction beforeSave\(array $options\s*=\s*array\(\)\)#i',
+				'#\bfunction beforeSave\(\$options\s*=\s*(array\(\)|\[\])\)#i',
+				'function beforeSave(Event $event, Entity $entity, ArrayObject $options)',
+			],
+			[
+				'beforeSave(Event $event, Entity $entity, ArrayObject $options) callback',
+				'#\bfunction beforeSave\(array \$options\s*=\s*(array\(\)|\[\])\)#i',
 				'function beforeSave(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
 				'beforeDelete(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction beforeDelete\($cascade\s*=\s*true\)#i',
+				'#\bfunction beforeDelete\(\$cascade\s*=\s*true\)#i',
 				'function beforeDelete(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
@@ -154,7 +161,7 @@ class MethodSignaturesTask extends BaseTask {
 			],
 			[
 				'afterSave(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction afterSave\($created,\s*$options\s*=\s*array\(\)\)#i',
+				'#\bfunction afterSave\(\$created,\s*\$options\s*=\s*(array\(\)|\[\])\)#i',
 				'function afterSave(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
@@ -166,32 +173,32 @@ class MethodSignaturesTask extends BaseTask {
 		$behaviorPatterns = [
 			[
 				'beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options) callback',
-				'#\bfunction beforeValidate\(Model $Model,\s*$options\s*=\s*array\(\)\)#i',
+				'#\bfunction beforeValidate\(Model \$Model,\s*\$options\s*=\s*(array\(\)|\[\])\)#i',
 				'function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)',
 			],
 			[
 				'beforeSave(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction beforeSave\(Model $Model,\s*$options\s*=\s*array\(\)\)#i',
+				'#\bfunction beforeSave\(Model \$Model,\s*\$options\s*=\s*(array\(\)|\[\])\)#i',
 				'function beforeSave(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
 				'beforeDelete(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction beforeDelete\(Model $Model,\s*$cascade\s*=\s*true\)#i',
+				'#\bfunction beforeDelete\(Model \$Model,\s*\$cascade\s*=\s*true\)#i',
 				'function beforeDelete(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
 				'afterRules(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction afterValidate\(Model $Model\)#i',
+				'#\bfunction afterValidate\(Model \$Model\)#i',
 				'function afterRules(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
 				'afterSave(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction afterSave\(Model $Model,\s*$created,\s*$options\s*=\s*array\(\)\)#i',
+				'#\bfunction afterSave\(Model \$Model,\s*\$created,\s*\$options\s*=\s*(array\(\)|\[\])\)#i',
 				'function afterSave(Event $event, Entity $entity, ArrayObject $options)',
 			],
 			[
 				'afterDelete(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction afterDelete\(Model $Model\)#i',
+				'#\bfunction afterDelete\(Model \$Model\)#i',
 				'function afterDelete(Event $event, Entity $entity, ArrayObject $options)',
 			],
 		];

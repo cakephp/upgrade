@@ -38,6 +38,9 @@ class TemplatesTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _process($path) {
+		$original = $contents = $this->Stage->source($path);
+
+		/* needs to be adjusted better (case sensitive)
 		$patterns = [
 			[
 				'Replace deep record array $model[Model][field] with simple $model[field]',
@@ -45,9 +48,8 @@ class TemplatesTask extends BaseTask {
 				'$\1\2',
 			],
 		];
-
-		$original = $contents = $this->Stage->source($path);
-		$contents = $this->_updateContents($contents, $patterns);
+		$contents = $this->_updateContents($contents, $patterns)
+		*/
 
 		$contents = $this->_replaceRelations($contents, $path);
 
@@ -84,6 +86,13 @@ class TemplatesTask extends BaseTask {
 	 * @return string
 	 */
 	protected function _replaceCustom($contents, $path) {
+		$pattern = '/\$this-\>Form-\>value\(\'(.+?).id\'\)/';
+		$replacement = function ($matches) {
+			$entity = lcfirst($matches[1]);
+			return '$' . $entity . '->id';
+		};
+		$contents = preg_replace_callback($pattern, $replacement, $contents);
+
 		// View
 		$pattern = '/\$this-\>Form-\>create\(\'(.+?)\'\)/i';
 		$replacement = function ($matches) {
