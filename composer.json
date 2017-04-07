@@ -8,7 +8,7 @@
 		"cakephp/cakephp": "~3.0",
 		"cakephp/app": "~3.0",
 		"phpunit/phpunit": "*",
-		"cakephp/plugin-installer": "^0.0.12"
+		"cakephp/plugin-installer": "~1.0"
 	},
 	"autoload": {
 		"psr-4": {
