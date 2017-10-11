@@ -29,15 +29,15 @@ class UpgradeShell extends Shell {
 	 * @var array
 	 */
 	public $tasks = [
-		'AppUses',
-		'Fixtures',
 		'Locations',
 		'Namespaces',
+		'AppUses',
 		'RenameClasses',
 		'RenameCollections',
-		'Stage',
+		'Fixtures',
 		'MethodNames',
 		'MethodSignatures',
+		'Stage',
 		'I18n',
 		'Locale',
 		'Tests',
@@ -117,7 +117,18 @@ class UpgradeShell extends Shell {
 			$className = ucfirst(Inflector::camelize($name));
 			$all[$name] = $className;
 		}
-		return $all;
+
+		$result = [];
+		foreach ($this->tasks as $prio => $null) {
+			$prio = Inflector::underscore($prio);
+			if (isset($all[$prio])) {
+				$result[$prio] = $all[$prio];
+			}
+		}
+
+		$result += $all;
+
+		return $result;
 	}
 
 	/**
