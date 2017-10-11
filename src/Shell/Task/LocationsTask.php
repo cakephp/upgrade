@@ -69,7 +69,9 @@ class LocationsTask extends BaseTask {
 	 */
 	protected function _shouldProcess($path) {
 		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
+		$root = str_replace(['/', '\\'], DS, $root);
 		$root = rtrim($root, DS);
+
 		$relativeFromRoot = str_replace($root, '', $path);
 
 		if (strpos($relativeFromRoot, DS . 'Plugin' . DS) || strpos($relativeFromRoot, DS . 'plugins' . DS)) {
