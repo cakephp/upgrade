@@ -18,6 +18,8 @@ use Cake\Utility\Inflector;
 
 /**
  * Make Mdel classes to Table classes.
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class ModelToTableTask extends BaseTask {
 

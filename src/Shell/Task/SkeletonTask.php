@@ -18,6 +18,8 @@ use Cake\Console\Shell;
 
 /**
  * Create and setup missing files and folders via app repo.
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class SkeletonTask extends BaseTask {
 

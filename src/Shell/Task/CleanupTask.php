@@ -19,6 +19,8 @@ use RecursiveDirectoryIterator;
 
 /**
  * Move files around as directories have changed in 3.0
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class CleanupTask extends LocationsTask {
 

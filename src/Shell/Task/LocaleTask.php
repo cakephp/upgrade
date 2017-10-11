@@ -18,6 +18,8 @@ namespace Cake\Upgrade\Shell\Task;
  * Locale Task.
  *
  * Updates Locale PO files.
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class LocaleTask extends BaseTask {
 

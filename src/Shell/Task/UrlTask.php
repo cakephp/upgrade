@@ -18,6 +18,8 @@ use Cake\Utility\Inflector;
 
 /**
  * Handles custom stuff
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class UrlTask extends BaseTask {
 

@@ -16,6 +16,8 @@ namespace Cake\Upgrade\Shell\Task;
 
 /**
  * Update namespaces.
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class NamespacesTask extends BaseTask {
 

@@ -18,6 +18,8 @@ namespace Cake\Upgrade\Shell\Task;
  * Update method names task.
  *
  * Handles updating method names that have been changed.
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class MethodNamesTask extends BaseTask {
 

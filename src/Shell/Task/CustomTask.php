@@ -16,6 +16,8 @@ namespace Cake\Upgrade\Shell\Task;
 
 /**
  * Handles custom stuff
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class CustomTask extends BaseTask {
 

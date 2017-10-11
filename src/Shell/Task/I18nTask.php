@@ -18,6 +18,8 @@ namespace Cake\Upgrade\Shell\Task;
  * I18n Task.
  *
  * Updates __() calls.
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class I18nTask extends BaseTask {
 

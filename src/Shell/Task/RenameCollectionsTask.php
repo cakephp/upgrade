@@ -18,6 +18,8 @@ namespace Cake\Upgrade\Shell\Task;
  * Upgrade stage task
  *
  * Handles staging changes for the upgrade process
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class RenameCollectionsTask extends BaseTask {
 

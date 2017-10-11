@@ -18,6 +18,8 @@ use Cake\Utility\Inflector;
 
 /**
  * Updates fixtures for 3.0
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class FixturesTask extends BaseTask {
 

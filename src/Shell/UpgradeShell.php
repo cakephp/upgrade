@@ -20,6 +20,26 @@ use Cake\Utility\Inflector;
 
 /**
  * A shell class to help developers upgrade applications to CakePHP 3.0
+ *
+ * @property \Cake\Upgrade\Shell\Task\LocationsTask $Locations
+ * @property \Cake\Upgrade\Shell\Task\NamespacesTask $Namespaces
+ * @property \Cake\Upgrade\Shell\Task\AppUsesTask $AppUses
+ * @property \Cake\Upgrade\Shell\Task\RenameClassesTask $RenameClasses
+ * @property \Cake\Upgrade\Shell\Task\RenameCollectionsTask $RenameCollections
+ * @property \Cake\Upgrade\Shell\Task\FixturesTask $Fixtures
+ * @property \Cake\Upgrade\Shell\Task\MethodNamesTask $MethodNames
+ * @property \Cake\Upgrade\Shell\Task\MethodSignaturesTask $MethodSignatures
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
+ * @property \Cake\Upgrade\Shell\Task\I18nTask $I18n
+ * @property \Cake\Upgrade\Shell\Task\LocaleTask $Locale
+ * @property \Cake\Upgrade\Shell\Task\TestsTask $Tests
+ * @property \Cake\Upgrade\Shell\Task\SkeletonTask $Skeleton
+ * @property \Cake\Upgrade\Shell\Task\TemplatesTask $Templates
+ * @property \Cake\Upgrade\Shell\Task\PrefixedTemplatesTask $PrefixedTemplates
+ * @property \Cake\Upgrade\Shell\Task\ModelToTableTask $ModelToTable
+ * @property \Cake\Upgrade\Shell\Task\CustomTask $Custom
+ * @property \Cake\Upgrade\Shell\Task\UrlTask $Url
+ * @property \Cake\Upgrade\Shell\Task\CleanupTask $Cleanup
  */
 class UpgradeShell extends Shell {
 

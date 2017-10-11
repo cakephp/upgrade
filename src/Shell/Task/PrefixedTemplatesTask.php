@@ -18,6 +18,8 @@ use Cake\Utility\Inflector;
 
 /**
  * Move prefix_action.ctp to Prefix/action.ctp
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class PrefixedTemplatesTask extends BaseTask {
 

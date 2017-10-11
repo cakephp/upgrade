@@ -16,6 +16,8 @@ namespace Cake\Upgrade\Shell\Task;
 
 /**
  * Renames classes
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class RenameClassesTask extends BaseTask {
 

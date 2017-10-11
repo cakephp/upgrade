@@ -21,6 +21,8 @@ use Cake\Utility\Text;
  * Update method names task.
  *
  * Handles updating baked templates
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class TemplatesTask extends BaseTask {
 
