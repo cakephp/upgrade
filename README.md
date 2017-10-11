@@ -47,6 +47,12 @@ which is probably the way most people will want to use it.
 Additionally the second command would run the `skeleton` task on `/home/mark/Sites/my-app`.
 This command is not included in `all` as it is only necessary for apps. Plugins don't need it.
 
+For plugins, point it to the root and use the `-p` plugin syntax:
+```bash
+// Upgrading 2.x /home/mark/Sites/my-app/Plugin/MyPlugin/ 
+bin/cake upgrade all -p MyPlugin /home/mark/Sites/my-app
+```
+
 It is recommended that you keep your application in version control, and keep
 backups of before using the upgrade tool.
 

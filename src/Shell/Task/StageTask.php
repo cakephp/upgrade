@@ -30,6 +30,8 @@ use RecursiveIteratorIterator;
  */
 class StageTask extends Shell {
 
+	use HelperTrait;
+
 	/**
 	 * Files
 	 *
@@ -242,9 +244,11 @@ class StageTask extends Shell {
 	 */
 	public function move($from, $to) {
 		if (is_dir($from)) {
-			$this->_findFiles('.*');
+			//FIXME
+			throw new RuntimeException('FixMe');
+			//$this->_findFiles('.*');
 			foreach ($this->_files as $fromFile) {
-				$newFile = str_replace($from, $new, $fromFile);
+				$newFile = str_replace($from, $to, $fromFile);
 				if ($newFile !== $fromFile) {
 					$this->_staged['move'][$fromFile] = $newFile;
 				}
@@ -326,7 +330,7 @@ class StageTask extends Shell {
 				$exclude = preg_quote($exclude);
 			}
 			$excludePattern = '@[\\\\/](' . implode($excludes, '|') . ')[\\\\/]@';
-			$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
+			$root = $this->_getRoot();
 
 			foreach ($this->_paths as $path) {
 				if (!is_dir($path)) {

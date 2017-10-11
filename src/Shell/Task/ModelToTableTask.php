@@ -17,12 +17,13 @@ namespace Cake\Upgrade\Shell\Task;
 use Cake\Utility\Inflector;
 
 /**
- * Make Mdel classes to Table classes.
+ * Make Model classes to Table classes.
  *
  * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 class ModelToTableTask extends BaseTask {
 
+	use HelperTrait;
 	use ChangeTrait;
 
 	/**
@@ -74,9 +75,7 @@ class ModelToTableTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
-		$root = rtrim($root, DS);
-		$relativeFromRoot = str_replace($root, '', $path);
+		$relativeFromRoot = $this->_getRelativePath($path);
 
 		if (strpos($relativeFromRoot, DS . 'Plugin' . DS) || strpos($relativeFromRoot, DS . 'plugins' . DS)) {
 			return false;

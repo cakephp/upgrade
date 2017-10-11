@@ -21,6 +21,7 @@ namespace Cake\Upgrade\Shell\Task;
  */
 class LocationsTask extends BaseTask {
 
+	use HelperTrait;
 	use ChangeTrait;
 
 	/**
@@ -68,11 +69,7 @@ class LocationsTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
-		$root = str_replace(['/', '\\'], DS, $root);
-		$root = rtrim($root, DS);
-
-		$relativeFromRoot = str_replace($root, '', $path);
+		$relativeFromRoot = $this->_getRelativePath($path);
 
 		if (strpos($relativeFromRoot, DS . 'Plugin' . DS) || strpos($relativeFromRoot, DS . 'plugins' . DS)) {
 			return false;
@@ -129,7 +126,7 @@ class LocationsTask extends BaseTask {
 	 * @return string $path
 	 */
 	protected function _relativeFromRoot($folder, $path) {
-		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
+		$root = $this->_getRoot();
 
 		$split = explode(DS . $folder . DS, $path);
 		if (empty($split[0]) || strpos($split[0], $root) !== 0) {

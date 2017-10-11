@@ -20,7 +20,7 @@
 	},
 	"prefer-stable": true,
 	"support": {
-		"source": "https://github.com/cakephp/upgrade"
+		"source": "https://github.com/dereuromark/upgrade"
 	},
 	"scripts": {
 		"post-install-cmd": "App\\Console\\Installer::postInstall",
@@ -28,7 +28,7 @@
 		"test": "phpunit",
 		"test-coverage": "phpunit --log-junit webroot/coverage/unitreport.xml --coverage-html webroot/coverage --coverage-clover webroot/coverage/coverage.xml",
 		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-5.7.20.phar && mv phpunit-5.7.20.phar phpunit.phar || true",
-		"cs-check": "phpcs -v -p --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --ignore=/vendor/,/tmp/,/logs/,/config/Migrations/,/webroot/assets/ --extensions=php ./",
-		"cs-fix": "phpcbf -v --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --ignore=/vendor/,/tmp/,/logs/,/config/Migrations/,/webroot/assets/ --extensions=php ./"
+		"cs-check": "phpcs -v -p --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --ignore=/vendor/,/tmp/,/logs/,/tests/test_files/ --extensions=php ./",
+		"cs-fix": "phpcbf -v --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --ignore=/vendor/,/tmp/,/logs/,/tests/test_files/ --extensions=php ./"
 	}
 }

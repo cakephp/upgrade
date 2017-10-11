@@ -18,6 +18,8 @@ use Cake\Error\Debugger;
 
 /**
  * Provides features for modifying the contents of a file
+ *
+ * @property \Cake\Upgrade\Shell\Task\StageTask $Stage
  */
 trait ChangeTrait {
 
@@ -73,6 +75,7 @@ trait ChangeTrait {
 	 * @return bool
 	 */
 	protected function _process($path) {
+		return false;
 	}
 
 	/**

@@ -21,6 +21,7 @@ namespace Cake\Upgrade\Shell\Task;
  */
 class NamespacesTask extends BaseTask {
 
+	use HelperTrait;
 	use ChangeTrait;
 
 	/**
@@ -86,9 +87,7 @@ class NamespacesTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
-		$root = rtrim($root, DS);
-		$relativeFromRoot = str_replace($root, '', $path);
+		$relativeFromRoot = $this->_getRelativePath($path);
 
 		if (strpos($relativeFromRoot, DS . 'Plugin' . DS) || strpos($relativeFromRoot, DS . 'plugins' . DS)) {
 			return false;

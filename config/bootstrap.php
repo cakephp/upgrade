@@ -73,7 +73,7 @@ try {
 	// shared configuration.
 	// Configure::load('app.local', 'default');
 } catch (\Exception $e) {
-	die('Unable to load config/app.php. Create it by copying config/app.default.php to config/app.php.');
+	exit('Unable to load config/app.php. Create it by copying config/app.default.php to config/app.php.');
 }
 
 Configure::load('app_custom', 'default');
