@@ -5,6 +5,7 @@
 	"type": "project",
 	"license": "MIT",
 	"require": {
+		"php": ">=7.0",
 		"cakephp/cakephp": "dev-master as 3.5",
 		"cakephp/app": "dev-master as 3.5"
 	},

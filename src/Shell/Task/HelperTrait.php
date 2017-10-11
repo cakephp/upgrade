@@ -13,9 +13,6 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Console\Shell;
-use Cake\Error\Debugger;
-
 /**
  * Provides helper functionality for the tasks
  *

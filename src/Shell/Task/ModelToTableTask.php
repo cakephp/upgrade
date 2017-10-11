@@ -23,8 +23,8 @@ use Cake\Utility\Inflector;
  */
 class ModelToTableTask extends BaseTask {
 
-	use HelperTrait;
 	use ChangeTrait;
+	use HelperTrait;
 
 	/**
 	 * @var array

@@ -21,8 +21,8 @@ namespace Cake\Upgrade\Shell\Task;
  */
 class NamespacesTask extends BaseTask {
 
-	use HelperTrait;
 	use ChangeTrait;
+	use HelperTrait;
 
 	/**
 	 * @var array

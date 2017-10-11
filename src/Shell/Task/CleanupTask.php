@@ -24,8 +24,8 @@ use RecursiveDirectoryIterator;
  */
 class CleanupTask extends LocationsTask {
 
-	use HelperTrait;
 	use ChangeTrait;
+	use HelperTrait;
 
 	/**
 	 * @var array

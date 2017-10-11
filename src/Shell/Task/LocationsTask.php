@@ -21,8 +21,8 @@ namespace Cake\Upgrade\Shell\Task;
  */
 class LocationsTask extends BaseTask {
 
-	use HelperTrait;
 	use ChangeTrait;
+	use HelperTrait;
 
 	/**
 	 * @var array
