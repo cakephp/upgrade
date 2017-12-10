@@ -15,8 +15,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Cake\\Upgrade\\": "src",
-			"Cake\\Upgrade\\Test\\": "tests"
+			"Cake\\Upgrade\\": "src/",
+			"Cake\\Upgrade\\Test\\": "tests/"
 		}
 	},
 	"prefer-stable": true,
