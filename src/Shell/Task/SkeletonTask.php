@@ -61,6 +61,7 @@ class SkeletonTask extends BaseTask {
 			'config' . DS . 'bootstrap.php',
 			'config' . DS . 'bootstrap_cli.php',
 			'config' . DS . 'paths.php',
+            'config' . DS . 'requirements.php',
 			'config' . DS . 'routes.php',
 			'tests' . DS . 'bootstrap.php',
 			'src' . DS . 'Application.php',
