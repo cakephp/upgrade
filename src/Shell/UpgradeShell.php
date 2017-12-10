@@ -197,7 +197,7 @@ class UpgradeShell extends Shell
             ]);
 
         return $parser->addSubcommand('all', [
-            'help' => 'Run all tasks expect for skeleton. That task should only be run manually, and only for apps (not plugins).',
+            'help' => 'Run all tasks except for skeleton. That task should only be run manually, and only for apps (not plugins).',
             'parser' => $allParser,
         ]);
     }
