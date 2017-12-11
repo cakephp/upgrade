@@ -73,6 +73,6 @@ Once these three commands have been run, you can use the other commands in any o
 The `all` command already used the right order by default.
 
 ## Tasks Available
-For detailed task descriptions and usage see [docs](https://github.com/dereuromark/upgrade/docs).
+For detailed task descriptions and usage see [docs](docs).
 
 Also note the [wiki](https://github.com/dereuromark/upgrade/wiki) with more recent tips.
