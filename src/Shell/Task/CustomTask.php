@@ -91,9 +91,9 @@ class CustomTask extends BaseTask {
 				'<br/>',
 			],
 			[
-				'Tools.GoogleMapV3 to Geo.GoogleMapV3',
+				'Tools.GoogleMapV3 to Geo.GoogleMap',
 				'/\bTools.GoogleMapV3\b/',
-				'Geo.GoogleMapV3',
+				'Geo.GoogleMap',
 			],
 			[
 				'Tools.Geocoder to Geo.Geocoder',
