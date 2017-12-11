@@ -58,13 +58,13 @@ class SkeletonTaskTest extends TestCase {
 	public function testProcess() {
 		$path = TMP . 'skeleton_test' . DS;
 
-		$this->assertFalse(file_exists($path . 'logs' . DS . 'empty'));
+		$this->assertFileNotExists($path . 'logs' . DS . 'empty');
 
 		$result = $this->sut->process($path . 'composer.json');
 		$this->assertTrue($result);
 
-		$this->assertTrue(file_exists($path . 'logs' . DS . 'empty'));
-		$this->assertTrue(file_exists($path . 'tests' . DS . 'bootstrap.php'));
+		$this->assertFileExists($path . 'logs' . DS . 'empty');
+		$this->assertFileExists($path . 'tests' . DS . 'bootstrap.php');
 	}
 
 }
