@@ -25,6 +25,8 @@ Once dependencies are installed you can start using the `upgrade` shell.
 ## IMPORTANT NOTICE
 
 This tool is a split-off off the original CakePHP upgrade tool and provides additional fixers:
+- Templates
+- Url
 - Locale (fixing locale files)
 - Model to Table (making the model files to Table class files)
 - Custom (tons of custom fixes)
@@ -80,6 +82,9 @@ Add namespaces to files based on their file path. Only run this *after* you have
 
 ### app_uses
 Replace App::uses() with use statements
+
+### model_to_table
+Move models into Table directory
 
 ### rename_classes
 Rename classes that have been moved/renamed. Run after replacing App::uses().
