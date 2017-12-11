@@ -28,13 +28,18 @@ class SkeletonTaskTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
+		$io = $this->getMockBuilder('Cake\Console\ConsoleIo')
+				->disableOriginalConstructor()
+				->getMock();
 
-		$this->sut = $this->getMock(
-			'Cake\Upgrade\Shell\Task\SkeletonTask',
-			['in', 'out', 'hr', 'err', '_stop'],
-			[$io]
-		);
+		$this->sut = $this->getMockBuilder('Cake\Upgrade\Shell\Task\SkeletonTask')
+						->setMethods([
+							'in', 'out', 'hr', 'err', '_stop',
+						])
+						->setConstructorArgs([
+							$io,
+						])->getMock();
+
 		$this->sut->loadTasks();
 	}
 

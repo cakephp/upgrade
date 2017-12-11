@@ -28,13 +28,18 @@ class FixturesTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$io = $this->getMock('Cake\Console\ConsoleIo', [], [], '', false);
+		$io = $this->getMockBuilder('Cake\Console\ConsoleIo')
+				->disableOriginalConstructor()
+				->getMock();
 
-		$this->sut = $this->getMock(
-			'Cake\Upgrade\Shell\Task\FixturesTask',
-			['in', 'out', 'hr', 'err', '_shouldProcess'],
-			[$io]
-		);
+		$this->sut = $this->getMockBuilder('Cake\Upgrade\Shell\Task\FixturesTask')
+						->setMethods([
+							'in', 'out', 'hr', 'err', '_shouldProcess',
+						])
+						->setConstructorArgs([
+							$io,
+						])->getMock();
+
 		$this->sut->loadTasks();
 	}
 
