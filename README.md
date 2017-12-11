@@ -81,10 +81,10 @@ Move files/directories around. Run this *before* adding namespaces with the name
 Add namespaces to files based on their file path. Only run this *after* you have moved files.
 
 ### app_uses
-Replace App::uses() with use statements
+Replace App::uses() with use statements.
 
 ### model_to_table
-Move models into Table directory
+Move models into Table directory.
 
 ### rename_classes
 Rename classes that have been moved/renamed. Run after replacing App::uses().
@@ -106,8 +106,14 @@ Update fixtures to use new index/constraint features. This is necessary before r
 ### tests
 Update test cases regarding fixtures.
 
+### locale
+Update locale and PO file folder.
+
 ### i18n
 Update translation functions regarding placeholders.
+
+### url
+Array URL fixes.
 
 ### skeleton
 Add basic skeleton files and folders from the "app" repository.
@@ -115,3 +121,9 @@ Add basic skeleton files and folders from the "app" repository.
 ### prefixed_templates
 Move view templates for prefixed actions to prefix subfolder. eg. Users/admin_index.ctp becomes Admin/Users/index.ctp.
 By default `admin` prefix is handled, you can run this task for other routing prefixes using `--prefix=other` as well.
+
+### custom
+Custom fixes.
+
+### cleanup
+Should be run last.
