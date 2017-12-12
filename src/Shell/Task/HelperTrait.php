@@ -26,7 +26,7 @@ trait HelperTrait {
 	protected function _getRoot() {
 		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
 		$root = str_replace(['/', '\\'], DS, $root);
-		$root = rtrim($root, DS);
+		$root = rtrim(realpath($root), DS);
 
 		return $root;
 	}
