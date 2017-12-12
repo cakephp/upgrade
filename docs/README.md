@@ -34,6 +34,15 @@ Update fixtures to use new index/constraint features. This is necessary before r
 ### tests
 Update test cases regarding fixtures.
 
+### fixture_loading
+Loading of fixtures is adjusted to new convention:
+// Before
+public $fixtures = ['app.user_role', 'plugin.foo_bar.user']
+
+// After
+public $fixtures = ['app.user_roles', 'plugin.foo_bar.users']
+```
+
 ### locale
 Update locale and PO file folder.
 
