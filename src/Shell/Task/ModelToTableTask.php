@@ -42,7 +42,6 @@ class ModelToTableTask extends BaseTask {
 		if (!preg_match('#/Model/([a-z0-9]+?)(Test)*\.php#i', $normalizedPath, $matches)) {
 			return false;
 		}
-		$moves = $this->_moves();
 
 		$modelClass = $matches[1];
 		$tableClass = Inflector::pluralize($modelClass) . 'Table';

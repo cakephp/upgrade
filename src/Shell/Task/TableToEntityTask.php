@@ -52,9 +52,11 @@ class TableToEntityTask extends BaseTask {
 		    return false;
         }
 
+		$namespace = $this->_getNamespace($path);
+
         $content = <<<TXT
 <?php
-namespace App\Model\Entity;
+namespace $namespace\Model\Entity;
 
 use Tools\Model\Entity\Entity;
 
@@ -80,6 +82,11 @@ class $entityClass extends Entity {
 }
 
 TXT;
+
+		$dir = dirname($new);
+		if (!is_dir($dir)) {
+			mkdir($dir, 0664, true);
+		}
 
 		return (bool)file_put_contents($new, $content);
 	}
@@ -132,6 +139,19 @@ TXT;
 					'help' => 'Set an application\'s root path. Not defining it makes the current path the root one.',
 				],
 			]);
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function _getNamespace()
+	{
+		$ns = $this->param('namespace');
+		if (!$ns) {
+			$ns = 'App';
+		}
+
+		return $ns;
 	}
 
 }
