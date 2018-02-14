@@ -78,6 +78,7 @@ class UpgradeShellTest extends TestCase {
 			'Shell/Task/CustomTask.php',
 			'Shell/Task/LocaleTask.php',
 			'Shell/Task/UrlTask.php',
+			'Shell/Task/TableToEntityTask.php',
 			'Shell/Task/FixtureLoadingTask.php',
 		];
 
