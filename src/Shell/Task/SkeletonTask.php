@@ -66,6 +66,7 @@ class SkeletonTask extends BaseTask {
 			'tests' . DS . 'bootstrap.php',
 			'src' . DS . 'Application.php',
 			'src' . DS . 'View' . DS . 'AppView.php',
+			'src' . DS . 'View' . DS . 'AjaxView.php',
 			'src' . DS . 'Template' . DS . 'Error' . DS . 'error400.ctp',
 			'src' . DS . 'Template' . DS . 'Error' . DS . 'error500.ctp',
 			'src' . DS . 'Template' . DS . 'Layout' . DS . 'error.ctp',
