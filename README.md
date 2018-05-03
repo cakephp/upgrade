@@ -1,6 +1,6 @@
 # CakePHP Upgrade tool 
 [![Build Status](https://api.travis-ci.org/dereuromark/upgrade.svg?branch=develop)](https://travis-ci.org/dereuromark/upgrade)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 
 Upgrade tool as standalone application for CakePHP meant to facilitate migrating from CakePHP 2.x to 3.x.
