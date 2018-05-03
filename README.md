@@ -80,3 +80,8 @@ The `all` command already used the right order by default.
 For detailed task descriptions and usage see [docs](docs).
 
 Also note the [wiki](https://github.com/dereuromark/upgrade/wiki) with more recent tips.
+
+
+## Using Tagged Releases
+For simplicity the tool uses the latest dev-master branches of framework and app repos (or you can get there using `composer update`).
+If you want to use the stable releases instead, just switch those in the composer.json and then run `composer update` again.

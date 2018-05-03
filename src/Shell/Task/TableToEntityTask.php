@@ -41,20 +41,20 @@ class TableToEntityTask extends BaseTask {
 		$normalizedPath = str_replace(DS, '/', $path);
 
 		if (!preg_match('#/Model/Table/([a-z0-9]+?)Table\.php#i', $normalizedPath, $matches)) {
-            return false;
-        }
-        $modelClass = $matches[1];
+			return false;
+		}
+		$modelClass = $matches[1];
 
 		$entityClass = Inflector::singularize($modelClass);
 
 		$new = str_replace(DS . 'Model' . DS . 'Table' . DS . $modelClass . 'Table', DS . 'Model' . DS . 'Entity' . DS . $entityClass, $path);
 		if (file_exists($new)) {
 		    return false;
-        }
+		}
 
 		$namespace = $this->_getNamespace($path);
 
-        $content = <<<TXT
+		$content = <<<TXT
 <?php
 namespace $namespace\Model\Entity;
 
@@ -110,20 +110,11 @@ TXT;
 		}
 
 		$from = 'Model' . DS . 'Table' . DS;
-        if (strpos($relativeFromRoot, DS . $from) !== false) {
-            return true;
-        }
+		if (strpos($relativeFromRoot, DS . $from) !== false) {
+			return true;
+		}
 
 		return false;
-	}
-
-	/**
-	 * Key value map of from and to
-	 *
-	 * @return array
-	 */
-	protected function _to($fname) {
-
 	}
 
 	/**
@@ -144,8 +135,7 @@ TXT;
 	/**
 	 * @return string
 	 */
-	protected function _getNamespace()
-	{
+	protected function _getNamespace() {
 		$ns = $this->param('namespace');
 		if (!$ns) {
 			$ns = 'App';
