@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit
-	bootstrap="./tests/bootstrap.php"
+	bootstrap="tests/bootstrap.php"
 	>
 
 	<testsuites>
-		<testsuite name="Upgrade Test Cases">
-			<directory>./tests/</directory>
+		<testsuite name="upgrade">
+			<directory>tests/</directory>
 		</testsuite>
 	</testsuites>
 </phpunit>
