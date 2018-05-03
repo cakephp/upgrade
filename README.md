@@ -13,6 +13,9 @@ Note: When migrating from 1.x to 2.x you might want to look in the old [cakephp-
 
 ## Installation
 
+This plugin is standalone. Do not try to mix this with your existing app. Instead, put it somewhere completely separate from it.
+Best to clone it (git clone ....).
+
 After downloading/cloning the upgrade tool, you need to install dependencies with `composer`
 
 ```bash
