@@ -9,7 +9,14 @@ It also supports the minor upgrades in 3.x - up until currently 3.6+.
 
 **Warning** This tool is still under development and doesn't handle all aspects of migrating.
 
+--- 
+**Info** Please look into [this article](https://www.dereuromark.de/2018/03/14/cakephp-3-6-is-coming/) for Upgrading applications for 3.6+. The new tool rector seems to be very promising.
+
+--- 
+
+
 Note: When migrating from 1.x to 2.x you might want to look in the old [cakephp-upgrade plugin](https://github.com/dereuromark/cakephp-upgrade) instead.
+
 
 ## Installation
 
