@@ -40,6 +40,8 @@ use Cake\Utility\Inflector;
  * @property \Cake\Upgrade\Shell\Task\CustomTask $Custom
  * @property \Cake\Upgrade\Shell\Task\UrlTask $Url
  * @property \Cake\Upgrade\Shell\Task\CleanupTask $Cleanup
+ * @property \Cake\Upgrade\Shell\Task\FixtureLoadingTask $FixtureLoading
+ * @property \Cake\Upgrade\Shell\Task\TableToEntityTask $TableToEntity
  */
 class UpgradeShell extends Shell {
 
@@ -61,12 +63,12 @@ class UpgradeShell extends Shell {
 		'I18n',
 		'Locale',
 		'Tests',
-        'FixtureLoading',
+		'FixtureLoading',
 		'Skeleton',
 		'Templates',
 		'PrefixedTemplates',
 		'ModelToTable',
-        'TableToEntity',
+		'TableToEntity',
 		'Custom',
 		'Url',
 		'Cleanup',
@@ -199,10 +201,10 @@ class UpgradeShell extends Shell {
 				'help' => 'Update test cases regarding fixtures.',
 				'parser' => $this->I18n->getOptionParser(),
 			])
-            ->addSubcommand('fixture_loading', [
-                'help' => 'Update test cases regarding fixture loading.',
-                'parser' => $this->I18n->getOptionParser(),
-            ])
+			->addSubcommand('fixture_loading', [
+				'help' => 'Update test cases regarding fixture loading.',
+				'parser' => $this->I18n->getOptionParser(),
+			])
 			->addSubcommand('templates', [
 				'help' => 'Update view templates.',
 				'parser' => $this->Templates->getOptionParser(),
@@ -223,10 +225,10 @@ class UpgradeShell extends Shell {
 				'help' => 'Make models to tables.',
 				'parser' => $this->ModelToTable->getOptionParser(),
 			])
-            ->addSubcommand('table_to_entity', [
-                'help' => 'Make entities from tables.',
-                'parser' => $this->ModelToTable->getOptionParser(),
-            ])
+			->addSubcommand('table_to_entity', [
+				'help' => 'Make entities from tables.',
+				'parser' => $this->ModelToTable->getOptionParser(),
+			])
 			->addSubcommand('prefixed_templates', [
 				'help' => 'Move view templates for prefixed actions.',
 				'parser' => $this->PrefixedTemplates->getOptionParser(),

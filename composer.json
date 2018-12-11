@@ -1,17 +1,17 @@
 {
 	"name": "dereuromark/upgrade",
 	"description": "CakePHP upgrade tool",
-	"homepage": "http://cakephp.org",
+	"homepage": "https://github.com/dereuromark/upgrade",
 	"type": "project",
 	"license": "MIT",
 	"require": {
 		"php": ">=7.1",
-		"cakephp/cakephp": "dev-master as 3.5",
-		"cakephp/app": "dev-master as 3.5"
+		"cakephp/cakephp": "dev-master as 3.7",
+		"cakephp/app": "dev-master as 3.7"
 	},
 	"require-dev": {
 		"fig-r/psr2r-sniffer": "dev-master",
-		"dereuromark/cakephp-ide-helper": "^0.10.3"
+		"dereuromark/cakephp-ide-helper": "@stable"
 	},
 	"autoload": {
 		"psr-4": {
@@ -26,9 +26,9 @@
 	"scripts": {
 		"post-install-cmd": "App\\Console\\Installer::postInstall",
 		"post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
-		"test": "phpunit",
-		"test-coverage": "phpunit --log-junit webroot/coverage/unitreport.xml --coverage-html webroot/coverage --coverage-clover webroot/coverage/coverage.xml",
-		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-5.7.20.phar && mv phpunit-5.7.20.phar phpunit.phar || true",
+		"test": "php phpunit.phar",
+		"test-coverage": "php phpunit.phar --log-junit webroot/coverage/unitreport.xml --coverage-html webroot/coverage --coverage-clover webroot/coverage/coverage.xml",
+		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-6.phar && mv phpunit-6.phar phpunit.phar || true",
 		"cs-check": "phpcs -v -p --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --ignore=/vendor/,/tmp/,/logs/,/tests/test_files/ --extensions=php ./",
 		"cs-fix": "phpcbf -v --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --ignore=/vendor/,/tmp/,/logs/,/tests/test_files/ --extensions=php ./"
 	}

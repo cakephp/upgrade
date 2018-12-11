@@ -1,15 +1,22 @@
 # CakePHP Upgrade tool 
 [![Build Status](https://api.travis-ci.org/dereuromark/upgrade.svg?branch=develop)](https://travis-ci.org/dereuromark/upgrade)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 
 Upgrade tool as standalone application for CakePHP meant to facilitate migrating from CakePHP 2.x to 3.x.
 
-It also supports the minor upgrades in 3.x - up until 3.5.
+It also supports the minor upgrades in 3.x - up until currently 3.7+.
 
 **Warning** This tool is still under development and doesn't handle all aspects of migrating.
 
+--- 
+**Info** Please look into [this article](https://www.dereuromark.de/2018/03/14/cakephp-3-6-is-coming/) for Upgrading applications for 3.6+. The new tool rector seems to be very promising.
+
+--- 
+
+
 Note: When migrating from 1.x to 2.x you might want to look in the old [cakephp-upgrade plugin](https://github.com/dereuromark/cakephp-upgrade) instead.
+
 
 ## Installation
 
@@ -80,3 +87,8 @@ The `all` command already used the right order by default.
 For detailed task descriptions and usage see [docs](docs).
 
 Also note the [wiki](https://github.com/dereuromark/upgrade/wiki) with more recent tips.
+
+
+## Using Tagged Releases
+For simplicity the tool uses the latest dev-master branches of framework and app repos (or you can get there using `composer update`).
+If you want to use the stable releases instead, just switch those in the composer.json and then run `composer update` again.

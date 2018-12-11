@@ -115,13 +115,13 @@ class FixturesTask extends BaseTask {
 			// Shim required type index.
 			if (!empty($out['_indexes'])) {
 			    foreach ($out['_indexes'] as $i => $index) {
-                    if (isset($index['unique']) && !$index['unique']) {
-                        unset($out['_indexes'][$i]['unique']);
-                    }
-                    if (!isset($index['type'])) {
-                        $out['_indexes'][$i]['type'] = 'index';
-                    }
-                }
+					if (isset($index['unique']) && !$index['unique']) {
+						unset($out['_indexes'][$i]['unique']);
+					}
+					if (!isset($index['type'])) {
+						$out['_indexes'][$i]['type'] = 'index';
+					}
+				}
 		    }
 
 			// Process table parameters
