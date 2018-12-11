@@ -5,7 +5,7 @@
 
 Upgrade tool as standalone application for CakePHP meant to facilitate migrating from CakePHP 2.x to 3.x.
 
-It also supports the minor upgrades in 3.x - up until currently 3.6+.
+It also supports the minor upgrades in 3.x - up until currently 3.7+.
 
 **Warning** This tool is still under development and doesn't handle all aspects of migrating.
 

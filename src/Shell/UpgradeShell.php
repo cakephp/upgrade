@@ -40,6 +40,8 @@ use Cake\Utility\Inflector;
  * @property \Cake\Upgrade\Shell\Task\CustomTask $Custom
  * @property \Cake\Upgrade\Shell\Task\UrlTask $Url
  * @property \Cake\Upgrade\Shell\Task\CleanupTask $Cleanup
+ * @property \Cake\Upgrade\Shell\Task\FixtureLoadingTask $FixtureLoading
+ * @property \Cake\Upgrade\Shell\Task\TableToEntityTask $TableToEntity
  */
 class UpgradeShell extends Shell {
 
