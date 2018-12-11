@@ -26,11 +26,14 @@ Best to clone it (git clone ....).
 After downloading/cloning the upgrade tool, you need to install dependencies with `composer`
 
 ```bash
-php composer.phar install
+composer install
 ```
 
 Once dependencies are installed you can start using the `upgrade` shell.
 
+Note: If you want to get the latest master, you can run `composer update` at your own risk. 
+It will download also all recent changes done.
+Alternatively, you can lock it down to a stable version and then update.
 
 ## IMPORTANT NOTICE
 
