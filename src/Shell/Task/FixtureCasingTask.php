@@ -90,6 +90,11 @@ class FixtureCasingTask extends BaseTask {
 				$fixtureName = Inflector::camelize(Inflector::underscore($fixtureName));
 				$pieces[count($pieces) - 1] = $fixtureName;
 
+				if (count($pieces) > 2) {
+					$pluginName = Inflector::camelize(Inflector::underscore($pieces[count($pieces) - 2]));
+					$pieces[count($pieces) - 2] = $pluginName;
+				}
+
 				$out[] = implode('.', $pieces);
 			}
 
