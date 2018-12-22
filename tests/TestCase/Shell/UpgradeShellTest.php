@@ -80,6 +80,7 @@ class UpgradeShellTest extends TestCase {
 			'Shell/Task/UrlTask.php',
 			'Shell/Task/TableToEntityTask.php',
 			'Shell/Task/FixtureLoadingTask.php',
+			'Shell/Task/FixtureCasingTask.php',
 		];
 
 		sort($files);
