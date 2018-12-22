@@ -36,11 +36,22 @@ Update test cases regarding fixtures.
 
 ### fixture_loading
 Loading of fixtures is adjusted to new convention:
+```php
 // Before
 public $fixtures = ['app.user_role', 'plugin.foo_bar.user']
 
 // After
 public $fixtures = ['app.user_roles', 'plugin.foo_bar.users']
+```
+
+### fixture_casing (NEW)
+Loading of fixtures is adjusted to new convention (CakePHP 3.7+):
+```php
+// Before
+public $fixtures = ['app.user_roles', 'plugin.foo_bar.users']
+
+// After
+public $fixtures = ['app.UserRoles', 'plugin.foo_bar.Users']
 ```
 
 ### locale

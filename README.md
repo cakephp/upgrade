@@ -42,7 +42,7 @@ This tool is a split-off off the original CakePHP upgrade tool and provides addi
 - Url
 - Locale (fixing locale files)
 - Model to Table (making the model files to Table class files)
-- FixtureLoading
+- Fixture loading and casing
 - Custom (tons of custom fixes)
 
 Feel free to manually port those things back into the core one.

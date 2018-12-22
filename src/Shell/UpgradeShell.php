@@ -42,6 +42,7 @@ use Cake\Utility\Inflector;
  * @property \Cake\Upgrade\Shell\Task\CleanupTask $Cleanup
  * @property \Cake\Upgrade\Shell\Task\FixtureLoadingTask $FixtureLoading
  * @property \Cake\Upgrade\Shell\Task\TableToEntityTask $TableToEntity
+ * @property \Cake\Upgrade\Shell\Task\FixtureCasingTask $FixtureCasing
  */
 class UpgradeShell extends Shell {
 
@@ -64,6 +65,7 @@ class UpgradeShell extends Shell {
 		'Locale',
 		'Tests',
 		'FixtureLoading',
+		'FixtureCasing',
 		'Skeleton',
 		'Templates',
 		'PrefixedTemplates',
@@ -203,6 +205,10 @@ class UpgradeShell extends Shell {
 			])
 			->addSubcommand('fixture_loading', [
 				'help' => 'Update test cases regarding fixture loading.',
+				'parser' => $this->I18n->getOptionParser(),
+			])
+			->addSubcommand('fixture_casing', [
+				'help' => 'Update test cases regarding fixture casing (prefix.CamelCase).',
 				'parser' => $this->I18n->getOptionParser(),
 			])
 			->addSubcommand('templates', [
