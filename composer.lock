@@ -58,12 +58,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/app.git",
-                "reference": "92dc4db41395f55c08ae94f20074f0fd26147ddb"
+                "reference": "87163adbfb3bde222ab60ef9ea982ae2e0f5f266"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/app/zipball/92dc4db41395f55c08ae94f20074f0fd26147ddb",
-                "reference": "92dc4db41395f55c08ae94f20074f0fd26147ddb",
+                "url": "https://api.github.com/repos/cakephp/app/zipball/87163adbfb3bde222ab60ef9ea982ae2e0f5f266",
+                "reference": "87163adbfb3bde222ab60ef9ea982ae2e0f5f266",
                 "shasum": ""
             },
             "require": {
@@ -97,7 +97,7 @@
             ],
             "description": "CakePHP skeleton app",
             "homepage": "https://cakephp.org",
-            "time": "2018-12-09T11:32:25+00:00"
+            "time": "2018-12-24T17:43:45+00:00"
         },
         {
             "name": "cakephp/cakephp",
@@ -105,12 +105,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "0be30d0c02cf955e58fedb2d47d8264e38342820"
+                "reference": "c60a9590422f9fb44a45467bccdc5f6c7601f533"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/0be30d0c02cf955e58fedb2d47d8264e38342820",
-                "reference": "0be30d0c02cf955e58fedb2d47d8264e38342820",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/c60a9590422f9fb44a45467bccdc5f6c7601f533",
+                "reference": "c60a9590422f9fb44a45467bccdc5f6c7601f533",
                 "shasum": ""
             },
             "require": {
@@ -185,7 +185,7 @@
                 "rapid-development",
                 "validation"
             ],
-            "time": "2018-12-21T01:10:53+00:00"
+            "time": "2018-12-27T04:11:48+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -246,16 +246,16 @@
         },
         {
             "name": "cakephp/migrations",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "928389e10edd16bae834f4d56336e1e66deb525a"
+                "reference": "b5148180a59b991dac3a74c3058dd5891dfc8961"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/928389e10edd16bae834f4d56336e1e66deb525a",
-                "reference": "928389e10edd16bae834f4d56336e1e66deb525a",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/b5148180a59b991dac3a74c3058dd5891dfc8961",
+                "reference": "b5148180a59b991dac3a74c3058dd5891dfc8961",
                 "shasum": ""
             },
             "require": {
@@ -295,7 +295,7 @@
                 "cakephp",
                 "migrations"
             ],
-            "time": "2018-06-22T13:22:45+00:00"
+            "time": "2018-12-25T19:49:39+00:00"
         },
         {
             "name": "cakephp/plugin-installer",
