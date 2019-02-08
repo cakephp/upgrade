@@ -10,8 +10,7 @@
 		"cakephp/app": "dev-master as 3.7"
 	},
 	"require-dev": {
-		"fig-r/psr2r-sniffer": "dev-master",
-		"dereuromark/cakephp-ide-helper": "@stable"
+		"fig-r/psr2r-sniffer": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {
