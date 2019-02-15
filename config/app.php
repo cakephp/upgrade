@@ -87,7 +87,7 @@ $config = [
  *   Example: `'skipLog' => array('Cake\Error\NotFoundException', 'Cake\Error\UnauthorizedException')`
  */
 	'Error' => [
-		'errorLevel' => E_ALL & ~E_DEPRECATED,
+		'errorLevel' => E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED ,
 		'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
 		'skipLog' => [],
 		'log' => true,
