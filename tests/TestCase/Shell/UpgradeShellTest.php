@@ -60,6 +60,7 @@ class UpgradeShellTest extends TestCase {
 		}
 
 		$expected = [
+			'Application.php',
 			'Shell/UpgradeShell.php',
 			'Shell/Task/BaseTask.php',
 			'Shell/Task/RenameCollectionsTask.php',

@@ -75,7 +75,7 @@ class UpgradeShell extends Shell
             if (!empty($this->params['interactive'])) {
                 $continue = $this->in('Continue with `' . $action . '`?', ['y', 'n', 'q'], 'y');
                 if ($continue === 'q') {
-                    return $this->error('Aborted. Changes are not commited.');
+                    $this->abort('Aborted. Changes are not commited.');
                 }
                 if ($continue === 'n') {
                     $this->out('Skipping this step.');
@@ -130,7 +130,7 @@ class UpgradeShell extends Shell
     public function getOptionParser()
     {
         $parser = parent::getOptionParser()
-            ->description('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .
+            ->setDescription('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .
                 'Be sure to have a backup of your application before running these commands.')
             ->addSubcommand('locations', [
                 'help' => 'Move files/directories around. Run this *before* adding namespaces with the namespaces command.',

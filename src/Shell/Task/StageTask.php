@@ -19,7 +19,7 @@ use Cake\Console\Shell;
 use Cake\Error\Debugger;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\InternalErrorException;
+use InvalidArgumentException;
 
 /**
  * Upgrade stage task
@@ -378,7 +378,7 @@ class StageTask extends Shell
     protected function _getPath()
     {
         if (empty($this->args[0]) || !file_exists($this->args[0])) {
-            throw new InternalErrorException('Path not specified or invalid.');
+            throw new InvalidArgumentException('Path not specified or invalid.');
         }
 
         if (count($this->args) === 1) {
