@@ -76,7 +76,6 @@ class UpgradeShell extends Shell
                 $continue = $this->in('Continue with `' . $action . '`?', ['y', 'n', 'q'], 'y');
                 if ($continue === 'q') {
                     $this->abort('Aborted. Changes are not commited.');
-                    return;
                 }
                 if ($continue === 'n') {
                     $this->out('Skipping this step.');
