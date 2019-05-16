@@ -10,6 +10,9 @@ It also supports the minor upgrades in 3.x - up until currently 3.7+.
 **Warning** This tool is still under development and doesn't handle all aspects of migrating.
 
 --- 
+**Cake 4** Please look into [wiki](https://github.com/dereuromark/upgrade/wiki/Tips#upgrading-to-4x) for hot new tips, also add yours!
+
+--- 
 **Info** Please look into [this article](https://www.dereuromark.de/2018/03/14/cakephp-3-6-is-coming/) for Upgrading applications for 3.6+. The new tool rector seems to be very promising.
 
 --- 
