@@ -51,7 +51,7 @@ Loading of fixtures is adjusted to new convention (CakePHP 3.7+):
 public $fixtures = ['app.user_roles', 'plugin.foo_bar.users']
 
 // After
-public $fixtures = ['app.UserRoles', 'plugin.foo_bar.Users']
+public $fixtures = ['app.UserRoles', 'plugin.FooBar.Users']
 ```
 
 ### locale
