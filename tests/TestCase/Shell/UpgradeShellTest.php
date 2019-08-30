@@ -83,9 +83,9 @@ class UpgradeShellTest extends TestCase {
 			'Shell/Task/FixtureCasingTask.php',
 		];
 
-		sort($files);
-		sort($expected);
-		$this->assertSame($expected, $files, 'The files to process should be all files in the src folder');
+		foreach ($expected as $file) {
+			$this->assertTrue(in_array($file, $files, true), 'The files to process should be all files in the src folder - ' . $file);
+		}
 	}
 
 }

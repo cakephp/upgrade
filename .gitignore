@@ -3,3 +3,4 @@
 /vendor/
 /phpunit.phar
 /logs/
+.phpunit.result.cache
