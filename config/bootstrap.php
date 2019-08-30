@@ -50,7 +50,6 @@ use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorHandler;
 use Cake\Log\Log;
@@ -140,4 +139,4 @@ Log::config(Configure::consume('Log'));
  * Plugin::load('DebugKit'); //Loads a single plugin named DebugKit
  */
 
-Plugin::load('IdeHelper');
+//Plugin::load('IdeHelper');
