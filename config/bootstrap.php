@@ -13,27 +13,14 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-	/**
-	 * Configure paths required to find CakePHP + general filepath
-	 * constants
-	 */
+/**
+ * Configure paths required to find CakePHP + general filepath
+ * constants
+ */
 require __DIR__ . '/paths.php';
 
 // Use composer to load the autoloader.
-if (file_exists(ROOT . '/vendor/autoload.php')) {
-	require ROOT . '/vendor/autoload.php';
-}
-
-// If composer is not used, use CakePHP's classloader to autoload the framework
-// and the application. You will also need setup autoloading for plugins by
-// passing `autoload' => true for `Plugin::loadAll()` or `Plugin::load()`
-if (!class_exists('Cake\Core\Configure')) {
-	require CAKE . 'Core/ClassLoader.php';
-	$loader = new ClassLoader();
-	$loader->register();
-	$loader->addNamespace('Cake', CAKE);
-	$loader->addNamespace(Configure::read('App.namespace'), APP);
-}
+require ROOT . DS . 'vendor' . DS . 'autoload.php';
 
 /**
  * Bootstrap CakePHP.
@@ -138,5 +125,4 @@ Log::config(Configure::consume('Log'));
  * Plugin::loadAll(); // Loads all plugins at once
  * Plugin::load('DebugKit'); //Loads a single plugin named DebugKit
  */
-
 //Plugin::load('IdeHelper');

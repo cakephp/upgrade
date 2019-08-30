@@ -1,4 +1,27 @@
-# CakePHP Upgrade app "Deluxe Edition"
+# CakePHP Upgrade app
+
+## Upgrade command 4.0 ready
+
+For now some of the basic upgrade tasks are here for simplicity reasons.
+
+Note: Make sure you already ran the 3.x ones here on the code to be up to date.
+
+#### cake4 (app)
+- ...
+
+#### cake4plugin
+- Create Plugin class if not exists
+
+
+
+## Upgrade shell "Deluxe Edition"
+
+Mainly for existing 3.x series upgrade.
+
+Currently running as
+```
+bin/cake upgrade_legacy {task}
+```
 
 ## Tasks available
 

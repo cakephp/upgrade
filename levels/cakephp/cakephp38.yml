@@ -1,0 +1,9 @@
+app:
+  AssertFileTask:
+    Application:
+      'source': 'Application.php.twig'
+
+plugin:
+  AssertFileTask:
+    Plugin:
+      'source': 'Plugin/Plugin.php.twig'

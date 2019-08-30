@@ -19,7 +19,9 @@ use Cake\Error\Debugger;
 use Cake\Utility\Inflector;
 
 /**
- * A shell class to help developers upgrade applications to CakePHP 3.0
+ * A shell to help developers upgrade applications to CakePHP minors and majors.
+ *
+ * Deprecated: Will be removed. Use command for new stuff.
  *
  * @property \Cake\Upgrade\Shell\Task\LocationsTask $Locations
  * @property \Cake\Upgrade\Shell\Task\NamespacesTask $Namespaces
@@ -44,7 +46,7 @@ use Cake\Utility\Inflector;
  * @property \Cake\Upgrade\Shell\Task\TableToEntityTask $TableToEntity
  * @property \Cake\Upgrade\Shell\Task\FixtureCasingTask $FixtureCasing
  */
-class UpgradeShell extends Shell {
+class UpgradeLegacyShell extends Shell {
 
 	/**
 	 * Tasks loaded.
@@ -164,7 +166,7 @@ class UpgradeShell extends Shell {
 	 */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser()
-			->description('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .
+			->setDescription('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .
 				'Be sure to have a backup of your application before running these commands.'
 			)
 			->addSubcommand('locations', [
@@ -252,6 +254,7 @@ class UpgradeShell extends Shell {
 				'parser' => $this->PrefixedTemplates->getOptionParser(),
 			]);
 
+		/** @var \Cake\Console\ConsoleInputSubcommand[] $subcommands */
 		$subcommands = $parser->subcommands();
 		$allParser = null;
 		foreach ($subcommands as $subcommand) {

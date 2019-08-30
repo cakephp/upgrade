@@ -56,14 +56,19 @@ Feel free to manually port those things back into the core one.
 
 ## Usage
 
+### Upgrade command
+```bash
+bin/cake upgrade /home/mark/Sites/my-app
+```
+
+### Upgrade legacy shell
 The upgrade tool provides a standalone application that can be used to upgrade
 other applications or cakephp plugins. Each of the subcommands accepts a path
 that points to the application you want to upgrade.
 
 ```bash
-cd /path/to/upgrade
-bin/cake upgrade all /home/mark/Sites/my-app
-bin/cake upgrade skeleton /home/mark/Sites/my-app
+bin/cake upgrade_legacy all /home/mark/Sites/my-app
+bin/cake upgrade_legacy skeleton /home/mark/Sites/my-app
 ```
 The first command would run all the tasks at once on `/home/mark/Sites/my-app`,
 which is probably the way most people will want to use it.
@@ -73,7 +78,7 @@ This command is not included in `all` as it is only necessary for apps. Plugins 
 For plugins, point it to the root and use the `-p` plugin syntax:
 ```bash
 // Upgrading 2.x /home/mark/Sites/my-app/Plugin/MyPlugin/ 
-bin/cake upgrade all -p MyPlugin /home/mark/Sites/my-app
+bin/cake upgrade_legacy all -p MyPlugin /home/mark/Sites/my-app
 ```
 
 It is recommended that you keep your application in version control, and keep
@@ -85,9 +90,9 @@ Several of the commands have dependencies on each other and should be run in a s
 is recommended that you run the following commands first before using other commands:
 
 ```bash
-bin/cake upgrade locations [path]
-bin/cake upgrade namespaces [path]
-bin/cake upgrade app_uses [path]
+bin/cake upgrade_legacy locations [path]
+bin/cake upgrade_legacy namespaces [path]
+bin/cake upgrade_legacy app_uses [path]
 ```
 
 Once these three commands have been run, you can use the other commands in any order.
