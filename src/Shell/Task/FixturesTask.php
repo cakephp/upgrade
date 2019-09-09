@@ -197,8 +197,7 @@ class FixturesTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		return
-			substr($path, -4) === '.php' &&
+		return substr($path, -4) === '.php' &&
 			strpos($path, DS . 'tests' . DS . 'Fixture' . DS);
 	}
 

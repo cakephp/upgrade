@@ -7,7 +7,7 @@
 	"require": {
 		"php": ">=7.1",
 		"cakephp/cakephp": "dev-master as 3.8",
-		"cakephp/app": "dev-master as 3.8"
+		"rector/rector": "dev-master as 0.5"
 	},
 	"require-dev": {
 		"fig-r/psr2r-sniffer": "dev-master"

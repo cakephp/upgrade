@@ -61,8 +61,7 @@ class PrefixedTemplatesTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		return
-			strpos($path, 'Template' . DS) &&
+		return strpos($path, 'Template' . DS) &&
 			substr($path, -4) === '.ctp' &&
 			strpos($path, $this->params['prefix'] . '_') &&
 			strpos($path, 'Template' . DS . 'Element' . DS) === false &&

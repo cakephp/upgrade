@@ -47,6 +47,11 @@ class CleanupTask extends LocationsTask {
 		return true;
 	}
 
+	/**
+	 * @param string $path
+	 * @param string $substr
+	 * @return void
+	 */
 	protected function _deleteIfEmpty($path, $substr) {
 		$dir = $path . DS . $substr;
 
