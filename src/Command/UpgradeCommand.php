@@ -52,11 +52,11 @@ class UpgradeCommand extends Command {
 
 		if (!is_dir($path)) {
 			$io->error('Project path not found: ' . $args->getArgumentAt(0));
-			throw new StopException(static::CODE_ERROR);
+			throw new StopException();
 		}
 		if (!file_exists($path . 'composer.json')) {
 			$io->error('Composer.json not found in ' . $args->getArgumentAt(0));
-			throw new StopException(static::CODE_ERROR);
+			throw new StopException();
 		}
 
 		$this->process($path, $args, $io);
