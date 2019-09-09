@@ -86,6 +86,9 @@ class RectorCommand extends Command {
 				'help' => 'Dont include previous ones.',
 				'short' => 'e',
 				'boolean' => true,
+			])->addOption('autoload-file', [
+				'help' => 'Autoload file to use. Only needed if no composer.json can be found in that path.',
+				'short' => 'a',
 			]);
 
 		return $parser;
@@ -115,7 +118,16 @@ class RectorCommand extends Command {
 			//TODO: add previous levels automatically?
 		}
 
+		$autoloadFile = $args->getOption('autoload-file');
+		if (!$autoloadFile) {
+			$autoloadFile = $this->guessAutoloadFile($path);
+		}
+
 		$command .= ' --set=' . $level;
+		if ($autoloadFile) {
+			$command .= ' --autoload-file=' . $autoloadFile;
+		}
+
 		$command .= ' ' . $path;
 
 		$io->out('Running `' . $command . '`...');
@@ -142,6 +154,24 @@ class RectorCommand extends Command {
 		return [
 			//TODO
 		];
+	}
+
+	/**
+	 * Guess autoload file based on composer vendor dir.
+	 *
+	 * @param string $path
+	 *
+	 * @return string|null
+	 */
+	protected function guessAutoloadFile(string $path): ?string
+	{
+		if (!file_exists($path . 'composer.json')) {
+			return null;
+		}
+
+		$autoloadPath = $path . 'vendor' . DS . 'autoload.php';
+
+		return $autoloadPath;
 	}
 
 }
