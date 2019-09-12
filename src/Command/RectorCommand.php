@@ -163,8 +163,7 @@ class RectorCommand extends Command {
 	 *
 	 * @return string|null
 	 */
-	protected function guessAutoloadFile(string $path): ?string
-	{
+	protected function guessAutoloadFile(string $path): ?string {
 		if (!file_exists($path . 'composer.json')) {
 			return null;
 		}

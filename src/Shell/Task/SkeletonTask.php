@@ -51,6 +51,8 @@ class SkeletonTask extends BaseTask {
 		}
 
 		$sourcePath = ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'app' . DS;
+		$this->prepareSkeletonAppCode($sourcePath);
+
 		$files = [
 			'bin' . DS . 'cake',
 			'bin' . DS . 'cake.bat',
@@ -140,6 +142,23 @@ class SkeletonTask extends BaseTask {
 					'help' => 'Overwrite files even if they already exist.',
 				],
 			]);
+	}
+
+	/**
+	 * @param string $sourcePath
+	 *
+	 * @return void
+	 */
+	protected function prepareSkeletonAppCode(string $sourcePath): void {
+		if (!is_dir($sourcePath)) {
+			$parentPath = dirname($sourcePath);
+			if (!is_dir($parentPath)) {
+				mkdir($parentPath, 0770, true);
+			}
+			exec('cd ' . $parentPath . ' && git clone https://github.com/cakephp/app.git');
+		}
+
+		exec('cd ' . $sourcePath . ' && git pull');
 	}
 
 }
