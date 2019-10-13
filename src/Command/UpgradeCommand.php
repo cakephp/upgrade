@@ -38,10 +38,10 @@ class UpgradeCommand extends Command
         $path = (string)$args->getArgument('path');
 
         $io->out('<info>Moving templates</info>');
-        $this->executeCommand(FileRenameCommand::class, ['templates', '--path', $path], $io);
+        $this->executeCommand(FileRenameCommand::class, ['templates', $path], $io);
 
-        // $io->out('<info>Moving locale files</info>');
-        // $this->executeCommand(FileRenameCommand::class, ['locales', '--path', $path], $io);
+        $io->out('<info>Moving locale files</info>');
+        $this->executeCommand(FileRenameCommand::class, ['locales', $path], $io);
 
         return static::CODE_SUCCESS;
     }
