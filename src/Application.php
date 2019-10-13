@@ -14,7 +14,10 @@
  */
 namespace Cake\Upgrade;
 
-use Cake\Http\BaseApplication;
+use Cake\Core\ConsoleApplicationInterface;
+use Cake\Console\CommandCollection;
+use Cake\Upgrade\Command\FileRenameCommand;
+use Cake\Upgrade\Command\UpgradeCommand;
 
 /**
  * Application setup class.
@@ -22,30 +25,29 @@ use Cake\Http\BaseApplication;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication
+class Application implements ConsoleApplicationInterface
 {
-
     /**
-     * Setup the middleware queue your application will use.
+     * Load configuration data.
      *
-     * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
-     * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
+     * @return void
      */
-    public function middleware($middlewareQueue)
+    public function bootstrap(): void
     {
-        return $middlewareQueue;
+        require_once dirname(__DIR__) . '/config/bootstrap.php';
     }
 
     /**
-     * Define the routes for an application.
+     * Define the console commands for an application.
      *
-     * Use the provided RouteBuilder to define an application's routing.
-     *
-     * @param \Cake\Routing\RouteBuilder $routes A route builder to add routes into.
-     * @return void
+     * @param \Cake\Console\CommandCollection $commands The CommandCollection to add commands into.
+     * @return \Cake\Console\CommandCollection The updated collection.
      */
-    public function routes($routes)
+    public function console(CommandCollection $commands): CommandCollection
     {
-        // Do not load routes.php
+        $commands->add('upgrade', UpgradeCommand::class);
+        $commands->add('upgrade file_rename', FileRenameCommand::class);
+
+        return $commands;
     }
 }

@@ -1,14 +1,31 @@
 language: php
 
 php:
-  - 5.6
-  - 7.0
+  - 7.2
   - 7.3
 
-sudo: false
+env:
+  global:
+    - DEFAULT=1
+
+matrix:
+  include:
+    - php: 7.2
+      env: PHPCS=1 DEFAULT=0
+
+before_install:
+  - phpenv config-rm xdebug.ini
 
 before_script:
-  - composer install
+  - if [[ $DEFAULT == 1 || $PHPCS == 1 ]]; then composer install; fi
+
+script:
+  - if [[ $DEFAULT == 1 ]]; then vendor/bin/phpunit; fi
+  - if [[ $PHPCS == 1 ]]; then composer cs-check; fi
+
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 notifications:
   email: false
