@@ -19,7 +19,7 @@ use Cake\Console\Shell;
 use Cake\Error\Debugger;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\InternalErrorException;
+use Cake\Http\Exception\InternalErrorException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
