@@ -101,7 +101,7 @@ class RectorCommand extends Command
         $process = proc_open(
             $command,
             $descriptorSpec,
-            $pipes,
+            $pipes
         );
         if (!is_resource($process)) {
             $io->error('Could not create rector process');
