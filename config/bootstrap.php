@@ -29,10 +29,9 @@ require __DIR__ . '/paths.php';
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
-use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Error\ErrorHandler;
+use Cake\Error\ConsoleErrorHandler;
 use Cake\Log\Log;
 
 /**

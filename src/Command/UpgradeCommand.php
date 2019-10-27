@@ -43,6 +43,9 @@ class UpgradeCommand extends Command
         $io->out('<info>Moving locale files</info>');
         $this->executeCommand(FileRenameCommand::class, ['locales', $path], $io);
 
+        $io->out('<info>Applying cakephp40 Rector rules</info>');
+        $this->executeCommand(RectorCommand::class, ['--rules', 'cakephp40', $path], $io);
+
         return static::CODE_SUCCESS;
     }
 
@@ -60,18 +63,14 @@ class UpgradeCommand extends Command
                 '',
                 'Runs all of the sub commands. You can also run each command individually.',
                 '',
-                'Sub-Commands',
-                '------------',
+                '<info>Sub-Commands</info>',
                 '',
                 '- file_rename - Rename template and locale files',
+                '- rector      - Apply rector refactoring rules',
             ])
             ->addArgument('path', [
                 'help' => 'The path to the application or plugin.',
                 'required' => true,
-            ])
-            ->addOption('plugin', [
-                'help' => 'Indicate that path is a plugin.',
-                'boolean' => true,
             ])
             ->addOption('dry-run', [
                 'help' => 'Dry run.',
