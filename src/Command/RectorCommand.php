@@ -60,6 +60,7 @@ class RectorCommand extends Command
         $result = $this->runRector($io, $args, $autoload);
         if ($result === false) {
             $io->error("Could not run rector. Ensure that `php` is on your PATH.");
+
             return static::CODE_ERROR;
         }
         $io->success('Rector applied successfully');
@@ -71,9 +72,8 @@ class RectorCommand extends Command
      * Run rector as a sub-process.
      *
      * @param \Cake\Console\ConsoleIo $io The io object to output with
+     * @param \Cake\Console\Arguments $args The Arguments object
      * @param string $autoload The autoload file path.
-     * @param string $rules The ruleset to run.
-     * @param string $path The path to run rector on.
      * @return bool
      */
     protected function runRector(ConsoleIo $io, Arguments $args, string $autoload): bool
@@ -93,11 +93,11 @@ class RectorCommand extends Command
         );
         $io->verbose("Running <info>{$command}</info>");
 
-        $descriptorSpec = array(
-            0 => array('pipe', 'r'),
-            1 => array('pipe', 'w'),
-            2 => array('pipe', 'w')
-        );
+        $descriptorSpec = [
+            0 => ['pipe', 'r'],
+            1 => ['pipe', 'w'],
+            2 => ['pipe', 'w'],
+        ];
         $process = proc_open(
             $command,
             $descriptorSpec,
@@ -105,10 +105,14 @@ class RectorCommand extends Command
         );
         if (!is_resource($process)) {
             $io->error('Could not create rector process');
+
             return false;
         }
 
-        while (!feof($pipes[1]) || !feof($pipes[2])) {
+        while (true) {
+            if (feof($pipes[1]) && feof($pipes[2])) {
+                break;
+            }
             $output = fread($pipes[1], 1024);
             if ($output) {
                 $io->out($output);
@@ -139,12 +143,16 @@ class RectorCommand extends Command
         $path = realpath($path);
         $io->verbose("Detecting autoload file for {$path}");
         $segments = explode(DIRECTORY_SEPARATOR, $path);
-        while (count($segments) > 0) {
+        while (true) {
+            if (count($segments) === 0) {
+                break;
+            }
             $check = implode(DIRECTORY_SEPARATOR, $segments) . '/vendor/autoload.php';
             $io->verbose("-> Checking {$check}");
 
             if (file_exists($check)) {
                 $io->verbose("-> Found {$check}");
+
                 return $check;
             }
             array_pop($segments);
