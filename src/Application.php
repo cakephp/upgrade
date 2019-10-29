@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -14,9 +16,10 @@
  */
 namespace Cake\Upgrade;
 
-use Cake\Core\ConsoleApplicationInterface;
 use Cake\Console\CommandCollection;
+use Cake\Core\ConsoleApplicationInterface;
 use Cake\Upgrade\Command\FileRenameCommand;
+use Cake\Upgrade\Command\RectorCommand;
 use Cake\Upgrade\Command\UpgradeCommand;
 
 /**
@@ -47,6 +50,7 @@ class Application implements ConsoleApplicationInterface
     {
         $commands->add('upgrade', UpgradeCommand::class);
         $commands->add('upgrade file_rename', FileRenameCommand::class);
+        $commands->add('upgrade rector', RectorCommand::class);
 
         return $commands;
     }
