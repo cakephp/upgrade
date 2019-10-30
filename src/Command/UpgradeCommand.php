@@ -46,6 +46,9 @@ class UpgradeCommand extends Command
         $io->out('<info>Applying cakephp40 Rector rules</info>');
         $this->executeCommand(RectorCommand::class, ['--rules', 'cakephp40', $path], $io);
 
+        $io->out('<info>Applying phpunit80 Rector rules</info>');
+        $this->executeCommand(RectorCommand::class, ['--rules', 'phpunit80', $path], $io);
+
         return static::CODE_SUCCESS;
     }
 
@@ -66,7 +69,7 @@ class UpgradeCommand extends Command
                 '<info>Sub-Commands</info>',
                 '',
                 '- file_rename - Rename template and locale files',
-                '- rector      - Apply rector refactoring rules',
+                '- rector      - Apply rector refactoring rules for phpunit80 and cakephp40',
             ])
             ->addArgument('path', [
                 'help' => 'The path to the application or plugin.',

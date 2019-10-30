@@ -173,7 +173,9 @@ class RectorCommand extends Command
             ->setDescription([
                 'Apply rector refactoring rules',
                 '',
-                'Run rector rules against `path`',
+                'Run rector rules against `path`. By default the <info>cakephp40</info> ' .
+                'rules are run. You may also want to run the <info>phpunit80</info> ruleset ' .
+                'to automate updating your test cases.'
             ])
             ->addArgument('path', [
                 'help' => 'The path to the application or plugin.',
@@ -184,7 +186,7 @@ class RectorCommand extends Command
                 'default' => 'cakephp40',
             ])
             ->addOption('autoload', [
-                'help' => 'The path to the application/plugin autoload if one cannot be autodetected, ' .
+                'help' => 'The path to the application/plugin autoload if one cannot be auto-detected, ' .
                     'or is detected incorrectly.',
             ])
             ->addOption('dry-run', [
