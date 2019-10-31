@@ -38,25 +38,35 @@ class UpgradeCommand extends Command
         $path = rtrim((string)$args->getArgument('path'), DIRECTORY_SEPARATOR);
         $pathParts = explode(DIRECTORY_SEPARATOR, $path);
         $srcPath = $testsPath = $path;
-        if ($pathParts[-1] !== 'src') {
+        $last = count($pathParts) - 1;
+        if ($pathParts[$last] !== 'src') {
             $srcPath .= DIRECTORY_SEPARATOR . 'src';
         }
-        if ($pathParts[-1] !== 'tests') {
+        if ($pathParts[$last] !== 'tests') {
             $testsPath .= DIRECTORY_SEPARATOR . 'tests';
         }
+        $withDryRun = function (array $params) use ($args): array {
+            if ($args->getOption('dry-run')) {
+                array_unshift($params, '--dry-run');
+
+                return $params;
+            }
+
+            return $params;
+        };
 
         $io->out('<info>Moving templates</info>');
-        $this->executeCommand(FileRenameCommand::class, ['templates', $path], $io);
+        $this->executeCommand(FileRenameCommand::class, $withDryRun(['templates', $path]), $io);
 
         $io->out('<info>Moving locale files</info>');
-        $this->executeCommand(FileRenameCommand::class, ['locales', $path], $io);
+        $this->executeCommand(FileRenameCommand::class, $withDryRun(['locales', $path]), $io);
 
         $io->out('<info>Applying cakephp40 Rector rules</info>');
-        $this->executeCommand(RectorCommand::class, ['--rules', 'cakephp40', $srcPath], $io);
-        $this->executeCommand(RectorCommand::class, ['--rules', 'cakephp40', $testsPath], $io);
+        $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp40', $srcPath]), $io);
+        $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp40', $testsPath]), $io);
 
         $io->out('<info>Applying phpunit80 Rector rules</info>');
-        $this->executeCommand(RectorCommand::class, ['--rules', 'phpunit80', $testsPath], $io);
+        $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'phpunit80', $testsPath]), $io);
 
         $io->out('Next upgrade your <info>composer.json</info>.');
 

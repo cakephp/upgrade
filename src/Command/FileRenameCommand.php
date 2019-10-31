@@ -189,6 +189,11 @@ class FileRenameCommand extends Command
      */
     protected function renameSubFolders(string $path): void
     {
+        $this->io->out("Moving sub directories of <info>$path</info>");
+        if ($this->args->getOption('dry-run')) {
+            return;
+        }
+
         $dirIter = new RecursiveDirectoryIterator(
             $path,
             RecursiveDirectoryIterator::UNIX_PATHS
@@ -204,7 +209,7 @@ class FileRenameCommand extends Command
                 RecursiveRegexIterator::SPLIT
             );
 
-            foreach ($templateDirs as $key => $val) {
+            foreach ($templateDirs as $val) {
                 $this->rename(
                     $val[0] . '/' . $folder,
                     $val[0] . '/' . strtolower($folder)
@@ -221,6 +226,10 @@ class FileRenameCommand extends Command
      */
     protected function changeExt(string $path): void
     {
+        $this->io->out("Recursively changing extensions in <info>$path</info>");
+        if ($this->args->getOption('dry-run')) {
+            return;
+        }
         $dirIter = new RecursiveDirectoryIterator(
             $path,
             RecursiveDirectoryIterator::SKIP_DOTS | RecursiveDirectoryIterator::UNIX_PATHS
@@ -232,7 +241,7 @@ class FileRenameCommand extends Command
             RecursiveRegexIterator::REPLACE
         );
 
-        foreach ($templates as $key => $val) {
+        foreach ($templates as $val) {
             $this->rename($val . '.ctp', $val . '.php');
         }
     }
@@ -246,8 +255,7 @@ class FileRenameCommand extends Command
      */
     protected function rename(string $source, string $dest): void
     {
-        $this->io->out("Move $source to $dest");
-
+        $this->io->verbose("Move $source to $dest");
         if ($this->args->getOption('dry-run')) {
             return;
         }
