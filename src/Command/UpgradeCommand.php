@@ -35,7 +35,15 @@ class UpgradeCommand extends Command
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $path = (string)$args->getArgument('path');
+        $path = rtrim((string)$args->getArgument('path'), DIRECTORY_SEPARATOR);
+        $pathParts = explode(DIRECTORY_SEPARATOR, $path);
+        $srcPath = $testsPath = $path;
+        if ($pathParts[-1] !== 'src') {
+            $srcPath .= DIRECTORY_SEPARATOR . 'src';
+        }
+        if ($pathParts[-1] !== 'tests') {
+            $testsPath .= DIRECTORY_SEPARATOR . 'tests';
+        }
 
         $io->out('<info>Moving templates</info>');
         $this->executeCommand(FileRenameCommand::class, ['templates', $path], $io);
@@ -44,10 +52,13 @@ class UpgradeCommand extends Command
         $this->executeCommand(FileRenameCommand::class, ['locales', $path], $io);
 
         $io->out('<info>Applying cakephp40 Rector rules</info>');
-        $this->executeCommand(RectorCommand::class, ['--rules', 'cakephp40', $path], $io);
+        $this->executeCommand(RectorCommand::class, ['--rules', 'cakephp40', $srcPath], $io);
+        $this->executeCommand(RectorCommand::class, ['--rules', 'cakephp40', $testsPath], $io);
 
         $io->out('<info>Applying phpunit80 Rector rules</info>');
-        $this->executeCommand(RectorCommand::class, ['--rules', 'phpunit80', $path], $io);
+        $this->executeCommand(RectorCommand::class, ['--rules', 'phpunit80', $testsPath], $io);
+
+        $io->out('Next upgrade your <info>composer.json</info>.');
 
         return static::CODE_SUCCESS;
     }
