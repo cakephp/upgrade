@@ -38,7 +38,7 @@ bin/cake upgrade /home/mark/Sites/my-app
 bin/cake upgrade file_rename locales /home/mark/Sites/my-app
 
 # Rename template files
-bin/cake upgrade file_rename locales /home/mark/Sites/my-app
+bin/cake upgrade file_rename templates /home/mark/Sites/my-app
 
 # Run rector rules.
 bin/cake upgrade rector /home/mark/Sites/my-app
