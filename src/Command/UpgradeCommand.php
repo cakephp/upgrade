@@ -36,15 +36,12 @@ class UpgradeCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $path = rtrim((string)$args->getArgument('path'), DIRECTORY_SEPARATOR);
-        $pathParts = explode(DIRECTORY_SEPARATOR, $path);
-        $srcPath = $testsPath = $path;
-        $last = count($pathParts) - 1;
-        if ($pathParts[$last] !== 'src') {
-            $srcPath .= DIRECTORY_SEPARATOR . 'src';
-        }
-        if ($pathParts[$last] !== 'tests') {
-            $testsPath .= DIRECTORY_SEPARATOR . 'tests';
-        }
+        $paths = [
+            'src' => $path . '/src',
+            'tests' => $path . '/tests',
+            'config' => $path . '/config',
+            'tempates' => $path . '/templates',
+        ];
         $withDryRun = function (array $params) use ($args): array {
             if ($args->getOption('dry-run')) {
                 array_unshift($params, '--dry-run');
@@ -62,11 +59,15 @@ class UpgradeCommand extends Command
         $this->executeCommand(FileRenameCommand::class, $withDryRun(['locales', $path]), $io);
 
         $io->out('<info>Applying cakephp40 Rector rules</info>');
-        $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp40', $srcPath]), $io);
-        $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp40', $testsPath]), $io);
-
+        foreach ($paths as $directory) {
+            if (!is_dir($directory)) {
+                $io->warning("The <info>{$path}</info> does not exist, skipping.");
+                continue;
+            }
+            $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp40', $directory]), $io);
+        }
         $io->out('<info>Applying phpunit80 Rector rules</info>');
-        $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'phpunit80', $testsPath]), $io);
+        $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'phpunit80', $paths['tests']]), $io);
 
         $io->out('Next upgrade your <info>composer.json</info>.');
 
@@ -83,14 +84,17 @@ class UpgradeCommand extends Command
     {
         $parser
             ->setDescription([
-                'Upgrade tool for CakePHP 4.0',
+                '<question>Upgrade tool for CakePHP 4.0</question>',
                 '',
-                'Runs all of the sub commands. You can also run each command individually.',
+                'Runs all of the sub commands on an application/plugin. The <info>path</info> ' .
+                'argument should be the application or plugin root directory.',
+                '',
+                'You can also run each command individually on specific directories if you want more control.',
                 '',
                 '<info>Sub-Commands</info>',
                 '',
-                '- file_rename - Rename template and locale files',
-                '- rector      - Apply rector refactoring rules for phpunit80 and cakephp40',
+                '- file_rename  Rename template and locale files',
+                '- rector       Apply rector rules for phpunit80 and cakephp40',
             ])
             ->addArgument('path', [
                 'help' => 'The path to the application or plugin.',
