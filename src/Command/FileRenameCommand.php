@@ -168,7 +168,7 @@ class FileRenameCommand extends Command
             RecursiveRegexIterator::REPLACE
         );
 
-        foreach ($templateDirs as $key => $val) {
+        foreach ($templateDirs as $val) {
             $this->rename(
                 $val . $info['from'],
                 $val . $info['to']
@@ -210,7 +210,7 @@ class FileRenameCommand extends Command
             );
 
             foreach ($templateDirs as $val) {
-                $this->rename(
+                $this->renameWithCasing(
                     $val[0] . '/' . $folder,
                     $val[0] . '/' . strtolower($folder)
                 );
@@ -243,6 +243,40 @@ class FileRenameCommand extends Command
 
         foreach ($templates as $val) {
             $this->rename($val . '.ctp', $val . '.php');
+        }
+    }
+
+    /**
+     * Rename file or directory with case hacks for git.
+     *
+     * @param string $source Source path.
+     * @param string $dest Destination path.
+     * @return void
+     */
+    protected function renameWithCasing(string $source, string $dest): void
+    {
+        $this->io->verbose("Move $source to $dest with filesystem casing");
+        if ($this->args->getOption('dry-run')) {
+            return;
+        }
+
+        $parent = dirname($dest);
+        if (!is_dir($parent)) {
+            $old = umask(0);
+            mkdir($parent, 0755, true);
+            umask($old);
+        }
+        $tempDest = $dest . '_';
+
+        if ($this->git) {
+            $restore = getcwd();
+            chdir($this->path);
+            exec("git mv $source $tempDest");
+            exec("git mv $tempDest $dest");
+            chdir($restore);
+        } else {
+            rename($source, $tempDest);
+            rename($tempDest, $dest);
         }
     }
 
