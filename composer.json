@@ -5,12 +5,12 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "cakephp/console": "4.x-dev as 4.0.0",
+        "cakephp/console": "^4.0",
         "rector/rector": "~0.6"
     },
     "require-dev": {
-        "cakephp/cakephp": "4.x-dev as 4.0.0",
-        "cakephp/cakephp-codesniffer": "dev-next",
+        "cakephp/cakephp": "^4.0",
+        "cakephp/cakephp-codesniffer": "^4.0",
         "mikey179/vfsstream": "^1.6",
         "phpunit/phpunit": "^8.3.3|^8.4"
     },
