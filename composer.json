@@ -31,7 +31,7 @@
         "source": "https://github.com/cakephp/upgrade"
     },
     "scripts": {
-        "cs-check": "phpcs --colors --parallel=16 -p src/ tests/",
+        "cs-check": "phpcs --colors --parallel=16 -p -s src/ tests/",
         "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
         "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
     }
