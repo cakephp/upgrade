@@ -85,7 +85,7 @@ class RectorCommand extends Command
 
         $cmdPath = ROOT . '/vendor/bin/rector process';
         $command = sprintf(
-            'php %s %s --autoload-file=%s --set=%s --working-dir=%s %s',
+            '%s %s --autoload-file=%s --set=%s --working-dir=%s %s',
             $cmdPath,
             $args->getOption('dry-run') ? '--dry-run' : '',
             escapeshellarg($autoload),
