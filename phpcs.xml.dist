@@ -5,9 +5,11 @@
     <rule ref="CakePHP" />
 
     <!-- Documented Broken Rules -->
+    <!-- Conflicts with PSR12.Files.FileHeader.SpacingAfterBlock -->
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceBetweenOpenTagAndDeclare">
         <severity>0</severity>
     </rule>
+    <!-- Conflicts with PSR12.Files.FileHeader.SpacingAfterBlock -->
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceAfterDeclare">
         <severity>0</severity>
     </rule>
