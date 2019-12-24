@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
@@ -13,9 +14,6 @@
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
-
-declare(strict_types=1);
-
 namespace Cake\Upgrade;
 
 use Cake\Console\CommandCollection;

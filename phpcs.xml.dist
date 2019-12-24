@@ -4,12 +4,16 @@
 
     <rule ref="CakePHP" />
 
-    <!-- Documented Broken Rules -->
-    <!-- Conflicts with PSR12.Files.FileHeader.SpacingAfterBlock -->
-    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceBetweenOpenTagAndDeclare">
+    <!--
+        Disable manually until rector is upgrade to nikic/php-parser 5.0
+        This is downgrading to cakephp-codesniffer 4.0.0-beta3 intead of 4.0
+    -->
+    <rule ref="PSR12.Files.FileHeader.SpacingAfterBlock">
         <severity>0</severity>
     </rule>
-    <!-- Conflicts with PSR12.Files.FileHeader.SpacingAfterBlock -->
+    <rule ref="PSR12.Files.FileHeader.IncorrectOrder">
+        <severity>0</severity>
+    </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceAfterDeclare">
         <severity>0</severity>
     </rule>
