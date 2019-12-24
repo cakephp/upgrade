@@ -38,6 +38,7 @@ class UpgradeCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $path = rtrim((string)$args->getArgument('path'), DIRECTORY_SEPARATOR);
+        $path = realpath($path);
         $paths = [
             'src' => $path . '/src',
             'tests' => $path . '/tests',

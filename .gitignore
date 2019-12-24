@@ -1,6 +1,8 @@
 /tmp/*
 /vendor/*
+/logs/*
 /composer.lock
 /plugins/DebugKit
 /phpunit.phar
 /phpcs.xml
+.phpunit*

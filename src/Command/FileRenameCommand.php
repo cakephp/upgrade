@@ -23,6 +23,7 @@ use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
+use Cake\Error\FatalErrorException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveRegexIterator;
@@ -92,6 +93,10 @@ class FileRenameCommand extends Command
         $this->args = $args;
 
         $path = (string)$args->getArgument('path');
+        if (!preg_match('/^vfs:\/\//', $path)) {
+            $path = realpath($path);
+        }
+
         $this->path = rtrim($path, '/') . DIRECTORY_SEPARATOR;
         $this->git = is_dir($this->path . '.git');
 
@@ -273,8 +278,28 @@ class FileRenameCommand extends Command
         if ($this->git) {
             $restore = getcwd();
             chdir($this->path);
-            exec("git mv $source $tempDest");
-            exec("git mv $tempDest $dest");
+            $gitOutput = [];
+            $returnVar = null;
+            $lastLine = exec("git mv $source $tempDest", $gitOutput, $returnVar);
+            if ($returnVar) {
+                throw new FatalErrorException(sprintf(
+                    'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
+                    $source,
+                    $tempDest,
+                    $lastLine
+                ));
+            }
+            $gitOutput = [];
+            $returnVar = null;
+            $lastLine = exec("git mv $tempDest $dest", $gitOutput, $returnVar);
+            if ($returnVar) {
+                throw new FatalErrorException(sprintf(
+                    'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
+                    $tempDest,
+                    $dest,
+                    $lastLine
+                ));
+            }
             chdir($restore);
         } else {
             rename($source, $tempDest);
@@ -288,6 +313,7 @@ class FileRenameCommand extends Command
      * @param string $source Source path.
      * @param string $dest Destination path.
      * @return void
+     * @throws \Cake\Error\FatalErrorException When we're unable to move the folder via git.
      */
     protected function rename(string $source, string $dest): void
     {
@@ -306,7 +332,18 @@ class FileRenameCommand extends Command
         if ($this->git) {
             $restore = getcwd();
             chdir($this->path);
-            exec("git mv $source $dest");
+            $gitOutput = [];
+            $returnVar = null;
+            $lastLine = exec("git mv $source $dest", $gitOutput, $returnVar);
+            if ($returnVar) {
+                throw new FatalErrorException(sprintf(
+                    'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
+                    $source,
+                    $dest,
+                    $lastLine
+                ));
+            }
+
             chdir($restore);
         } else {
             rename($source, $dest);
