@@ -282,7 +282,8 @@ class FileRenameCommand extends Command
             $returnVar = null;
             $lastLine = exec("git mv $source $tempDest", $gitOutput, $returnVar);
             if ($returnVar) {
-                throw new FatalErrorException(sprintf('Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
+                throw new FatalErrorException(sprintf(
+                    'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
                     $source,
                     $tempDest,
                     $lastLine
@@ -292,7 +293,8 @@ class FileRenameCommand extends Command
             $returnVar = null;
             $lastLine = exec("git mv $tempDest $dest", $gitOutput, $returnVar);
             if ($returnVar) {
-                throw new FatalErrorException(sprintf('Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
+                throw new FatalErrorException(sprintf(
+                    'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
                     $tempDest,
                     $dest,
                     $lastLine
@@ -334,7 +336,8 @@ class FileRenameCommand extends Command
             $returnVar = null;
             $lastLine = exec("git mv $source $dest", $gitOutput, $returnVar);
             if ($returnVar) {
-                throw new FatalErrorException(sprintf('Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
+                throw new FatalErrorException(sprintf(
+                    'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
                     $source,
                     $dest,
                     $lastLine
