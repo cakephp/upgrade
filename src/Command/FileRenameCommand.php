@@ -330,8 +330,6 @@ class FileRenameCommand extends Command
         if ($this->git) {
             $restore = getcwd();
             chdir($this->path);
-            $source = preg_replace('#^' . preg_quote($this->path) . '#', '', $source);
-            $dest = preg_replace('#^' . preg_quote($this->path) . '#', '', $dest);
             $gitOutput = [];
             $returnVar = null;
             $lastLine = exec("git mv $source $dest", $gitOutput, $returnVar);
