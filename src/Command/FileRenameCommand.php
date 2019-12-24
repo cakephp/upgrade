@@ -93,7 +93,10 @@ class FileRenameCommand extends Command
         $this->args = $args;
 
         $path = (string)$args->getArgument('path');
-        $path = realpath($path);
+        if (!preg_match('/^vfs:\/\//', $path)) {
+            $path = realpath($path);
+        }
+
         $this->path = rtrim($path, '/') . DIRECTORY_SEPARATOR;
         $this->git = is_dir($this->path . '.git');
 
