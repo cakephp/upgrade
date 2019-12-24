@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
-<ruleset name="CakePHP Core">
+<ruleset name="CakePHP Upgrade">
     <config name="installed_paths" value="../../cakephp/cakephp-codesniffer" />
 
     <rule ref="CakePHP" />
+
+    <!-- Documented Broken Rules -->
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceBetweenOpenTagAndDeclare">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceAfterDeclare">
+        <severity>0</severity>
+    </rule>
 </ruleset>

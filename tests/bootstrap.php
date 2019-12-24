@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * Test runner bootstrap.
@@ -7,6 +6,9 @@ declare(strict_types=1);
  * Add additional configuration/setup your application needs when running
  * unit tests in this file.
  */
+
+declare(strict_types=1);
+
 error_reporting(-1);
 date_default_timezone_set('UTC');
 

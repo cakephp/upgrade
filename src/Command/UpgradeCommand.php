@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
@@ -14,6 +13,9 @@ declare(strict_types=1);
  * @since         4.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
+declare(strict_types=1);
+
 namespace Cake\Upgrade\Command;
 
 use Cake\Console\Arguments;
