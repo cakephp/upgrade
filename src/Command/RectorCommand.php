@@ -17,14 +17,14 @@ declare(strict_types=1);
 namespace Cake\Upgrade\Command;
 
 use Cake\Console\Arguments;
-use Cake\Console\Command;
+use Cake\Console\BaseCommand;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 
 /**
  * Runs rector rulesets against the provided path.
  */
-class RectorCommand extends Command
+class RectorCommand extends BaseCommand
 {
     /**
      * Execute.
