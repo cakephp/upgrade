@@ -22,13 +22,7 @@ require __DIR__ . '/paths.php';
  * Bootstrap CakePHP.
  *
  * Does the various bits of setup that CakePHP needs to do.
- * This includes:
- *
- * - Registering the CakePHP autoloader.
- * - Setting the default application paths.
  */
-require CORE_PATH . 'config' . DS . 'bootstrap.php';
-
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Error\ConsoleErrorHandler;
