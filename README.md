@@ -34,6 +34,7 @@ cd /path/to/upgrade
 # Run all upgrade tasks at once.
 bin/cake upgrade /home/mark/Sites/my-app
 
+# OR run upgrade tasks individually.
 # Rename locale files
 bin/cake upgrade file_rename locales /home/mark/Sites/my-app
 
@@ -41,7 +42,17 @@ bin/cake upgrade file_rename locales /home/mark/Sites/my-app
 bin/cake upgrade file_rename templates /home/mark/Sites/my-app
 
 # Run rector rules.
-bin/cake upgrade rector /home/mark/Sites/my-app
+bin/cake upgrade rector /home/mark/Sites/my-app/src
+bin/cake upgrade rector /home/mark/Sites/my-app/tests
+bin/cake upgrade rector /home/mark/Sites/my-app/config
 ```
 
+## Development
 
+To ease installation & usage, this package does not
+use `require-dev` in `composer.json` as the installed PHPUnit and
+CakePHP packages cause conflicts with the rector tasks.
+
+To install dev-dependencies use `make install-dev`. Then you will be able to
+run `vendor/bin/phpunit`. You can also use `make test` to install dependencies
+and run tests.

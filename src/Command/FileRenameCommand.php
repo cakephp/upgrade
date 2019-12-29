@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Cake\Upgrade\Command;
 
 use Cake\Console\Arguments;
-use Cake\Console\Command;
+use Cake\Console\BaseCommand;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
@@ -30,7 +30,7 @@ use RegexIterator;
 /**
  * Rename and move files
  */
-class FileRenameCommand extends Command
+class FileRenameCommand extends BaseCommand
 {
     /**
      * Is git used

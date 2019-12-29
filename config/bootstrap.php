@@ -22,16 +22,9 @@ require __DIR__ . '/paths.php';
  * Bootstrap CakePHP.
  *
  * Does the various bits of setup that CakePHP needs to do.
- * This includes:
- *
- * - Registering the CakePHP autoloader.
- * - Setting the default application paths.
  */
-require CORE_PATH . 'config' . DS . 'bootstrap.php';
-
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Error\ConsoleErrorHandler;
 use Cake\Log\Log;
 
 /**
@@ -72,10 +65,5 @@ mb_internal_encoding(Configure::read('App.encoding'));
  * formatted and sets the default language to use for translations.
  */
 ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
-
-/*
- * Register application error and exception handlers.
- */
-(new ConsoleErrorHandler(Configure::read('Error')))->register();
 
 Log::setConfig(Configure::consume('Log'));

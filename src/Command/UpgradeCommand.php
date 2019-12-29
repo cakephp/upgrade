@@ -17,14 +17,14 @@ declare(strict_types=1);
 namespace Cake\Upgrade\Command;
 
 use Cake\Console\Arguments;
-use Cake\Console\Command;
+use Cake\Console\BaseCommand;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 
 /**
  * Entry point into the upgrade process
  */
-class UpgradeCommand extends Command
+class UpgradeCommand extends BaseCommand
 {
     /**
      * Execute.

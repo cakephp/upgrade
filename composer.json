@@ -8,12 +8,6 @@
         "cakephp/console": "^4.0",
         "rector/rector": "~0.6"
     },
-    "require-dev": {
-        "cakephp/cakephp": "^4.0",
-        "cakephp/cakephp-codesniffer": "^4.0",
-        "mikey179/vfsstream": "^1.6",
-        "phpunit/phpunit": "^8.4"
-    },
     "autoload": {
         "psr-4": {
             "Cake\\Upgrade\\": "src"
@@ -33,6 +27,13 @@
     "scripts": {
         "cs-check": "phpcs --colors --parallel=16 -p -s src/ tests/",
         "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
+        "test": "phpunit",
         "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
+    },
+    "require-dev": {
+        "cakephp/cakephp": "^4.0",
+        "cakephp/cakephp-codesniffer": "^4.0",
+        "mikey179/vfsstream": "^1.6",
+        "phpunit/phpunit": "^8.4"
     }
 }

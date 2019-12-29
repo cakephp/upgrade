@@ -16,12 +16,12 @@ matrix:
 before_install:
   - phpenv config-rm xdebug.ini
 
-before_script:
-  - if [[ $DEFAULT == 1 || $PHPCS == 1 ]]; then composer install; fi
+install:
+  - make install-dev
 
 script:
-  - if [[ $DEFAULT == 1 ]]; then vendor/bin/phpunit; fi
-  - if [[ $PHPCS == 1 ]]; then composer cs-check; fi
+  - if [[ $DEFAULT == 1 ]]; then make test; fi
+  - if [[ $PHPCS == 1 ]]; then make check-cs; fi
 
 cache:
   directories:
