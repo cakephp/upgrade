@@ -9,7 +9,7 @@ install-dev:
 	composer require --dev $(DEV_DEPENDENCIES)
 
 test: install-dev
-	vendor/bin/phpunit
+	composer test
 
 check-cs: install-dev
 	composer cs-check
