@@ -199,15 +199,15 @@ class FileRenameCommand extends BaseCommand
             return;
         }
 
-        $dirIter = new RecursiveDirectoryIterator(
-            $path,
-            RecursiveDirectoryIterator::UNIX_PATHS
-        );
-        $iterIter = new RecursiveIteratorIterator($dirIter);
-
         $folders = ['Layout', 'Element', 'Cell', 'Email', 'Plugin', 'Flash'];
 
         foreach ($folders as $folder) {
+            $dirIter = new RecursiveDirectoryIterator(
+                $path,
+                RecursiveDirectoryIterator::UNIX_PATHS
+            );
+            $iterIter = new RecursiveIteratorIterator($dirIter);
+            
             $templateDirs = new RegexIterator(
                 $iterIter,
                 '#/' . $folder . '/\.$#',
