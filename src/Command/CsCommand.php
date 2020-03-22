@@ -10,11 +10,6 @@ use Cake\Console\Exception\StopException;
 class CsCommand extends Command {
 
 	/**
-	 * @var string|false
-	 */
-	public $modelClass = false;
-
-	/**
 	 * The name of this command.
 	 *
 	 * @var string
@@ -76,7 +71,7 @@ class CsCommand extends Command {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser The built parser.
 	 */
-	protected function buildOptionParser(ConsoleOptionParser $parser) {
+	protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser {
 		$parser = parent::buildOptionParser($parser)
 			->setDescription('A tool to help automate cs fixing. Quickly execute groups of sniffer rules. ' .
 				'Be sure to have a backup of your application before running these commands.'
@@ -188,7 +183,7 @@ class CsCommand extends Command {
     <exclude-pattern>*\.yml</exclude-pattern>
     <exclude-pattern>*\.txt</exclude-pattern>
     <exclude-pattern>*\.json</exclude-pattern>
-    
+
     <config name="installed_paths" value="tmp/rulesets/slevomat-code-sniffer,tmp/rulesets/spryker-code-sniffer,vendor/fig-r/psr2r-sniffer"/>
 
     <rule ref="SlevomatCodingStandard"/>

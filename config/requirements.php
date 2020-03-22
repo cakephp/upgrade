@@ -16,7 +16,7 @@
 /*
  * You can empty out this file, if you are certain that you match all requirements.
  */
-$phpVersion = '7.1.0';
+$phpVersion = '7.2.0';
 
 /*
  * You can remove this if you are confident that your PHP version is sufficient.

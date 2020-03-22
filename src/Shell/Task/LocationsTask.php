@@ -14,6 +14,8 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
+use Cake\Console\ConsoleOptionParser;
+
 /**
  * Move files around as directories have changed in 3.0
  *
@@ -164,7 +166,7 @@ class LocationsTask extends BaseTask {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		return parent::getOptionParser()
 			->addOptions([
 				'root' => [

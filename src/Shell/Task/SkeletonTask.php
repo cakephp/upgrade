@@ -15,6 +15,7 @@
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Console\Shell;
+use Cake\Console\ConsoleOptionParser;
 
 /**
  * Create and setup missing files and folders via app repo.
@@ -69,19 +70,19 @@ class SkeletonTask extends BaseTask {
 			'src' . DS . 'Application.php',
 			'src' . DS . 'View' . DS . 'AppView.php',
 			'src' . DS . 'View' . DS . 'AjaxView.php',
-			'src' . DS . 'Template' . DS . 'Error' . DS . 'error400.ctp',
-			'src' . DS . 'Template' . DS . 'Error' . DS . 'error500.ctp',
-			'src' . DS . 'Template' . DS . 'Layout' . DS . 'error.ctp',
 			'src' . DS . 'Controller' . DS . 'PagesController.php',
-			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'default.ctp',
-			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'error.ctp',
-			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'success.ctp',
+			'templates' . DS . 'Error' . DS . 'error400.php',
+			'templates' . DS . 'Error' . DS . 'error500.php',
+			'templates' . DS . 'layout' . DS . 'error.php',
+			'templates' . DS . 'element' . DS . 'flash' . DS . 'default.php',
+			'templates' . DS . 'element' . DS . 'flash' . DS . 'error.php',
+			'templates' . DS . 'element' . DS . 'flash' . DS . 'success.php',
 		];
 		$ret = 0;
 		foreach ($files as $file) {
 			$ret |= $this->_addFile($file, $sourcePath, $path);
 		}
-		$ret |= $this->_addFile('config' . DS . 'app.default.php', $sourcePath, $path, 'config' . DS . 'app.default.php');
+		$ret |= $this->_addFile('config' . DS . 'app.php', $sourcePath, $path, 'config' . DS . 'app.php');
 		return (bool)$ret;
 	}
 
@@ -133,7 +134,7 @@ class SkeletonTask extends BaseTask {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		return parent::getOptionParser()
 			->addOptions([
 				'overwrite' => [

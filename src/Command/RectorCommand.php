@@ -10,11 +10,6 @@ use Cake\Console\Exception\StopException;
 class RectorCommand extends Command {
 
 	/**
-	 * @var string|false
-	 */
-	public $modelClass = false;
-
-	/**
 	 * The name of this command.
 	 *
 	 * @var string
@@ -68,7 +63,7 @@ class RectorCommand extends Command {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser The built parser.
 	 */
-	protected function buildOptionParser(ConsoleOptionParser $parser) {
+	protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser {
 		$parser = parent::buildOptionParser($parser)
 			->setDescription('A wrapper around rector to help upgrading between 3.x and 4.x. ' .
 				'Be sure to have a backup of your application before running these commands.'

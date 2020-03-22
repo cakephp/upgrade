@@ -15,6 +15,7 @@
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Utility\Inflector;
+use Cake\Console\ConsoleOptionParser;
 
 /**
  * Move prefix_action.ctp to Prefix/action.ctp
@@ -75,7 +76,7 @@ class PrefixedTemplatesTask extends BaseTask {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		return parent::getOptionParser()
 			->addOptions([
 				'prefix' => [

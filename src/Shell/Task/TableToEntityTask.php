@@ -15,6 +15,7 @@
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Utility\Inflector;
+use Cake\Console\ConsoleOptionParser;
 
 /**
  * Make Table classes build Entity classes.
@@ -122,7 +123,7 @@ TXT;
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		return parent::getOptionParser()
 			->addOptions([
 				'root' => [

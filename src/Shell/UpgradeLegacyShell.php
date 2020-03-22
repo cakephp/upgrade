@@ -14,6 +14,7 @@
  */
 namespace Cake\Upgrade\Shell;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\Error\Debugger;
 use Cake\Utility\Inflector;
@@ -117,7 +118,7 @@ class UpgradeLegacyShell extends Shell {
 
 				if (!empty($this->params['interactive'])) {
 					$this->Stage->commit();
-					$this->Stage->clear();
+					$this->Stage->clearStaged();
 				}
 			}
 		}
@@ -164,7 +165,7 @@ class UpgradeLegacyShell extends Shell {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		$parser = parent::getOptionParser()
 			->setDescription('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .
 				'Be sure to have a backup of your application before running these commands.'

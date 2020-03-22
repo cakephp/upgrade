@@ -15,6 +15,7 @@
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Utility\Inflector;
+use Cake\Console\ConsoleOptionParser;
 
 /**
  * Make Model classes to Table classes.
@@ -108,7 +109,7 @@ class ModelToTableTask extends BaseTask {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		return parent::getOptionParser()
 			->addOptions([
 				'root' => [

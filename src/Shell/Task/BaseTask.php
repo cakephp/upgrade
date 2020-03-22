@@ -13,6 +13,7 @@
  */
 namespace Cake\Upgrade\Shell\Task;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 
 /**
@@ -25,7 +26,7 @@ class BaseTask extends Shell {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		return parent::getOptionParser()
 			->addArgument('path', [
 				'help' => 'Path to code to upgrade',

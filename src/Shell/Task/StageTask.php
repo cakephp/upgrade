@@ -69,7 +69,7 @@ class StageTask extends Shell {
 	 *
 	 * @return void
 	 */
-	public function clear() {
+	public function clearStaged() {
 		$this->_staged = [
 			'change' => [],
 			'delete' => [],

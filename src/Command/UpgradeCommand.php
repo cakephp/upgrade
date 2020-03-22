@@ -10,11 +10,6 @@ use Cake\Console\Exception\StopException;
 class UpgradeCommand extends Command {
 
 	/**
-	 * @var string|false
-	 */
-	public $modelClass = false;
-
-	/**
 	 * The name of this command.
 	 *
 	 * @var string
@@ -69,7 +64,7 @@ class UpgradeCommand extends Command {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser The built parser.
 	 */
-	protected function buildOptionParser(ConsoleOptionParser $parser) {
+	protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser {
 		$parser = parent::buildOptionParser($parser)
 			->setDescription('A tool to help automate upgrading CakePHP apps and plugins. ' .
 				'Be sure to have a backup of your application before running these commands.'
