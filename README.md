@@ -1,5 +1,6 @@
-# CakePHP Upgrade tool [![Build Status](https://api.travis-ci.org/cakephp/upgrade.png)](https://travis-ci.org/cakephp/upgrade)
+# CakePHP Upgrade tool 
 
+[![Build Status](https://img.shields.io/travis/com/cakephp/upgrade?style=flat-square)](https://travis-ci.com/cakephp/upgrade)
 
 Upgrade tools for CakePHP meant to facilitate migrating from CakePHP 2.x to 3.0.0.
 
