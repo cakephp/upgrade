@@ -2,21 +2,29 @@
 
 [![Build Status](https://img.shields.io/travis/com/cakephp/upgrade?style=flat-square)](https://travis-ci.com/cakephp/upgrade)
 
-Upgrade tools for CakePHP meant to facilitate migrating from CakePHP 2.x to 3.0.0.
-
-**Warning** This tool is still under development and doesn't handle all aspects of migrating.
+Upgrade tools for CakePHP meant to facilitate migrating from CakePHP 3.8+ to
+4.0.0. This repository should be used as a standalone application and *not* as
+a plugin.
 
 ## Installation
 
-After downloading/cloning the upgrade tool, you need to install dependencies with `composer`
+First clone this repository or download a zipball:
 
 ```bash
-php composer.phar install
+git clone git://github.com/cakephp/upgrade
 ```
 
-Once dependencies are installed you can start using the `upgrade` shell.
+Then to install dependencies with `composer`
+
+```bash
+php composer.phar install --no-dev
+```
 
 ## Usage
+
+The upgrade tool is intended to be run *before* you update your application's
+dependencies to 4.0. The rector based tasks will not run correctly if your
+application already has its dependencies updated to 4.x.
 
 The upgrade tool provides a standalone application that can be used to upgrade
 other applications or cakephp plugins. Each of the subcommands accepts a path
@@ -24,71 +32,29 @@ that points to the application you want to upgrade.
 
 ```bash
 cd /path/to/upgrade
-bin/cake upgrade all /home/mark/Sites/my-app
-bin/cake upgrade skeleton /home/mark/Sites/my-app
-```
-The first command would run all the tasks at once on `/home/mark/Sites/my-app`,
-which is probably the way most people will want to use it.
-Additionally the second command would run the `skeleton` task on `/home/mark/Sites/my-app`.
-This command is not included in `all` as it is only necessary for apps. Plugins don't need it.
 
-It is recommended that you keep your application in version control, and keep
-backups of it before using the upgrade tool.
+# Run all upgrade tasks at once.
+bin/cake upgrade /home/mark/Sites/my-app
 
-### Order matters
+# OR run upgrade tasks individually.
+# Rename locale files
+bin/cake upgrade file_rename locales /home/mark/Sites/my-app
 
-Several of the commands have dependencies on each other and should be run in a specific order. It
-is recommended that you run the following commands first before using other commands:
+# Rename template files
+bin/cake upgrade file_rename templates /home/mark/Sites/my-app
 
-```bash
-bin/cake upgrade locations [path]
-bin/cake upgrade namespaces [path]
-bin/cake upgrade app_uses [path]
+# Run rector rules.
+bin/cake upgrade rector /home/mark/Sites/my-app/src
+bin/cake upgrade rector /home/mark/Sites/my-app/tests
+bin/cake upgrade rector /home/mark/Sites/my-app/config
 ```
 
-Once these three commands have been run, you can use the other commands in any order.
-The `all` command already used the right order by default.
+## Development
 
-## Tasks Available
+To ease installation & usage, this package does not
+use `require-dev` in `composer.json` as the installed PHPUnit and
+CakePHP packages cause conflicts with the rector tasks.
 
-### locations
-Move files/directories around. Run this *before* adding namespaces with the namespaces command.
-
-### namespaces
-Add namespaces to files based on their file path. Only run this *after* you have moved files.
-
-### app_uses
-Replace App::uses() with use statements
-
-### rename_classes
-Rename classes that have been moved/renamed. Run after replacing App::uses().
-
-### rename_collections
-Rename HelperCollection, ComponentCollection, and TaskCollection. Will also
-rename component constructor arguments and \_Collection properties on all
-objects.
-
-### method_names
-Updates the method names for a number of methods.
-
-### method_signatures
-Updates the method signatures for a number of methods.
-
-### fixtures
-Update fixtures to use new index/constraint features. This is necessary before running tests.
-
-### tests
-Update test cases regarding fixtures.
-
-### i18n
-Update translation functions regarding placeholders.
-
-### skeleton
-Add basic skeleton files and folders from the "app" repository.
-
-### prefixed_templates
-Move view templates for prefixed actions to prefix subfolder. eg. Users/admin_index.ctp becomes Admin/Users/index.ctp.
-By default `admin` prefix is handled, you can run this task for other routing prefixes using `--prefix=other` as well.
-
-## More Available Tasks
-See [dereuromark/upgrade](https://github.com/dereuromark/upgrade) repo for a few more on-top tasks available, that have not been merged back into this main one yet.
+To install dev-dependencies use `make install-dev`. Then you will be able to
+run `vendor/bin/phpunit`. You can also use `make test` to install dependencies
+and run tests.
