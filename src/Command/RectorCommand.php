@@ -47,7 +47,7 @@ class RectorCommand extends BaseCommand
             $autoload = $this->detectAutoload($io, $path);
         }
         if ($autoload === null) {
-            $io->error("No autoload file could be found. Use the `--autoload` flag to provide a path.");
+            $io->error('No autoload file could be found. Use the `--autoload` flag to provide a path.');
 
             return static::CODE_ERROR;
         }
@@ -59,7 +59,7 @@ class RectorCommand extends BaseCommand
 
         $result = $this->runRector($io, $args, $autoload);
         if ($result === false) {
-            $io->error("Could not run rector. Ensure that `php` is on your PATH.");
+            $io->error('Could not run rector. Ensure that `php` is on your PATH.');
 
             return static::CODE_ERROR;
         }
