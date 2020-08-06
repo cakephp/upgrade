@@ -50,7 +50,7 @@ class RectorCommandTest extends TestCase
      */
     public function testApplyInvalidAppDir()
     {
-        $this->exec("upgrade rector --dry-run ./something/invalid");
+        $this->exec('upgrade rector --dry-run ./something/invalid');
 
         $this->assertExitError();
         $this->assertErrorContains('`./something/invalid` does not exist.');
