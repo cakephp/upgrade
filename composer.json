@@ -6,8 +6,7 @@
 	"license": "MIT",
 	"require": {
 		"php": ">=7.2",
-		"cakephp/cakephp": "dev-master as 3.8",
-		"rector/rector": "dev-master as 0.5"
+		"cakephp/cakephp": "dev-master as 4.1"
 	},
 	"require-dev": {
 		"fig-r/psr2r-sniffer": "dev-master"
