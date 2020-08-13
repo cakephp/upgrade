@@ -128,7 +128,13 @@ class FixturesTask extends BaseTask {
 			if (isset($data['tableParameters'])) {
 				$out['_options'] = $data['tableParameters'];
 			}
-			return $matches[1] . "\n\t\t" . implode(",\n\t\t", $export($out)) . "\n\t" . $matches[3];
+
+			$content = implode(",\n\t\t", $export($out));
+			if ($content) {
+				$content .= ',';
+			}
+
+			return $matches[1] . "\n\t\t" . $content . "\n\t" . $matches[3];
 		};
 
 		$contents = preg_replace_callback(

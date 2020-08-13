@@ -81,7 +81,7 @@ class FixtureCasingTask extends BaseTask {
 			eval('$data = [' . $matches[2] . '];');
 			//@codingStandardsIgnoreEnd
 
-			$indent = strpos($matches[1], "\t") === false ? str_repeat(' ', 4) : "\t";
+			$indent = strpos($matches[2], "\t") === false ? str_repeat(' ', 4) : "\t";
 
 			$out = [];
 			foreach ($data as $key => $fixture) {
@@ -98,7 +98,12 @@ class FixtureCasingTask extends BaseTask {
 				$out[] = implode('.', $pieces);
 			}
 
-			return $matches[1] . "\n$indent$indent" . implode(",\n$indent$indent", $export($out)) . "\n$indent" . $matches[3];
+			$content = implode(",\n$indent$indent", $export($out));
+			if ($content) {
+				$content = "\n$indent$indent" . $content . ",";
+			}
+
+			return $matches[1] . $content . "\n$indent" . $matches[3];
 		};
 
 		$contents = preg_replace_callback(
