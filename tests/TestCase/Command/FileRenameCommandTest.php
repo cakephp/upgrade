@@ -135,7 +135,7 @@ class FileRenameCommandTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -156,7 +156,7 @@ class FileRenameCommandTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Configure::write('App.paths.plugins', $this->pluginPaths);
         Configure::write('App.paths.locales', $this->localePaths);
