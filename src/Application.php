@@ -1,4 +1,5 @@
 <?php
+
 namespace Cake\Upgrade;
 
 use Cake\Core\Configure;
@@ -45,7 +46,7 @@ class Application extends BaseApplication {
 
 			// Handle plugin/theme assets like CakePHP normally does.
 			->add(new AssetMiddleware([
-				'cacheTime' => Configure::read('Asset.cacheTime')
+				'cacheTime' => Configure::read('Asset.cacheTime'),
 			]))
 
 			// Add routing middleware.

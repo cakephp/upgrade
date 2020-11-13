@@ -7,11 +7,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Utility\Inflector;
@@ -61,6 +62,7 @@ class FixturesTask extends BaseTask {
 					}
 				}
 			}
+
 			return $vals;
 		};
 
@@ -103,6 +105,7 @@ class FixturesTask extends BaseTask {
 					if (!empty($indexProps['unique'])) {
 						unset($indexProps['unique']);
 						$constraints[$index] = ['type' => 'unique'] + $indexProps;
+
 						continue;
 					}
 					$out['_indexes'][$index] = $indexProps;
@@ -191,6 +194,7 @@ class FixturesTask extends BaseTask {
 		if (!empty($newPath)) {
 			$result &= $this->Stage->move($path, $newPath);
 		}
+
 		return (bool)$result;
 	}
 

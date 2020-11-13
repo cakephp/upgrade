@@ -1,4 +1,5 @@
 <?php
+
 namespace Cake\Upgrade\Command;
 
 use Cake\Console\Arguments;
@@ -38,8 +39,8 @@ class RectorCommand extends Command {
 	 * @param \Cake\Console\Arguments $args The command arguments.
 	 * @param \Cake\Console\ConsoleIo $io The console io
 	 *
-	 * @return int|null The exit code or null for success
 	 * @throws \Cake\Console\Exception\StopException
+	 * @return int|null The exit code or null for success
 	 */
 	public function execute(Arguments $args, ConsoleIo $io) {
 		$path = $args->getArgumentAt(0);
@@ -52,6 +53,7 @@ class RectorCommand extends Command {
 
 		if (!is_dir($path)) {
 			$io->error('Path to app or plugin not found: ' . $args->getArgumentAt(0));
+
 			throw new StopException();
 		}
 
@@ -93,8 +95,8 @@ class RectorCommand extends Command {
 	 * @param string $path
 	 * @param \Cake\Console\Arguments $args
 	 * @param \Cake\Console\ConsoleIo $io
-	 * @return void
 	 * @throws \Cake\Console\Exception\StopException
+	 * @return void
 	 */
 	protected function process(string $path, Arguments $args, ConsoleIo $io): void {
 
@@ -106,6 +108,7 @@ class RectorCommand extends Command {
 		$level = $args->getOption('level');
 		if (!$level) {
 			$io->error('No level provided.');
+
 			throw new StopException();
 		}
 

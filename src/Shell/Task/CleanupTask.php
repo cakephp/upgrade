@@ -7,11 +7,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
 use FilesystemIterator;
@@ -44,6 +45,7 @@ class CleanupTask extends LocationsTask {
 		foreach (array_keys($this->_moves()) as $substr) {
 			$this->_deleteIfEmpty($path, $substr);
 		}
+
 		return true;
 	}
 
@@ -61,6 +63,7 @@ class CleanupTask extends LocationsTask {
 				$substr = substr($substr, 0, $pos);
 				$this->_deleteIfEmpty($path, $substr);
 			}
+
 			return;
 		}
 
@@ -103,6 +106,7 @@ class CleanupTask extends LocationsTask {
 		if (basename($path) === 'composer.json' && empty($this->params['plugin'])) {
 			return true;
 		}
+
 		return false;
 	}
 

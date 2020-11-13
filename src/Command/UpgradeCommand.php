@@ -1,4 +1,5 @@
 <?php
+
 namespace Cake\Upgrade\Command;
 
 use Cake\Console\Arguments;
@@ -33,8 +34,8 @@ class UpgradeCommand extends Command {
 	 * @param \Cake\Console\Arguments $args The command arguments.
 	 * @param \Cake\Console\ConsoleIo $io The console io
 	 *
-	 * @return int|null The exit code or null for success
 	 * @throws \Cake\Console\Exception\StopException
+	 * @return int|null The exit code or null for success
 	 */
 	public function execute(Arguments $args, ConsoleIo $io) {
 		$path = $args->getArgumentAt(0);
@@ -47,10 +48,12 @@ class UpgradeCommand extends Command {
 
 		if (!is_dir($path)) {
 			$io->error('Project path not found: ' . $args->getArgumentAt(0));
+
 			throw new StopException();
 		}
 		if (!file_exists($path . 'composer.json')) {
 			$io->error('Composer.json not found in ' . $args->getArgumentAt(0));
+
 			throw new StopException();
 		}
 

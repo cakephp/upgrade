@@ -7,15 +7,16 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Utility\Inflector;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Utility\Inflector;
 
 /**
  * Make Model classes to Table classes.
@@ -63,6 +64,7 @@ class ModelToTableTask extends BaseTask {
 
 		$changed = $this->Stage->change($path, $original, $contents);
 		$moved = $this->Stage->move($path, $new);
+
 		return $changed & $moved;
 	}
 

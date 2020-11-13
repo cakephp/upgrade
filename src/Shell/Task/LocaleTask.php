@@ -7,11 +7,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
 /**
@@ -40,6 +41,7 @@ class LocaleTask extends BaseTask {
 		$original = $contents = $this->Stage->source($path);
 
 		$contents = $this->_adjustLocales($contents);
+
 		return $this->Stage->change($path, $original, $contents);
 	}
 
@@ -63,6 +65,7 @@ class LocaleTask extends BaseTask {
 				$string = preg_replace('/%[sdefc]/', $repString, $string, 1, $c);
 				$count++;
 			}
+
 			return '' . $matches[1] . ' "' . $string . '"';
 		};
 
@@ -81,6 +84,7 @@ class LocaleTask extends BaseTask {
 	 */
 	protected function _shouldProcess($path) {
 		$ending = substr($path, -3);
+
 		return $ending === '.po';
 	}
 

@@ -12,33 +12,18 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-namespace Cake\Upgrade\Shell\Task;
+namespace Cake\Upgrade\Utility;
 
-/**
- * Provides helper functionality for the tasks
- *
- * @mixin \Cake\Console\Shell
- */
-trait HelperTrait {
+trait ExecTrait {
 
 	/**
-	 * @return string
-	 */
-	protected function _getRoot() {
-		$root = !empty($this->params['root']) ? $this->params['root'] : $this->args[0];
-		$root = str_replace(['/', '\\'], DS, $root);
-		$root = rtrim(realpath($root), DS);
-
-		return $root;
-	}
-
-	/**
-	 * @param string $path
+	 * @param string $string
+	 * @param array $replacements
 	 *
 	 * @return string
 	 */
-	protected function _getRelativePath($path) {
-		return str_replace($this->_getRoot(), '', $path);
+	protected function exec(string $string, array $replacements): string {
+		return $this->_updateContents($string, $replacements);
 	}
 
 }

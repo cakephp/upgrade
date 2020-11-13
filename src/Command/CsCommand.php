@@ -1,4 +1,5 @@
 <?php
+
 namespace Cake\Upgrade\Command;
 
 use Cake\Console\Arguments;
@@ -23,7 +24,7 @@ class CsCommand extends Command {
 	 */
 	protected $levels = [
 		'whitespace' => [
-			'Spryker.WhiteSpace.EmptyEnclosingLine,Spryker.WhiteSpace.EmptyLines,Spryker.WhiteSpace.FunctionSpacing,Spryker.WhiteSpace.DocBlockSpacing'
+			'Spryker.WhiteSpace.EmptyEnclosingLine,Spryker.WhiteSpace.EmptyLines,Spryker.WhiteSpace.FunctionSpacing,Spryker.WhiteSpace.DocBlockSpacing',
 		],
 		'type-order' => [
 			'Spryker.Commenting.DocBlockTypeOrder',
@@ -42,8 +43,8 @@ class CsCommand extends Command {
 	 * @param \Cake\Console\Arguments $args The command arguments.
 	 * @param \Cake\Console\ConsoleIo $io The console io
 	 *
-	 * @return int|null The exit code or null for success
 	 * @throws \Cake\Console\Exception\StopException
+	 * @return int|null The exit code or null for success
 	 */
 	public function execute(Arguments $args, ConsoleIo $io) {
 		$path = $args->getArgumentAt(0);
@@ -56,10 +57,12 @@ class CsCommand extends Command {
 
 		if (!is_dir($path)) {
 			$io->error('Project path not found: ' . $args->getArgumentAt(0));
+
 			throw new StopException();
 		}
 		if (!file_exists($path . 'composer.json')) {
 			$io->error('Composer.json not found in ' . $args->getArgumentAt(0));
+
 			throw new StopException();
 		}
 
@@ -114,6 +117,7 @@ class CsCommand extends Command {
 
 		if ($args->getOption('explain')) {
 			$this->explain($command . ' -e ' . $path, $io);
+
 			return;
 		}
 

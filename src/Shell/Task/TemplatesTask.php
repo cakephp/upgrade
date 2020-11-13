@@ -7,11 +7,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Utility\Inflector;
@@ -77,6 +78,7 @@ class TemplatesTask extends BaseTask {
 		$replacement = function ($matches) {
 			return '$' . $matches[1] . '->' . lcfirst($matches[2]) . $matches[3];
 		};
+
 		return preg_replace_callback($pattern, $replacement, $contents);
 	}
 
@@ -91,6 +93,7 @@ class TemplatesTask extends BaseTask {
 		$pattern = '/\$this-\>Form-\>value\(\'(.+?).id\'\)/';
 		$replacement = function ($matches) {
 			$entity = lcfirst($matches[1]);
+
 			return '$' . $entity . '->id';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -99,6 +102,7 @@ class TemplatesTask extends BaseTask {
 		$pattern = '/\$this-\>Form-\>create\(\'(.+?)\'\)/i';
 		$replacement = function ($matches) {
 			$entity = lcfirst($matches[1]);
+
 			return '$this->Form->create($' . $entity . ')';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -108,6 +112,7 @@ class TemplatesTask extends BaseTask {
 		$replacement = function ($matches) {
 			$models = Text::tokenize($matches[2]);
 			$class = array_shift($models);
+
 			return 'public $modelClass = ' . $class;
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -140,6 +145,7 @@ class TemplatesTask extends BaseTask {
 		$replacement = function ($matches) {
 			$entity = lcfirst($matches[1]);
 			$table = Inflector::pluralize($matches[1]);
+
 			return '$' . $entity . ' = $this->' . $table . '->newEntity($this->request->data)';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -148,6 +154,7 @@ class TemplatesTask extends BaseTask {
 		$replacement = function ($matches) {
 			$entity = lcfirst($matches[1]);
 			$table = Inflector::pluralize($matches[1]);
+
 			return '$this->' . $table . '->save($' . $entity . ')';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -156,6 +163,7 @@ class TemplatesTask extends BaseTask {
 		$replacement = function ($matches) {
 			$entity = lcfirst($matches[1]);
 			$table = Inflector::pluralize($matches[1]);
+
 			return '$this->' . $table . '->delete($' . $entity . ')';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -168,6 +176,7 @@ class TemplatesTask extends BaseTask {
 			$pattern = '/\$this-\>(' . $model . ')-\>/i';
 			$replacement = function ($matches) {
 				$table = Inflector::pluralize($matches[1]);
+
 				return '$this->' . $table . '->';
 			};
 			$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -179,6 +188,7 @@ class TemplatesTask extends BaseTask {
 			if (count($methods) < 2) {
 				return $matches[0];
 			}
+
 			return '->request->allowMethod([' . implode(', ', $methods) . '])';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -189,6 +199,7 @@ class TemplatesTask extends BaseTask {
 			if (count($methods) < 2) {
 				return $matches[0];
 			}
+
 			return '$this->Auth->' . $matches[1] . '([' . implode(', ', $methods) . '])';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -206,6 +217,7 @@ class TemplatesTask extends BaseTask {
 	 */
 	protected function _shouldProcess($path) {
 		$ending = substr($path, -4);
+
 		return $ending === '.php' || $ending === '.ctp';
 	}
 

@@ -7,11 +7,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Console\Shell;
@@ -144,6 +145,7 @@ class AppUsesTask extends BaseTask {
 					1,
 					Shell::VERBOSE
 				);
+
 				return $matches[0];
 			} else {
 				$use = 'Cake\\' . $matches[2] . '\\' . $matches[1];
@@ -153,6 +155,7 @@ class AppUsesTask extends BaseTask {
 			}
 
 			$use = str_replace('/', '\\', $use);
+
 			return 'use ' . $use;
 		};
 
@@ -167,6 +170,7 @@ class AppUsesTask extends BaseTask {
 	 */
 	protected function _removeDynamicAppUses($contents) {
 		$pattern = '#(App::uses\(.+\);?)#';
+
 		return preg_replace($pattern, '/* TODO: \1 */', $contents);
 	}
 
@@ -220,6 +224,7 @@ class AppUsesTask extends BaseTask {
 
 			if (!isset($this->implicitMap[$check])) {
 				$this->out(sprintf('<warning>%s is not in the implicit class map</warning>', $check));
+
 				continue;
 			}
 
@@ -274,6 +279,7 @@ class AppUsesTask extends BaseTask {
 			$val = substr($val, 4);
 		}
 		$regex = '/\bCake(' . implode($rename, '|') . ')\b/';
+
 		return preg_replace($regex, '\1', $contents);
 	}
 
@@ -291,6 +297,7 @@ class AppUsesTask extends BaseTask {
 		if (in_array($matches[1], $this->rename)) {
 			$matches[1] = substr($matches[1], 4);
 		}
+
 		return $matches;
 	}
 

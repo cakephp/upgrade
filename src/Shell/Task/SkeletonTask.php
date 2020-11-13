@@ -7,15 +7,16 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Console\Shell;
 use Cake\Console\ConsoleOptionParser;
+use Cake\Console\Shell;
 
 /**
  * Create and setup missing files and folders via app repo.
@@ -83,6 +84,7 @@ class SkeletonTask extends BaseTask {
 			$ret |= $this->_addFile($file, $sourcePath, $path);
 		}
 		$ret |= $this->_addFile('config' . DS . 'app.php', $sourcePath, $path, 'config' . DS . 'app.php');
+
 		return (bool)$ret;
 	}
 
@@ -111,6 +113,7 @@ class SkeletonTask extends BaseTask {
 			}
 			$this->out('Adding ' . $file, 1, Shell::VERBOSE);
 		}
+
 		return $result;
 	}
 
@@ -126,6 +129,7 @@ class SkeletonTask extends BaseTask {
 		if (basename($path) === 'composer.json' && empty($this->params['plugin'])) {
 			return true;
 		}
+
 		return false;
 	}
 

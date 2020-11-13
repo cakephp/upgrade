@@ -7,11 +7,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         CakePHP(tm) v 2.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since CakePHP(tm) v 2.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell;
 
 use Cake\Console\ConsoleOptionParser;
@@ -77,6 +78,7 @@ class UpgradeLegacyShell extends Shell {
 		'Custom',
 		'Url',
 		'Cleanup',
+		'Bs4',
 	];
 
 	/**
@@ -107,6 +109,7 @@ class UpgradeLegacyShell extends Shell {
 				}
 				if ($continue === 'n') {
 					$this->out('Skipping this step.');
+
 					continue;
 				}
 			}
@@ -253,6 +256,10 @@ class UpgradeLegacyShell extends Shell {
 			->addSubcommand('custom', [
 				'help' => 'Custom stuff.',
 				'parser' => $this->PrefixedTemplates->getOptionParser(),
+			])
+			->addSubcommand('bs4', [
+				'help' => 'Bootstrap 4 templating.',
+				'parser' => $this->PrefixedTemplates->getOptionParser(),
 			]);
 
 		/** @var \Cake\Console\ConsoleInputSubcommand[] $subcommands */
@@ -261,6 +268,7 @@ class UpgradeLegacyShell extends Shell {
 		foreach ($subcommands as $subcommand) {
 			if ($allParser === null) {
 				$allParser = $subcommand->parser();
+
 				continue;
 			}
 			$allParser->merge($subcommand->parser());

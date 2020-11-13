@@ -1,27 +1,33 @@
-# CakePHP Upgrade tool 
+# CakePHP Upgrade tool
 [![Build Status](https://api.travis-ci.org/dereuromark/upgrade.svg?branch=develop)](https://travis-ci.org/dereuromark/upgrade)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 
-Upgrade tool as standalone application for CakePHP meant to facilitate migrating 
+Upgrade tool as standalone application for CakePHP meant to facilitate migrating
 - from CakePHP 2.x to 3.x.
 - supports the minor upgrades in 3.x - up until currently 3.8+.
 - supports basic stuff for 4.x
 
 **Warning** This tool is still under development and doesn't handle all aspects of migrating.
 
---- 
-**Cake 4** 
+---
+**CakePHP 4**
+
+Tasks available now for CakePHP4 (and super helpful):
+- method_names
+- method_signatures
+- skeleton
+
 Fore more please look into [wiki](https://github.com/dereuromark/upgrade/wiki/Tips#upgrading-to-4x) for hot new tips, also add yours!
 
---- 
-**Cake 3** 
+---
+**CakePHP 3**
 Please look into [this article](https://www.dereuromark.de/2018/03/14/cakephp-3-6-is-coming/) for Upgrading applications for 3.6+. The new tool rector seems to be very promising.
 
---- 
+---
 
-**Cake 2** 
+**CakePHP 2**
 When migrating from 1.x to 2.x you might want to look in the old [cakephp-upgrade plugin](https://github.com/dereuromark/cakephp-upgrade) instead.
 
 
@@ -38,7 +44,7 @@ composer install
 
 Once dependencies are installed you can start using the `upgrade` shell.
 
-Note: If you want to get the latest master, you can run `composer update` at your own risk. 
+Note: If you want to get the latest master, you can run `composer update` at your own risk.
 It will download also all recent changes done.
 Alternatively, you can lock it down to a stable version and then update.
 
@@ -77,7 +83,7 @@ This command is not included in `all` as it is only necessary for apps. Plugins 
 
 For plugins, point it to the root and use the `-p` plugin syntax:
 ```bash
-// Upgrading 2.x /home/mark/Sites/my-app/Plugin/MyPlugin/ 
+// Upgrading 2.x /home/mark/Sites/my-app/Plugin/MyPlugin/
 bin/cake upgrade_legacy all -p MyPlugin /home/mark/Sites/my-app
 ```
 
