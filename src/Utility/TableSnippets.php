@@ -33,7 +33,7 @@ class TableSnippets {
 	/**
 	 * @return array
 	 */
-	public function events(): array {
+	public function snippets(): array {
 		$list = [
 			[
 				'initialize(array $config)',

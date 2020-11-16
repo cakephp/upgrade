@@ -29,6 +29,11 @@ class GenericSnippets {
 				'#\bCake\\\\Network\\\\Exception\\\\#',
 				'Cake\\Http\\Exception\\',
 			],
+			[
+				'$this->request->url',
+				'#-\>request-\>url\b#',
+				'->request->getRequestTarget()',
+			],
 		];
 
 		return $list;

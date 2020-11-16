@@ -19,6 +19,7 @@ use Cake\Upgrade\Utility\ComponentSnippets;
 use Cake\Upgrade\Utility\ControllerSnippets;
 use Cake\Upgrade\Utility\FormSnippets;
 use Cake\Upgrade\Utility\GenericSnippets;
+use Cake\Upgrade\Utility\ShellSnippets;
 use Cake\Upgrade\Utility\ShellTaskSnippets;
 use Cake\Upgrade\Utility\TableSnippets;
 use Cake\Upgrade\Utility\TestsSnippets;
@@ -44,6 +45,7 @@ class MethodSignaturesTask extends BaseTask {
 	 */
 	protected $snippets = [
 		ShellTaskSnippets::class => ShellTaskSnippets::class,
+		ShellSnippets::class => ShellSnippets::class,
 	];
 
 	/**
@@ -56,13 +58,13 @@ class MethodSignaturesTask extends BaseTask {
 		$patterns = [];
 
 		if (strpos($path, 'src' . DS . 'Controller' . DS . 'Component' . DS) !== false) {
-			$patterns = array_merge((new ComponentSnippets())->events(), $patterns);
+			$patterns = array_merge((new ComponentSnippets())->snippets(), $patterns);
 		} elseif (strpos($path, 'src' . DS . 'Controller' . DS) !== false) {
 			$patterns = array_merge((new ControllerSnippets())->snippets(), $patterns);
 		} elseif (strpos($path, 'src' . DS . 'Model' . DS) !== false) {
-			$patterns = array_merge((new TableSnippets())->events(), $patterns);
+			$patterns = array_merge((new TableSnippets())->snippets(), $patterns);
 		} elseif (strpos($path, 'src' . DS . 'Form' . DS) !== false) {
-			$patterns = array_merge((new FormSnippets())->events(), $patterns);
+			$patterns = array_merge((new FormSnippets())->snippets(), $patterns);
 		} elseif (strpos($path, 'tests' . DS . 'TestCase' . DS) !== false) {
 			$patterns = array_merge((new TestsSnippets())->snippets(), $patterns);
 		}

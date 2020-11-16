@@ -17,7 +17,7 @@ class FormSnippets {
 	/**
 	 * @return array
 	 */
-	public function events(): array {
+	public function snippets(): array {
 		$list = [
 			[
 				'_buildSchema() method',

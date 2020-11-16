@@ -18,12 +18,17 @@ class ComponentSnippets {
 	/**
 	 * @return array
 	 */
-	public function events(): array {
+	public function snippets(): array {
 		$list = [
 			[
 				'initialize() return type',
-				'#\bpublic function initialize\(\)(?!:)#i',
-				'public function initialize(): void',
+				'#\bpublic function initialize\(array \$config\)(?!:)#i',
+				'public function initialize(array $config): void',
+			],
+			[
+				'->request-> to ->getRequest()->',
+				'#-\>request-\>#',
+				'->getRequest()->',
 			],
 		];
 
