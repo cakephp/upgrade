@@ -1,6 +1,6 @@
 <?php
 
-namespace Cake\Upgrade\Utility;
+namespace Cake\Upgrade\Snippets\MethodSignatures;
 
 class ControllerSnippets {
 

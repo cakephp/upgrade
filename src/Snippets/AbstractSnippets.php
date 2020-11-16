@@ -1,6 +1,6 @@
 <?php
 
-namespace Cake\Upgrade\Utility;
+namespace Cake\Snippets;
 
 abstract class AbstractSnippets {
 

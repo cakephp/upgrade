@@ -1,6 +1,8 @@
 <?php
 
-namespace Cake\Upgrade\Utility;
+namespace Cake\Upgrade\Snippets\MethodSignatures;
+
+use Cake\Snippets\AbstractSnippets;
 
 class ShellSnippets extends AbstractSnippets {
 

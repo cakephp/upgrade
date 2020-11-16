@@ -1,12 +1,12 @@
 <?php
 
-namespace Cake\Upgrade\Test\TestCase\Utility;
+namespace Cake\Upgrade\Test\TestCase\Snippets\MethodSignatures;
 
 use Cake\TestSuite\TestCase;
 use Cake\Upgrade\Shell\Task\ChangeTrait;
-use Cake\Upgrade\Utility\TestsSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\FormSnippets;
 
-class TestsSnippetsTest extends TestCase {
+class FormSnippetsTest extends TestCase {
 
 	use ChangeTrait;
 
@@ -14,19 +14,22 @@ class TestsSnippetsTest extends TestCase {
 	 * @return void
 	 */
 	public function testReplace(): void {
-		$replacements = (new TestsSnippets())->snippets();
+		$replacements = (new FormSnippets())->snippets();
 
-		$string = 'public function setUp()';
+		$string = 'protected function _buildSchema(Schema $schema)';
 		$result = $this->exec($string, $replacements);
-		$expected = 'public function setUp(): void';
+		$expected = 'protected function _buildSchema(Schema $schema): Schema';
 		$this->assertSame($expected, $result);
 
 		$result = $this->exec($expected, $replacements);
 		$this->assertSame($expected, $result);
 
-		$string = '$this->assertNotContains(';
+		$string = 'protected function _execute(array $data)';
 		$result = $this->exec($string, $replacements);
-		$expected = '$this->assertStringNotContainsString(';
+		$expected = 'protected function _execute(array $data): bool';
+		$this->assertSame($expected, $result);
+
+		$result = $this->exec($expected, $replacements);
 		$this->assertSame($expected, $result);
 	}
 

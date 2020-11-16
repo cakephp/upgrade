@@ -26,7 +26,7 @@ class SkeletonTaskTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$io = $this->getMockBuilder(ConsoleIo::class)->getMock();
@@ -43,7 +43,7 @@ class SkeletonTaskTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function tearDown() {
+	public function tearDown(): void {
 		$Folder = new Folder(TMP . 'skeleton_test' . DS);
 		$Folder->delete();
 

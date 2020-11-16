@@ -1,11 +1,11 @@
 <?php
 
-namespace Cake\Upgrade\Test\TestCase\Utility;
+namespace Cake\Upgrade\Test\TestCase\Snippets\MethodSignatures;
 
 use Cake\TestSuite\TestCase;
 use Cake\Upgrade\Shell\Task\ChangeTrait;
-use Cake\Upgrade\Utility\ExecTrait;
-use Cake\Upgrade\Utility\ViewSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\ExecTrait;
+use Cake\Upgrade\Snippets\MethodSignatures\ViewSnippets;
 
 class ViewSnippetsTest extends TestCase {
 

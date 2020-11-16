@@ -12,7 +12,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-namespace Cake\Upgrade\Utility;
+namespace Cake\Upgrade\Snippets\MethodSignatures;
 
 trait ExecTrait {
 

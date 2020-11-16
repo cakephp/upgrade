@@ -15,14 +15,14 @@
 
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Utility\ComponentSnippets;
-use Cake\Upgrade\Utility\ControllerSnippets;
-use Cake\Upgrade\Utility\FormSnippets;
-use Cake\Upgrade\Utility\GenericSnippets;
-use Cake\Upgrade\Utility\ShellSnippets;
-use Cake\Upgrade\Utility\ShellTaskSnippets;
-use Cake\Upgrade\Utility\TableSnippets;
-use Cake\Upgrade\Utility\TestsSnippets;
+use Cake\Upgrade\Snippets\ComponentSnippets;
+use Cake\Upgrade\Snippets\ControllerSnippets;
+use Cake\Upgrade\Snippets\FormSnippets;
+use Cake\Upgrade\Snippets\GenericSnippets;
+use Cake\Upgrade\Snippets\ShellSnippets;
+use Cake\Upgrade\Snippets\ShellTaskSnippets;
+use Cake\Upgrade\Snippets\TableSnippets;
+use Cake\Upgrade\Snippets\TestsSnippets;
 
 /**
  * Update method signatures task for CakePHP 4.

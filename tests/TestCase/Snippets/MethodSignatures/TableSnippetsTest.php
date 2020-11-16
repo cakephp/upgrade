@@ -1,10 +1,10 @@
 <?php
 
-namespace Cake\Upgrade\Test\TestCase\Utility;
+namespace Cake\Upgrade\Test\TestCase\Snippets\MethodSignatures;
 
 use Cake\TestSuite\TestCase;
 use Cake\Upgrade\Shell\Task\ChangeTrait;
-use Cake\Upgrade\Utility\TableSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\TableSnippets;
 
 class TableSnippetsTest extends TestCase {
 
@@ -14,7 +14,7 @@ class TableSnippetsTest extends TestCase {
 	 * @return void
 	 */
 	public function testReplace(): void {
-		$replacements = (new TableSnippets())->events();
+		$replacements = (new TableSnippets())->snippets();
 
 		$string = 'public function buildRules(RulesChecker $rules)';
 		$result = $this->exec($string, $replacements);

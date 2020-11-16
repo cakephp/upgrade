@@ -1,10 +1,10 @@
 <?php
 
-namespace Cake\Upgrade\Test\TestCase\Utility;
+namespace Cake\Upgrade\Test\TestCase\Snippets\MethodSignatures;
 
 use Cake\TestSuite\TestCase;
 use Cake\Upgrade\Shell\Task\ChangeTrait;
-use Cake\Upgrade\Utility\GenericSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\GenericSnippets;
 
 class GenericSnippetsTest extends TestCase {
 

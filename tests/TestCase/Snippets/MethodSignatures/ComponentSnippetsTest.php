@@ -1,12 +1,12 @@
 <?php
 
-namespace Cake\Upgrade\Test\TestCase\Utility;
+namespace Cake\Upgrade\Test\TestCase\Snippets\MethodSignatures;
 
 use Cake\TestSuite\TestCase;
 use Cake\Upgrade\Shell\Task\ChangeTrait;
-use Cake\Upgrade\Utility\ControllerSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\ComponentSnippets;
 
-class ControllerSnippetsTest extends TestCase {
+class ComponentSnippetsTest extends TestCase {
 
 	use ChangeTrait;
 
@@ -14,7 +14,7 @@ class ControllerSnippetsTest extends TestCase {
 	 * @return void
 	 */
 	public function testReplace(): void {
-		$replacements = (new ControllerSnippets())->events();
+		$replacements = (new ComponentSnippets())->snippets();
 
 		$string = 'public function beforeFilter(Event $event)';
 		$result = $this->exec($string, $replacements);
@@ -28,17 +28,6 @@ class ControllerSnippetsTest extends TestCase {
 		$string = 'public function beforeFilter(EventInterface $event): void';
 		$result = $this->exec($string, $replacements);
 		$this->assertSame($string, $result);
-	}
-
-	/**
-	 * @return void
-	 */
-	public function testPlugins(): void {
-		$replacements = (new ControllerSnippets())->plugins();
-		$string = '$this->loadComponent(\'Search.Prg\');';
-		$result = $this->exec($string, $replacements);
-		$expected = '$this->loadComponent(\'Search.Search\');';
-		$this->assertSame($expected, $result);
 	}
 
 	/**

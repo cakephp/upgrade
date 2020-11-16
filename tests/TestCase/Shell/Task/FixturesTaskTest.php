@@ -23,7 +23,7 @@ class FixturesTaskTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$io = $this->getMockBuilder(ConsoleIo::class)->getMock();
