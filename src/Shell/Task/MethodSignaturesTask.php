@@ -7,15 +7,25 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
+use Cake\Upgrade\Snippets\ComponentSnippets;
+use Cake\Upgrade\Snippets\ControllerSnippets;
+use Cake\Upgrade\Snippets\FormSnippets;
+use Cake\Upgrade\Snippets\GenericSnippets;
+use Cake\Upgrade\Snippets\ShellSnippets;
+use Cake\Upgrade\Snippets\ShellTaskSnippets;
+use Cake\Upgrade\Snippets\TableSnippets;
+use Cake\Upgrade\Snippets\TestsSnippets;
+
 /**
- * Update method signatures task.
+ * Update method signatures task for CakePHP 4.
  *
  * Handles updating method signatures that have been changed.
  *
@@ -31,188 +41,48 @@ class MethodSignaturesTask extends BaseTask {
 	public $tasks = ['Stage'];
 
 	/**
+	 * @var string[]
+	 */
+	protected $snippets = [
+		ShellTaskSnippets::class => ShellTaskSnippets::class,
+		ShellSnippets::class => ShellSnippets::class,
+	];
+
+	/**
 	 * Processes a path.
 	 *
 	 * @param string $path
 	 * @return bool
 	 */
 	protected function _process($path) {
-		$controllerPatterns = [
-			[
-				'beforeFilter(Event $event) callback',
-				'#\bfunction beforeFilter\(\)#i',
-				'function beforeFilter(Event $event)',
-			],
-			[
-				'parent::beforeFilter(Event $event) call',
-				'#\bparent::beforeFilter\(\)#i',
-				'parent::beforeFilter($event)',
-			],
-			[
-				'beforeRender(Event $event) callback',
-				'#\bfunction beforeRender\(\)#i',
-				'function beforeRender(Event $event)',
-			],
-			[
-				'parent::beforeRender(Event $event) call',
-				'#\bparent::beforeRender\(\)#i',
-				'parent::beforeRender($event)',
-			],
-			[
-				'afterFilter(Event $event) callback',
-				'#\bfunction afterFilter\(\)#i',
-				'function afterFilter(Event $event)',
-			],
-			[
-				'parent::afterFilter(Event $event) call',
-				'#\bparent::afterFilter\(\)#i',
-				'parent::afterFilter($event)',
-			],
-			[
-				'constructClasses() method',
-				'#\bfunction constructClasses\(\)#i',
-				'function initialize()',
-			],
-		];
-		$componentPatterns = [
-			[
-				'beforeRedirect(Event $event, $url, Response $response) callback',
-				'#\bfunction beforeRedirect\(Controller \$controller,#i',
-				'function beforeRedirect(Event $event,',
-			],
-			[
-				'initialize(Event $event) callback',
-				'#\bfunction initialize\(Controller \$controller\)#i',
-				'function initialize(Event $event)',
-			],
-			[
-				'startup(Event $event) callback',
-				'#\bfunction startup\(Controller \$controller\)#i',
-				'function startup(Event $event)',
-			],
-			[
-				'beforeRender(Event $event) callback',
-				'#\bfunction beforeRender\(Controller \$controller\)#i',
-				'function beforeRender(Event $event)',
-			],
-			[
-				'shutdown(Event $event) callback',
-				'#\bfunction shutdown\(Controller \$controller\)#i',
-				'function shutdown(Event $event)',
-			],
-		];
-		$helperPatterns = [
-			[
-				'beforeRenderFile(Event $event, $viewFile) callback',
-				'#\bfunction beforeRenderFile\(\$viewFile\)#i',
-				'function beforeRenderFile(Event $event, $viewFile)',
-			],
-			[
-				'afterRenderFile(Event $event, $viewFile, $content) callback',
-				'#\bfunction afterRenderFile\(\$viewFile, \$content\)#i',
-				'function afterRenderFile(Event $event, $viewFile, $content)',
-			],
-			[
-				'beforeRender(Event $event, $viewFile) callback',
-				'#\bfunction beforeRender\(\$viewFile\)#i',
-				'function beforeRender(Event $event, $viewFile)',
-			],
-			[
-				'afterRender(Event $event, $viewFile) callback',
-				'#\bfunction afterRender\(\$viewFile\)#i',
-				'function afterRender(Event $event, $viewFile)',
-			],
-			[
-				'beforeLayout(Event $event, $layoutFile) callback',
-				'#\bfunction beforeLayout\(\$layoutFile\)#i',
-				'function beforeLayout(Event $event, $layoutFile)',
-			],
-			[
-				'afterLayout(Event $event, $layoutFile) callback',
-				'#\bfunction afterLayout\(\$layoutFile\)#i',
-				'function afterLayout(Event $event, $layoutFile)',
-			],
-		];
-		$modelPatterns = [
-			[
-				'beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options) callback',
-				'#\bfunction beforeValidate\(array \$options\s*=\s*(array\(\)|\[\])\)#i',
-				'function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)',
-			],
-			[
-				'beforeSave(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction beforeSave\(\$options\s*=\s*(array\(\)|\[\])\)#i',
-				'function beforeSave(Event $event, Entity $entity, ArrayObject $options)',
-			],
-			[
-				'beforeSave(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction beforeSave\(array \$options\s*=\s*(array\(\)|\[\])\)#i',
-				'function beforeSave(Event $event, Entity $entity, ArrayObject $options)',
-			],
-			[
-				'beforeDelete(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction beforeDelete\(\$cascade\s*=\s*true\)#i',
-				'function beforeDelete(Event $event, Entity $entity, ArrayObject $options)',
-			],
-			[
-				'afterRules(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction afterValidate\(\)#i',
-				'function afterRules(Event $event, Entity $entity, ArrayObject $options)',
-			],
-			[
-				'afterSave(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction afterSave\(\$created,\s*\$options\s*=\s*(array\(\)|\[\])\)#i',
-				'function afterSave(Event $event, Entity $entity, ArrayObject $options)',
-			],
-			[
-				'afterDelete(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction afterDelete\(\)#i',
-				'function afterDelete(Event $event, Entity $entity, ArrayObject $options)',
-			],
-		];
-		$behaviorPatterns = [
-			[
-				'beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options) callback',
-				'#\bfunction beforeValidate\(Model \$Model,\s*\$options\s*=\s*(array\(\)|\[\])\)#i',
-				'function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)',
-			],
-			[
-				'beforeSave(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction beforeSave\(Model \$Model,\s*\$options\s*=\s*(array\(\)|\[\])\)#i',
-				'function beforeSave(Event $event, Entity $entity, ArrayObject $options)',
-			],
-			[
-				'beforeDelete(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction beforeDelete\(Model \$Model,\s*\$cascade\s*=\s*true\)#i',
-				'function beforeDelete(Event $event, Entity $entity, ArrayObject $options)',
-			],
-			[
-				'afterRules(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction afterValidate\(Model \$Model\)#i',
-				'function afterRules(Event $event, Entity $entity, ArrayObject $options)',
-			],
-			[
-				'afterSave(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction afterSave\(Model \$Model,\s*\$created,\s*\$options\s*=\s*(array\(\)|\[\])\)#i',
-				'function afterSave(Event $event, Entity $entity, ArrayObject $options)',
-			],
-			[
-				'afterDelete(Event $event, Entity $entity, ArrayObject $options) callback',
-				'#\bfunction afterDelete\(Model \$Model\)#i',
-				'function afterDelete(Event $event, Entity $entity, ArrayObject $options)',
-			],
-		];
-
 		$patterns = [];
-		if (strpos($path, DS . 'View' . DS) !== false) {
-			$patterns = $helperPatterns;
-		} elseif (strpos($path, DS . 'Controller' . DS . 'Component' . DS) !== false) {
-			$patterns = $componentPatterns;
-		} elseif (strpos($path, DS . 'Controller' . DS) !== false) {
-			$patterns = $controllerPatterns;
-		} elseif (strpos($path, DS . 'Model' . DS) !== false) {
-			$patterns = array_merge($modelPatterns, $behaviorPatterns);
+
+		if (strpos($path, 'src' . DS . 'Controller' . DS . 'Component' . DS) !== false) {
+			$patterns = array_merge((new ComponentSnippets())->snippets(), $patterns);
+		} elseif (strpos($path, 'src' . DS . 'Controller' . DS) !== false) {
+			$patterns = array_merge((new ControllerSnippets())->snippets(), $patterns);
+		} elseif (strpos($path, 'src' . DS . 'Model' . DS) !== false) {
+			$patterns = array_merge((new TableSnippets())->snippets(), $patterns);
+		} elseif (strpos($path, 'src' . DS . 'Form' . DS) !== false) {
+			$patterns = array_merge((new FormSnippets())->snippets(), $patterns);
+		} elseif (strpos($path, 'tests' . DS . 'TestCase' . DS) !== false) {
+			$patterns = array_merge((new TestsSnippets())->snippets(), $patterns);
 		}
+
+		$patterns = array_merge((new GenericSnippets())->snippets(), $patterns);
+
+		$snippets = [];
+		foreach ($this->snippets as $snippetClass) {
+			$class = new $snippetClass();
+			$snippets += $class->snippets($path);
+		}
+
+		foreach ($snippets as $name => $snippet) {
+			array_unshift($snippet, $name);
+			$snippets[$name] = $snippet;
+		}
+
+		$patterns = array_merge($patterns, $snippets);
 
 		$original = $contents = $this->Stage->source($path);
 		$contents = $this->_updateContents($contents, $patterns);

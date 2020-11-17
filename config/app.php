@@ -1,4 +1,5 @@
 <?php
+
 return [
 	/**
 	 * Debug Level:
@@ -168,9 +169,9 @@ return [
 	 *
 	 * Each transport needs a `className`. Valid options are as follows:
 	 *
-	 *  Mail   - Send using PHP mail function
-	 *  Smtp   - Send using SMTP
-	 *  Debug  - Do not send the email, just return the result
+	 *  Mail - Send using PHP mail function
+	 *  Smtp - Send using SMTP
+	 *  Debug - Do not send the email, just return the result
 	 *
 	 * You can add custom transports (or override existing transports) by adding the
 	 * appropriate file to src/Mailer/Transport. Transports should be named

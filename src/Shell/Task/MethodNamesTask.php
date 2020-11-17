@@ -7,11 +7,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
 /**
@@ -37,119 +38,16 @@ class MethodNamesTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _process($path) {
-		$controllerPatterns = [
-			[
-				'Replace $this->... = with $this->viewBuilder()->...()',
-				'#\-\>(theme|layout|autoLayout|layoutPath)\s*=\s*(.*?);#',
-				'->viewBuilder()->\1(\2);',
-			],
-			[
-				'Replace $this->... with $this->viewBuilder()->...()',
-				'#\-\>(theme|layout|autoLayout|layoutPath)\b(?!\()#',
-				'->viewBuilder()->\1()',
-			],
-			[
-				'Replace $this->viewPath = ... with $this->viewBuilder()->templatePath(...)',
-				'#\-\>viewPath\s*=\s*(.*?);#',
-				'->viewBuilder()->templatePath(\1);',
-			],
-			[
-				'Replace $this->layout with $this->viewBuilder()->layout()',
-				'#\-\>viewPath\b(?!\()#',
-				'->viewBuilder()->templatePath()',
-			],
-			[
-				'Replace $this->view = ... with $this->viewBuilder()->template(...)',
-				'#\-\>view\s*=\s*(.*?);#',
-				'->viewBuilder()->template(\1);',
-			],
-			[
-				'Replace $this->view with $this->viewBuilder()->template()',
-				'#\-\>view\b(?!\()#',
-				'->viewBuilder()->template()',
-			],
-			[
-				'Replace $this->viewClass = ... with $this->viewBuilder()->className(...)',
-				'#\-\>viewClass\s*=\s*(.*?);#',
-				'->viewBuilder()->className(\1);',
-			],
-			[
-				'Replace $this->viewClass with $this->viewBuilder()->className()',
-				'#\-\>viewClass\b(?!\()#',
-				'->viewBuilder()->className()',
-			],
-		];
-
-		$helperPatterns = [
-			[
-				'Replace $this->Paginator->url() with $this->Paginator->generateUrl()',
-				'#\$this->Paginator->url\(#',
-				'$this->Paginator->generateUrl(',
-			],
-			[
-				'Replace $this->Html->url() with $this->Url->build()',
-				'#\$this->Html->url\(#',
-				'$this->Url->build(',
-			],
-			[
-				'Replace $this->Html->assetTimestamp() with $this->Url->assetTimestamp()',
-				'#\$this->Html->assetTimestamp\(#',
-				'$this->Url->assetTimestamp(',
-			],
-			[
-				'Replace $this->Html->assetUrl() with $this->Url->assetUrl()',
-				'#\$this->Html->assetUrl\(#',
-				'$this->Url->assetUrl(',
-			],
-			[
-				'Replace $this->Html->webroot() with $this->Url->webroot()',
-				'#\$this->Html->webroot\(#',
-				'$this->Url->webroot(',
-			],
-			[
-				'Replace $this->Session->flash() with $this->Flash->render()',
-				'#\$this->Session->flash\(#',
-				'$this->Flash->render(',
-			],
-		];
-
 		$otherPatterns = [
 			[
-				'Replace $this->Cookie->type() with $this->Cookie->encryption()',
-				'#\$this->Cookie->type\(#',
-				'$this->Cookie->encryption(',
-			],
-			[
-				'Replace ConnectionManager::getDataSource() with ConnectionManager::get()',
-				'#ConnectionManager\:\:getDataSource\(#',
-				'ConnectionManager::get(',
-			],
-			[
-				'Replace generateTreeList(null, null, null, ...) with find(\'treeList\', [...])',
-				'#\bgenerateTreeList\(null,\s*null,\s*null,\s*(.+)\)#',
-				'find(\'treeList\', [\'spacer\' => \1])',
-			],
-		];
-
-		$taskPatterns = [
-			[
-				'Replace function execute() with main()',
-				'#function execute\(\)#',
-				'function main()',
-			],
-			[
-				'Replace parent::execute() with parent::main()',
-				'#parent\:\:execute\(\)#',
-				'parent::main()',
-			],
-			[
-				'Replace calls to execute() with main()',
-				'#->execute\(#',
-				'->main(',
+				'slug usage',
+				'#\bInflector::slug\(#',
+				'\Cake\Utility\Text::slug(',
 			],
 		];
 
 		$patterns = [];
+		/*
 		if (
 			strpos($path, DS . 'Controller' . DS) !== false
 		) {
@@ -162,6 +60,7 @@ class MethodNamesTask extends BaseTask {
 		} elseif (strpos($path, DS . 'Command' . DS . 'Task' . DS)) {
 			$patterns = $taskPatterns;
 		}
+		*/
 		$patterns = array_merge($patterns, $otherPatterns);
 
 		$original = $contents = $this->Stage->source($path);
@@ -180,7 +79,8 @@ class MethodNamesTask extends BaseTask {
 	 */
 	protected function _shouldProcess($path) {
 		$ending = substr($path, -4);
-		return $ending === '.php' || $ending === '.ctp';
+
+		return $ending === '.php';
 	}
 
 }

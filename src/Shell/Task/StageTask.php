@@ -7,11 +7,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Console\ConsoleIo;
@@ -19,9 +20,10 @@ use Cake\Console\Shell;
 use Cake\Error\Debugger;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
-use Cake\Network\Exception\InternalErrorException;
+use Cake\Http\Exception\InternalErrorException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use RuntimeException;
 
 /**
  * Upgrade stage task
@@ -69,7 +71,7 @@ class StageTask extends Shell {
 	 *
 	 * @return void
 	 */
-	public function clear() {
+	public function clearStaged() {
 		$this->_staged = [
 			'change' => [],
 			'delete' => [],
@@ -80,12 +82,12 @@ class StageTask extends Shell {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function __construct(ConsoleIo $io = null) {
+	public function __construct(?ConsoleIo $io = null) {
 		parent::__construct($io);
 
 		if (strtolower(substr(php_uname('s'), 0, 3)) === 'win') {
 			$this->_mkdirCommand = 'mkdir';
-		};
+		}
 	}
 
 	/**
@@ -115,6 +117,7 @@ class StageTask extends Shell {
 
 			$Folder = new Folder(TMP . 'upgrade');
 			$Folder->delete();
+
 			return true;
 		}
 
@@ -142,15 +145,18 @@ class StageTask extends Shell {
 
 			if (!empty($this->params['git'])) {
 				exec($gitCd . sprintf('git rm -f %s', escapeshellarg($path)));
+
 				return true;
 			}
 
 			if (is_dir($path)) {
 				$Folder = new Folder($path);
+
 				return $Folder->delete();
 			}
 
 			$File = new File($path, true);
+
 			return $File->delete();
 		}
 
@@ -173,10 +179,12 @@ class StageTask extends Shell {
 
 			if (is_dir($path)) {
 				$Folder = new Folder($path);
+
 				return $Folder->move($to);
 			}
 
 			$File = new File($to, true);
+
 			return $File->write(file_get_contents($path)) && unlink($path);
 		}
 
@@ -205,7 +213,7 @@ class StageTask extends Shell {
 		} else {
 			$this->out(sprintf('<info>Update %s</info>', Debugger::trimPath($path)));
 		}
-		$this->out($diff, 1, $dryRun ? Shell::NORMAL : SHELL::VERBOSE);
+		$this->out($diff, 1, $dryRun ? Shell::NORMAL : Shell::VERBOSE);
 
 		if ($dryRun || !file_exists($path)) {
 			return true;
@@ -221,6 +229,7 @@ class StageTask extends Shell {
 		}
 
 		$File = new File($path, true);
+
 		return $File->write(file_get_contents($uPath));
 	}
 
@@ -232,6 +241,7 @@ class StageTask extends Shell {
 	 */
 	public function delete($path) {
 		$this->_staged['delete'][] = $path;
+
 		return true;
 	}
 
@@ -246,6 +256,7 @@ class StageTask extends Shell {
 		if (is_dir($from)) {
 			//FIXME
 			throw new RuntimeException('FixMe');
+
 			//$this->_findFiles('.*');
 			foreach ($this->_files as $fromFile) {
 				$newFile = str_replace($from, $to, $fromFile);
@@ -254,10 +265,12 @@ class StageTask extends Shell {
 				}
 			}
 			$this->delete($from);
+
 			return true;
 		}
 
 		$this->_staged['move'][$from] = $to;
+
 		return true;
 	}
 
@@ -270,7 +283,7 @@ class StageTask extends Shell {
 	 * @return bool
 	 */
 	public function change($filePath, $original, $updated) {
-		if ($original === $updated) {
+		if (!$updated || $original === $updated) {
 			return false;
 		}
 
@@ -292,6 +305,7 @@ class StageTask extends Shell {
 		$u->write($updated);
 
 		$this->_staged['change'][$filePath][] = $uHash;
+
 		return true;
 	}
 
@@ -337,17 +351,25 @@ class StageTask extends Shell {
 					if (is_file($path)) {
 						$this->_files[] = $path;
 					}
+
 					continue;
 				}
 				$Iterator = new RecursiveIteratorIterator(
 					new RecursiveDirectoryIterator($path)
 				);
+				/** @var \SplFileInfo $file */
 				foreach ($Iterator as $file) {
 					$path = $file->getPathname();
 					$searchPath = str_replace($root, '', $path);
 					if (!$file->isFile() || preg_match($excludePattern, $searchPath)) {
 						continue;
 					}
+
+					// Hack for speedup right now
+					if (!in_array($file->getExtension(), ['php', 'ctp', 'po', 'json'], true)) {
+						continue;
+					}
+
 					$this->_files[] = $path;
 				}
 			}

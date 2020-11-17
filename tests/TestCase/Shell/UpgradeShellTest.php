@@ -4,7 +4,7 @@ namespace Cake\Upgrade\Test\TestCase\Shell;
 
 use Cake\Console\ConsoleIo;
 use Cake\TestSuite\TestCase;
-use Cake\Upgrade\Shell\UpgradeShell;
+use Cake\Upgrade\Shell\UpgradeLegacyShell;
 
 /**
  * UpgradeShellTest
@@ -14,7 +14,7 @@ class UpgradeShellTest extends TestCase {
 	/**
 	 * Upgrade shell instance
 	 *
-	 * @var \Cake\Upgrade\Shell\UpgradeShell
+	 * @var \Cake\Upgrade\Shell\UpgradeLegacyShell
 	 */
 	public $shell;
 
@@ -25,12 +25,12 @@ class UpgradeShellTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$io = $this->getMockBuilder(ConsoleIo::class)->getMock();
 
-		$this->shell = $this->getMockBuilder(UpgradeShell::class)
+		$this->shell = $this->getMockBuilder(UpgradeLegacyShell::class)
 			->setMethods(['in', 'out', 'hr', 'err', '_stop'])
 			->setConstructorArgs([$io])
 			->getMock();

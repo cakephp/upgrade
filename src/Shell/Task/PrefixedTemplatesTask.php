@@ -7,13 +7,15 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Utility\Inflector;
 
 /**
@@ -49,6 +51,7 @@ class PrefixedTemplatesTask extends BaseTask {
 			$path
 		);
 		$new = str_replace($this->params['prefix'] . '_', '', $new);
+
 		return $this->Stage->move($path, $new);
 	}
 
@@ -61,8 +64,7 @@ class PrefixedTemplatesTask extends BaseTask {
 	 * @return bool
 	 */
 	protected function _shouldProcess($path) {
-		return
-			strpos($path, 'Template' . DS) &&
+		return strpos($path, 'Template' . DS) &&
 			substr($path, -4) === '.ctp' &&
 			strpos($path, $this->params['prefix'] . '_') &&
 			strpos($path, 'Template' . DS . 'Element' . DS) === false &&
@@ -76,7 +78,7 @@ class PrefixedTemplatesTask extends BaseTask {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		return parent::getOptionParser()
 			->addOptions([
 				'prefix' => [

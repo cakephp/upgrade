@@ -7,11 +7,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
 /**
@@ -375,6 +376,7 @@ class CustomTask extends BaseTask {
 		$pattern = '//i';
 		$replacement = function ($matches) {
 			$entity = lcfirst($matches[1]);
+
 			return '$this->Form->create($' . $entity . ')';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -404,6 +406,7 @@ class CustomTask extends BaseTask {
 		$pattern = '/-\>Format-\>cIcon\(ICON_(\w+?),\s*\'(.*?)\'/i';
 		$replacement = function ($matches) {
 			$iconName = strtolower($matches[1]);
+
 			return '->Format->icon(\'' . $iconName . '\', [\'title\' => \'' . $matches[2] . '\']';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -411,6 +414,7 @@ class CustomTask extends BaseTask {
 		$pattern = '/-\>Format-\>cIcon\(ICON_(\w+?)\)/i';
 		$replacement = function ($matches) {
 			$iconName = strtolower($matches[1]);
+
 			return '->Format->icon(\'' . $iconName . '\')';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -418,6 +422,7 @@ class CustomTask extends BaseTask {
 		$pattern = '/-\>Format-\>cIcon\(([a-z.-]+),\s*\'(.*?)\'/i';
 		$replacement = function ($matches) {
 			$iconName = strtolower($matches[1]);
+
 			return '->Format->icon(\'' . $iconName . '\', [\'title\' => \'' . $matches[2] . '\']';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -425,6 +430,7 @@ class CustomTask extends BaseTask {
 		$pattern = '/-\>Format-\>cIcon\(\'([a-z.-]+)\',\s*\'(.*?)\'/i';
 		$replacement = function ($matches) {
 			$iconName = $matches[1];
+
 			return '->Format->icon(\'' . $iconName . '\', [\'title\' => \'' . $matches[2] . '\']';
 		};
 		$contents = preg_replace_callback($pattern, $replacement, $contents);
@@ -453,6 +459,7 @@ class CustomTask extends BaseTask {
 			$newPath = dirname($path) . DS . $newFilename . $ending;
 			$this->Stage->move($path, $newPath);
 		}
+
 		return $contents;
 	}
 
@@ -466,6 +473,7 @@ class CustomTask extends BaseTask {
  */
 	protected function _shouldProcess($path) {
 		$ending = substr($path, -4);
+
 		return $ending === '.php' || $ending === '.ctp';
 	}
 

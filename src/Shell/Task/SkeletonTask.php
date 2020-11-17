@@ -7,13 +7,15 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 
 /**
@@ -51,6 +53,8 @@ class SkeletonTask extends BaseTask {
 		}
 
 		$sourcePath = ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'app' . DS;
+		$this->prepareSkeletonAppCode($sourcePath);
+
 		$files = [
 			'bin' . DS . 'cake',
 			'bin' . DS . 'cake.bat',
@@ -58,6 +62,10 @@ class SkeletonTask extends BaseTask {
 			'phpunit.xml.dist',
 			'index.php',
 			'webroot' . DS . 'index.php',
+			'webroot' . DS . 'css' . DS . 'cake.css',
+			'webroot' . DS . 'css' . DS . 'home.css',
+			'webroot' . DS . 'css' . DS . 'milligram.min.css',
+			'webroot' . DS . 'css' . DS . 'normalize.min.css',
 			'config' . DS . 'bootstrap.php',
 			'config' . DS . 'bootstrap_cli.php',
 			'config' . DS . 'paths.php',
@@ -67,19 +75,20 @@ class SkeletonTask extends BaseTask {
 			'src' . DS . 'Application.php',
 			'src' . DS . 'View' . DS . 'AppView.php',
 			'src' . DS . 'View' . DS . 'AjaxView.php',
-			'src' . DS . 'Template' . DS . 'Error' . DS . 'error400.ctp',
-			'src' . DS . 'Template' . DS . 'Error' . DS . 'error500.ctp',
-			'src' . DS . 'Template' . DS . 'Layout' . DS . 'error.ctp',
 			'src' . DS . 'Controller' . DS . 'PagesController.php',
-			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'default.ctp',
-			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'error.ctp',
-			'src' . DS . 'Template' . DS . 'Element' . DS . 'Flash' . DS . 'success.ctp',
+			'templates' . DS . 'Error' . DS . 'error400.php',
+			'templates' . DS . 'Error' . DS . 'error500.php',
+			'templates' . DS . 'layout' . DS . 'error.php',
+			'templates' . DS . 'element' . DS . 'flash' . DS . 'default.php',
+			'templates' . DS . 'element' . DS . 'flash' . DS . 'error.php',
+			'templates' . DS . 'element' . DS . 'flash' . DS . 'success.php',
 		];
 		$ret = 0;
 		foreach ($files as $file) {
 			$ret |= $this->_addFile($file, $sourcePath, $path);
 		}
-		$ret |= $this->_addFile('config' . DS . 'app.default.php', $sourcePath, $path, 'config' . DS . 'app.default.php');
+		$ret |= $this->_addFile('config' . DS . 'app.php', $sourcePath, $path, 'config' . DS . 'app.php');
+
 		return (bool)$ret;
 	}
 
@@ -108,6 +117,7 @@ class SkeletonTask extends BaseTask {
 			}
 			$this->out('Adding ' . $file, 1, Shell::VERBOSE);
 		}
+
 		return $result;
 	}
 
@@ -123,6 +133,7 @@ class SkeletonTask extends BaseTask {
 		if (basename($path) === 'composer.json' && empty($this->params['plugin'])) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -131,7 +142,7 @@ class SkeletonTask extends BaseTask {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		return parent::getOptionParser()
 			->addOptions([
 				'overwrite' => [
@@ -140,6 +151,23 @@ class SkeletonTask extends BaseTask {
 					'help' => 'Overwrite files even if they already exist.',
 				],
 			]);
+	}
+
+	/**
+	 * @param string $sourcePath
+	 *
+	 * @return void
+	 */
+	protected function prepareSkeletonAppCode(string $sourcePath): void {
+		if (!is_dir($sourcePath)) {
+			$parentPath = dirname($sourcePath);
+			if (!is_dir($parentPath)) {
+				mkdir($parentPath, 0770, true);
+			}
+			exec('cd ' . $parentPath . ' && git clone https://github.com/cakephp/app.git');
+		}
+
+		exec('cd ' . $sourcePath . ' && git pull');
 	}
 
 }

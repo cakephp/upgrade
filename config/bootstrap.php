@@ -7,33 +7,20 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         CakePHP(tm) v 0.10.8.2117
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since CakePHP(tm) v 0.10.8.2117
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-	/**
-	 * Configure paths required to find CakePHP + general filepath
-	 * constants
-	 */
+/**
+ * Configure paths required to find CakePHP + general filepath
+ * constants
+ */
 require __DIR__ . '/paths.php';
 
 // Use composer to load the autoloader.
-if (file_exists(ROOT . '/vendor/autoload.php')) {
-	require ROOT . '/vendor/autoload.php';
-}
-
-// If composer is not used, use CakePHP's classloader to autoload the framework
-// and the application. You will also need setup autoloading for plugins by
-// passing `autoload' => true for `Plugin::loadAll()` or `Plugin::load()`
-if (!class_exists('Cake\Core\Configure')) {
-	require CAKE . 'Core/ClassLoader.php';
-	$loader = new ClassLoader();
-	$loader->register();
-	$loader->addNamespace('Cake', CAKE);
-	$loader->addNamespace(Configure::read('App.namespace'), APP);
-}
+require ROOT . DS . 'vendor' . DS . 'autoload.php';
 
 /**
  * Bootstrap CakePHP.
@@ -47,13 +34,12 @@ if (!class_exists('Cake\Core\Configure')) {
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 use Cake\Cache\Cache;
-use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Datasource\ConnectionManager;
+use Cake\Error\ConsoleErrorHandler;
 use Cake\Error\ErrorHandler;
 use Cake\Log\Log;
-use Cake\Mailer\Email;
 
 /**
  * Read configuration file and inject configuration into various
@@ -116,11 +102,9 @@ if (!Configure::read('App.fullBaseUrl')) {
 	unset($httpHost, $s);
 }
 
-Cache::config(Configure::consume('Cache'));
-ConnectionManager::config(Configure::consume('Datasources'));
-Email::configTransport(Configure::consume('EmailTransport'));
-Email::config(Configure::consume('Email'));
-Log::config(Configure::consume('Log'));
+Cache::setConfig(Configure::consume('Cache'));
+ConnectionManager::setConfig(Configure::consume('Datasources'));
+Log::setConfig(Configure::consume('Log'));
 
 /**
  * Custom Inflector rules, can be set to correctly pluralize or singularize table, model, controller names or whatever other
@@ -138,5 +122,4 @@ Log::config(Configure::consume('Log'));
  * Plugin::loadAll(); // Loads all plugins at once
  * Plugin::load('DebugKit'); //Loads a single plugin named DebugKit
  */
-
 //Plugin::load('IdeHelper');

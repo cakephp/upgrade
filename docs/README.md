@@ -1,7 +1,38 @@
-# CakePHP Upgrade app "Deluxe Edition"
+# CakePHP Upgrade app
 
-## Tasks available
+## Upgrade command 4.0 ready
 
+For now some of the basic upgrade tasks are here for simplicity reasons.
+
+Note: Make sure you already ran the 3.x ones here on the code to be up to date.
+
+#### cake4 (app)
+- ...
+
+#### cake4plugin
+- Create Plugin class if not exists
+
+
+
+## Upgrade shell "Deluxe Edition"
+
+Mainly for simple regex based 3.x to 4.x upgrade.
+
+Currently running as
+```
+bin/cake upgrade_legacy {task}
+```
+
+## Tasks available (upgraded for CakePHP 4)
+
+### method_names
+Updates the method names for a number of methods.
+
+### method_signatures
+Updates the method signatures for a number of methods.
+
+
+## Old tasks for 3.x apps still
 ### locations
 Move files/directories around. Run this *before* adding namespaces with the namespaces command.
 
@@ -21,12 +52,6 @@ Rename classes that have been moved/renamed. Run after replacing App::uses().
 Rename HelperCollection, ComponentCollection, and TaskCollection. Will also
 rename component constructor arguments and \_Collection properties on all
 objects.
-
-### method_names
-Updates the method names for a number of methods.
-
-### method_signatures
-Updates the method signatures for a number of methods.
 
 ### fixtures
 Update fixtures to use new index/constraint features. This is necessary before running tests.

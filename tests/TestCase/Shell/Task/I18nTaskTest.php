@@ -23,7 +23,7 @@ class I18nTaskTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$io = $this->getMockBuilder(ConsoleIo::class)->getMock();
@@ -35,6 +35,9 @@ class I18nTaskTest extends TestCase {
 		$this->task->loadTasks();
 	}
 
+	/**
+	 * @return void
+	 */
 	public function testProcess() {
 		$path = TESTS . 'test_files' . DS;
 		$this->task->process($path . 'i18n_before.php');

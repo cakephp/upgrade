@@ -7,11 +7,12 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         3.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since 3.0.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell\Task;
 
 use Cake\Utility\Inflector;
@@ -72,6 +73,7 @@ class FixtureCasingTask extends BaseTask {
 					}
 				}
 			}
+
 			return $vals;
 		};
 
@@ -81,7 +83,7 @@ class FixtureCasingTask extends BaseTask {
 			eval('$data = [' . $matches[2] . '];');
 			//@codingStandardsIgnoreEnd
 
-			$indent = strpos($matches[1], "\t") === false ? str_repeat(' ', 4) : "\t";
+			$indent = strpos($matches[2], "\t") === false ? str_repeat(' ', 4) : "\t";
 
 			$out = [];
 			foreach ($data as $key => $fixture) {
@@ -98,7 +100,12 @@ class FixtureCasingTask extends BaseTask {
 				$out[] = implode('.', $pieces);
 			}
 
-			return $matches[1] . "\n$indent$indent" . implode(",\n$indent$indent", $export($out)) . "\n$indent" . $matches[3];
+			$content = implode(",\n$indent$indent", $export($out));
+			if ($content) {
+				$content = "\n$indent$indent" . $content . ',';
+			}
+
+			return $matches[1] . $content . "\n$indent" . $matches[3];
 		};
 
 		$contents = preg_replace_callback(

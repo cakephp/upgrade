@@ -1,4 +1,5 @@
 <?php
+
 return [
 	'debug' => true,
 
@@ -15,7 +16,7 @@ return [
 		'namespace' => 'Cake\Upgrade',
 		'encoding' => 'UTF-8',
 		'base' => false,
-		'dir' => 'src'
+		'dir' => 'src',
 	],
 
 ];

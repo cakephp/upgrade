@@ -7,19 +7,23 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         CakePHP(tm) v 2.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link http://cakephp.org CakePHP(tm) Project
+ * @since CakePHP(tm) v 2.0
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Cake\Upgrade\Shell;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\Error\Debugger;
 use Cake\Utility\Inflector;
 
 /**
- * A shell class to help developers upgrade applications to CakePHP 3.0
+ * A shell to help developers upgrade applications to CakePHP minors and majors.
+ *
+ * Deprecated: Will be removed. Use command for new stuff.
  *
  * @property \Cake\Upgrade\Shell\Task\LocationsTask $Locations
  * @property \Cake\Upgrade\Shell\Task\NamespacesTask $Namespaces
@@ -44,7 +48,7 @@ use Cake\Utility\Inflector;
  * @property \Cake\Upgrade\Shell\Task\TableToEntityTask $TableToEntity
  * @property \Cake\Upgrade\Shell\Task\FixtureCasingTask $FixtureCasing
  */
-class UpgradeShell extends Shell {
+class UpgradeLegacyShell extends Shell {
 
 	/**
 	 * Tasks loaded.
@@ -74,6 +78,7 @@ class UpgradeShell extends Shell {
 		'Custom',
 		'Url',
 		'Cleanup',
+		'Bs4',
 	];
 
 	/**
@@ -104,6 +109,7 @@ class UpgradeShell extends Shell {
 				}
 				if ($continue === 'n') {
 					$this->out('Skipping this step.');
+
 					continue;
 				}
 			}
@@ -115,7 +121,7 @@ class UpgradeShell extends Shell {
 
 				if (!empty($this->params['interactive'])) {
 					$this->Stage->commit();
-					$this->Stage->clear();
+					$this->Stage->clearStaged();
 				}
 			}
 		}
@@ -162,9 +168,9 @@ class UpgradeShell extends Shell {
 	 *
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		$parser = parent::getOptionParser()
-			->description('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .
+			->setDescription('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .
 				'Be sure to have a backup of your application before running these commands.'
 			)
 			->addSubcommand('locations', [
@@ -250,13 +256,19 @@ class UpgradeShell extends Shell {
 			->addSubcommand('custom', [
 				'help' => 'Custom stuff.',
 				'parser' => $this->PrefixedTemplates->getOptionParser(),
+			])
+			->addSubcommand('bs4', [
+				'help' => 'Bootstrap 4 templating.',
+				'parser' => $this->PrefixedTemplates->getOptionParser(),
 			]);
 
+		/** @var \Cake\Console\ConsoleInputSubcommand[] $subcommands */
 		$subcommands = $parser->subcommands();
 		$allParser = null;
 		foreach ($subcommands as $subcommand) {
 			if ($allParser === null) {
 				$allParser = $subcommand->parser();
+
 				continue;
 			}
 			$allParser->merge($subcommand->parser());

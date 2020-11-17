@@ -1,0 +1,13 @@
+always:
+  ComposerTask:
+    global:
+      'minPHP': '7.2'
+    require:
+      'cakephp/cakephp': '^4.0.0'
+    scripts:
+      'phpstan': 'phpstan analyse src/'
+      'phpstan-setup': 'cp composer.json composer.backup && composer require --dev phpstan/phpstan-shim:^0.11 && mv composer.backup composer.json'
+
+  ReadmeTask:
+    'phpversion':
+
