@@ -2,7 +2,7 @@
 
 namespace Cake\Upgrade\Snippets\MethodSignatures;
 
-use Cake\Snippets\AbstractSnippets;
+use Cake\Upgrade\Snippets\AbstractSnippets;
 
 class ShellTaskSnippets extends AbstractSnippets {
 

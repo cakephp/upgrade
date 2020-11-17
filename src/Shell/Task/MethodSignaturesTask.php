@@ -15,14 +15,15 @@
 
 namespace Cake\Upgrade\Shell\Task;
 
-use Cake\Upgrade\Snippets\ComponentSnippets;
-use Cake\Upgrade\Snippets\ControllerSnippets;
-use Cake\Upgrade\Snippets\FormSnippets;
-use Cake\Upgrade\Snippets\GenericSnippets;
-use Cake\Upgrade\Snippets\ShellSnippets;
-use Cake\Upgrade\Snippets\ShellTaskSnippets;
-use Cake\Upgrade\Snippets\TableSnippets;
-use Cake\Upgrade\Snippets\TestsSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\ComponentSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\ControllerSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\FormSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\GenericSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\TestFixturesSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\ShellSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\ShellTaskSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\TableSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\TestsSnippets;
 
 /**
  * Update method signatures task for CakePHP 4.
@@ -67,6 +68,8 @@ class MethodSignaturesTask extends BaseTask {
 			$patterns = array_merge((new FormSnippets())->snippets(), $patterns);
 		} elseif (strpos($path, 'tests' . DS . 'TestCase' . DS) !== false) {
 			$patterns = array_merge((new TestsSnippets())->snippets(), $patterns);
+		} elseif (strpos($path, 'tests' . DS . 'Fixture' . DS) !== false) {
+			$patterns = array_merge((new TestFixturesSnippets())->snippets(), $patterns);
 		}
 
 		$patterns = array_merge((new GenericSnippets())->snippets(), $patterns);
