@@ -333,7 +333,7 @@ class StageTask extends Shell
             foreach ($excludes as &$exclude) {
                 $exclude = preg_quote($exclude);
             }
-            $excludePattern = '@[\\\\/](' . implode($excludes, '|') . ')[\\\\/]@';
+            $excludePattern = '@[\\\\/](' . implode('|', $excludes) . ')[\\\\/]@';
 
             foreach ($this->_paths as $path) {
                 if (!is_dir($path)) {
