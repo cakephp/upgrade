@@ -34,6 +34,11 @@ class GenericSnippets {
 				'#-\>request-\>url\b#',
 				'->request->getRequestTarget()',
 			],
+			[
+				'use Cake\Console\Command;',
+				'#\buse Cake\\\\Console\\\\Command;#',
+				'use Cake\Command\Command;',
+			]
 		];
 
 		return $list;
