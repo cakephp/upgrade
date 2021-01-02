@@ -78,16 +78,16 @@ class RectorCommand extends BaseCommand
      */
     protected function runRector(ConsoleIo $io, Arguments $args, string $autoload): bool
     {
-        $rules = (string)$args->getOption('rules');
+        $config = ROOT . '/config/rector/' . basename((string)$args->getOption('rules')) . '.php';
         $path = realpath((string)$args->getArgument('path'));
 
         $cmdPath = ROOT . '/vendor/bin/rector process';
         $command = sprintf(
-            '%s %s --autoload-file=%s --set=%s --working-dir=%s %s',
+            '%s %s --autoload-file=%s --config=%s --working-dir=%s %s',
             $cmdPath,
             $args->getOption('dry-run') ? '--dry-run' : '',
             escapeshellarg($autoload),
-            escapeshellarg($rules),
+            escapeshellarg($config),
             escapeshellarg($path),
             escapeshellarg($path)
         );
