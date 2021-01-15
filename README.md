@@ -8,6 +8,13 @@ Upgrade tools for CakePHP meant to facilitate migrating from CakePHP 2.x to 3.0.
 
 ## Installation
 
+First clone the 3.x branch of this repository:
+
+```bash
+git clone git://github.com/cakephp/upgrade
+git checkout -b 3.x
+```
+
 After downloading/cloning the upgrade tool, you need to install dependencies with `composer`
 
 ```bash
