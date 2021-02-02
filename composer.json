@@ -1,12 +1,12 @@
 {
     "name": "cakephp/upgrade",
+    "type": "project",
     "description": "Command line tool for updating CakePHP applications and plugins.",
     "homepage": "http://cakephp.org",
-    "type": "project",
     "license": "MIT",
     "require": {
         "cakephp/console": "^4.0",
-        "rector/rector": "~0.7"
+        "rector/rector": "~0.9"
     },
     "autoload": {
         "psr-4": {
@@ -19,15 +19,14 @@
             "OldApp\\": "tests/OldApp"
         }
     },
-    "minimum-stability" : "dev",
+    "minimum-stability": "dev",
     "prefer-stable": true,
-    "support": {
-        "source": "https://github.com/cakephp/upgrade"
-    },
     "scripts": {
         "cs-check": "phpcs --colors --parallel=16 -p -s src/ tests/",
         "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
-        "test": "phpunit",
-        "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
+        "test": "phpunit"
+    },
+    "support": {
+        "source": "https://github.com/cakephp/upgrade"
     }
 }
