@@ -117,6 +117,7 @@ class FileRenameCommand extends BaseCommand
      */
     protected function processTemplates(): void
     {
+        $this->io->out("Renaming <info>{$this->path}src/Template</info>");
         if (is_dir($this->path . 'src/Template')) {
             $this->rename(
                 $this->path . 'src/Template',
@@ -127,6 +128,7 @@ class FileRenameCommand extends BaseCommand
         }
 
         foreach ((array)Configure::read('App.paths.plugins') as $path) {
+            $this->io->out("Renaming templates in <info>{$path}</info>");
             $this->moveDir($path, 'templates');
             $this->changeExt($path);
         }
@@ -139,6 +141,7 @@ class FileRenameCommand extends BaseCommand
      */
     protected function processLocales(): void
     {
+        $this->io->out("Renaming <info>{$this->path}src/Locale</info>");
         if (is_dir($this->path . 'src/Locale')) {
             $this->rename(
                 $this->path . 'src/Locale',
@@ -147,6 +150,7 @@ class FileRenameCommand extends BaseCommand
         }
 
         foreach ((array)Configure::read('App.paths.plugins') as $path) {
+            $this->io->out("Renaming locales in <info>{$path}</info>");
             $this->moveDir($path, 'locales');
         }
     }
