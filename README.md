@@ -1,6 +1,6 @@
 # CakePHP Upgrade tool 
 
-[![Build Status](https://img.shields.io/travis/com/cakephp/upgrade?style=flat-square)](https://travis-ci.com/cakephp/upgrade)
+![Build Status](https://github.com/cakephp/upgrade/actions/workflows/ci.yml/badge.svg?branch=master)
 
 Upgrade tools for CakePHP meant to facilitate migrating from CakePHP 3.8+ to
 4.0.0. This repository should be used as a standalone application and *not* as
