@@ -19,7 +19,6 @@
             "OldApp\\": "tests/OldApp"
         }
     },
-    "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
         "cs-check": "phpcs --colors --parallel=16 -p -s src/ tests/",
