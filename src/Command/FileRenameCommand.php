@@ -21,11 +21,11 @@ use Cake\Console\BaseCommand;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
-use Cake\Error\FatalErrorException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveRegexIterator;
 use RegexIterator;
+use RuntimeException;
 
 /**
  * Rename and move files
@@ -283,7 +283,7 @@ class FileRenameCommand extends BaseCommand
             $returnVar = null;
             $lastLine = exec("git mv $source $tempDest", $gitOutput, $returnVar);
             if ($returnVar) {
-                throw new FatalErrorException(sprintf(
+                throw new RuntimeException(sprintf(
                     'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
                     $source,
                     $tempDest,
@@ -294,7 +294,7 @@ class FileRenameCommand extends BaseCommand
             $returnVar = null;
             $lastLine = exec("git mv $tempDest $dest", $gitOutput, $returnVar);
             if ($returnVar) {
-                throw new FatalErrorException(sprintf(
+                throw new RuntimeException(sprintf(
                     'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
                     $tempDest,
                     $dest,
