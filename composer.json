@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "cakephp/console": "^4.0",
-        "rector/rector": "~0.10.21"
+        "rector/rector": "~0.10.20"
     },
     "autoload": {
         "psr-4": {
