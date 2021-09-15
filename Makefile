@@ -1,6 +1,6 @@
 .PHONY: install-dev test check-cs
 
-DEV_DEPENDENCIES = cakephp/cakephp:^4.0 \
+DEV_DEPENDENCIES = cakephp/cakephp:dev-4.next \
   cakephp/cakephp-codesniffer:^4.0 \
   mikey179/vfsstream:^1.6.8 \
   phpunit/phpunit:^9.3
