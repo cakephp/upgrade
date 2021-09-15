@@ -5,7 +5,7 @@
     "homepage": "http://cakephp.org",
     "license": "MIT",
     "require": {
-        "cakephp/console": "^4.0",
+        "cakephp/console": "dev-4.next as 4.3",
         "rector/rector": "~0.10.20"
     },
     "autoload": {
