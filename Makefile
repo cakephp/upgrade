@@ -11,6 +11,9 @@ install-dev:
 install-dev-lowest:
 	composer require --dev --prefer-lowest $(DEV_DEPENDENCIES)
 
+install-dev-ignore-reqs:
+	composer require --dev --ignore-platform-reqs $(DEV_DEPENDENCIES)
+
 test: install-dev
 	composer test
 
