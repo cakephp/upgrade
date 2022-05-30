@@ -25,6 +25,12 @@
         "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
         "test": "phpunit"
     },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
     "support": {
         "source": "https://github.com/cakephp/upgrade"
     }
