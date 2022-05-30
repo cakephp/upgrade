@@ -62,7 +62,7 @@ class UpgradeCommand extends BaseCommand
         $io->out('<info>Applying cakephp40 Rector rules</info>');
         foreach ($paths as $directory) {
             if (!is_dir($directory)) {
-                $io->warning("The <info>{$path}</info> does not exist, skipping.");
+                $io->warning("{$directory} does not exist, skipping.");
                 continue;
             }
             $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp40', $directory]), $io);
