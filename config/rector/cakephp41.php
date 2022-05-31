@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 use Rector\CakePHP\Set\CakePHPSetList;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Rector\Config\RectorConfig;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $containerConfigurator->import(CakePHPSetList::CAKEPHP_41);
+return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->sets([CakePHPSetList::CAKEPHP_41]);
 };
