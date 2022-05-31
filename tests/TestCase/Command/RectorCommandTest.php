@@ -14,10 +14,10 @@ declare(strict_types=1);
  * @since         4.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Cake\Test\TestCase\Command;
+namespace Cake\Upgrade\Test\TestCase\Command;
 
 use Cake\TestSuite\ConsoleIntegrationTestTrait;
-use Cake\TestSuite\TestCase;
+use Cake\Upgrade\Test\TestCase;
 
 /**
  * RectorCommand test.
@@ -42,7 +42,6 @@ class RectorCommandTest extends TestCase
 
         $this->useCommandRunner(true);
         $this->configApplication('\Cake\Upgrade\Application', []);
-        $this->appDir = ROOT . '/tests/OldApp/';
     }
 
     /**
@@ -61,7 +60,7 @@ class RectorCommandTest extends TestCase
      */
     public function testApplyAppDir()
     {
-        $this->exec("upgrade rector --dry-run {$this->appDir}");
+        $this->exec('upgrade rector --dry-run ' . static::APP_PATH);
 
         $this->assertExitSuccess();
         $this->assertOutputContains('HelloCommand.php');

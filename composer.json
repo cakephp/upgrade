@@ -15,8 +15,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Cake\\Upgrade\\Test\\": "tests",
-            "OldApp\\": "tests/OldApp"
+            "Cake\\Upgrade\\Test\\": "tests"
         }
     },
     "prefer-stable": true,
