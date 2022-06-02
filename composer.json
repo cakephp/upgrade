@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "cakephp/console": "^4.0",
-        "rector/rector": "^0.13.2"
+        "rector/rector": "^0.13.3"
     },
     "autoload": {
         "psr-4": {
@@ -15,8 +15,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Cake\\Upgrade\\Test\\": "tests",
-            "OldApp\\": "tests/OldApp"
+            "Cake\\Upgrade\\Test\\": "tests"
         }
     },
     "prefer-stable": true,
