@@ -9,8 +9,4 @@
 			<directory>./tests/</directory>
 		</testsuite>
 	</testsuites>
-
-    <extensions>
-        <extension class="Cake\Upgrade\Test\PHPUnitExtension"/>
-    </extensions>
 </phpunit>
