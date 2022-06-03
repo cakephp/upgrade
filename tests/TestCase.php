@@ -16,9 +16,24 @@ declare(strict_types=1);
  */
 namespace Cake\Upgrade\Test;
 
+use Cake\Filesystem\Filesystem;
 use Cake\TestSuite\TestCase as CakeTestCase;
 
 class TestCase extends CakeTestCase
 {
     public const APP_PATH = TMP . 'app';
+
+    protected function copyOldApp(string $testName): void
+    {
+        $className = substr(static::class, strrpos(static::class, '\\') + 1);
+        $testPath = TESTS . 'old_apps' . DS . $className . '-' . $testName;
+
+        if (file_exists($testPath)) {
+            $appPath = TMP . 'app';
+
+            $fs = new Filesystem();
+            $fs->deleteDir($appPath);
+            $fs->copyDir($testPath, $appPath);
+        }
+    }
 }
