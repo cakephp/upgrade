@@ -47,7 +47,7 @@ class RectorCommandTest extends TestCase
     /**
      * @return void
      */
-    public function testApplyInvalidAppDir()
+    public function testInvalidAppDir()
     {
         $this->exec('upgrade rector --dry-run ./something/invalid');
 

@@ -25,7 +25,7 @@ class TestCase extends CakeTestCase
 
     protected function copyOldApp(string $testName): void
     {
-        $className = substr(static::class, strrpos(static::class, '\\') + 1);
+        $className = substr(static::class, strrpos(static::class, '\\') + 1, -strlen('Test'));
         $testPath = TESTS . 'old_apps' . DS . $className . '-' . $testName;
 
         if (file_exists($testPath)) {
