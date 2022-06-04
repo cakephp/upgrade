@@ -4,5 +4,5 @@
 
     <rule ref="CakePHP" />
 
-    <exclude-pattern>tests/old_apps</exclude-pattern>
+    <exclude-pattern>tests/test_apps</exclude-pattern>
 </ruleset>

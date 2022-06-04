@@ -17,4 +17,9 @@ require dirname(__DIR__) . '/config/bootstrap.php';
 
 use Cake\Core\Configure;
 
-Configure::write('App.namespace', 'App');
+define('ORIGINAL_APPS', TESTS . 'test_apps' . DS . 'original' . DS);
+define('UPGRADED_APPS', TESTS . 'test_apps' . DS . 'upgraded' . DS);
+
+define('TEST_APP', TMP . 'test_app' . DS);
+
+Configure::write('App.namespace', 'Cake\Upgrade');

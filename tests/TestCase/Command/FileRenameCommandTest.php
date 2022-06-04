@@ -17,263 +17,28 @@ declare(strict_types=1);
 namespace Cake\Upgrade\Test\TestCase\Command;
 
 use Cake\Core\Configure;
-use Cake\TestSuite\ConsoleIntegrationTestTrait;
-use Cake\TestSuite\TestCase;
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
+use Cake\Upgrade\Test\TestCase;
 
 /**
  * FileRenameCommand test.
  */
 class FileRenameCommandTest extends TestCase
 {
-    use ConsoleIntegrationTestTrait;
-
-    protected $dirStructure = [
-        'forTemplate' => [
-            'src' => [
-                'Template' => [
-                    'Email' => ['html' => ['def.php' => '']],
-                    'Element' => [
-                        'Flash' => ['default.ctp' => ''],
-                        'foo.ctp' => '',
-                    ],
-                    'Layout' => ['default.ctp' => ''],
-                    'Cell' => [
-                        'MyCell' => ['display.ctp' => ''],
-                    ],
-                    'Plugin' => [
-                        'TestPlugin' => [
-                            'Layout' => ['Email' => ['text.php' => '']],
-                            'Element' => ['bar.ctp' => ''],
-                            'Posts' => ['index.ctp' => ''],
-                        ],
-                    ],
-                    'Pages' => [
-                        'home.ctp' => '',
-                    ],
-                ],
-            ],
-            'plugins' => [
-                'TestPlugin' => [
-                    'src' => [
-                        // This is ensure "src/Cell" does not get renamed.
-                        'Cell' => [
-                            'TestPluginCell.php' => '',
-                        ],
-                        'Template' => [
-                            'Element' => [
-                                'foo.ctp' => '',
-                            ],
-                            'Layout' => [
-                                'plugin.ctp' => '',
-                                'Email' => ['html.php' => ''],
-                            ],
-                            'Cell' => [
-                                'TestPluginCell' => ['bar.ctp' => ''],
-                            ],
-                        ],
-                    ],
-                ],
-                'PluginWithoutTemplates' => [
-                    'src' => [],
-                ],
-            ],
-        ],
-        'forLocale' => [
-            'src' => [
-                'Locale' => [
-                    'default.pot' => '',
-                    'en' => [
-                        'default.po' => '',
-                    ],
-                ],
-            ],
-            'plugins' => [
-                'TestVendor' => [
-                    'TestPlugin' => [
-                        'src' => [
-                            'Locale' => [
-                                'default.pot' => '',
-                                'fr' => [
-                                    'default.po' => '',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'TestPluginWithLocale' => [
-                    'src' => [],
-                ],
-            ],
-        ],
-    ];
-
-    /**
-     * pluginPaths
-     *
-     * @var array
-     */
-    protected $pluginPaths = [];
-
-    /**
-     * localePaths
-     *
-     * @var array
-     */
-    protected $localePaths = [];
-
-    /**
-     * Namespace
-     *
-     * @var string
-     */
-    protected $namespace = '';
-
-    /**
-     * setup method
-     *
-     * @return void
-     */
-    public function setUp(): void
+    public function testTemplates(): void
     {
-        parent::setUp();
+        $this->setupTestApp(__FUNCTION__);
+        Configure::write('App.paths.plugins', TEST_APP . 'plugins');
 
-        $this->useCommandRunner(true);
-        $this->configApplication('\Cake\Upgrade\Application', []);
-
-        $this->fs = vfsStream::setup('root');
-
-        $this->pluginPaths = Configure::read('App.paths.plugins');
-        Configure::write('App.paths.plugins', [$this->fs->url() . '/plugins'], true);
-
-        $this->localePaths = Configure::read('App.paths.locales');
-        Configure::write('App.paths.locales', [$this->fs->url() . '/src/Locale'], true);
+        $this->exec('upgrade file_rename templates ' . TEST_APP);
+        $this->assertTestAppUpgraded();
     }
 
-    /**
-     * tearDown
-     *
-     * @return void
-     */
-    public function tearDown(): void
+    public function testLocales(): void
     {
-        Configure::write('App.paths.plugins', $this->pluginPaths);
-        Configure::write('App.paths.locales', $this->localePaths);
-        Configure::write('App.namespace', $this->namespace);
-    }
+        $this->setupTestApp(__FUNCTION__);
+        Configure::write('App.paths.plugins', TEST_APP . 'plugins');
 
-    /**
-     * testUpgradeTemplate
-     *
-     * @return void
-     */
-    public function testUpgradeTemplate()
-    {
-        vfsStream::create($this->dirStructure['forTemplate']);
-
-        $this->exec('upgrade file_rename templates ' . $this->fs->url());
-
-        $ds = [
-            'src' => [],
-            'templates' => [
-                'email' => ['html' => ['def.php' => '']],
-                'element' => [
-                    'flash' => ['default.php' => ''],
-                    'foo.php' => '',
-                ],
-                'layout' => ['default.php' => ''],
-                'cell' => [
-                    'MyCell' => ['display.php' => ''],
-                ],
-                'plugin' => [
-                    'TestPlugin' => [
-                        'layout' => ['email' => ['text.php' => '']],
-                        'element' => ['bar.php' => ''],
-                        'Posts' => ['index.php' => ''],
-                    ],
-                ],
-                'Pages' => [
-                    'home.php' => '',
-                ],
-            ],
-            'plugins' => [
-                'TestPlugin' => [
-                    'src' => [
-                        // This is ensure "src/Cell" does not get renamed.
-                        'Cell' => [
-                            'TestPluginCell.php' => '',
-                        ],
-                    ],
-                    'templates' => [
-                        'element' => [
-                            'foo.php' => '',
-                        ],
-                        'layout' => [
-                            'plugin.php' => '',
-                            'email' => ['html.php' => ''],
-                        ],
-                        'cell' => [
-                            'TestPluginCell' => ['bar.php' => ''],
-                        ],
-                    ],
-                ],
-                'PluginWithoutTemplates' => [
-                    'src' => [],
-                ],
-            ],
-        ];
-
-        $this->assertEquals(
-            ['root' => $ds],
-            vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure()
-        );
-    }
-
-    /**
-     * testUpgradeLocale
-     *
-     * @return void
-     */
-    public function testUpgradeLocale()
-    {
-        vfsStream::create($this->dirStructure['forLocale']);
-
-        $this->exec('upgrade file_rename locales ' . $this->fs->url());
-
-        $ds = [
-            'src' => [],
-            'resources' => [
-                'locales' => [
-                    'default.pot' => '',
-                    'en' => [
-                        'default.po' => '',
-                    ],
-                ],
-            ],
-            'plugins' => [
-                'TestVendor' => [
-                    'TestPlugin' => [
-                        'src' => [],
-                        'resources' => [
-                            'locales' => [
-                                'default.pot' => '',
-                                'fr' => [
-                                    'default.po' => '',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'TestPluginWithLocale' => [
-                    'src' => [],
-                ],
-            ],
-        ];
-
-        $this->assertEquals(
-            ['root' => $ds],
-            vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure()
-        );
+        $this->exec('upgrade file_rename locales ' . TEST_APP);
+        $this->assertTestAppUpgraded();
     }
 }
