@@ -21,6 +21,7 @@ use Cake\Console\BaseCommand;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
+use DirectoryIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveRegexIterator;
@@ -129,8 +130,20 @@ class FileRenameCommand extends BaseCommand
 
         foreach ((array)Configure::read('App.paths.plugins') as $path) {
             $this->io->out("Renaming templates in <info>{$path}</info>");
-            $this->moveDir($path, 'templates');
-            $this->changeExt($path);
+            $iterator = new DirectoryIterator($path);
+            foreach ($iterator as $dirInfo) {
+                $dirPath = $dirInfo->getRealPath();
+                if ($dirInfo->isDot() || !is_dir($dirPath . '/src/Template')) {
+                    continue;
+                }
+
+                $this->rename(
+                    $dirPath . '/src/Template',
+                    $dirPath . '/templates'
+                );
+                $this->renameSubFolders($dirPath . '/templates');
+                $this->changeExt($dirPath . '/templates');
+            }
         }
     }
 
@@ -151,40 +164,17 @@ class FileRenameCommand extends BaseCommand
 
         foreach ((array)Configure::read('App.paths.plugins') as $path) {
             $this->io->out("Renaming locales in <info>{$path}</info>");
-            $this->moveDir($path, 'locales');
-        }
-    }
+            $iterator = new DirectoryIterator($path);
+            foreach ($iterator as $dirInfo) {
+                $dirPath = $dirInfo->getRealPath();
+                if ($dirInfo->isDot() || !is_dir($dirPath . '/src/Locale')) {
+                    continue;
+                }
 
-    /**
-     * Recursively move directories.
-     *
-     * @param string $path Path
-     * @param string $type Type
-     * @return void
-     */
-    protected function moveDir(string $path, string $type): void
-    {
-        $info = $this->types[$type];
-
-        $dirIter = new RecursiveDirectoryIterator(
-            $path,
-            RecursiveDirectoryIterator::UNIX_PATHS
-        );
-        $iterIter = new RecursiveIteratorIterator($dirIter);
-        $templateDirs = new RegexIterator(
-            $iterIter,
-            $info['regex'],
-            RecursiveRegexIterator::REPLACE
-        );
-
-        foreach ($templateDirs as $val) {
-            $this->rename(
-                $val . $info['from'],
-                $val . $info['to']
-            );
-
-            if ($type === 'templates') {
-                $this->renameSubFolders($val . '/../templates');
+                $this->rename(
+                    $dirPath . '/src/Locale',
+                    $dirPath . '/resources/locales'
+                );
             }
         }
     }
