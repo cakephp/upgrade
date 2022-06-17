@@ -26,8 +26,5 @@
     "prefer-stable": true,
     "support": {
         "source": "https://github.com/cakephp/upgrade"
-    },
-    "scripts": {
-        "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
     }
 }
