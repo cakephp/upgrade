@@ -5,6 +5,7 @@
     "homepage": "http://cakephp.org",
     "license": "MIT",
     "require": {
+        "php": "^8.0",
         "cakephp/console": "^4.0",
         "nette/utils": "^3.2",
         "rector/rector": "dev-main",
