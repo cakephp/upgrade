@@ -6,9 +6,9 @@ namespace Rector\CakePHP\ValueObject;
 final class RemoveIntermediaryMethod
 {
     public function __construct(
-        private readonly string $firstMethod,
-        private readonly string $secondMethod,
-        private readonly string $finalMethod,
+        private string $firstMethod,
+        private string $secondMethod,
+        private string $finalMethod,
     ) {
     }
 

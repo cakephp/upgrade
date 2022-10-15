@@ -17,7 +17,7 @@ final class CakePHPFullyQualifiedClassNameResolver
      * @var string
      * @see https://regex101.com/r/mbvKJp/1
      */
-    final public const LIB_NAMESPACE_PART_REGEX = '#\\\\Lib\\\\#';
+    public const LIB_NAMESPACE_PART_REGEX = '#\\\\Lib\\\\#';
 
     /**
      * @var string
@@ -32,8 +32,8 @@ final class CakePHPFullyQualifiedClassNameResolver
     private const PLUGIN_OR_LIB_REGEX = '#(Plugin|Lib)#';
 
     public function __construct(
-        private readonly ImplicitNameResolver $implicitNameResolver,
-        private readonly ReflectionProvider $reflectionProvider
+        private ImplicitNameResolver $implicitNameResolver,
+        private ReflectionProvider $reflectionProvider
     ) {
     }
 

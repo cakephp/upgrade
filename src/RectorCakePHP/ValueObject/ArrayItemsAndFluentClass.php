@@ -10,8 +10,8 @@ final class ArrayItemsAndFluentClass
      * @param array<string, \PhpParser\Node\Expr> $fluentCalls
      */
     public function __construct(
-        private readonly array $arrayItems,
-        private readonly array $fluentCalls
+        private array $arrayItems,
+        private array $fluentCalls
     ) {
     }
 

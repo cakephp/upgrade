@@ -25,7 +25,7 @@ final class ModalToGetSetRector extends AbstractRector implements ConfigurableRe
     /**
      * @var string
      */
-    final public const UNPREFIXED_METHODS_TO_GET_SET = 'unprefixed_methods_to_get_set';
+    public const UNPREFIXED_METHODS_TO_GET_SET = 'unprefixed_methods_to_get_set';
 
     /**
      * @var \Rector\CakePHP\ValueObject\ModalToGetSet[]

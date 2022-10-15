@@ -26,7 +26,7 @@ final class RemoveIntermediaryMethodRector extends AbstractRector implements Con
     /**
      * @var string
      */
-    final public const REMOVE_INTERMEDIARY_METHOD = 'remove_intermediary_method';
+    public const REMOVE_INTERMEDIARY_METHOD = 'remove_intermediary_method';
 
     /**
      * @var \Rector\CakePHP\ValueObject\RemoveIntermediaryMethod[]
@@ -34,7 +34,7 @@ final class RemoveIntermediaryMethodRector extends AbstractRector implements Con
     private array $removeIntermediaryMethod = [];
 
     public function __construct(
-        private readonly FluentChainMethodCallNodeAnalyzer $fluentChainMethodCallNodeAnalyzer
+        private FluentChainMethodCallNodeAnalyzer $fluentChainMethodCallNodeAnalyzer
     ) {
     }
 

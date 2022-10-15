@@ -7,17 +7,23 @@ use PHPStan\Type\ObjectType;
 
 final class ModalToGetSet
 {
-    private readonly string $getMethod;
+    /**
+     * @readonly
+     */
+    private string $getMethod;
 
-    private readonly string $setMethod;
+    /**
+     * @readonly
+     */
+    private string $setMethod;
 
     public function __construct(
-        private readonly string $type,
-        private readonly string $unprefixedMethod,
+        private string $type,
+        private string $unprefixedMethod,
         ?string $getMethod = null,
         ?string $setMethod = null,
-        private readonly int $minimalSetterArgumentCount = 1,
-        private readonly ?string $firstArgumentType = null
+        private int $minimalSetterArgumentCount = 1,
+        private ?string $firstArgumentType = null
     ) {
         $this->getMethod = $getMethod ?? 'get' . ucfirst($unprefixedMethod);
         $this->setMethod = $setMethod ?? 'set' . ucfirst($unprefixedMethod);

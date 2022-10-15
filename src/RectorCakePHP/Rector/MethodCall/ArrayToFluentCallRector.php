@@ -24,12 +24,12 @@ final class ArrayToFluentCallRector extends AbstractRector implements Configurab
     /**
      * @var string
      */
-    final public const ARRAYS_TO_FLUENT_CALLS = 'arrays_to_fluent_calls';
+    public const ARRAYS_TO_FLUENT_CALLS = 'arrays_to_fluent_calls';
 
     /**
      * @var string
      */
-    final public const FACTORY_METHODS = 'factory_methods';
+    public const FACTORY_METHODS = 'factory_methods';
 
     /**
      * @var \Rector\CakePHP\ValueObject\ArrayToFluentCall[]

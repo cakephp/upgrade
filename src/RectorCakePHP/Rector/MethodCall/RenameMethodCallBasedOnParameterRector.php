@@ -24,7 +24,7 @@ final class RenameMethodCallBasedOnParameterRector extends AbstractRector implem
     /**
      * @var string
      */
-    final public const CALLS_WITH_PARAM_RENAMES = 'calls_with_param_renames';
+    public const CALLS_WITH_PARAM_RENAMES = 'calls_with_param_renames';
 
     /**
      * @var \Rector\CakePHP\ValueObject\RenameMethodCallBasedOnParameter[]
