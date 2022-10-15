@@ -19,7 +19,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Cake\\Upgrade\\Test\\": "tests"
+            "Cake\\Upgrade\\Test\\": "tests",
+            "Rector\\CakePHP\\Tests\\Rector\\": "tests/Rector"
         }
     },
     "prefer-stable": true,
