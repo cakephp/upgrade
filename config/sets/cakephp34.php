@@ -18,7 +18,7 @@ use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
 use Rector\Visibility\ValueObject\ChangeMethodVisibility;
 
 return static function (RectorConfig $rectorConfig): void {
-
+    $rectorConfig->import(__DIR__ . '/../config.php');
     $rectorConfig->ruleWithConfiguration(PropertyFetchToMethodCallRector::class, [
         // source: https://book.cakephp.org/3.0/en/appendices/3-4-migration-guide.html
         new PropertyFetchToMethodCall('Cake\Network\Request', 'params', 'getAttribute', null, ['params']),

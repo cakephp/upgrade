@@ -35,12 +35,5 @@
     },
     "support": {
         "source": "https://github.com/cakephp/upgrade"
-    },
-    "extra": {
-        "rector": {
-            "includes": [
-                "config/config.php"
-            ]
-        }
     }
 }
