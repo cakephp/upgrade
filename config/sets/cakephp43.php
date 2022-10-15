@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Rector\CakePHP\Rector\MethodCall\RemoveIntermediaryMethodRector;
-
 use Rector\CakePHP\ValueObject\RemoveIntermediaryMethod;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;

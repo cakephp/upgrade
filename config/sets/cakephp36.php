@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Renaming\ValueObject\MethodCallRename;
@@ -40,7 +39,8 @@ return static function (RectorConfig $rectorConfig): void {
         'Cake\Network\Exception\NotImplementedException' => 'Cake\Http\Exception\NotImplementedException',
         'Cake\Network\Exception\ServiceUnavailableException' => 'Cake\Http\Exception\ServiceUnavailableException',
         'Cake\Network\Exception\UnauthorizedException' => 'Cake\Http\Exception\UnauthorizedException',
-        'Cake\Network\Exception\UnavailableForLegalReasonsException' => 'Cake\Http\Exception\UnavailableForLegalReasonsException',
+        'Cake\Network\Exception\UnavailableForLegalReasonsException'
+            => 'Cake\Http\Exception\UnavailableForLegalReasonsException',
         'Cake\Network\Session' => 'Cake\Http\Session',
         'Cake\Network\Session\DatabaseSession' => 'Cake\Http\Session\DatabaseSession',
         'Cake\Network\Session\CacheSession' => 'Cake\Http\Session\CacheSession',

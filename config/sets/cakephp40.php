@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use PHPStan\Type\BooleanType;
-
 use PHPStan\Type\IntegerType;
 use PHPStan\Type\NullType;
 use PHPStan\Type\ObjectType;
