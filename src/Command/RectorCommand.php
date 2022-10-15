@@ -83,7 +83,7 @@ class RectorCommand extends BaseCommand
 
         $cmdPath = ROOT . '/vendor/bin/rector process';
         $command = sprintf(
-            '%s %s --autoload-file=%s --config=%s %s --clear-cache',
+            '%s %s --autoload-file=%s --config=%s %s',
             $cmdPath,
             $args->getOption('dry-run') ? '--dry-run' : '',
             escapeshellarg($autoload),
