@@ -6,11 +6,13 @@
     "license": "MIT",
     "require": {
         "cakephp/console": "^4.0",
-        "rector/rector": "^0.14.5"
+        "rector/rector": "dev-main",
+        "webmozart/assert": "^1.11"
     },
     "autoload": {
         "psr-4": {
-            "Cake\\Upgrade\\": "src"
+            "Cake\\Upgrade\\": "src",
+            "Rector\\CakePHP\\": "src/RectorCakePHP"
         }
     },
     "autoload-dev": {
@@ -27,11 +29,20 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
+            "cweagans/composer-patches": true,
+            "phpstan/extension-installer": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "rector/extension-installer": true
         }
     },
     "support": {
         "source": "https://github.com/cakephp/upgrade"
+    },
+    "extra": {
+        "rector": {
+            "includes": [
+                "config/config.php"
+            ]
+        }
     }
 }
