@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Rector\CakePHP\Rector\MethodCall;
@@ -28,7 +27,7 @@ final class RenameMethodCallBasedOnParameterRector extends AbstractRector implem
     final public const CALLS_WITH_PARAM_RENAMES = 'calls_with_param_renames';
 
     /**
-     * @var RenameMethodCallBasedOnParameter[]
+     * @var \Rector\CakePHP\ValueObject\RenameMethodCallBasedOnParameter[]
      */
     private array $callsWithParamRenames = [];
 
@@ -40,6 +39,7 @@ final class RenameMethodCallBasedOnParameterRector extends AbstractRector implem
                 new RenameMethodCallBasedOnParameter('ServerRequest', 'withParam', 'paging', 'withAttribute'),
             ],
         ];
+
         return new RuleDefinition(
             'Changes method calls based on matching the first parameter value.',
             [
@@ -65,7 +65,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @return array<class-string<Node>>
+     * @return array<class-string<\PhpParser\Node>>
      */
     public function getNodeTypes(): array
     {
@@ -73,7 +73,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param MethodCall $node
+     * @param \PhpParser\Node\Expr\MethodCall $node
      */
     public function refactor(Node $node): ?Node
     {

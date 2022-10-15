@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Rector\CakePHP\Naming;
@@ -65,10 +64,12 @@ final class CakePHPFullyQualifiedClassNameResolver
         }
 
         // C. is not plugin nor lib custom App class?
-        if (\str_contains($pseudoNamespace, '\\') && ! StringUtils::isMatch(
-            $pseudoNamespace,
-            self::PLUGIN_OR_LIB_REGEX
-        )) {
+        if (
+            \str_contains($pseudoNamespace, '\\') && ! StringUtils::isMatch(
+                $pseudoNamespace,
+                self::PLUGIN_OR_LIB_REGEX
+            )
+        ) {
             return 'App\\' . $pseudoNamespace . '\\' . $shortClass;
         }
 

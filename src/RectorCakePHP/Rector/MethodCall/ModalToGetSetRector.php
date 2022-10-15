@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Rector\CakePHP\Rector\MethodCall;
@@ -29,7 +28,7 @@ final class ModalToGetSetRector extends AbstractRector implements ConfigurableRe
     final public const UNPREFIXED_METHODS_TO_GET_SET = 'unprefixed_methods_to_get_set';
 
     /**
-     * @var ModalToGetSet[]
+     * @var \Rector\CakePHP\ValueObject\ModalToGetSet[]
      */
     private array $unprefixedMethodsToGetSet = [];
 
@@ -70,7 +69,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @return array<class-string<Node>>
+     * @return array<class-string<\PhpParser\Node>>
      */
     public function getNodeTypes(): array
     {
@@ -78,7 +77,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param MethodCall $node
+     * @param \PhpParser\Node\Expr\MethodCall $node
      */
     public function refactor(Node $node): ?Node
     {

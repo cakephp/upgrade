@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Rector\CakePHP\Rector\MethodCall;
@@ -30,7 +29,7 @@ final class RemoveIntermediaryMethodRector extends AbstractRector implements Con
     final public const REMOVE_INTERMEDIARY_METHOD = 'remove_intermediary_method';
 
     /**
-     * @var RemoveIntermediaryMethod[]
+     * @var \Rector\CakePHP\ValueObject\RemoveIntermediaryMethod[]
      */
     private array $removeIntermediaryMethod = [];
 
@@ -64,7 +63,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @return array<class-string<Node>>
+     * @return array<class-string<\PhpParser\Node>>
      */
     public function getNodeTypes(): array
     {
@@ -72,7 +71,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param MethodCall $node
+     * @param \PhpParser\Node\Expr\MethodCall $node
      */
     public function refactor(Node $node): ?Node
     {
@@ -80,7 +79,7 @@ CODE_SAMPLE
         if (! $removeIntermediaryMethod instanceof RemoveIntermediaryMethod) {
             return null;
         }
-        /** @var MethodCall $var */
+        /** @var \PhpParser\Node\Expr\MethodCall $var */
         $var = $node->var;
         $target = $var->var;
 
@@ -112,7 +111,7 @@ CODE_SAMPLE
         if (! $this->nodeNameResolver->isName($rootMethodCall->var, 'this')) {
             return null;
         }
-        /** @var MethodCall $var */
+        /** @var \PhpParser\Node\Expr\MethodCall $var */
         $var = $methodCall->var;
         if (
             (! $methodCall->name instanceof Identifier) ||

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Rector\CakePHP\Rector\Namespace_;
@@ -8,7 +7,6 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Stmt\Declare_;
 use PhpParser\Node\Stmt\Namespace_;
-use PhpParser\Node\Stmt\Use_;
 use PHPStan\Type\ObjectType;
 use Rector\CakePHP\Naming\CakePHPFullyQualifiedClassNameResolver;
 use Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace;
@@ -49,7 +47,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @return array<class-string<Node>>
+     * @return array<class-string<\PhpParser\Node>>
      */
     public function getNodeTypes(): array
     {
@@ -57,7 +55,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param FileWithoutNamespace|Namespace_ $node
+     * @param \Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace|\PhpParser\Node\Stmt\Namespace_ $node
      */
     public function refactor(Node $node): ?Node
     {
@@ -73,6 +71,7 @@ CODE_SAMPLE
 
         if ($node instanceof Namespace_) {
             $node->stmts = array_merge($uses, $node->stmts);
+
             return $node;
         }
 
@@ -80,11 +79,11 @@ CODE_SAMPLE
     }
 
     /**
-     * @return StaticCall[]
+     * @return \PhpParser\Node\Expr\StaticCall[]
      */
     private function collectAppUseStaticCalls(Node $node): array
     {
-        /** @var StaticCall[] $appUsesStaticCalls */
+        /** @var \PhpParser\Node\Expr\StaticCall[] $appUsesStaticCalls */
         $appUsesStaticCalls = $this->betterNodeFinder->find($node, function (Node $node): bool {
             if (! $node instanceof StaticCall) {
                 return false;
@@ -102,7 +101,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param StaticCall[] $staticCalls
+     * @param \PhpParser\Node\Expr\StaticCall[] $staticCalls
      * @return string[]
      */
     private function resolveNamesFromStaticCalls(array $staticCalls): array
@@ -116,7 +115,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param Use_[] $uses
+     * @param \PhpParser\Node\Stmt\Use_[] $fileWithoutNamespace
      */
     private function refactorFile(FileWithoutNamespace $fileWithoutNamespace, array $uses): ?FileWithoutNamespace
     {
@@ -132,6 +131,7 @@ CODE_SAMPLE
         }
 
         $fileWithoutNamespace->stmts = array_merge($uses, $fileWithoutNamespace->stmts);
+
         return $fileWithoutNamespace;
     }
 
@@ -150,7 +150,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param Use_[] $uses
+     * @param \PhpParser\Node\Stmt\Use_[] $fileWithoutNamespace
      */
     private function refactorFileWithDeclare(
         FileWithoutNamespace $fileWithoutNamespace,

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Rector\CakePHP\ValueObject;
@@ -7,7 +6,7 @@ namespace Rector\CakePHP\ValueObject;
 final class ArrayToFluentCall
 {
     /**
-     * @param array<string, string> $arrayKeysToFluentCalls
+     * @param array<string, string> $class
      */
     public function __construct(
         private readonly string $class,

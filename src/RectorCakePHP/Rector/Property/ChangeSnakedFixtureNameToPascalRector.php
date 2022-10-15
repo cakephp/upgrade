@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Rector\CakePHP\Rector\Property;
@@ -51,7 +50,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @return array<class-string<Node>>
+     * @return array<class-string<\PhpParser\Node>>
      */
     public function getNodeTypes(): array
     {
@@ -59,7 +58,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param Property $node
+     * @param \PhpParser\Node\Stmt\Property $node
      */
     public function refactor(Node $node): ?Node
     {
@@ -109,6 +108,7 @@ CODE_SAMPLE
         $pascalCaseTableParts = array_map(
             function (string $token): string {
                 $tokenUnicodeString = new UnicodeString($token);
+
                 return ucfirst($tokenUnicodeString->camel()->toString());
             },
             $tableParts

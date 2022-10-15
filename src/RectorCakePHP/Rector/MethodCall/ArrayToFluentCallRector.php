@@ -1,12 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Rector\CakePHP\Rector\MethodCall;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
-use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Scalar\String_;
 use Rector\CakePHP\ValueObject\ArrayItemsAndFluentClass;
@@ -34,12 +32,12 @@ final class ArrayToFluentCallRector extends AbstractRector implements Configurab
     final public const FACTORY_METHODS = 'factory_methods';
 
     /**
-     * @var ArrayToFluentCall[]
+     * @var \Rector\CakePHP\ValueObject\ArrayToFluentCall[]
      */
     private array $arraysToFluentCalls = [];
 
     /**
-     * @var FactoryMethod[]
+     * @var \Rector\CakePHP\ValueObject\FactoryMethod[]
      */
     private array $factoryMethods = [];
 
@@ -89,7 +87,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @return array<class-string<Node>>
+     * @return array<class-string<\PhpParser\Node>>
      */
     public function getNodeTypes(): array
     {
@@ -97,7 +95,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param MethodCall $node
+     * @param \PhpParser\Node\Expr\MethodCall $node
      */
     public function refactor(Node $node): ?Node
     {
@@ -192,7 +190,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param array<ArrayItem|null> $originalArrayItems
+     * @param array<(\PhpParser\Node\Expr\ArrayItem|null)> $originalArrayItems
      * @param array<string, string> $arrayMap
      */
     private function extractFluentMethods(array $originalArrayItems, array $arrayMap): ArrayItemsAndFluentClass

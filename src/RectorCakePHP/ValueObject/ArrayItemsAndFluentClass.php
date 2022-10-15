@@ -1,17 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Rector\CakePHP\ValueObject;
 
-use PhpParser\Node\Expr;
-use PhpParser\Node\Expr\ArrayItem;
-
 final class ArrayItemsAndFluentClass
 {
     /**
-     * @param ArrayItem[] $arrayItems
-     * @param array<string, Expr> $fluentCalls
+     * @param \PhpParser\Node\Expr\ArrayItem[] $arrayItems
+     * @param array<string, \PhpParser\Node\Expr> $fluentCalls
      */
     public function __construct(
         private readonly array $arrayItems,
@@ -20,7 +16,7 @@ final class ArrayItemsAndFluentClass
     }
 
     /**
-     * @return ArrayItem[]
+     * @return \PhpParser\Node\Expr\ArrayItem[]
      */
     public function getArrayItems(): array
     {
@@ -28,7 +24,7 @@ final class ArrayItemsAndFluentClass
     }
 
     /**
-     * @return array<string, Expr>
+     * @return array<string, \PhpParser\Node\Expr>
      */
     public function getFluentCalls(): array
     {
