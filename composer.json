@@ -8,6 +8,7 @@
         "cakephp/console": "^4.0",
         "nette/utils": "^3.2",
         "rector/rector": "dev-main",
+        "symfony/string": "^6.0",
         "webmozart/assert": "^1.11"
     },
     "autoload": {
@@ -36,5 +37,11 @@
     },
     "support": {
         "source": "https://github.com/cakephp/upgrade"
+    },
+    "require-dev": {
+        "cakephp/cakephp": "^4.0",
+        "cakephp/cakephp-codesniffer": "^4.0",
+        "mikey179/vfsstream": "^1.6.8",
+        "phpunit/phpunit": "^9.3"
     }
 }
