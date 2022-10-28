@@ -5,4 +5,6 @@
     <rule ref="CakePHP" />
 
     <exclude-pattern>tests/test_apps</exclude-pattern>
+    <exclude-pattern>src/RectorCakePHP</exclude-pattern>
+    <exclude-pattern>tests/Rector</exclude-pattern>
 </ruleset>
