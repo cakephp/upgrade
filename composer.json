@@ -2,7 +2,7 @@
     "name": "cakephp/upgrade",
     "type": "project",
     "description": "Command line tool for updating CakePHP applications and plugins.",
-    "homepage": "http://cakephp.org",
+    "homepage": "https://cakephp.org",
     "license": "MIT",
     "require": {
         "cakephp/console": "^4.0",
