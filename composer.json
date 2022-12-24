@@ -1,7 +1,7 @@
 {
     "name": "cakephp/upgrade",
     "description": "CakePHP upgrade tool",
-    "homepage": "http://cakephp.org",
+    "homepage": "https://cakephp.org",
     "type": "project",
     "license": "MIT",
     "require": {
