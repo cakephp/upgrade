@@ -43,12 +43,8 @@ class Processor {
 					$taskObject->run($file);
 
 					if (!$taskObject->hasChanges()) {
-						debug($taskObject);
-
 						continue;
 					}
-
-					debug($taskObject->getChanges());
 					$changeSet->add($taskObject->getChanges());
 				}
 
