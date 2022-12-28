@@ -14,7 +14,7 @@ Upgrade tool as standalone application for CakePHP meant to facilitate migrating
 
 ---
 
-**CakePHP 5**
+### CakePHP 5
 
 The brand new upgrade command of this tool provides a configurable approach.
 Define sets/levels and run it over your app or plugin:
@@ -35,7 +35,7 @@ For docs on this check [here](docs/Upgrade.md).
 
 ---
 
-**CakePHP 4**
+### CakePHP 4
 
 Tasks available now for CakePHP4 (and super helpful):
 - method_names
@@ -46,12 +46,12 @@ Fore more please look into [wiki](https://github.com/dereuromark/upgrade/wiki/Ti
 
 ---
 
-**CakePHP 3**
+### CakePHP 3
 Please look into [this article](https://www.dereuromark.de/2018/03/14/cakephp-3-6-is-coming/) for Upgrading applications for 3.6+. The new tool rector seems to be very promising.
 
 ---
 
-**CakePHP 2**
+### CakePHP 2
 When migrating from 1.x to 2.x you might want to look in the old [cakephp-upgrade plugin](https://github.com/dereuromark/cakephp-upgrade) instead.
 
 
