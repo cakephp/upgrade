@@ -52,7 +52,7 @@ class RenameClassesTask extends BaseTask {
 		$contents = str_replace(
 			array_keys($replacements),
 			array_values($replacements),
-			$contents
+			$contents,
 		);
 
 		// Replace static and dynamic calls

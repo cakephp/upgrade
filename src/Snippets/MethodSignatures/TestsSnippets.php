@@ -5,7 +5,7 @@ namespace Cake\Upgrade\Snippets\MethodSignatures;
 class TestsSnippets {
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected $callbacks = [
 		'setUp',

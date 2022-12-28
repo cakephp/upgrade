@@ -19,10 +19,10 @@ use Cake\Upgrade\Snippets\MethodSignatures\ComponentSnippets;
 use Cake\Upgrade\Snippets\MethodSignatures\ControllerSnippets;
 use Cake\Upgrade\Snippets\MethodSignatures\FormSnippets;
 use Cake\Upgrade\Snippets\MethodSignatures\GenericSnippets;
-use Cake\Upgrade\Snippets\MethodSignatures\TestFixturesSnippets;
 use Cake\Upgrade\Snippets\MethodSignatures\ShellSnippets;
 use Cake\Upgrade\Snippets\MethodSignatures\ShellTaskSnippets;
 use Cake\Upgrade\Snippets\MethodSignatures\TableSnippets;
+use Cake\Upgrade\Snippets\MethodSignatures\TestFixturesSnippets;
 use Cake\Upgrade\Snippets\MethodSignatures\TestsSnippets;
 
 /**
@@ -42,7 +42,7 @@ class MethodSignaturesTask extends BaseTask {
 	public $tasks = ['Stage'];
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected $snippets = [
 		ShellTaskSnippets::class => ShellTaskSnippets::class,

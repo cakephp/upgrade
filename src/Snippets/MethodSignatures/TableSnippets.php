@@ -5,7 +5,7 @@ namespace Cake\Upgrade\Snippets\MethodSignatures;
 class TableSnippets {
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected $callbacks = [
 		'beforeFind',
@@ -24,7 +24,7 @@ class TableSnippets {
 	];
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected $returnTypes = [
 		'',

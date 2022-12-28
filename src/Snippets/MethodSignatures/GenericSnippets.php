@@ -38,7 +38,7 @@ class GenericSnippets {
 				'use Cake\Console\Command;',
 				'#\buse Cake\\\\Console\\\\Command;#',
 				'use Cake\Command\Command;',
-			]
+			],
 		];
 
 		return $list;

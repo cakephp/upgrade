@@ -48,7 +48,7 @@ class PrefixedTemplatesTask extends BaseTask {
 		$new = str_replace(
 			'Template' . DS,
 			'Template' . DS . Inflector::camelize($this->params['prefix']) . DS,
-			$path
+			$path,
 		);
 		$new = str_replace($this->params['prefix'] . '_', '', $new);
 

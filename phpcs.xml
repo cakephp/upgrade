@@ -2,7 +2,13 @@
 <ruleset name="friendsofcake-search">
 	<config name="installed_paths" value="vendor/fig-r/psr2r-sniffer/PSR2R"/>
 
-	<rule ref="PSR2R"/>
+	<arg value="nps"/>
+
+	<file>config/</file>
+	<file>src/</file>
+	<file>tests/</file>
 
 	<exclude-pattern>*/tests/test_files/*</exclude-pattern>
+
+	<rule ref="PSR2R"/>
 </ruleset>

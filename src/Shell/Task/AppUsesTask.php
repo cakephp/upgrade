@@ -143,7 +143,7 @@ class AppUsesTask extends BaseTask {
 				$this->out(
 					sprintf('<info>Skip %s as it is a vendor library.</info>', $matches[1]),
 					1,
-					Shell::VERBOSE
+					Shell::VERBOSE,
 				);
 
 				return $matches[0];
@@ -190,7 +190,7 @@ class AppUsesTask extends BaseTask {
 		preg_match(
 			'/class\s+\S+(\s+extends\s+(\S+))?(\s+implements\s+(\S+))?/',
 			$contents,
-			$matches
+			$matches,
 		);
 
 		$toCheck = [];
@@ -204,7 +204,7 @@ class AppUsesTask extends BaseTask {
 		preg_match_all(
 			'/function.*\(.*\b(\S+)\b\s+\$/',
 			$contents,
-			$matches
+			$matches,
 		);
 
 		$toCheck = array_filter(array_unique(array_merge($toCheck, $matches[1])));
@@ -212,7 +212,7 @@ class AppUsesTask extends BaseTask {
 		preg_match_all(
 			'/\b([A-Z][a-zA-Z0-9]+)::/',
 			$contents,
-			$matches
+			$matches,
 		);
 
 		$toCheck = array_filter(array_unique(array_merge($toCheck, $matches[1])));
@@ -235,7 +235,7 @@ class AppUsesTask extends BaseTask {
 			$contents = preg_replace(
 				'/(namespace [\S+]+;[\n]{1,})/',
 				'\1' . $useStatement . (!$containsUseStatements ? "\n" : ''),
-				$contents
+				$contents,
 			);
 		}
 
@@ -256,14 +256,17 @@ class AppUsesTask extends BaseTask {
 
 		$contents = str_replace($matches[0], '', $contents);
 
-		array_walk($matches[0], create_function('&$val', '$val = ltrim($val);'));
+		$callable = function($val) {
+			return ltrim($val);
+		};
+		array_walk($matches[0], $callable);
 		$matches[0] = array_unique($matches[0]);
 		sort($matches[0]);
 
 		return preg_replace(
 			'/(namespace [\S+]+;[\n]{2})/',
 			'\1' . implode('', $matches[0]),
-			$contents
+			$contents,
 		);
 	}
 
@@ -278,7 +281,7 @@ class AppUsesTask extends BaseTask {
 		foreach ($rename as &$val) {
 			$val = substr($val, 4);
 		}
-		$regex = '/\bCake(' . implode($rename, '|') . ')\b/';
+		$regex = '/\bCake(' . implode('|', $rename) . ')\b/';
 
 		return preg_replace($regex, '\1', $contents);
 	}

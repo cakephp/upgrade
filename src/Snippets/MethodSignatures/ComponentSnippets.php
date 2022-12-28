@@ -5,7 +5,7 @@ namespace Cake\Upgrade\Snippets\MethodSignatures;
 class ComponentSnippets {
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected $callbacks = [
 		'beforeFilter',

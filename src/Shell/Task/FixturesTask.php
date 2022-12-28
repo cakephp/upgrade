@@ -145,7 +145,7 @@ class FixturesTask extends BaseTask {
 			$processor,
 			$contents,
 			-1,
-			$count
+			$count,
 		);
 
 		// Fix import model => ModelName => table plural table_name
@@ -161,7 +161,7 @@ class FixturesTask extends BaseTask {
 			$processor,
 			$contents,
 			-1,
-			$count
+			$count,
 		);
 
 		// Pluralize fixtures
@@ -185,7 +185,7 @@ class FixturesTask extends BaseTask {
 				$pluralProcessor,
 				$contents,
 				-1,
-				$count
+				$count,
 			);
 			$newPath = dirname($path) . DS . $className . '.php';
 		}

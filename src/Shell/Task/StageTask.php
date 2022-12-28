@@ -136,8 +136,8 @@ class StageTask extends Shell {
 			$this->out(
 				sprintf(
 					'<info>Delete %s</info>',
-					Debugger::trimPath($path)
-				)
+					Debugger::trimPath($path),
+				),
 			);
 			if ($dryRun) {
 				return true;
@@ -166,8 +166,8 @@ class StageTask extends Shell {
 				sprintf(
 					'<info>Move %s to %s</info>',
 					Debugger::trimPath($path),
-					Debugger::trimPath($to)
-				)
+					Debugger::trimPath($to),
+				),
 			);
 			if ($dryRun || !file_exists($path)) {
 				return true;
@@ -197,7 +197,7 @@ class StageTask extends Shell {
 
 		exec('git diff --no-index ' . escapeshellarg($oPath) . ' ' . escapeshellarg($uPath), $output);
 
-		$output = implode($output, "\n");
+		$output = implode("\n", $output);
 		$i = strrpos($output, $final);
 		$diff = substr($output, ($i + 41));
 
@@ -207,8 +207,8 @@ class StageTask extends Shell {
 				sprintf(
 					'<info>Move %s to %s and update</info>',
 					Debugger::trimPath($path),
-					Debugger::trimPath($to)
-				)
+					Debugger::trimPath($to),
+				),
 			);
 		} else {
 			$this->out(sprintf('<info>Update %s</info>', Debugger::trimPath($path)));
@@ -343,7 +343,7 @@ class StageTask extends Shell {
 			foreach ($excludes as &$exclude) {
 				$exclude = preg_quote($exclude);
 			}
-			$excludePattern = '@[\\\\/](' . implode($excludes, '|') . ')[\\\\/]@';
+			$excludePattern = '@[\\\\/](' . implode('|', $excludes) . ')[\\\\/]@';
 			$root = $this->_getRoot();
 
 			foreach ($this->_paths as $path) {
@@ -355,7 +355,7 @@ class StageTask extends Shell {
 					continue;
 				}
 				$Iterator = new RecursiveIteratorIterator(
-					new RecursiveDirectoryIterator($path)
+					new RecursiveDirectoryIterator($path),
 				);
 				/** @var \SplFileInfo $file */
 				foreach ($Iterator as $file) {

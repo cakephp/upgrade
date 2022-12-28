@@ -68,8 +68,7 @@ class RectorCommand extends Command {
 	protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser {
 		$parser = parent::buildOptionParser($parser)
 			->setDescription('A wrapper around rector to help upgrading between 3.x and 4.x. ' .
-				'Be sure to have a backup of your application before running these commands.'
-			)->addArgument('path', [
+				'Be sure to have a backup of your application before running these commands.')->addArgument('path', [
 				'help' => 'Path to project or plugin.',
 				'required' => true,
 			])->addOption('level', [
@@ -79,7 +78,7 @@ class RectorCommand extends Command {
 				'help' => 'Fix fixable issues.',
 				'short' => 'f',
 				'boolean' => true,
-			])->addOption('exact', [
+				])->addOption('exact', [
 				'help' => 'Dont include previous ones.',
 				'short' => 'e',
 				'boolean' => true,

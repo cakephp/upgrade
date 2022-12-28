@@ -101,7 +101,7 @@ class FixtureLoadingTask extends BaseTask {
 			$processor,
 			$contents,
 			-1,
-			$count
+			$count,
 		);
 
 		return $contents;

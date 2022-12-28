@@ -171,8 +171,7 @@ class UpgradeLegacyShell extends Shell {
 	public function getOptionParser(): ConsoleOptionParser {
 		$parser = parent::getOptionParser()
 			->setDescription('A shell to help automate upgrading from CakePHP 2.x to 3.x. ' .
-				'Be sure to have a backup of your application before running these commands.'
-			)
+				'Be sure to have a backup of your application before running these commands.')
 			->addSubcommand('locations', [
 				'help' => 'Move files/directories around. Run this *before* adding namespaces with the namespaces command.',
 				'parser' => $this->Locations->getOptionParser(),
@@ -262,7 +261,7 @@ class UpgradeLegacyShell extends Shell {
 				'parser' => $this->PrefixedTemplates->getOptionParser(),
 			]);
 
-		/** @var \Cake\Console\ConsoleInputSubcommand[] $subcommands */
+		/** @var array<\Cake\Console\ConsoleInputSubcommand> $subcommands */
 		$subcommands = $parser->subcommands();
 		$allParser = null;
 		foreach ($subcommands as $subcommand) {

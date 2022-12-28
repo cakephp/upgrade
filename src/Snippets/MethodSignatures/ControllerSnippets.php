@@ -5,7 +5,7 @@ namespace Cake\Upgrade\Snippets\MethodSignatures;
 class ControllerSnippets {
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected $callbacks = [
 		'beforeFilter',
@@ -20,7 +20,7 @@ class ControllerSnippets {
 	public function snippets(): array {
 		return array_merge(
 			$this->events(),
-			$this->plugins()
+			$this->plugins(),
 		);
 	}
 

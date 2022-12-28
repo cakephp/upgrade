@@ -77,8 +77,7 @@ class CsCommand extends Command {
 	protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser {
 		$parser = parent::buildOptionParser($parser)
 			->setDescription('A tool to help automate cs fixing. Quickly execute groups of sniffer rules. ' .
-				'Be sure to have a backup of your application before running these commands.'
-			)->addArgument('path', [
+				'Be sure to have a backup of your application before running these commands.')->addArgument('path', [
 				'help' => 'Path to project.',
 				'required' => true,
 			])->addOption('level', [
@@ -88,7 +87,7 @@ class CsCommand extends Command {
 				'help' => 'Fix fixable issues.',
 				'short' => 'f',
 				'boolean' => true,
-			])->addOption('explain', [
+				])->addOption('explain', [
 				'help' => 'Explain available sniffs.',
 				'short' => 'e',
 				'boolean' => true,
@@ -198,9 +197,9 @@ class CsCommand extends Command {
 XML;
 
 		/*
-	<config name="installed_paths" value="../../tmp/rulesets/slevomat-code-sniffer"/>
-	<config name="installed_paths" value="../../tmp/rulesets/spryker-code-sniffer"/>
-	<config name="installed_paths" value="../../tmp/rulesets/psr2r-code-sniffer"/>
+		<config name="installed_paths" value="../../tmp/rulesets/slevomat-code-sniffer"/>
+		<config name="installed_paths" value="../../tmp/rulesets/spryker-code-sniffer"/>
+		<config name="installed_paths" value="../../tmp/rulesets/psr2r-code-sniffer"/>
 
 		 */
 
@@ -214,7 +213,7 @@ XML;
 	 */
 	protected function standard(string $level): array {
 		if (!empty($this->levels[$level])) {
-			/** @var string|string[] $level */
+			/** @var array<string>|string $level */
 			$level = $this->levels[$level];
 			if (is_array($level)) {
 				$level = implode(',', $level);

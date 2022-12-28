@@ -70,8 +70,7 @@ class UpgradeCommand extends Command {
 	protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser {
 		$parser = parent::buildOptionParser($parser)
 			->setDescription('A tool to help automate upgrading CakePHP apps and plugins. ' .
-				'Be sure to have a backup of your application before running these commands.'
-			)->addArgument('path', [
+				'Be sure to have a backup of your application before running these commands.')->addArgument('path', [
 				'name' => 'Path to app',
 				'required' => true,
 			]);

@@ -37,8 +37,8 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Datasource\ConnectionManager;
-use Cake\Error\ConsoleErrorHandler;
-use Cake\Error\ErrorHandler;
+use Cake\Error\ErrorTrap;
+use Cake\Error\ExceptionTrap;
 use Cake\Log\Log;
 
 /**
@@ -57,7 +57,7 @@ try {
 	// You can use this file to provide local overrides to your
 	// shared configuration.
 	// Configure::load('app.local', 'default');
-} catch (\Exception $e) {
+} catch (Exception $e) {
 	exit('Unable to load config/app.php. Create it by copying config/app.default.php to config/app.php.');
 }
 
@@ -77,11 +77,8 @@ mb_internal_encoding(Configure::read('App.encoding'));
 	/**
 	 * Register application error and exception handlers.
 	 */
-if (PHP_SAPI === 'cli') {
-	(new ConsoleErrorHandler(Configure::consume('Error')))->register();
-} else {
-	(new ErrorHandler(Configure::consume('Error')))->register();
-}
+(new ErrorTrap(Configure::read('Error')))->register();
+(new ExceptionTrap(Configure::read('Error')))->register();
 
 	/**
 	 * Set the full base url.
@@ -105,21 +102,3 @@ if (!Configure::read('App.fullBaseUrl')) {
 Cache::setConfig(Configure::consume('Cache'));
 ConnectionManager::setConfig(Configure::consume('Datasources'));
 Log::setConfig(Configure::consume('Log'));
-
-/**
- * Custom Inflector rules, can be set to correctly pluralize or singularize table, model, controller names or whatever other
- * string is passed to the inflection functions
- *
- * Inflector::rules('singular', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
- * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
- */
-
-/**
- * Plugins need to be loaded manually, you can either load them one by one or all of them in a single call
- * Uncomment one of the lines below, as you need. make sure you read the documentation on Plugin to use more
- * advanced ways of loading plugins
- *
- * Plugin::loadAll(); // Loads all plugins at once
- * Plugin::load('DebugKit'); //Loads a single plugin named DebugKit
- */
-//Plugin::load('IdeHelper');
