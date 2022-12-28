@@ -68,6 +68,8 @@ class FixturesTask extends BaseTask {
 
 		// Process field property.
 		$processor = function ($matches) use ($export) {
+			/** @var array<string, array<mixed>> $data */
+			$data = [];
 			//@codingStandardsIgnoreStart
 			eval('$data = [' . $matches[2] . '];');
 			//@codingStandardsIgnoreEnd

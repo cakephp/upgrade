@@ -2,11 +2,18 @@
 
 namespace Cake\Upgrade\Command;
 
+use Cake\Command\Command;
 use Cake\Console\Arguments;
-use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Exception\StopException;
+use Cake\Upgrade\Processor\Processor;
+use Cake\Upgrade\Task\Cake50\CiTask;
+use Cake\Upgrade\Task\Cake50\ComposerTask;
+use Cake\Upgrade\Task\Cake50\LoadModelTask;
+use Cake\Upgrade\Task\Cake50\TestsBootstrapFixtureTask;
+use Cake\Upgrade\Task\ChangeSet;
+use InvalidArgumentException;
 
 class UpgradeCommand extends Command {
 
@@ -20,11 +27,11 @@ class UpgradeCommand extends Command {
 	/**
 	 * Any levels always include previous ones.
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
-	protected $levels = [
-		'cakephp38',
-		'cakephp40',
+	protected array $levels = [
+		'cake45',
+		'cake50',
 	];
 
 	/**
@@ -35,7 +42,7 @@ class UpgradeCommand extends Command {
 	 * @param \Cake\Console\ConsoleIo $io The console io
 	 *
 	 * @throws \Cake\Console\Exception\StopException
-	 * @return int|null The exit code or null for success
+	 * @return int|null|void The exit code or null for success
 	 */
 	public function execute(Arguments $args, ConsoleIo $io) {
 		$path = $args->getArgumentAt(0);
@@ -60,6 +67,9 @@ class UpgradeCommand extends Command {
 		$this->process($path, $args, $io);
 
 		$io->out('Done :)');
+		if (!$args->getOption('verbose')) {
+			$io->out('Tip: Use -v (verbose mode) and -d (dry-run) to see diff/changes without executing them.');
+		}
 	}
 
 	/**
@@ -71,9 +81,17 @@ class UpgradeCommand extends Command {
 		$parser = parent::buildOptionParser($parser)
 			->setDescription('A tool to help automate upgrading CakePHP apps and plugins. ' .
 				'Be sure to have a backup of your application before running these commands.')->addArgument('path', [
-				'name' => 'Path to app',
+				'name' => 'Path to app/plugin ROOT (where composer.json is)',
 				'required' => true,
 			]);
+		$parser->addOption('set', [
+			'help' => 'What set to use (TODO: defaults to all available up to the one defined in composer.json)',
+		]);
+		$parser->addOption('dry-run', [
+			'help' => 'Dry run.',
+			'short' => 'd',
+			'boolean' => true,
+		]);
 
 		return $parser;
 	}
@@ -85,7 +103,62 @@ class UpgradeCommand extends Command {
 	 * @return void
 	 */
 	protected function process(string $path, Arguments $args, ConsoleIo $io) {
-		//TODO delegate to stack of tasks
+		$io->out('Processing: ' . $path);
+		$io->out('Sets:');
+		$levels = $this->levels($args->getOption('set'));
+
+		$changeSet = new ChangeSet();
+		foreach ($levels as $level) {
+			$io->out(' - ' . $level);
+
+			$options = $args->getOptions() + [
+				'path' => $path,
+			];
+			$changes = $this->taskProcessor($level, $options)->process($path);
+			$changeSet->add($changes);
+		}
+
+		$io->success(count($changeSet) . ' changes');
+		if ($args->getOption('verbose')) {
+			$io->success((string)$changeSet);
+		}
+	}
+
+	/**
+	 * @param string|null $set
+	 *
+	 * @return array<string>
+	 */
+	private function levels(?string $set): array {
+		if (!$set) {
+			return $this->levels;
+		}
+
+		foreach ($this->levels as $level) {
+			if ($set === $level) {
+				return [$set];
+			}
+		}
+
+		throw new InvalidArgumentException('No such set/level found: ' . $set);
+	}
+
+	/**
+	 * @param string $level
+	 * @param array<string, mixed> $config
+	 *
+	 * @return \Cake\Upgrade\Processor\Processor
+	 */
+	protected function taskProcessor(string $level, array $config): Processor {
+		//TODO: make dynamic, configurable
+		$tasks = [
+			ComposerTask::class,
+			CiTask::class,
+			LoadModelTask::class,
+			TestsBootstrapFixtureTask::class,
+		];
+
+		return new Processor($tasks, $config);
 	}
 
 }

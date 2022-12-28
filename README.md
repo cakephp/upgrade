@@ -1,17 +1,40 @@
 # CakePHP Upgrade tool
 [![Build Status](https://api.travis-ci.org/dereuromark/upgrade.svg?branch=develop)](https://travis-ci.org/dereuromark/upgrade)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 
 Upgrade tool as standalone application for CakePHP meant to facilitate migrating
-- from CakePHP 2.x to 3.x.
-- supports the minor upgrades in 3.x - up until currently 3.8+.
+- ~~from CakePHP 2.x to 3.x.~~ [EOL]
+- ~~supports the minor upgrades in 3.x - up until currently 3.8+.~~ [EOL]
 - supports basic stuff for 4.x
+- supports basic stuff for 5.x + extension development possible
 
 **Warning** This tool is still under development and doesn't handle all aspects of migrating.
 
 ---
+
+**CakePHP 5**
+
+The brand new upgrade command of this tool provides a configurable approach.
+Define sets/levels and run it over your app or plugin:
+
+```
+bin/cake upgrade /path/to/repo -v -d
+```
+Keep verbose and dry-run for checking if it works as expected, then apply your changes for real.
+
+This tool works best in combination with the official [upgrade](https://github.com/cakephp/upgrade/) tool and its rector based approaches.
+- dereuromark/upgrade handles basic cases and non-PHP files
+- cakephp/upgrade handles PHP class files via rector (requires valid PHP files)
+
+If rector fails or cannot handle your app, you can try to use this tool completely by defining more regex
+based rules for example.
+
+For docs on this check [here](docs/Upgrade.md).
+
+---
+
 **CakePHP 4**
 
 Tasks available now for CakePHP4 (and super helpful):
@@ -22,6 +45,7 @@ Tasks available now for CakePHP4 (and super helpful):
 Fore more please look into [wiki](https://github.com/dereuromark/upgrade/wiki/Tips#upgrading-to-4x) for hot new tips, also add yours!
 
 ---
+
 **CakePHP 3**
 Please look into [this article](https://www.dereuromark.de/2018/03/14/cakephp-3-6-is-coming/) for Upgrading applications for 3.6+. The new tool rector seems to be very promising.
 

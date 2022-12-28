@@ -79,6 +79,7 @@ class FixtureLoadingTask extends BaseTask {
 
 		// Process field property.
 		$processor = function ($matches) use ($export) {
+			$data = [];
 			//@codingStandardsIgnoreStart
 			eval('$data = [' . $matches[2] . '];');
 			//@codingStandardsIgnoreEnd

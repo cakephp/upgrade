@@ -2,8 +2,8 @@
 
 namespace Cake\Upgrade\Command;
 
+use Cake\Command\Command;
 use Cake\Console\Arguments;
-use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Exception\StopException;
@@ -44,7 +44,7 @@ class CsCommand extends Command {
 	 * @param \Cake\Console\ConsoleIo $io The console io
 	 *
 	 * @throws \Cake\Console\Exception\StopException
-	 * @return int|null The exit code or null for success
+	 * @return int|null|void The exit code or null for success
 	 */
 	public function execute(Arguments $args, ConsoleIo $io) {
 		$path = $args->getArgumentAt(0);

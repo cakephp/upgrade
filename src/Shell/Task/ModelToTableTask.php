@@ -65,7 +65,7 @@ class ModelToTableTask extends BaseTask {
 		$changed = $this->Stage->change($path, $original, $contents);
 		$moved = $this->Stage->move($path, $new);
 
-		return $changed & $moved;
+		return (bool)($changed & $moved);
 	}
 
 	/**

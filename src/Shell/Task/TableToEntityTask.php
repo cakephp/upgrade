@@ -54,7 +54,7 @@ class TableToEntityTask extends BaseTask {
 		    return false;
 		}
 
-		$namespace = $this->_getNamespace($path);
+		$namespace = $this->_getNamespace();
 
 		$content = <<<TXT
 <?php
