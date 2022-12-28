@@ -11,6 +11,7 @@ use Cake\Upgrade\Processor\Processor;
 use Cake\Upgrade\Task\Cake50\CiTask;
 use Cake\Upgrade\Task\Cake50\ComposerTask;
 use Cake\Upgrade\Task\Cake50\LoadModelTask;
+use Cake\Upgrade\Task\Cake50\ReadmeTask;
 use Cake\Upgrade\Task\Cake50\TestsBootstrapFixtureTask;
 use Cake\Upgrade\Task\ChangeSet;
 use InvalidArgumentException;
@@ -153,6 +154,7 @@ class UpgradeCommand extends Command {
 		//TODO: make dynamic, configurable
 		$tasks = [
 			ComposerTask::class,
+			ReadmeTask::class,
 			CiTask::class,
 			LoadModelTask::class,
 			TestsBootstrapFixtureTask::class,
