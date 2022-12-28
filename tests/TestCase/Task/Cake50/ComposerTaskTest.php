@@ -27,7 +27,9 @@ class ComposerTaskTest extends TestCase {
 		$expected = <<<TXT
 composer.json
 -        "php": ">=7.4",
+-        "cakephp/cakephp": "^4.2.0",
 +        "php": ">=8.1",
++        "cakephp/cakephp": "^5.0.0@beta",
 
 TXT;
 		$this->assertTextEquals($expected, $changesString);

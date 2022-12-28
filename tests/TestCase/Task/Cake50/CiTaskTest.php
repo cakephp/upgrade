@@ -31,9 +31,9 @@ class CiTaskTest extends TestCase {
 -          - php-version: '7.4'
 +          - php-version: '8.1'
 -        if [[ \${{ matrix.php-version }} == '7.4' && \${{ matrix.db-type }} == 'sqlite' ]]; then
-+        if [[ \${{ matrix.php-version }} == '8.1' ]]; then
++        if [[ \${{ matrix.php-version }} == '8.1' && \${{ matrix.db-type }} == 'sqlite' ]]; then
 -      if: success() && matrix.php-version == '7.4' && matrix.db-type == 'sqlite'
-+      if: success() && matrix.php-version == '8.1'
++      if: success() && matrix.php-version == '8.1' && matrix.db-type == 'sqlite'
 -        php-version: '7.4'
 +        php-version: '8.1'
 
