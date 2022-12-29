@@ -11,8 +11,10 @@ use Cake\Upgrade\Processor\Processor;
 use Cake\Upgrade\Task\Cake50\CiTask;
 use Cake\Upgrade\Task\Cake50\ComposerTask;
 use Cake\Upgrade\Task\Cake50\LoadModelTask;
+use Cake\Upgrade\Task\Cake50\PhpunitXmlTask;
 use Cake\Upgrade\Task\Cake50\ReadmeTask;
 use Cake\Upgrade\Task\Cake50\TestsBootstrapFixtureTask;
+use Cake\Upgrade\Task\Cake50\TestsFixtureSchemaTask;
 use Cake\Upgrade\Task\ChangeSet;
 use InvalidArgumentException;
 
@@ -158,6 +160,8 @@ class UpgradeCommand extends Command {
 			CiTask::class,
 			LoadModelTask::class,
 			TestsBootstrapFixtureTask::class,
+			TestsFixtureSchemaTask::class,
+			PhpunitXmlTask::class,
 		];
 
 		return new Processor($tasks, $config);

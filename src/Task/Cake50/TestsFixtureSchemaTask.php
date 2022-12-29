@@ -35,9 +35,6 @@ class TestsFixtureSchemaTask extends Task implements RepoTaskInterface {
 
 		$templateFilePath = ROOT . DS . 'resources' . DS . 'schema.php';
 		$content = (string)file_get_contents($templateFilePath);
-		if (strpos($content, 'env(\'FIXTURE_SCHEMA_METADATA\')')) {
-			return;
-		}
 
 		$namespace = $this->getNamespace($path) ?: 'App';
 		$newContent = str_replace('{{namespace}}', $namespace, $content);
