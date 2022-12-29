@@ -9,6 +9,7 @@ use Cake\Upgrade\Task\Task;
  * Adjusts:
  * - Upgrades <filter> to <coverage>
  * - Adds <env name="FIXTURE_SCHEMA_METADATA" value="tests/schema.php"/> if needed
+ * - Replaces <listeners> with <extensions> //FIXME
  * - TODO: Header attr? xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd etc
  */
 class PhpunitXmlTask extends Task implements RepoTaskInterface {
@@ -29,20 +30,12 @@ class PhpunitXmlTask extends Task implements RepoTaskInterface {
 			return;
 		}
 
-		if (empty($this->config['skipSchemaCheck']) && !$this->hasSchemaFile($path)) {
-			return;
-		}
-
 		$content = (string)file_get_contents($filePath);
-		if (strpos($content, '<env name="FIXTURE_SCHEMA_METADATA"') !== false) {
-			return;
-		}
+		$newContent = $this->replaceListenerWithExtension($content);
 
-		preg_match('#^(\s+)\</php\>#mu', $content, $matches);
-		$indentation = $matches ? $matches[1] : '    ';
+		//dd($newContent);
 
-		$replace = PHP_EOL . $indentation . $indentation . '<env name="FIXTURE_SCHEMA_METADATA" value="tests/schema.php"/>' . PHP_EOL . $indentation . '</php>';
-		$newContent = preg_replace('#^(\s+)\</php\>#mu', $replace, $content);
+		$newContent = $this->addFixtureSchemadataPath($path, $newContent);
 
 		/*
 		$xml = Xml::build($content);
@@ -54,6 +47,30 @@ class PhpunitXmlTask extends Task implements RepoTaskInterface {
 		*/
 
 		$this->persistFile($filePath, $content, $newContent);
+	}
+
+	/**
+	 * @param string $path
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	protected function addFixtureSchemadataPath(string $path, string $content): string {
+		if (empty($this->config['skipSchemaCheck']) && !$this->hasSchemaFile($path)) {
+			return $content;
+		}
+
+		if (strpos($content, '<env name="FIXTURE_SCHEMA_METADATA"') !== false) {
+			return $content;
+		}
+
+		preg_match('#^(\s+)\</php\>#mu', $content, $matches);
+		$indentation = $matches ? $matches[1] : '    ';
+
+		$replace = PHP_EOL . $indentation . $indentation . '<env name="FIXTURE_SCHEMA_METADATA" value="tests/schema.php"/>' . PHP_EOL . $indentation . '</php>';
+		$content = preg_replace('#^(\s+)\</php\>#mu', $replace, $content);
+
+		return $content;
 	}
 
 	/**
@@ -81,6 +98,17 @@ class PhpunitXmlTask extends Task implements RepoTaskInterface {
 		$schemaFilePath = $path . static::FILE_SCHEMA;
 
 		return file_exists($schemaFilePath);
+	}
+
+	/**
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	protected function replaceListenerWithExtension(string $content): string
+	{
+		//FIXME
+		return preg_replace('#\<listeners\>.+\</listeners\>#mu', '<extensions><extension class="\Cake\TestSuite\Fixture\PHPUnitExtension"/></extensions>', $content);
 	}
 
 }
