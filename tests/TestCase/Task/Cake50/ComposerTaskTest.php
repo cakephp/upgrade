@@ -29,7 +29,10 @@ composer.json
 -        "php": ">=7.4",
 -        "cakephp/cakephp": "^4.2.0",
 +        "php": ">=8.1",
-+        "cakephp/cakephp": "^5.0.0@beta",
++        "cakephp/cakephp": "5.x-dev",
+-    }
++    },
++    "minimum-stability": "dev"
 
 TXT;
 		$this->assertTextEquals($expected, $changesString);
