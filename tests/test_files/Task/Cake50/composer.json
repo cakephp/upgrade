@@ -13,5 +13,11 @@
 		"cakephp/migrations": "^3.0.0",
 		"dereuromark/cakephp-shim": "^2.3.0",
 		"phpunit/phpunit": "^9.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"Foo\\Bar\\": "src/",
+			"Foo\\Bar\\Test\\Fixture\\": "tests/Fixture/"
+		}
 	}
 }

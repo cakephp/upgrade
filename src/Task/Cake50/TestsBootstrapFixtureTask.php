@@ -7,7 +7,7 @@ use Cake\Upgrade\Task\Task;
 
 /**
  * Adjusts:
- * - ->loadModel()-> to ->fetchTable()->
+ * - Adds schema loader to bootstrap if needed
  */
 class TestsBootstrapFixtureTask extends Task implements RepoTaskInterface {
 
