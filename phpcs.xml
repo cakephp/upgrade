@@ -4,5 +4,7 @@
 
     <rule ref="CakePHP" />
 
+    <exclude-pattern>src/Rector</exclude-pattern>
     <exclude-pattern>tests/test_apps</exclude-pattern>
+    <exclude-pattern>tests/TestCase/Rector</exclude-pattern>
 </ruleset>
