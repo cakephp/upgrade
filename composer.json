@@ -1,6 +1,6 @@
 {
     "name": "cakephp/upgrade",
-    "type": "project",
+    "type": "rector-extension",
     "description": "Command line tool for updating CakePHP applications and plugins.",
     "homepage": "https://cakephp.org",
     "license": "MIT",
@@ -8,20 +8,18 @@
         "php": "^8.0",
         "cakephp/console": "^4.0",
         "nette/utils": "^3.2",
-        "rector/rector": "^0.14.6",
+        "rector/rector": "^0.14",
         "symfony/string": "^6.0",
         "webmozart/assert": "^1.11"
     },
     "autoload": {
         "psr-4": {
-            "Cake\\Upgrade\\": "src",
-            "Rector\\CakePHP\\": "src/RectorCakePHP"
+            "Cake\\Upgrade\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Cake\\Upgrade\\Test\\": "tests",
-            "Rector\\CakePHP\\Tests\\Rector\\": "tests/Rector"
+            "Cake\\Upgrade\\Test\\": "tests"
         }
     },
     "prefer-stable": true,
@@ -35,6 +33,13 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "rector/extension-installer": true
+        }
+    },
+    "extra": {
+        "rector": {
+            "includes": [
+                "config/rector/config.php"
+            ]
         }
     },
     "support": {
