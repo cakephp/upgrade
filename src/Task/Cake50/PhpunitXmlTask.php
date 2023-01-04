@@ -105,10 +105,9 @@ class PhpunitXmlTask extends Task implements RepoTaskInterface {
 	 *
 	 * @return string
 	 */
-	protected function replaceListenerWithExtension(string $content): string
-	{
+	protected function replaceListenerWithExtension(string $content): string {
 		//FIXME
-		return preg_replace('#\<listeners\>.+\</listeners\>#mu', '<extensions><extension class="\Cake\TestSuite\Fixture\PHPUnitExtension"/></extensions>', $content);
+		return preg_replace('#\<listeners\>.+?\</listeners\>#mu', '<extensions><extension class="\Cake\TestSuite\Fixture\PHPUnitExtension"/></extensions>', $content);
 	}
 
 }

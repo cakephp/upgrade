@@ -8,7 +8,7 @@ use Cake\Upgrade\Task\FileTaskInterface;
 class Processor {
 
 	/**
-	 * @var array<\Cake\Upgrade\Task\TaskInterface>
+	 * @var array<class-string<\Cake\Upgrade\Task\TaskInterface>>
 	 */
 	protected array $tasks;
 
@@ -18,7 +18,7 @@ class Processor {
 	protected array $config;
 
 	/**
-	 * @param array<\Cake\Upgrade\Task\TaskInterface> $tasks
+	 * @param array<class-string<\Cake\Upgrade\Task\TaskInterface>> $tasks
 	 * @param array<string, mixed> $config
 	 */
 	public function __construct(array $tasks, array $config) {

@@ -3,9 +3,9 @@
 namespace Cake\Upgrade\Test\TestCase\Task\Cake50;
 
 use Cake\TestSuite\TestCase;
-use Cake\Upgrade\Task\Cake50\PhpunitXmlTask;
+use Cake\Upgrade\Task\Cake50\TypedClosureTask;
 
-class PhpunitXmlTaskTest extends TestCase {
+class TypedClosureTaskTest extends TestCase {
 
 	/**
 	 * Basic test to simulate running on this repo
@@ -16,18 +16,21 @@ class PhpunitXmlTaskTest extends TestCase {
 	 */
 	public function testRun() {
 		$path = TESTS . 'test_files' . DS . 'Task' . DS . 'Cake50' . DS;
+		$filePath = $path . 'src' . DS . 'Plugin.php';
 
-		$task = new PhpunitXmlTask(['path' => $path, 'skipSchemaCheck' => true]);
-		$task->run($path);
+		$task = new TypedClosureTask(['path' => $path]);
+		$task->run($filePath);
 
 		$changes = $task->getChanges();
 		$this->assertCount(1, $changes);
 
 		$changesString = (string)$changes;
 		$expected = <<<'TXT'
-phpunit.xml.dist
-+
-+        <env name="FIXTURE_SCHEMA_METADATA" value="tests/schema.php"/>
+src/Plugin.php
+-        $routes->prefix('Admin', function (RouteBuilder $routes) {
+-            $routes->plugin('Expose', function (RouteBuilder $routes) {
++        $routes->prefix('Admin', function (RouteBuilder $routes): void {
++            $routes->plugin('Expose', function (RouteBuilder $routes): void {
 
 TXT;
 		$this->assertTextEquals($expected, $changesString);

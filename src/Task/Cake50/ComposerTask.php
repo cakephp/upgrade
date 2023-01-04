@@ -48,17 +48,17 @@ class ComposerTask extends Task implements RepoTaskInterface {
 
 			return '"php": "' . static::CHAR_PHP . $version . '"';
 		};
-		$newContent = (string)preg_replace_callback('#"php": "' . preg_quote(static::CHAR_PHP, '#') . '(.+)"#', $callable, $content);
+		$newContent = preg_replace_callback('#"php": "' . preg_quote(static::CHAR_PHP, '#') . '(.+)"#', $callable, $content);
 
 		$callable = function ($matches) {
 			$version = version_compare($matches[1], static::TARGET_VERSION_CAKEPHP, '<') ? static::TARGET_VERSION_CAKEPHP : $matches[1];
-			if (strpos(static::TARGET_VERSION_CAKEPHP, 'x-dev') === false) {
+			if (strpos($version, 'x-dev') === false) {
 				$version = static::CHAR_CAKEPHP . $version;
 			}
 
 			return '"cakephp/cakephp": "' . $version . '"';
 		};
-		$newContent = (string)preg_replace_callback('#"cakephp/cakephp": "' . preg_quote(static::CHAR_CAKEPHP, '#') . '(.+)"#', $callable, $newContent);
+		$newContent = preg_replace_callback('#"cakephp/cakephp": "' . preg_quote(static::CHAR_CAKEPHP, '#') . '(.+)"#', $callable, $newContent);
 
 		if (strpos(static::TARGET_VERSION_CAKEPHP, 'x-dev') !== false) {
 			$array = ComposerJson::fromString($newContent);
@@ -66,9 +66,32 @@ class ComposerTask extends Task implements RepoTaskInterface {
 				$array['minimum-stability'] = 'dev'; // beta is not enough for now
 				$newContent = ComposerJson::toString($array, ComposerJson::indentation($content));
 			}
+
+			$newContent = $this->replaceDereuromarkPlugins($newContent);
 		}
 
 		$this->persistFile($filePath, $content, $newContent);
+	}
+
+	/**
+	 * Sets dev-cake5 branch for stable modules.
+	 *
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	protected function replaceDereuromarkPlugins(string $content): string {
+		$callable = function ($matches) {
+			$name = $matches[1];
+			$constraint = $matches[2];
+			if (strpos($constraint, '^') !== false) {
+				$constraint = 'dev-cake5';
+			}
+
+			return '"dereuromark/cakephp-' . $name . '": "' . $constraint . '"';
+		};
+
+		return preg_replace_callback('#"dereuromark/cakephp-(\w+)": "(.+)"#', $callable, $content);
 	}
 
 }

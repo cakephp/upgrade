@@ -3,9 +3,9 @@
 namespace Cake\Upgrade\Test\TestCase\Task\Cake50;
 
 use Cake\TestSuite\TestCase;
-use Cake\Upgrade\Task\Cake50\PhpunitXmlTask;
+use Cake\Upgrade\Task\Cake50\PhpcsPsr2rTask;
 
-class PhpunitXmlTaskTest extends TestCase {
+class PhpcsPsr2rTaskTest extends TestCase {
 
 	/**
 	 * Basic test to simulate running on this repo
@@ -17,20 +17,15 @@ class PhpunitXmlTaskTest extends TestCase {
 	public function testRun() {
 		$path = TESTS . 'test_files' . DS . 'Task' . DS . 'Cake50' . DS;
 
-		$task = new PhpunitXmlTask(['path' => $path, 'skipSchemaCheck' => true]);
+		$task = new PhpcsPsr2rTask(['path' => $path]);
 		$task->run($path);
 
 		$changes = $task->getChanges();
 		$this->assertCount(1, $changes);
 
 		$changesString = (string)$changes;
-		$expected = <<<'TXT'
-phpunit.xml.dist
-+
-+        <env name="FIXTURE_SCHEMA_METADATA" value="tests/schema.php"/>
-
-TXT;
-		$this->assertTextEquals($expected, $changesString);
+		$expected = '<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">';
+		$this->assertTextContains($expected, $changesString);
 	}
 
 }

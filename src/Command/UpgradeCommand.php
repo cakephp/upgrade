@@ -7,15 +7,30 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Exception\StopException;
+use Cake\Core\Configure;
 use Cake\Upgrade\Processor\Processor;
 use Cake\Upgrade\Task\Cake50\CiTask;
+use Cake\Upgrade\Task\Cake50\ComposerPsr2rTask;
 use Cake\Upgrade\Task\Cake50\ComposerTask;
+use Cake\Upgrade\Task\Cake50\DatabaseTypeDriverTask;
 use Cake\Upgrade\Task\Cake50\LoadModelTask;
+use Cake\Upgrade\Task\Cake50\ModelValidatorTask;
 use Cake\Upgrade\Task\Cake50\PhpunitXmlTask;
 use Cake\Upgrade\Task\Cake50\ReadmeTask;
+use Cake\Upgrade\Task\Cake50\RemoveOutdatedCodeTask;
+use Cake\Upgrade\Task\Cake50\ShellToCommandTask;
 use Cake\Upgrade\Task\Cake50\TestsBootstrapFixtureTask;
+use Cake\Upgrade\Task\Cake50\TestsControllerInstantiationTask;
 use Cake\Upgrade\Task\Cake50\TestsFixtureSchemaTask;
+use Cake\Upgrade\Task\Cake50\TypedClosureTask;
+use Cake\Upgrade\Task\Cake50\TypedPropertyEntityTask;
+use Cake\Upgrade\Task\Cake50\TypedPropertyFixtureTask;
+use Cake\Upgrade\Task\Cake50\TypedPropertyPluginTask;
+use Cake\Upgrade\Task\Cake50\TypedPropertyTask;
+use Cake\Upgrade\Task\Cake50\TypedPropertyTestCaseTask;
+use Cake\Upgrade\Task\Cake50\TypeFactoryTask;
 use Cake\Upgrade\Task\ChangeSet;
+use DirectoryIterator;
 use InvalidArgumentException;
 
 class UpgradeCommand extends Command {
@@ -153,18 +168,98 @@ class UpgradeCommand extends Command {
 	 * @return \Cake\Upgrade\Processor\Processor
 	 */
 	protected function taskProcessor(string $level, array $config): Processor {
-		//TODO: make dynamic, configurable
-		$tasks = [
-			ComposerTask::class,
-			ReadmeTask::class,
-			CiTask::class,
-			LoadModelTask::class,
-			TestsBootstrapFixtureTask::class,
-			TestsFixtureSchemaTask::class,
-			PhpunitXmlTask::class,
-		];
+		$tasks = $this->tasks();
 
 		return new Processor($tasks, $config);
+	}
+
+	/**
+	 * @param \Cake\Console\ConsoleOptionParser $parser
+	 * @param \Cake\Console\Arguments $args
+	 * @param \Cake\Console\ConsoleIo $io
+	 *
+	 * @return void
+	 */
+	protected function displayHelp(ConsoleOptionParser $parser, Arguments $args, ConsoleIo $io): void {
+		parent::displayHelp($parser, $args, $io);
+
+		if (!$args->getOption('verbose')) {
+			return;
+		}
+
+		$availableTasks = $this->availableTasks();
+		$tasks = $this->tasks();
+
+		$io->out(count($availableTasks) . ' available native tasks:');
+
+		foreach ($availableTasks as $task) {
+			$message = ' - ' . $task;
+			if (in_array($task, $tasks, true)) {
+				$io->success($message . ' (active)');
+			} else {
+				$io->warning($message);
+			}
+		}
+	}
+
+	/**
+	 * @return array<string>
+	 */
+	protected function tasks(): array {
+		//TODO: make more flexible
+		if (Configure::read('Upgrade.tasks')) {
+			return Configure::read('Upgrade.tasks');
+		}
+
+		$tasks = [
+			ComposerTask::class,
+			ComposerPsr2rTask::class,
+			ReadmeTask::class,
+			CiTask::class,
+			DatabaseTypeDriverTask::class,
+			ModelValidatorTask::class,
+			LoadModelTask::class,
+			TypeFactoryTask::class,
+			ShellToCommandTask::class,
+			TypedClosureTask::class,
+			TypedPropertyTask::class,
+			TypedPropertyPluginTask::class,
+			TypedPropertyEntityTask::class,
+			TypedPropertyFixtureTask::class,
+			TypedPropertyTestCaseTask::class,
+			TestsBootstrapFixtureTask::class,
+			TestsFixtureSchemaTask::class,
+			TestsControllerInstantiationTask::class,
+			PhpunitXmlTask::class,
+			//PhpcsPsr2rTask::class,
+			RemoveOutdatedCodeTask::class,
+		];
+
+		return $tasks;
+	}
+
+	/**
+	 * @return array<string>
+	 */
+	protected function availableTasks(): array {
+		$tasks = [];
+
+		/**
+		 * @var \DirectoryIterator<\DirectoryIterator> $iterator
+		 */
+		$iterator = new DirectoryIterator(ROOT . DS . 'src' . DS . 'Task' . DS . 'Cake50');
+		foreach ($iterator as $file) {
+			if (!preg_match('/(\w+)Task.php$/', (string)$file, $matches)) {
+				continue;
+			}
+
+			$name = $matches[1];
+			$class = 'Cake\\Upgrade\\Task\\Cake50\\' . $name . 'Task';
+
+			$tasks[] = $class;
+		}
+
+		return $tasks;
 	}
 
 }

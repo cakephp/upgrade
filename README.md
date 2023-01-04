@@ -31,6 +31,9 @@ This tool works best in combination with the official [upgrade](https://github.c
 If rector fails or cannot handle your app, you can try to use this tool completely by defining more regex
 based rules for example.
 
+You can check active vs available tasks using `--help` together with `-v`.
+It will list all available ones, active ones are in green.
+
 For docs on this check [here](docs/Upgrade.md).
 
 ---

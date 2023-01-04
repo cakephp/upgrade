@@ -1,26 +1,35 @@
 <?php
 
+use Cake\Utility\Inflector;
+
 $tables = [];
 
 /**
- * @var \DirectoryIterator<\DirectoryIterator> $ierator
+ * @var \DirectoryIterator<\DirectoryIterator> $iterator
  */
-$ierator = new DirectoryIterator(__DIR__ . DS . 'Fixture');
-foreach ($ierator as $file) {
+$iterator = new DirectoryIterator(__DIR__ . DS . 'Fixture');
+foreach ($iterator as $file) {
 	if (!preg_match('/(\w+)Fixture.php$/', (string)$file, $matches)) {
 		continue;
 	}
 
 	$name = $matches[1];
-	$tableName = \Cake\Utility\Inflector::underscore($name);
+	$tableName = null;
 	$class = '{{namespace}}\\Test\\Fixture\\' . $name . 'Fixture';
 	try {
-		$object = (new ReflectionClass($class))->getProperty('fields');
+		$fieldsObject = (new ReflectionClass($class))->getProperty('fields');
+		$tableObject = (new ReflectionClass($class))->getProperty('table');
+		$tableName = $tableObject->getDefaultValue();
+
 	} catch (ReflectionException $e) {
 		continue;
 	}
 
-	$array = $object->getDefaultValue();
+	if (!$tableName) {
+		$tableName = Inflector::underscore($name);
+	}
+
+	$array = $fieldsObject->getDefaultValue();
 	$constraints = $array['_constraints'] ?? [];
 	$indexes = $array['_indexes'] ?? [];
 	unset($array['_constraints'], $array['_indexes'], $array['_options']);

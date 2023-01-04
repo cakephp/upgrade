@@ -3,9 +3,9 @@
 namespace Cake\Upgrade\Test\TestCase\Task\Cake50;
 
 use Cake\TestSuite\TestCase;
-use Cake\Upgrade\Task\Cake50\PhpunitXmlTask;
+use Cake\Upgrade\Task\Cake50\ComposerPsr2rTask;
 
-class PhpunitXmlTaskTest extends TestCase {
+class ComposerPsr2rTaskTest extends TestCase {
 
 	/**
 	 * Basic test to simulate running on this repo
@@ -17,7 +17,7 @@ class PhpunitXmlTaskTest extends TestCase {
 	public function testRun() {
 		$path = TESTS . 'test_files' . DS . 'Task' . DS . 'Cake50' . DS;
 
-		$task = new PhpunitXmlTask(['path' => $path, 'skipSchemaCheck' => true]);
+		$task = new ComposerPsr2rTask(['path' => $path]);
 		$task->run($path);
 
 		$changes = $task->getChanges();
@@ -25,9 +25,9 @@ class PhpunitXmlTaskTest extends TestCase {
 
 		$changesString = (string)$changes;
 		$expected = <<<'TXT'
-phpunit.xml.dist
-+
-+        <env name="FIXTURE_SCHEMA_METADATA" value="tests/schema.php"/>
+composer.json
+-        "fig-r/psr2r-sniffer": "dev-master"
++        "fig-r/psr2r-sniffer": "dev-next"
 
 TXT;
 		$this->assertTextEquals($expected, $changesString);

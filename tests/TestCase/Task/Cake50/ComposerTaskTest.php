@@ -24,12 +24,14 @@ class ComposerTaskTest extends TestCase {
 		$this->assertCount(1, $changes);
 
 		$changesString = (string)$changes;
-		$expected = <<<TXT
+		$expected = <<<'TXT'
 composer.json
 -        "php": ">=7.4",
 -        "cakephp/cakephp": "^4.2.0",
 +        "php": ">=8.1",
 +        "cakephp/cakephp": "5.x-dev",
+-        "dereuromark/cakephp-shim": "^2.3.0",
++        "dereuromark/cakephp-shim": "dev-cake5",
 -    }
 +    },
 +    "minimum-stability": "dev"

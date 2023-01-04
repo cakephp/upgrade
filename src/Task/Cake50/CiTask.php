@@ -41,7 +41,7 @@ class CiTask extends Task implements RepoTaskInterface {
 
 			return 'php-version: \'' . $version . '\'';
 		};
-		$newContent = (string)preg_replace_callback('/php-version: \'(.+?)\'/', $callable, $content);
+		$newContent = preg_replace_callback('/php-version: \'(.+?)\'/', $callable, $content);
 
 		$callable = function ($matches) {
 			$versionMin = version_compare($matches[1], static::VERSION_MIN . '.0', '<') ? static::VERSION_MIN : $matches[1];
@@ -49,14 +49,14 @@ class CiTask extends Task implements RepoTaskInterface {
 
 			return 'php-version: [\'' . $versionMin . '\', \'' . $versionMax . '\']';
 		};
-		$newContent = (string)preg_replace_callback('/php-version: \[\'(.+?)\', \'(.+?)\'\]/', $callable, $newContent);
+		$newContent = preg_replace_callback('/php-version: \[\'(.+?)\', \'(.+?)\'\]/', $callable, $newContent);
 
 		$callable = function ($matches) {
 			$version = version_compare($matches[1], static::VERSION_MIN . '.0', '<') ? static::VERSION_MIN : $matches[1];
 
 			return '== \'' . $version . '\'';
 		};
-		$newContent = (string)preg_replace_callback('/== \'(7\..+?)\'/', $callable, $newContent);
+		$newContent = preg_replace_callback('/== \'(7\..+?)\'/', $callable, $newContent);
 
 		$this->persistFile($filePath, $content, $newContent);
 	}

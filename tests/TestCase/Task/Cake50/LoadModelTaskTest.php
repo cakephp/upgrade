@@ -25,13 +25,13 @@ class LoadModelTaskTest extends TestCase {
 		$this->assertCount(1, $changes);
 
 		$changesString = (string)$changes;
-		$expected = <<<TXT
+		$expected = <<<'TXT'
 src/Controller/SomeController.php
--        \$modelName = \$this->getController()->loadModel()->getAlias();
-+        \$modelName = \$this->getController()->fetchTable()->getAlias();
--        \$modelName = \$this->X->loadModel()
+-        $modelName = $this->getController()->loadModel()->getAlias();
++        $modelName = $this->getController()->fetchTable()->getAlias();
+-        $modelName = $this->X->loadModel()
 -            ->getAlias();
-+        \$modelName = \$this->X->fetchTable()->getAlias();
++        $modelName = $this->X->fetchTable()->getAlias();
 
 TXT;
 		$this->assertTextEquals($expected, $changesString);

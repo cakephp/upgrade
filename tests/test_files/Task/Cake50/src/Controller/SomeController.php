@@ -1,6 +1,6 @@
 <?php
 
-namespace Cake\Upgrade\Test\test_files\Task\Cake50\src\Controller;
+namespace SomePlugin\Controller;
 class SomeController {
 
 	public function simple() {

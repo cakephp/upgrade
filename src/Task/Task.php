@@ -4,6 +4,7 @@ namespace Cake\Upgrade\Task;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use RuntimeException;
 
 abstract class Task {
 
@@ -43,6 +44,10 @@ abstract class Task {
 	 * @return void
 	 */
 	protected function persistFile(string $filePath, string $content, string $newContent) {
+		if (!file_exists($filePath) && $content !== '') {
+			throw new RuntimeException('Cannot update a non-existent file `' . $filePath . '`');
+		}
+
 		if ($content === $newContent) {
 			return;
 		}
@@ -80,18 +85,22 @@ abstract class Task {
 		$files = [];
 
 		foreach ($subPaths as $subPath) {
+			if (!is_dir($path . $subPath)) {
+				continue;
+			}
+
 			$iterator = new RecursiveIteratorIterator(
 				new RecursiveDirectoryIterator($path . $subPath),
 			);
 
 			/** @var \SplFileInfo $file */
 			foreach ($iterator as $file) {
-				$path = $file->getPathname();
+				$filePath = $file->getPathname();
 				if (!$file->isFile() || ($ext && $file->getExtension() !== $ext)) {
 					continue;
 				}
 
-				$files[] = $path;
+				$files[] = $filePath;
 			}
 		}
 

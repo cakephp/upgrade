@@ -3,9 +3,9 @@
 namespace Cake\Upgrade\Test\TestCase\Task\Cake50;
 
 use Cake\TestSuite\TestCase;
-use Cake\Upgrade\Task\Cake50\PhpunitXmlTask;
+use Cake\Upgrade\Task\Cake50\TypeFactoryTask;
 
-class PhpunitXmlTaskTest extends TestCase {
+class TypeFactoryTaskTest extends TestCase {
 
 	/**
 	 * Basic test to simulate running on this repo
@@ -16,18 +16,19 @@ class PhpunitXmlTaskTest extends TestCase {
 	 */
 	public function testRun() {
 		$path = TESTS . 'test_files' . DS . 'Task' . DS . 'Cake50' . DS;
+		$filePath = $path . 'src' . DS . 'Model' . DS . 'Behavior' . DS . 'SomeBehavior.php';
 
-		$task = new PhpunitXmlTask(['path' => $path, 'skipSchemaCheck' => true]);
-		$task->run($path);
+		$task = new TypeFactoryTask(['path' => $path]);
+		$task->run($filePath);
 
 		$changes = $task->getChanges();
 		$this->assertCount(1, $changes);
 
 		$changesString = (string)$changes;
 		$expected = <<<'TXT'
-phpunit.xml.dist
-+
-+        <env name="FIXTURE_SCHEMA_METADATA" value="tests/schema.php"/>
+src/Model/Behavior/SomeBehavior.php
+-        Type::map('array', ArrayType::class);
++        \Cake\Database\TypeFactory::map('array', ArrayType::class);
 
 TXT;
 		$this->assertTextEquals($expected, $changesString);

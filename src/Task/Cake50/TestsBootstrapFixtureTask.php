@@ -32,11 +32,11 @@ class TestsBootstrapFixtureTask extends Task implements RepoTaskInterface {
 			return;
 		}
 
-		$newContent = $content . <<<TXT
+		$newContent = $content . <<<'TXT'
 
 if (env('FIXTURE_SCHEMA_METADATA')) {
-	\$loader = new Cake\TestSuite\Fixture\SchemaLoader();
-	\$loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'));
+	$loader = new Cake\TestSuite\Fixture\SchemaLoader();
+	$loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'));
 }
 
 TXT;
