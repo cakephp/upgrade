@@ -9,8 +9,8 @@ use Cake\Upgrade\Task\Task;
  * Adjusts:
  * - Upgrades <filter> to <coverage>
  * - Adds <env name="FIXTURE_SCHEMA_METADATA" value="tests/schema.php"/> if needed
- * - Replaces <listeners> with <extensions> //FIXME
- * - TODO: Header attr? xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd etc
+ * - Replaces <listeners> with <extensions>
+ * - Fixes up header attr: xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd etc
  */
 class PhpunitXmlTask extends Task implements RepoTaskInterface {
 
@@ -33,8 +33,7 @@ class PhpunitXmlTask extends Task implements RepoTaskInterface {
 		$content = (string)file_get_contents($filePath);
 		$newContent = $this->replaceListenerWithExtension($content);
 
-		//dd($newContent);
-
+		$newContent = $this->replaceHeader($newContent);
 		$newContent = $this->addFixtureSchemadataPath($path, $newContent);
 
 		/*
@@ -106,8 +105,111 @@ class PhpunitXmlTask extends Task implements RepoTaskInterface {
 	 * @return string
 	 */
 	protected function replaceListenerWithExtension(string $content): string {
-		//FIXME
-		return preg_replace('#\<listeners\>.+?\</listeners\>#mu', '<extensions><extension class="\Cake\TestSuite\Fixture\PHPUnitExtension"/></extensions>', $content);
+		$rows = explode(PHP_EOL, $content);
+		$startRow = $this->findStartRow($rows, '<listeners>');
+		$endRow = $this->findEndRow($rows, '</listeners>');
+		if ($startRow === null || $endRow === null) {
+			return $content;
+		}
+
+		$indentation = $this->indentation($rows[$startRow]);
+
+		for ($i = $startRow; $i <= $endRow; $i++) {
+			unset($rows[$i]);
+		}
+
+		$extension = <<<TXT
+$indentation<extensions>
+$indentation$indentation<extension class="\Cake\TestSuite\Fixture\PHPUnitExtension"/>
+$indentation</extensions>
+TXT;
+		$extensionRows = explode(PHP_EOL, $extension);
+
+		array_splice($rows, $startRow, 0, $extensionRows);
+
+		return implode(PHP_EOL, $rows);
+	}
+
+	/**
+	 * @param array<string> $rows
+	 * @param string $needle
+	 *
+	 * @return int|null
+	 */
+	protected function findStartRow(array $rows, string $needle): ?int {
+		foreach ($rows as $i => $row) {
+			if (strpos($row, $needle) !== false) {
+				return $i;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * @param array<string> $rows
+	 * @param string $needle
+	 * @param int|null $offset
+	 *
+	 * @return int|null
+	 */
+	protected function findEndRow(array $rows, string $needle, ?int $offset = null): ?int {
+		foreach ($rows as $i => $row) {
+			if ($offset !== null && $i < $offset) {
+				continue;
+			}
+
+			if (strpos($row, $needle) !== false) {
+				return $i;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * @param string $row
+	 *
+	 * @return string
+	 */
+	protected function indentation(string $row): string {
+		preg_match('#^\s+#', $row, $matches);
+
+		return $matches ? $matches[0] : '';
+	}
+
+	/**
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	protected function replaceHeader(string $content): string {
+		if (strpos($content, 'https://schema.phpunit.de/9.3/phpunit.xsd') !== false) {
+			return $content;
+		}
+
+		$replacement = <<<'TXT'
+<phpunit bootstrap="tests/bootstrap.php" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+TXT;
+
+		$rows = explode(PHP_EOL, $content);
+		$startRow = $this->findStartRow($rows, '<phpunit');
+		$endRow = $this->findEndRow($rows, '>', $startRow);
+		if ($startRow === null || $endRow === null) {
+			return $content;
+		}
+
+		for ($i = $startRow; $i <= $endRow; $i++) {
+			unset($rows[$i]);
+		}
+
+		$replacementRows = explode(PHP_EOL, $replacement);
+
+		array_splice($rows, $startRow, 0, $replacementRows);
+
+		$content = implode(PHP_EOL, $rows);
+
+		return $content;
 	}
 
 }
