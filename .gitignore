@@ -4,3 +4,4 @@
 /phpunit.phar
 /logs/
 .phpunit.result.cache
+/composer.lock

@@ -9,6 +9,9 @@
 	<file>tests/</file>
 
 	<exclude-pattern>*/tests/test_files/*</exclude-pattern>
+	<exclude-pattern>src/Rector</exclude-pattern>
+	<exclude-pattern>tests/test_apps</exclude-pattern>
+	<exclude-pattern>tests/TestCase/Rector</exclude-pattern>
 
 	<rule ref="PSR2R"/>
 </ruleset>

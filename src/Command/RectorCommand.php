@@ -1,173 +1,210 @@
 <?php
+declare(strict_types=1);
 
+/**
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
+ * @since         4.0.0
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Cake\Upgrade\Command;
 
-use Cake\Command\Command;
 use Cake\Console\Arguments;
+use Cake\Console\BaseCommand;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Console\Exception\StopException;
 
-class RectorCommand extends Command {
+/**
+ * Runs rector rulesets against the provided path.
+ */
+class RectorCommand extends BaseCommand
+{
+    /**
+     * Execute.
+     *
+     * @param \Cake\Console\Arguments $args The command arguments.
+     * @param \Cake\Console\ConsoleIo $io The console io
+     * @return int|null
+     */
+    public function execute(Arguments $args, ConsoleIo $io): ?int
+    {
+        $path = (string)$args->getArgument('path');
+        if (!file_exists($path)) {
+            $io->error("The provided path `{$path}` does not exist.");
 
-	/**
-	 * The name of this command.
-	 *
-	 * @var string
-	 */
-	protected $name = 'rector';
+            return static::CODE_ERROR;
+        }
 
-	/**
-	 * Any levels can always include previous ones.
-	 *
-	 * @var array
-	 */
-	protected $levels = [
-		'3.4' => 'cakephp34',
-		'3.5' => 'cakephp35',
-		'3.6' => 'cakephp36',
-		'3.7' => 'cakephp37',
-		'3.8' => 'cakephp38',
-		//'3.9' => 'cakephp39',
-		'4.0' => 'cakephp40',
-	];
+        $autoload = $args->getOption('autoload');
+        if (empty($autoload)) {
+            $autoload = $this->detectAutoload($io, $path);
+        }
+        if ($autoload === null) {
+            $io->error('No autoload file could be found. Use the `--autoload` flag to provide a path.');
 
-	/**
-	 * E.g.:
-	 * bin/cake cs /path/to/app --level=type-order
-	 *
-	 * @param \Cake\Console\Arguments $args The command arguments.
-	 * @param \Cake\Console\ConsoleIo $io The console io
-	 *
-	 * @throws \Cake\Console\Exception\StopException
-	 * @return int|null|void The exit code or null for success
-	 */
-	public function execute(Arguments $args, ConsoleIo $io) {
-		$path = $args->getArgumentAt(0);
-		if ($path) {
-			$path = realpath($path);
-		}
-		if ($path) {
-			$path .= DS;
-		}
+            return static::CODE_ERROR;
+        }
+        if (!file_exists($autoload)) {
+            $io->error("The autoload file `{$autoload}` does not exist. Use the `--autoload` flag to provide a path.");
 
-		if (!is_dir($path)) {
-			$io->error('Path to app or plugin not found: ' . $args->getArgumentAt(0));
+            return static::CODE_ERROR;
+        }
 
-			throw new StopException();
-		}
+        $result = $this->runRector($io, $args, $autoload);
+        if ($result === false) {
+            $io->error('Could not run rector. Ensure that `php` is on your PATH.');
 
-		$this->process($path, $args, $io);
-	}
+            return static::CODE_ERROR;
+        }
+        $io->success('Rector applied successfully');
 
-	/**
-	 * @param \Cake\Console\ConsoleOptionParser $parser The parser to be defined
-	 *
-	 * @return \Cake\Console\ConsoleOptionParser The built parser.
-	 */
-	protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser {
-		$parser = parent::buildOptionParser($parser)
-			->setDescription('A wrapper around rector to help upgrading between 3.x and 4.x. ' .
-				'Be sure to have a backup of your application before running these commands.')->addArgument('path', [
-				'help' => 'Path to project or plugin.',
-				'required' => true,
-			])->addOption('level', [
-				'help' => 'Level to use.',
-				'required' => true,
-			])->addOption('fix', [
-				'help' => 'Fix fixable issues.',
-				'short' => 'f',
-				'boolean' => true,
-				])->addOption('exact', [
-				'help' => 'Dont include previous ones.',
-				'short' => 'e',
-				'boolean' => true,
-			])->addOption('autoload-file', [
-				'help' => 'Autoload file to use. Only needed if no composer.json can be found in that path.',
-				'short' => 'a',
-			]);
+        return static::CODE_SUCCESS;
+    }
 
-		return $parser;
-	}
+    /**
+     * Run rector as a sub-process.
+     *
+     * @param \Cake\Console\ConsoleIo $io The io object to output with
+     * @param \Cake\Console\Arguments $args The Arguments object
+     * @param string $autoload The autoload file path.
+     * @return bool
+     */
+    protected function runRector(ConsoleIo $io, Arguments $args, string $autoload): bool
+    {
+        $config = ROOT . '/config/rector/' . basename((string)$args->getOption('rules')) . '.php';
+        $path = realpath((string)$args->getArgument('path'));
 
-	/**
-	 * @param string $path
-	 * @param \Cake\Console\Arguments $args
-	 * @param \Cake\Console\ConsoleIo $io
-	 * @throws \Cake\Console\Exception\StopException
-	 * @return void
-	 */
-	protected function process(string $path, Arguments $args, ConsoleIo $io): void {
+        $cmdPath = ROOT . '/vendor/bin/rector process';
+        $command = sprintf(
+            '%s %s --autoload-file=%s --config=%s %s --clear-cache',
+            $cmdPath,
+            $args->getOption('dry-run') ? '--dry-run' : '',
+            escapeshellarg($autoload),
+            escapeshellarg($config),
+            escapeshellarg($path)
+        );
+        $io->verbose("Running <info>{$command}</info>");
 
-		$command = 'vendor/bin/rector process';
-		if (!$args->getOption('fix')) {
-			$command .= ' --dry-run';
-		}
+        $descriptorSpec = [
+            0 => ['pipe', 'r'],
+            1 => ['pipe', 'w'],
+            2 => ['pipe', 'w'],
+        ];
+        $process = proc_open(
+            $command,
+            $descriptorSpec,
+            $pipes
+        );
+        if (!is_resource($process)) {
+            $io->error('Could not create rector process');
 
-		$level = $args->getOption('level');
-		if (!$level) {
-			$io->error('No level provided.');
+            return false;
+        }
 
-			throw new StopException();
-		}
+        while (true) {
+            if (feof($pipes[1]) && feof($pipes[2])) {
+                break;
+            }
+            $output = fread($pipes[1], 1024);
+            if ($output) {
+                $io->out($output);
+            }
+            $error = fread($pipes[2], 1024);
+            if ($error) {
+                $io->err($error);
+            }
+        }
 
-		if (!$args->getOption('exact')) {
-			//TODO: add previous levels automatically?
-		}
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        proc_close($process);
 
-		$autoloadFile = $args->getOption('autoload-file');
-		if (!$autoloadFile) {
-			$autoloadFile = $this->guessAutoloadFile($path);
-		}
+        return true;
+    }
 
-		$command .= ' --set=' . $level;
-		if ($autoloadFile) {
-			$command .= ' --autoload-file=' . $autoloadFile;
-		}
+    /**
+     * Find the application autoload file by traversing up the file system
+     * looking for a `vendor/autoload.php` file.
+     *
+     * @param \Cake\Console\ConsoleIo $io The io object
+     * @param string $path The path to start scanning from
+     * @return string|null The path to a vendor/autoload.php or null
+     */
+    protected function detectAutoload(ConsoleIo $io, string $path): ?string
+    {
+        $path = realpath($path);
+        $io->verbose("Detecting autoload file for {$path}");
+        $segments = explode(DIRECTORY_SEPARATOR, $path);
+        while (true) {
+            if (count($segments) === 0) {
+                break;
+            }
+            $check = implode(DIRECTORY_SEPARATOR, $segments) . '/vendor/autoload.php';
+            $io->verbose("-> Checking {$check}");
 
-		$command .= ' ' . $path;
+            if (file_exists($check)) {
+                $io->verbose("-> Found {$check}");
 
-		$io->out('Running `' . $command . '`...');
+                return $check;
+            }
+            array_pop($segments);
+        }
 
-		exec($command, $output, $returnVar);
-		$io->out($output);
-		if ($returnVar === 0) {
-			$io->success('All good.');
-		} else {
-			$io->err('Return code: ' . $returnVar);
-		}
-	}
+        return null;
+    }
 
-	/**
-	 * @param string $level
-	 *
-	 * @return array
-	 */
-	protected function standard(string $level): array {
-		if (!empty($this->levels[$level])) {
-			$level = $this->levels[$level];
-		}
+    /**
+     * Gets the option parser instance and configures it.
+     *
+     * @param \Cake\Console\ConsoleOptionParser $parser The parser to build
+     * @return \Cake\Console\ConsoleOptionParser
+     */
+    protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
+    {
+        $parser
+            ->setDescription([
+                'Apply rector refactoring rules',
+                '',
+                'Run rector rules against `path`. By default the <info>cakephp40</info> ' .
+                'rules are run.',
+                '',
+                'You will want to run the <info>cakephp40</info> rules multiple times on ' .
+                'subdirectories of your application:',
+                '',
+                '<info>bin/cake upgrade rector ~/app/src</info>',
+                '<info>bin/cake upgrade rector ~/app/config</info>',
+                '<info>bin/cake upgrade rector ~/app/templates</info>',
+                '<info>bin/cake upgrade rector ~/app/tests</info>',
+                '',
+                'You should run the <info>phpunit80</info> ruleset to automate ' .
+                'updating your test cases:',
+                '',
+                '<info>bin/cake upgrade rector --rules phpunit80 ~/app/tests</info>',
+            ])
+            ->addArgument('path', [
+                'help' => 'The path to the application or plugin.',
+                'required' => true,
+            ])
+            ->addOption('rules', [
+                'help' => 'The rector ruleset to run',
+                'default' => 'cakephp40',
+            ])
+            ->addOption('autoload', [
+                'help' => 'The path to the application/plugin autoload if one cannot be auto-detected, ' .
+                    'or is detected incorrectly.',
+            ])
+            ->addOption('dry-run', [
+                'help' => 'Enable to get a preview of what modifications will be applied.',
+                'boolean' => true,
+            ]);
 
-		return [
-			//TODO
-		];
-	}
-
-	/**
-	 * Guess autoload file based on composer vendor dir.
-	 *
-	 * @param string $path
-	 *
-	 * @return string|null
-	 */
-	protected function guessAutoloadFile(string $path): ?string {
-		if (!file_exists($path . 'composer.json')) {
-			return null;
-		}
-
-		$autoloadPath = $path . 'vendor' . DS . 'autoload.php';
-
-		return $autoloadPath;
-	}
-
+        return $parser;
+    }
 }

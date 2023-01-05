@@ -1,22 +1,22 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link http://cakephp.org CakePHP(tm) Project
- * @since CakePHP(tm) v3.0.0
- * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link          https://cakephp.org CakePHP(tm) Project
+ * @since         3.0.0
+ * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  */
 
 /**
  * Use the DS to separate the directories in other defines
  */
 if (!defined('DS')) {
-	define('DS', DIRECTORY_SEPARATOR);
+    define('DS', DIRECTORY_SEPARATOR);
 }
 
 /**
@@ -31,14 +31,10 @@ if (!defined('DS')) {
 define('ROOT', dirname(__DIR__));
 
 /**
- * The actual directory name for the "src".
+ * The actual directory name for the application directory. Normally
+ * named 'src'.
  */
 define('APP_DIR', 'src');
-
-/**
- * The name of the webroot dir. Defaults to 'webroot'
- */
-define('WEBROOT_DIR', 'webroot');
 
 /**
  * Path to the application's directory.
@@ -52,8 +48,12 @@ define('CONFIG', ROOT . DS . 'config' . DS);
 
 /**
  * File path to the webroot directory.
+ *
+ * To derive your webroot from your webserver change this to:
+ *
+ * `define('WWW_ROOT', rtrim($_SERVER['DOCUMENT_ROOT'], DS) . DS);`
  */
-define('WWW_ROOT', ROOT . DS . WEBROOT_DIR . DS);
+define('WWW_ROOT', ROOT . DS . 'webroot' . DS);
 
 /**
  * Path to the tests directory.
@@ -68,7 +68,7 @@ define('TMP', ROOT . DS . 'tmp' . DS);
 /**
  * Path to the logs directory.
  */
-define('LOGS', TMP . 'logs' . DS);
+define('LOGS', ROOT . DS . 'logs' . DS);
 
 /**
  * Path to the cache files directory. It can be shared between hosts in a multi-server setup.
@@ -80,7 +80,7 @@ define('CACHE', TMP . 'cache' . DS);
  *
  * CakePHP should always be installed with composer, so look there.
  */
-define('CAKE_CORE_INCLUDE_PATH', ROOT . '/vendor/cakephp/cakephp');
+define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
 
 /**
  * Path to the cake directory.
