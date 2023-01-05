@@ -9,7 +9,7 @@ use Cake\Upgrade\Task\Task;
  * Adjusts:
  * - ->loadModel()-> to ->fetchTable()->
  */
-class LoadModelTask extends Task implements FileTaskInterface {
+class BasicsTask extends Task implements FileTaskInterface {
 
 	/**
 	 * @param string $path
@@ -17,7 +17,7 @@ class LoadModelTask extends Task implements FileTaskInterface {
 	 * @return array<string>
 	 */
 	public function getFiles(string $path): array {
-		return $this->collectFiles($path, 'php', ['src/']);
+		return $this->collectFiles($path, 'php', ['src/', 'tests/TestCase/']);
 	}
 
 	/**
@@ -27,7 +27,11 @@ class LoadModelTask extends Task implements FileTaskInterface {
 	 */
 	public function run(string $path): void {
 		$content = (string)file_get_contents($path);
-		$newContent = preg_replace('#-\>loadModel\(\)\s*-\>#', '->fetchTable()->', $content);
+
+		$newContent = preg_replace('#\bTableRegistry::exists\(#', 'TableRegistry::getTableLocator()->exists(', $content);
+		$newContent = preg_replace('#\bTableRegistry::get\(#', 'TableRegistry::getTableLocator()->get(', $newContent);
+
+		$newContent = preg_replace('#\bprotected \$modelClass =#', 'protected ?string $defaultTable = ', $newContent);
 
 		$this->persistFile($path, $content, $newContent);
 	}

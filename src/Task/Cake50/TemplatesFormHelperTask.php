@@ -7,9 +7,9 @@ use Cake\Upgrade\Task\Task;
 
 /**
  * Adjusts:
- * - ->loadModel()-> to ->fetchTable()->
+ * - protected $_defaultConfig => protected array $_defaultConfig
  */
-class LoadModelTask extends Task implements FileTaskInterface {
+class TemplatesFormHelperTask extends Task implements FileTaskInterface {
 
 	/**
 	 * @param string $path
@@ -17,7 +17,7 @@ class LoadModelTask extends Task implements FileTaskInterface {
 	 * @return array<string>
 	 */
 	public function getFiles(string $path): array {
-		return $this->collectFiles($path, 'php', ['src/']);
+		return $this->collectFiles($path, 'php', ['templates/']);
 	}
 
 	/**
@@ -27,7 +27,7 @@ class LoadModelTask extends Task implements FileTaskInterface {
 	 */
 	public function run(string $path): void {
 		$content = (string)file_get_contents($path);
-		$newContent = preg_replace('#-\>loadModel\(\)\s*-\>#', '->fetchTable()->', $content);
+		$newContent = preg_replace('#\$this-\>Format-\>icon\(#', '$this->Icon->render(', $content);
 
 		$this->persistFile($path, $content, $newContent);
 	}

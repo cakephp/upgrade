@@ -9,6 +9,7 @@ use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Exception\StopException;
 use Cake\Core\Configure;
 use Cake\Upgrade\Processor\Processor;
+use Cake\Upgrade\Task\Cake50\BasicsTask;
 use Cake\Upgrade\Task\Cake50\CiTask;
 use Cake\Upgrade\Task\Cake50\ComposerPsr2rTask;
 use Cake\Upgrade\Task\Cake50\ComposerTask;
@@ -20,7 +21,9 @@ use Cake\Upgrade\Task\Cake50\PhpunitXmlTask;
 use Cake\Upgrade\Task\Cake50\ReadmeTask;
 use Cake\Upgrade\Task\Cake50\RemoveOutdatedCodeTask;
 use Cake\Upgrade\Task\Cake50\ShellToCommandTask;
+use Cake\Upgrade\Task\Cake50\TemplatesFormHelperTask;
 use Cake\Upgrade\Task\Cake50\TestsBootstrapFixtureTask;
+use Cake\Upgrade\Task\Cake50\TestsCommandTask;
 use Cake\Upgrade\Task\Cake50\TestsControllerInstantiationTask;
 use Cake\Upgrade\Task\Cake50\TestsFixtureSchemaTask;
 use Cake\Upgrade\Task\Cake50\TypedClosureTask;
@@ -217,6 +220,7 @@ class UpgradeCommand extends Command {
 			ComposerPsr2rTask::class,
 			ReadmeTask::class,
 			CiTask::class,
+			BasicsTask::class,
 			DatabaseTypeDriverTask::class,
 			ModelValidatorTask::class,
 			ModelHookTask::class,
@@ -232,9 +236,11 @@ class UpgradeCommand extends Command {
 			TestsBootstrapFixtureTask::class,
 			TestsFixtureSchemaTask::class,
 			TestsControllerInstantiationTask::class,
+			TestsCommandTask::class,
 			PhpunitXmlTask::class,
 			//PhpcsPsr2rTask::class,
 			RemoveOutdatedCodeTask::class,
+			TemplatesFormHelperTask::class,
 		];
 
 		return $tasks;
