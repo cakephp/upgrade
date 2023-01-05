@@ -31,7 +31,9 @@ composer.json
 +        "php": ">=8.1",
 +        "cakephp/cakephp": "5.x-dev",
 -        "dereuromark/cakephp-shim": "^2.3.0",
+-        "phpunit/phpunit": "^9.5",
 +        "dereuromark/cakephp-shim": "dev-cake5",
++        "phpunit/phpunit": "^9.5.16",
 -    }
 +    },
 +    "minimum-stability": "dev"

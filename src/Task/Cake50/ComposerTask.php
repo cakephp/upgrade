@@ -43,12 +43,14 @@ class ComposerTask extends Task implements RepoTaskInterface {
 		$filePath = $path . 'composer.json';
 		$content = (string)file_get_contents($filePath);
 
+		$newContent = str_replace('"phpunit/phpunit": "^9.5"', '"phpunit/phpunit": "^9.5.16"', $content);
+
 		$callable = function ($matches) {
 			$version = version_compare($matches[1], static::TARGET_VERSION_PHP . '.0', '<') ? static::TARGET_VERSION_PHP : $matches[1];
 
 			return '"php": "' . static::CHAR_PHP . $version . '"';
 		};
-		$newContent = preg_replace_callback('#"php": "' . preg_quote(static::CHAR_PHP, '#') . '(.+)"#', $callable, $content);
+		$newContent = preg_replace_callback('#"php": "' . preg_quote(static::CHAR_PHP, '#') . '(.+)"#', $callable, $newContent);
 
 		$callable = function ($matches) {
 			$version = version_compare($matches[1], static::TARGET_VERSION_CAKEPHP, '<') ? static::TARGET_VERSION_CAKEPHP : $matches[1];

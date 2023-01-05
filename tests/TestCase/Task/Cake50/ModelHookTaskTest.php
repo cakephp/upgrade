@@ -31,7 +31,6 @@ src/Model/Table/SomeTable.php
 +    public function beforeFind(EventInterface $event, \Cake\ORM\Query\SelectQuery $query, ArrayObject $options, bool $primary) {
 
 TXT;
-		dd($changesString);
 		$this->assertTextEquals($expected, $changesString);
 	}
 

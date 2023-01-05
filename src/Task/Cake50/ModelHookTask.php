@@ -29,6 +29,8 @@ class ModelHookTask extends Task implements FileTaskInterface {
 		$content = (string)file_get_contents($path);
 		$newContent = preg_replace('#\bpublic function beforeFind\(EventInterface \$event, Query \$#', 'public function beforeFind(EventInterface $event, \Cake\ORM\Query\SelectQuery $', $content);
 
+		$newContent = preg_replace('#\bprotected function _initializeSchema\(TableSchemaInterface \$schema\)#', 'public function getSchema()', $newContent);
+
 		$this->persistFile($path, $content, $newContent);
 	}
 
