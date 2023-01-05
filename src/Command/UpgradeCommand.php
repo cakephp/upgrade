@@ -14,6 +14,7 @@ use Cake\Upgrade\Task\Cake50\ComposerPsr2rTask;
 use Cake\Upgrade\Task\Cake50\ComposerTask;
 use Cake\Upgrade\Task\Cake50\DatabaseTypeDriverTask;
 use Cake\Upgrade\Task\Cake50\LoadModelTask;
+use Cake\Upgrade\Task\Cake50\ModelHookTask;
 use Cake\Upgrade\Task\Cake50\ModelValidatorTask;
 use Cake\Upgrade\Task\Cake50\PhpunitXmlTask;
 use Cake\Upgrade\Task\Cake50\ReadmeTask;
@@ -218,6 +219,7 @@ class UpgradeCommand extends Command {
 			CiTask::class,
 			DatabaseTypeDriverTask::class,
 			ModelValidatorTask::class,
+			ModelHookTask::class,
 			LoadModelTask::class,
 			TypeFactoryTask::class,
 			ShellToCommandTask::class,
