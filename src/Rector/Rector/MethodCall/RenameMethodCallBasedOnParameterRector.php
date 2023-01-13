@@ -11,7 +11,6 @@ use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Core\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use Webmozart\Assert\Assert;
 
 /**
  * @see https://book.cakephp.org/4.0/en/appendices/4-0-migration-guide.html
@@ -92,12 +91,7 @@ CODE_SAMPLE
      */
     public function configure(array $configuration): void
     {
-        $callsWithParamRenames = $configuration[self::CALLS_WITH_PARAM_RENAMES] ?? $configuration;
-
-        Assert::isArray($callsWithParamRenames);
-        Assert::allIsInstanceOf($callsWithParamRenames, RenameMethodCallBasedOnParameter::class);
-
-        $this->callsWithParamRenames = $callsWithParamRenames;
+        $this->callsWithParamRenames = $configuration[self::CALLS_WITH_PARAM_RENAMES] ?? $configuration;
     }
 
     private function matchTypeAndMethodName(MethodCall $methodCall): ?RenameMethodCallBasedOnParameter

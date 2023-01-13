@@ -12,7 +12,6 @@ use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Core\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use Webmozart\Assert\Assert;
 
 /**
  * @see https://book.cakephp.org/3.0/en/appendices/3-4-migration-guide.html#deprecated-combined-get-set-methods
@@ -97,11 +96,7 @@ CODE_SAMPLE
      */
     public function configure(array $configuration): void
     {
-        $unprefixedMethodsToGetSet = $configuration[self::UNPREFIXED_METHODS_TO_GET_SET] ?? $configuration;
-        Assert::isArray($unprefixedMethodsToGetSet);
-        Assert::allIsAOf($unprefixedMethodsToGetSet, ModalToGetSet::class);
-
-        $this->unprefixedMethodsToGetSet = $unprefixedMethodsToGetSet;
+        $this->unprefixedMethodsToGetSet = $configuration[self::UNPREFIXED_METHODS_TO_GET_SET] ?? $configuration;
     }
 
     private function matchTypeAndMethodName(MethodCall $methodCall): ?ModalToGetSet
