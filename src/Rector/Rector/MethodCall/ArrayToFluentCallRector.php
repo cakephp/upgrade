@@ -14,7 +14,6 @@ use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Core\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use Webmozart\Assert\Assert;
 
 /**
  * @see \Cake\Upgrade\Rector\Tests\Rector\MethodCall\ArrayToFluentCallRector\ArrayToFluentCallRectorTest
@@ -120,16 +119,8 @@ CODE_SAMPLE
      */
     public function configure(array $configuration): void
     {
-        $arraysToFluentCalls = $configuration[self::ARRAYS_TO_FLUENT_CALLS] ?? [];
-        Assert::isArray($arraysToFluentCalls);
-        Assert::allIsInstanceOf($arraysToFluentCalls, ArrayToFluentCall::class);
-
-        $this->arraysToFluentCalls = $arraysToFluentCalls;
-
-        $factoryMethods = $configuration[self::FACTORY_METHODS] ?? [];
-        Assert::isArray($factoryMethods);
-        Assert::allIsInstanceOf($factoryMethods, FactoryMethod::class);
-        $this->factoryMethods = $factoryMethods;
+        $this->arraysToFluentCalls = $configuration[self::ARRAYS_TO_FLUENT_CALLS] ?? [];
+        $this->factoryMethods = $configuration[self::FACTORY_METHODS] ?? [];
     }
 
     private function matchTypeAndMethodName(MethodCall $methodCall): ?FactoryMethod

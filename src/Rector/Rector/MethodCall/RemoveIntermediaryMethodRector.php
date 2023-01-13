@@ -13,7 +13,6 @@ use Rector\Core\Rector\AbstractRector;
 use Rector\Defluent\NodeAnalyzer\FluentChainMethodCallNodeAnalyzer;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use Webmozart\Assert\Assert;
 
 /**
  * @see https://book.cakephp.org/3.0/en/appendices/3-4-migration-guide.html#deprecated-combined-get-set-methods
@@ -91,12 +90,7 @@ CODE_SAMPLE
      */
     public function configure(array $configuration): void
     {
-        $removeIntermediaryMethods = $configuration[self::REMOVE_INTERMEDIARY_METHOD] ?? $configuration;
-
-        Assert::isArray($removeIntermediaryMethods);
-        Assert::allIsAOf($removeIntermediaryMethods, RemoveIntermediaryMethod::class);
-
-        $this->removeIntermediaryMethod = $removeIntermediaryMethods;
+        $this->removeIntermediaryMethod = $configuration[self::REMOVE_INTERMEDIARY_METHOD] ?? $configuration;
     }
 
     private function matchTypeAndMethodName(MethodCall $methodCall): ?RemoveIntermediaryMethod
