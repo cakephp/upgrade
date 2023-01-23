@@ -3,7 +3,7 @@
 ![Build Status](https://github.com/cakephp/upgrade/actions/workflows/ci.yml/badge.svg?branch=master)
 
 Upgrade tools for CakePHP meant to facilitate migrating between CakePHP 4.x
-versions, and to CakePHP 5.x. This repository should be used as a standalone
+versions and from CakePHP 4.x to CakePHP 5.x. This repository should be used as a standalone
 application and *not* as a plugin.
 
 ## Installation
