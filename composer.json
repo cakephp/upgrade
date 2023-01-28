@@ -6,14 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "cakephp/cakephp": "5.x-dev",
+        "cakephp/console": "5.x-dev",
         "nette/utils": "^3.2",
         "rector/rector": "^0.14.8",
         "symfony/string": "^6.0"
-    },
-    "require-dev": {
-        "cakephp/cakephp-codesniffer": "^5.0",
-        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
@@ -48,5 +44,11 @@
     },
     "support": {
         "source": "https://github.com/cakephp/upgrade"
+    },
+    "require-dev": {
+        "cakephp/cakephp": "5.x-dev",
+        "cakephp/cakephp-codesniffer": "^5.0",
+        "mikey179/vfsstream": "^1.6.8",
+        "phpunit/phpunit": "^9.5"
     }
 }
