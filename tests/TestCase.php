@@ -16,27 +16,21 @@ declare(strict_types=1);
  */
 namespace Cake\Upgrade\Test;
 
-use Cake\Filesystem\Filesystem;
-use Cake\TestSuite\ConsoleIntegrationTestTrait;
-use Cake\TestSuite\TestCase as CakeTestCase;
+use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
+use Cake\Utility\Filesystem;
 use Cake\Utility\Hash;
+use PHPUnit\Framework\TestCase as BaseTestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class TestCase extends CakeTestCase
+class TestCase extends BaseTestCase
 {
     use ConsoleIntegrationTestTrait;
 
     /**
      * @var string
      */
-    protected $testAppDir;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->useCommandRunner(true);
-    }
+    protected string $testAppDir;
 
     protected function setupTestApp(string $testName): void
     {
