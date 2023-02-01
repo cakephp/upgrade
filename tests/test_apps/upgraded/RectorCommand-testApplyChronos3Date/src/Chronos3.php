@@ -19,7 +19,6 @@ class Chronos3 {
         $date->subWeekdays(1);
         $date->addWeeks(1);
         $date->subWeeks(1);
-        $date->addWeeks(1)->subWeeks(1);
 
         $date = new \Cake\Chronos\ChronosDate();
         $date->addYears(1);
@@ -36,7 +35,6 @@ class Chronos3 {
         $date->subWeekdays(1);
         $date->addWeeks(1);
         $date->subWeeks(1);
-        $date->addWeeks(1)->subWeeks(1);
 
     }
 

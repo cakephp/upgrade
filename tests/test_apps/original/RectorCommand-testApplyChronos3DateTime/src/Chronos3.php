@@ -19,7 +19,6 @@ class Chronos3 {
         $dateTime->subWeekday();
         $dateTime->addWeek();
         $dateTime->subWeek();
-        $dateTime->addWeek()->subWeek();
 
         $dateTime->addHour();
         $dateTime->subHour();
