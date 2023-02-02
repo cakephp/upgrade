@@ -5,8 +5,8 @@
     "homepage": "https://cakephp.org",
     "license": "MIT",
     "require": {
-        "php": "^8.0",
-        "cakephp/console": "^4.0",
+        "php": "^8.1",
+        "cakephp/console": "5.x-dev",
         "nette/utils": "^3.2",
         "rector/rector": "^0.14.8",
         "symfony/string": "^6.0"
@@ -22,6 +22,7 @@
         }
     },
     "prefer-stable": true,
+    "minimum-stability": "dev",
     "scripts": {
         "cs-check": "phpcs --colors --parallel=16 -p -s src/ tests/",
         "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",

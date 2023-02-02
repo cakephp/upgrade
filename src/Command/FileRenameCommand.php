@@ -38,35 +38,35 @@ class FileRenameCommand extends BaseCommand
      *
      * @var bool
      */
-    protected $git = false;
+    protected bool $git = false;
 
     /**
      * App/plugin path.
      *
      * @var string
      */
-    protected $path = '';
+    protected string $path = '';
 
     /**
      * Arguments
      *
      * @var \Cake\Console\Arguments
      */
-    protected $args;
+    protected Arguments $args;
 
     /**
      * Console IO
      *
      * @var \Cake\Console\ConsoleIo
      */
-    protected $io;
+    protected ConsoleIo $io;
 
     /**
      * Holds info of file types to move.
      *
      * @var array
      */
-    protected $types = [
+    protected array $types = [
         'templates' => [
             'regex' => '#/Template/\.$#',
             'from' => '/Template',

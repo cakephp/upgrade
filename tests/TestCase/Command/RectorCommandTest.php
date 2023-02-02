@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 namespace Cake\Upgrade\Test\TestCase\Command;
 
-use Cake\TestSuite\ConsoleIntegrationTestTrait;
+use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Upgrade\Test\TestCase;
 
 /**
@@ -40,7 +40,6 @@ class RectorCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->useCommandRunner(true);
         $this->configApplication('\Cake\Upgrade\Application', []);
     }
 
@@ -67,5 +66,19 @@ class RectorCommandTest extends TestCase
         $this->assertOutputContains('HelloCommand.php');
         $this->assertOutputContains('begin diff');
         $this->assertOutputContains('Rector applied successfully');
+    }
+
+    public function testApplyChronos3Date()
+    {
+        $this->setupTestApp(__FUNCTION__);
+        $this->exec('upgrade rector --rules chronos3-date ' . TEST_APP);
+        $this->assertTestAppUpgraded();
+    }
+
+    public function testApplyChronos3DateTime()
+    {
+        $this->setupTestApp(__FUNCTION__);
+        $this->exec('upgrade rector --rules chronos3-datetime ' . TEST_APP);
+        $this->assertTestAppUpgraded();
     }
 }

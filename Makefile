@@ -1,9 +1,9 @@
 .PHONY: install-dev test check-cs
 
-DEV_DEPENDENCIES = cakephp/cakephp:^4.0 \
-  cakephp/cakephp-codesniffer:^4.0 \
+DEV_DEPENDENCIES = cakephp/cakephp:5.x-dev \
+  cakephp/cakephp-codesniffer:^5.0 \
   mikey179/vfsstream:^1.6.8 \
-  phpunit/phpunit:^9.3
+  phpunit/phpunit:^9.5
 
 install-dev:
 	composer require --dev $(DEV_DEPENDENCIES)
