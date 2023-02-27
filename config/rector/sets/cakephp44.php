@@ -18,6 +18,7 @@ return static function (RectorConfig $rectorConfig): void {
         'Cake\Datasource\Paging\Paginator' => 'Cake\Datasource\Paging\NumericPaginator',
         'Cake\TestSuite\ContainerStubTrait' => 'Cake\Core\TestSuite\ContainerStubTrait',
         'Cake\TestSuite\HttpClientTrait' =>  'Cake\Http\TestSuite\HttpClientTrait',
+        'Cake\Cache\InvalidArgumentException' => 'Cake\Cache\Exception\InvalidArgumentException',
     ]);
 
     $rectorConfig->ruleWithConfiguration(
