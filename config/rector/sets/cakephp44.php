@@ -15,6 +15,9 @@ return static function (RectorConfig $rectorConfig): void {
         'Cake\TestSuite\Stub\ConsoleOutput' => 'Cake\Console\TestSuite\StubConsoleOutput',
         'Cake\TestSuite\Stub\MissingConsoleInputException' => 'Cake\Console\TestSuite\MissingConsoleInputException',
         'Cake\TestSuite\HttpClientTrait' => 'Cake\Http\TestSuite\HttpClientTrait',
+        'Cake\Datasource\Paging\Paginator' => 'Cake\Datasource\Paging\NumericPaginator',
+        'Cake\TestSuite\ContainerStubTrait' => 'Cake\Core\TestSuite\ContainerStubTrait',
+        'Cake\TestSuite\HttpClientTrait' =>  'Cake\Http\TestSuite\HttpClientTrait',
     ]);
 
     $rectorConfig->ruleWithConfiguration(
