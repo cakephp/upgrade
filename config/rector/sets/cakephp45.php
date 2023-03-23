@@ -19,6 +19,7 @@ return static function (RectorConfig $rectorConfig): void {
         RenameMethodRector::class,
         [
             new MethodCallRename('Cake\View\View', 'loadHelper', 'addHelper'),
+            new MethodCallRename('Cake\Validation\Validator', 'isArray', 'array'),
         ]
     );
 
