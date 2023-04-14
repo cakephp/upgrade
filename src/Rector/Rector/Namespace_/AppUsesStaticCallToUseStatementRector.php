@@ -5,8 +5,11 @@ namespace Cake\Upgrade\Rector\Rector\Namespace_;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Declare_;
 use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\Use_;
+use PhpParser\Node\Stmt\UseUse;
 use PHPStan\Type\ObjectType;
 use Cake\Upgrade\Rector\ShortClassNameResolver;
 use Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace;
@@ -67,7 +70,11 @@ CODE_SAMPLE
         $this->nodeRemover->removeNodes($appUsesStaticCalls);
 
         $names = $this->resolveNamesFromStaticCalls($appUsesStaticCalls);
-        $uses = $this->nodeFactory->createUsesFromNames($names);
+        $uses = [];
+        foreach ($names as $name) {
+            $useUse = new UseUse(new Name($name));
+            $uses[] = new Use_([$useUse]);
+        }
 
         if ($node instanceof Namespace_) {
             $node->stmts = array_merge($uses, $node->stmts);
