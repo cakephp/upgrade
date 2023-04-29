@@ -68,6 +68,16 @@ class RectorCommandTest extends TestCase
         $this->assertOutputContains('Rector applied successfully');
     }
 
+    /**
+     * @return void
+     */
+    public function testApply45()
+    {
+        $this->setupTestApp(__FUNCTION__);
+        $this->exec('upgrade rector --rules cakephp45 ' . TEST_APP);
+        $this->assertTestAppUpgraded();
+    }
+
     public function testApplyChronos3Date()
     {
         $this->setupTestApp(__FUNCTION__);
