@@ -1,4 +1,7 @@
 <?php
+
+use function Cake\Core\env;
+
 return [
     /**
      * Debug Level:
