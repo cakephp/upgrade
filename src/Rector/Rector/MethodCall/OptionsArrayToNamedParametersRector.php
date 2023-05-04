@@ -49,7 +49,7 @@ $query = $articles->find('all', conditions: ['Articles.title' => $title]);
 CODE_SAMPLE
                 ,
                 [
-                    self::OPTIONS_TO_NAMED_PARAMETERS => [
+                    [
                         new OptionsArrayToNamedParameters('Table', ['find']),
                     ],
                 ]
@@ -70,7 +70,7 @@ CODE_SAMPLE
      */
     public function configure(array $configuration): void
     {
-        $this->optionsToNamed = $configuration[self::OPTIONS_TO_NAMED_PARAMETERS] ?? [];
+        $this->optionsToNamed = $configuration;
     }
 
     /**

@@ -91,4 +91,11 @@ class RectorCommandTest extends TestCase
         $this->exec('upgrade rector --rules chronos3-datetime ' . TEST_APP);
         $this->assertTestAppUpgraded();
     }
+
+    public function testApply50()
+    {
+        $this->setupTestApp(__FUNCTION__);
+        $this->exec('upgrade rector --rules cakephp50 ' . TEST_APP);
+        $this->assertTestAppUpgraded();
+    }
 }

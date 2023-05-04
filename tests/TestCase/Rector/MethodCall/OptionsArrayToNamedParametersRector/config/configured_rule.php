@@ -11,8 +11,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__ . '/../../../../../../config/rector/config.php');
 
     $rectorConfig->ruleWithConfiguration(OptionsArrayToNamedParametersRector::class, [
-        OptionsArrayToNamedParametersRector::OPTIONS_TO_NAMED_PARAMETERS => [
-            new OptionsArrayToNamedParameters(ConfigurableClass::class, ['find'])
-        ],
+        new OptionsArrayToNamedParameters(ConfigurableClass::class, ['find'])
     ]);
 };
