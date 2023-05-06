@@ -11,6 +11,9 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__ . '/../../../../../../config/rector/config.php');
 
     $rectorConfig->ruleWithConfiguration(OptionsArrayToNamedParametersRector::class, [
-        new OptionsArrayToNamedParameters(ConfigurableClass::class, ['find'])
+        new OptionsArrayToNamedParameters(ConfigurableClass::class, ['find']),
+        new OptionsArrayToNamedParameters(ConfigurableClass::class, [
+            'get', 'rename' => ['key' => 'cacheKey'],
+        ]),
     ]);
 };

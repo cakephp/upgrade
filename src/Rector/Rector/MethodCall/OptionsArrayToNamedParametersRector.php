@@ -94,11 +94,7 @@ CODE_SAMPLE
             return false;
         }
 
-        if (in_array($methodCall->name,$optionsToNamed->getMethods(), true)) {
-            return false;
-        }
-
-        return true;
+        return $methodCall->name == $optionsToNamed->getMethod();
     }
 
     private function replaceMethodCall(OptionsArrayToNamedParameters $optionsToNamed, MethodCall $methodCall): ?MethodCall
@@ -117,8 +113,14 @@ CODE_SAMPLE
         $argNodes = $methodCall->args;
         unset($argNodes[$argCount - 1]);
 
+        $renames = $optionsToNamed->getRenames();
+
         foreach ($optionsParam->value->items as $param) {
-            $argNodes[] = new Arg($param->value, name: new Identifier($param->key->value));
+            $key = $param->key->value;
+            if (isset($renames[$key])) {
+                $key = $renames[$key];
+            }
+            $argNodes[] = new Arg($param->value, name: new Identifier($key));
         }
         $methodCall->args = $argNodes;
 
