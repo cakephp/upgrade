@@ -26,6 +26,10 @@ function optionsToNamedParameters()
     // Array values are not spread
     $options = ['conditions' => ['Articles.id' => $value]];
     $instance->find('all', $options);
+
+    // Can modify get as well.
+    $instance->get(1);
+    $instance->get(1, ['key' => 'cache-this']);
 }
 
 ?>
@@ -57,6 +61,10 @@ function optionsToNamedParameters()
     // Array values are not spread
     $options = ['conditions' => ['Articles.id' => $value]];
     $instance->find('all', $options);
+
+    // Can modify get as well.
+    $instance->get(1);
+    $instance->get(1, cacheKey: 'cache-this');
 }
 
 ?>

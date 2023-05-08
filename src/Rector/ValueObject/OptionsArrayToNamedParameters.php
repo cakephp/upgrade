@@ -9,7 +9,7 @@ final class OptionsArrayToNamedParameters
 {
     public function __construct(
         private string $class,
-        private array $methods
+        private array $methods = [],
     ) {
     }
 
@@ -26,8 +26,19 @@ final class OptionsArrayToNamedParameters
     /**
      * @return array<string, string>
      */
-    public function getMethods(): array
+    public function getMethod(): string
     {
-        return $this->methods;
+        return $this->methods[0] ?? '';
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getRenames(): array
+    {
+        if (isset($this->methods['rename'])) {
+            return $this->methods['rename'];
+        }
+        return [];
     }
 }
