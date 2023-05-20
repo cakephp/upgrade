@@ -49,8 +49,6 @@ jobs:
       run: |
         if ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
           make install-dev-lowest
-        elif ${{ matrix.php-version == '8.1' }}; then
-          make install-dev-ignore-reqs
         else
           make install-dev
         fi
