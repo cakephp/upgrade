@@ -6,6 +6,7 @@ use Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\MixedType;
 use Rector\Config\RectorConfig;
+use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\TypeDeclaration\Rector\Property\AddPropertyTypeDeclarationRector;
 use Rector\TypeDeclaration\ValueObject\AddPropertyTypeDeclaration;
 
@@ -32,5 +33,10 @@ return static function (RectorConfig $rectorConfig): void {
             new AddPropertyTypeDeclaration('Cake\ORM\Entity', '_virtual', $arrayType),
         ]
     );
+
+    $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
+        'Cake\I18n\FrozenDate' => 'Cake\I18n\Date',
+        'Cake\I18n\FrozenTime' => 'Cake\I18n\DateTime',
+    ]);
 
 };
