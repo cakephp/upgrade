@@ -28,11 +28,6 @@ return static function (RectorConfig $rectorConfig): void {
         ]
     );
 
-    $intNull = new UnionType([new IntegerType(), new NullType()]);
-    $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclaration::class, [
-        new AddReturnTypeDeclaration('Cake\Console\Command', 'execute', $intNull),
-    ]);
-
     $arrayType = new ArrayType(new MixedType(), new MixedType());
     $rectorConfig->ruleWithConfiguration(
         AddPropertyTypeDeclarationRector::class,
@@ -46,5 +41,10 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         'Cake\I18n\FrozenDate' => 'Cake\I18n\Date',
         'Cake\I18n\FrozenTime' => 'Cake\I18n\DateTime',
+    ]);
+
+    $intNull = new UnionType([new IntegerType(), new NullType()]);
+    $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclaration::class, [
+        new AddReturnTypeDeclaration('Cake\Console\Command', 'execute', $intNull),
     ]);
 };
