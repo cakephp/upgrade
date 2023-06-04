@@ -10,6 +10,7 @@ use PHPStan\Type\NullType;
 use PHPStan\Type\UnionType;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\Name\RenameClassRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\Property\AddPropertyTypeDeclarationRector;
 use Rector\TypeDeclaration\ValueObject\AddPropertyTypeDeclaration;
 use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
@@ -44,7 +45,7 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $intNull = new UnionType([new IntegerType(), new NullType()]);
-    $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclaration::class, [
-        new AddReturnTypeDeclaration('Cake\Console\Command', 'execute', $intNull),
+    $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclarationRector::class, [
+        new AddReturnTypeDeclaration('Cake\Command\Command', 'execute', $intNull),
     ]);
 };

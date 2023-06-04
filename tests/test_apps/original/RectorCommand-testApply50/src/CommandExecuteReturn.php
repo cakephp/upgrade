@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace App\Command;
+
 use Cake\Command\Command;
 
 use Cake\Console\Arguments;
@@ -10,6 +12,6 @@ class ExampleCommand extends Command
 {
     public function execute(Arguments $args, ConsoleIo $io)
     {
-        // Do something,
+        return self::CODE_SUCCESS;
     }
 }
