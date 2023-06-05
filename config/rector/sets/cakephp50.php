@@ -4,11 +4,16 @@ declare(strict_types=1);
 use Cake\Upgrade\Rector\Rector\MethodCall\OptionsArrayToNamedParametersRector;
 use Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters;
 use PHPStan\Type\ArrayType;
+use PHPStan\Type\IntegerType;
 use PHPStan\Type\MixedType;
+use PHPStan\Type\NullType;
+use PHPStan\Type\UnionType;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\Name\RenameClassRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\Property\AddPropertyTypeDeclarationRector;
 use Rector\TypeDeclaration\ValueObject\AddPropertyTypeDeclaration;
+use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 
 # @see https://book.cakephp.org/5/en/appendices/5-0-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
@@ -39,4 +44,8 @@ return static function (RectorConfig $rectorConfig): void {
         'Cake\I18n\FrozenTime' => 'Cake\I18n\DateTime',
     ]);
 
+    $intNull = new UnionType([new IntegerType(), new NullType()]);
+    $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclarationRector::class, [
+        new AddReturnTypeDeclaration('Cake\Command\Command', 'execute', $intNull),
+    ]);
 };
