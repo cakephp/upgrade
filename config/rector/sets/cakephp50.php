@@ -4,9 +4,11 @@ declare(strict_types=1);
 use Cake\Upgrade\Rector\Rector\MethodCall\OptionsArrayToNamedParametersRector;
 use Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters;
 use PHPStan\Type\ArrayType;
+use PHPStan\Type\BooleanType;
 use PHPStan\Type\IntegerType;
 use PHPStan\Type\MixedType;
 use PHPStan\Type\NullType;
+use PHPStan\Type\StringType;
 use PHPStan\Type\UnionType;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\Name\RenameClassRector;
@@ -30,12 +32,27 @@ return static function (RectorConfig $rectorConfig): void {
     );
 
     $arrayType = new ArrayType(new MixedType(), new MixedType());
+    $stringNull = new UnionType([new StringType(), new NullType()]);
+    $boolType = new BooleanType();
     $rectorConfig->ruleWithConfiguration(
         AddPropertyTypeDeclarationRector::class,
         [
+            // Entity properties
             new AddPropertyTypeDeclaration('Cake\ORM\Entity', '_hidden', $arrayType),
             new AddPropertyTypeDeclaration('Cake\ORM\Entity', '_accessible', $arrayType),
             new AddPropertyTypeDeclaration('Cake\ORM\Entity', '_virtual', $arrayType),
+
+            // Plugin properties
+            new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'bootstrapEnabled', $boolType),
+            new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'consoleEnabled', $boolType),
+            new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'middlewareEnabled', $boolType),
+            new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'servicesEnabled', $boolType),
+            new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'routesEnabled', $boolType),
+            new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'path', $stringNull),
+            new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'classPath', $stringNull),
+            new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'configPath', $stringNull),
+            new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'templatePath', $stringNull),
+            new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'name', $stringNull),
         ]
     );
 
