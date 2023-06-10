@@ -98,7 +98,7 @@ CODE_SAMPLE
         $currentStmt = null;
         $this->traverseNodesWithCallable(
             $node->stmts,
-            function (Node $subNode) use ($node, $appUsesStaticCalls, &$currentStmt, &$stmtsToBeRemoved) {
+            function (Node $subNode) use ($node, $appUsesStaticCalls, &$currentStmt) {
                 if ($subNode instanceof Stmt) {
                     $currentStmt = $subNode;
                     return null;
