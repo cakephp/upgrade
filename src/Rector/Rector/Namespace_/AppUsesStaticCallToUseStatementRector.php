@@ -14,6 +14,7 @@ use PHPStan\Type\ObjectType;
 use Cake\Upgrade\Rector\ShortClassNameResolver;
 use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Stmt;
+use PhpParser\NodeTraverser;
 use Rector\Core\Contract\PhpParser\Node\StmtsAwareInterface;
 use Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\Core\Rector\AbstractRector;
@@ -105,6 +106,10 @@ CODE_SAMPLE
         $this->traverseNodesWithCallable(
             $stmts,
             function (Node $subNode) use ($node, $appUsesStaticCalls, &$currentStmt) {
+                if ($subNode instanceof StmtsAwareInterface) {
+                    return NodeTraverser::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
+                }
+
                 if ($subNode instanceof Stmt) {
                     $currentStmt = $subNode;
                     return null;
@@ -115,10 +120,6 @@ CODE_SAMPLE
                 }
 
                 if (! in_array($subNode, $appUsesStaticCalls, true)) {
-                    return null;
-                }
-
-                if (! in_array($currentStmt, $node->stmts, true)) {
                     return null;
                 }
 
