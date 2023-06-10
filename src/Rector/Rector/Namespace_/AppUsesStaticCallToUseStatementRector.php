@@ -108,14 +108,16 @@ CODE_SAMPLE
                     return null;
                 }
 
-                /** @var Stmt $currentStmt */
-                foreach ($appUsesStaticCalls as $toBeRemovedNode) {
-                    if ($subNode === $toBeRemovedNode && in_array($currentStmt, $node->stmts, true)) {
-                        unset($node->stmts[$currentStmt->getAttribute(AttributeKey::STMT_KEY)]);
-                        return null;
-                    }
+                if (! in_array($subNode, $appUsesStaticCalls, true)) {
+                    return null;
                 }
 
+                if (! in_array($currentStmt, $node->stmts, true)) {
+                    return null;
+                }
+
+                /** @var Stmt $currentStmt */
+                unset($node->stmts[$currentStmt->getAttribute(AttributeKey::STMT_KEY)]);
                 return null;
             });
     }
