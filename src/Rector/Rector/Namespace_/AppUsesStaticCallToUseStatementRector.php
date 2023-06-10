@@ -106,6 +106,7 @@ CODE_SAMPLE
         $this->traverseNodesWithCallable(
             $stmts,
             function (Node $subNode) use ($node, $appUsesStaticCalls, &$currentStmt) {
+                // only lookup each of current stmts, avoid too deep traversal
                 if ($subNode instanceof StmtsAwareInterface) {
                     return NodeTraverser::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
                 }
