@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Upgrade\Rector\Rector\MethodCall\AddMethodCallArgsRector;
+use Cake\Upgrade\Rector\ValueObject\AddMethodCallArgs;
 use Rector\Config\RectorConfig;
+use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
-use Rector\Transform\Rector\MethodCall\MethodCallToAnotherMethodCallWithArgumentsRector;
-use Rector\Transform\ValueObject\MethodCallToAnotherMethodCallWithArguments;
+use Rector\Renaming\ValueObject\MethodCallRename;
 
 /**
  * @see https://github.com/cakephp/chronos/blob/2.next/docs/en/2-4-upgrade-guide.rst
@@ -35,19 +37,13 @@ return static function (RectorConfig $rectorConfig): void {
         'subWeek' => 'subWeeks',
     ];
 
-    $renameMethods = [];
+    $renameMethods = $addMethodCallArgs = [];
 
     foreach ($mutationMethods as $oldMethod => $newMethod) {
-        $renameMethods[] = new MethodCallToAnotherMethodCallWithArguments(
-            'Cake\Chronos\ChronosDate',
-            $oldMethod,
-            $newMethod,
-            [1],
-        );
+        $renameMethods[] = new MethodCallRename('Cake\Chronos\ChronosDate', $oldMethod, $newMethod);
+        $addMethodCallArgs[] = new AddMethodCallArgs('Cake\Chronos\ChronosDate', $newMethod, 1);
     }
 
-    $rectorConfig->ruleWithConfiguration(
-        MethodCallToAnotherMethodCallWithArgumentsRector::class,
-        $renameMethods
-    );
+    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, $renameMethods);
+    $rectorConfig->ruleWithConfiguration(AddMethodCallArgsRector::class, $addMethodCallArgs);
 };

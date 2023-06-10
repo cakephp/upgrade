@@ -1,13 +1,12 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Cake\Upgrade\Test\TestCase\Rector\MethodCall\ArrayToFluentCallRector;
+namespace Cake\Upgrade\Test\TestCase\Rector\MethodCall\AddMethodCallArgsRector;
 
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class ArrayToFluentCallRectorTest extends AbstractRectorTestCase
+final class AddMethodCallArgsRectorTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData()

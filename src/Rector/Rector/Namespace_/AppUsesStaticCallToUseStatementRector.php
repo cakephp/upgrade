@@ -67,7 +67,9 @@ CODE_SAMPLE
             return null;
         }
 
-        $this->nodeRemover->removeNodes($appUsesStaticCalls);
+        foreach($appUsesStaticCalls as $toBeRemovedNode) {
+            $this->nodeRemover->removeNode($toBeRemovedNode);
+        }
 
         $names = $this->resolveNamesFromStaticCalls($appUsesStaticCalls);
         $uses = [];
@@ -171,8 +173,6 @@ CODE_SAMPLE
                 foreach ($uses as $use) {
                     $newStmts[] = $use;
                 }
-
-                continue;
             }
         }
 
