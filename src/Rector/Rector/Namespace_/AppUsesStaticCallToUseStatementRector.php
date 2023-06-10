@@ -12,8 +12,13 @@ use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\UseUse;
 use PHPStan\Type\ObjectType;
 use Cake\Upgrade\Rector\ShortClassNameResolver;
+use PhpParser\Node\FunctionLike;
+use PhpParser\Node\Stmt;
+use PhpParser\Node\Stmt\Expression;
+use PhpParser\NodeTraverser;
 use Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\Core\Rector\AbstractRector;
+use Rector\NodeTypeResolver\Node\AttributeKey;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -54,7 +59,7 @@ CODE_SAMPLE
      */
     public function getNodeTypes(): array
     {
-        return [FileWithoutNamespace::class, Namespace_::class];
+        return [FileWithoutNamespace::class, Namespace_::class, FunctionLike::class];
     }
 
     /**
@@ -67,10 +72,6 @@ CODE_SAMPLE
             return null;
         }
 
-        foreach($appUsesStaticCalls as $toBeRemovedNode) {
-            $this->nodeRemover->removeNode($toBeRemovedNode);
-        }
-
         $names = $this->resolveNamesFromStaticCalls($appUsesStaticCalls);
         $uses = [];
         foreach ($names as $name) {
@@ -78,13 +79,53 @@ CODE_SAMPLE
             $uses[] = new Use_([$useUse]);
         }
 
+        $this->removeCallLikeStmts($node, $appUsesStaticCalls);
+
         if ($node instanceof Namespace_) {
             $node->stmts = array_merge($uses, $node->stmts);
-
-            return $node;
         }
 
-        return $this->refactorFile($node, $uses);
+        if ($node instanceof FileWithoutNamespace) {
+            $this->refactorFile($node, $uses);
+        }
+
+        return $node;
+    }
+
+    /**
+     * @param StaticCall[] $appUsesStaticCalls
+     */
+    private function removeCallLikeStmts(Namespace_|FileWithoutNamespace|FunctionLike $node, array $appUsesStaticCalls): void
+    {
+        $currentStmt = null;
+        $stmtsToBeRemoved = [];
+        $this->traverseNodesWithCallable(
+            $node->stmts,
+            function (Node $subNode) use ($appUsesStaticCalls, &$currentStmt, &$stmtsToBeRemoved) {
+                if ($subNode instanceof Stmt) {
+                    $currentStmt = $subNode;
+                    return null;
+                }
+
+                if (! $subNode instanceof StaticCall) {
+                    return null;
+                }
+
+                foreach ($appUsesStaticCalls as $toBeRemovedNode) {
+                    if ($subNode === $toBeRemovedNode) {
+                        $stmtsToBeRemoved[] = $currentStmt;
+                        return null;
+                    }
+                }
+
+                return null;
+            });
+
+        foreach ($node->stmts as $key => $stmt) {
+            if (in_array($stmt, $stmtsToBeRemoved, true)) {
+                unset($node->stmts[$key]);
+            }
+        }
     }
 
     /**
@@ -128,13 +169,7 @@ CODE_SAMPLE
      */
     private function refactorFile(FileWithoutNamespace $fileWithoutNamespace, array $uses): ?FileWithoutNamespace
     {
-        $hasNamespace = $this->betterNodeFinder->findFirstInstanceOf($fileWithoutNamespace, Namespace_::class);
-        // already handled above
-        if ($hasNamespace !== null) {
-            return null;
-        }
-
-        $hasDeclare = $this->betterNodeFinder->findFirstInstanceOf($fileWithoutNamespace, Declare_::class);
+        $hasDeclare = $this->betterNodeFinder->findFirstInstanceOf($fileWithoutNamespace->stmts, Declare_::class);
         if ($hasDeclare !== null) {
             return $this->refactorFileWithDeclare($fileWithoutNamespace, $uses);
         }
@@ -166,16 +201,16 @@ CODE_SAMPLE
         array $uses
     ): FileWithoutNamespace {
         $newStmts = [];
-        foreach ($fileWithoutNamespace->stmts as $stmt) {
+        foreach ($fileWithoutNamespace->stmts as $key => $stmt) {
             $newStmts[] = $stmt;
 
             if ($stmt instanceof Declare_) {
                 foreach ($uses as $use) {
-                    $newStmts[] = $use;
+                    array_splice($fileWithoutNamespace->stmts, 1, 0, [$use]);
                 }
             }
         }
 
-        return new FileWithoutNamespace($newStmts);
+        return $fileWithoutNamespace;
     }
 }
