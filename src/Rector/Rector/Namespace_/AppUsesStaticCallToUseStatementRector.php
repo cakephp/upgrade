@@ -112,6 +112,7 @@ CODE_SAMPLE
                 foreach ($appUsesStaticCalls as $toBeRemovedNode) {
                     if ($subNode === $toBeRemovedNode && in_array($currentStmt, $node->stmts, true)) {
                         unset($node->stmts[$currentStmt->getAttribute(AttributeKey::STMT_KEY)]);
+                        return null;
                     }
                 }
 
