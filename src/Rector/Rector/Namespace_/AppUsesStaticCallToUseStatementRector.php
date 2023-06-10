@@ -61,10 +61,18 @@ CODE_SAMPLE
     }
 
     /**
-     * @param \Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace|\PhpParser\Node\Stmt\Namespace_ $node
+     * @param \Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace|\PhpParser\Node\Stmt\Namespace_|FunctionLike $node
      */
     public function refactor(Node $node): ?Node
     {
+        $stmts = $node instanceof FunctionLike
+            ? $node->getStmts()
+            : $node->stmts;
+
+        if ($stmts === null) {
+            return null;
+        }
+
         $appUsesStaticCalls = $this->collectAppUseStaticCalls($node);
         if ($appUsesStaticCalls === []) {
             return null;
@@ -77,7 +85,7 @@ CODE_SAMPLE
             $uses[] = new Use_([$useUse]);
         }
 
-        $this->removeCallLikeStmts($node, $appUsesStaticCalls);
+        $this->removeCallLikeStmts($node, $stmts, $appUsesStaticCalls);
 
         if ($node instanceof Namespace_) {
             $node->stmts = array_merge($uses, $node->stmts);
@@ -91,13 +99,14 @@ CODE_SAMPLE
     }
 
     /**
+     * @param Stmt[] $stmts
      * @param StaticCall[] $appUsesStaticCalls
      */
-    private function removeCallLikeStmts(Namespace_|FileWithoutNamespace|FunctionLike $node, array $appUsesStaticCalls): void
+    private function removeCallLikeStmts(Namespace_|FileWithoutNamespace|FunctionLike $node, array $stmts, array $appUsesStaticCalls): void
     {
         $currentStmt = null;
         $this->traverseNodesWithCallable(
-            $node->stmts,
+            $stmts,
             function (Node $subNode) use ($node, $appUsesStaticCalls, &$currentStmt) {
                 if ($subNode instanceof Stmt) {
                     $currentStmt = $subNode;
