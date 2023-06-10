@@ -202,10 +202,10 @@ CODE_SAMPLE
         array $uses
     ): FileWithoutNamespace {
         $newStmts = [];
-        foreach ($fileWithoutNamespace->stmts as $stmt) {
+        foreach ($fileWithoutNamespace->stmts as $key => $stmt) {
             if ($stmt instanceof Declare_) {
                 foreach ($uses as $use) {
-                    array_splice($fileWithoutNamespace->stmts, 1, 0, [$use]);
+                    array_splice($fileWithoutNamespace->stmts, $key + 1, 0, [$use]);
                 }
             }
         }
