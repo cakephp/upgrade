@@ -14,6 +14,7 @@ use PHPStan\Type\ObjectType;
 use Cake\Upgrade\Rector\ShortClassNameResolver;
 use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Stmt;
+use Rector\Core\Contract\PhpParser\Node\StmtsAwareInterface;
 use Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\Core\Rector\AbstractRector;
 use Rector\NodeTypeResolver\Node\AttributeKey;
@@ -57,19 +58,15 @@ CODE_SAMPLE
      */
     public function getNodeTypes(): array
     {
-        return [FileWithoutNamespace::class, Namespace_::class, FunctionLike::class];
+        return [StmtsAwareInterface::class];
     }
 
     /**
-     * @param \Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace|\PhpParser\Node\Stmt\Namespace_|FunctionLike $node
+     * @param StmtsAwareInterface $node
      */
     public function refactor(Node $node): ?Node
     {
-        $stmts = $node instanceof FunctionLike
-            ? $node->getStmts()
-            : $node->stmts;
-
-        if ($stmts === null) {
+        if ($node->stmts === null) {
             return null;
         }
 
@@ -85,7 +82,7 @@ CODE_SAMPLE
             $uses[] = new Use_([$useUse]);
         }
 
-        $this->removeCallLikeStmts($node, $stmts, $appUsesStaticCalls);
+        $this->removeCallLikeStmts($node, $node->stmts, $appUsesStaticCalls);
 
         if ($node instanceof Namespace_) {
             $node->stmts = array_merge($uses, $node->stmts);
@@ -102,7 +99,7 @@ CODE_SAMPLE
      * @param Stmt[] $stmts
      * @param StaticCall[] $appUsesStaticCalls
      */
-    private function removeCallLikeStmts(Namespace_|FileWithoutNamespace|FunctionLike $node, array $stmts, array $appUsesStaticCalls): void
+    private function removeCallLikeStmts(StmtsAwareInterface $node, array $stmts, array $appUsesStaticCalls): void
     {
         $currentStmt = null;
         $this->traverseNodesWithCallable(
@@ -134,7 +131,8 @@ CODE_SAMPLE
     /**
      * @return \PhpParser\Node\Expr\StaticCall[]
      */
-    private function collectAppUseStaticCalls(Node $node): array
+
+    private function collectAppUseStaticCalls(StmtsAwareInterface $node): array
     {
         /** @var \PhpParser\Node\Expr\StaticCall[] $appUsesStaticCalls */
         $appUsesStaticCalls = $this->betterNodeFinder->find($node, function (Node $node): bool {
