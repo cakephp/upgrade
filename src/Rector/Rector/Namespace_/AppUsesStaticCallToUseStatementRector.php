@@ -14,8 +14,6 @@ use PHPStan\Type\ObjectType;
 use Cake\Upgrade\Rector\ShortClassNameResolver;
 use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Stmt;
-use PhpParser\Node\Stmt\Expression;
-use PhpParser\NodeTraverser;
 use Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\Core\Rector\AbstractRector;
 use Rector\NodeTypeResolver\Node\AttributeKey;
@@ -98,10 +96,9 @@ CODE_SAMPLE
     private function removeCallLikeStmts(Namespace_|FileWithoutNamespace|FunctionLike $node, array $appUsesStaticCalls): void
     {
         $currentStmt = null;
-        $stmtsToBeRemoved = [];
         $this->traverseNodesWithCallable(
             $node->stmts,
-            function (Node $subNode) use ($appUsesStaticCalls, &$currentStmt, &$stmtsToBeRemoved) {
+            function (Node $subNode) use ($node, $appUsesStaticCalls, &$currentStmt, &$stmtsToBeRemoved) {
                 if ($subNode instanceof Stmt) {
                     $currentStmt = $subNode;
                     return null;
@@ -111,21 +108,15 @@ CODE_SAMPLE
                     return null;
                 }
 
+                /** @var Stmt $currentStmt */
                 foreach ($appUsesStaticCalls as $toBeRemovedNode) {
-                    if ($subNode === $toBeRemovedNode) {
-                        $stmtsToBeRemoved[] = $currentStmt;
-                        return null;
+                    if ($subNode === $toBeRemovedNode && in_array($currentStmt, $node->stmts, true)) {
+                        unset($node->stmts[$currentStmt->getAttribute(AttributeKey::STMT_KEY)]);
                     }
                 }
 
                 return null;
             });
-
-        foreach ($node->stmts as $key => $stmt) {
-            if (in_array($stmt, $stmtsToBeRemoved, true)) {
-                unset($node->stmts[$key]);
-            }
-        }
     }
 
     /**
@@ -201,9 +192,7 @@ CODE_SAMPLE
         array $uses
     ): FileWithoutNamespace {
         $newStmts = [];
-        foreach ($fileWithoutNamespace->stmts as $key => $stmt) {
-            $newStmts[] = $stmt;
-
+        foreach ($fileWithoutNamespace->stmts as $stmt) {
             if ($stmt instanceof Declare_) {
                 foreach ($uses as $use) {
                     array_splice($fileWithoutNamespace->stmts, 1, 0, [$use]);
