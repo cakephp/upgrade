@@ -33,6 +33,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     $arrayType = new ArrayType(new MixedType(), new MixedType());
     $stringNull = new UnionType([new StringType(), new NullType()]);
+    $stringType = new StringType();
     $boolType = new BooleanType();
     $rectorConfig->ruleWithConfiguration(
         AddPropertyTypeDeclarationRector::class,
@@ -53,6 +54,23 @@ return static function (RectorConfig $rectorConfig): void {
             new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'configPath', $stringNull),
             new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'templatePath', $stringNull),
             new AddPropertyTypeDeclaration('Cake\Core\BasePlugin', 'name', $stringNull),
+
+            // Helper properties
+            new AddPropertyTypeDeclaration('Cake\View\Helper\FormHelper', '_defaultWidgets', $arrayType),
+            new AddPropertyTypeDeclaration('Cake\View\Helper', '_defaultConfig', $arrayType),
+            new AddPropertyTypeDeclaration('Cake\View\Helper', '_defaultConfig', $arrayType),
+            new AddPropertyTypeDeclaration('Cake\View\Helper', 'helpers', $arrayType),
+
+            // ORM properties
+            new AddPropertyTypeDeclaration('Cake\ORM\Behavior', '_defaultConfig', $arrayType),
+
+            // Controller Properties
+            new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'name', $stringType),
+            new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'paginate', $arrayType),
+            new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'plugin', $stringNull),
+            new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'autoRender', $boolType),
+            new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'middlewares', $arrayType),
+            new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'viewClasses', $arrayType),
         ]
     );
 
