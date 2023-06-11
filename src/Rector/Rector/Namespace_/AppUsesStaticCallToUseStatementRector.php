@@ -12,8 +12,12 @@ use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\UseUse;
 use PHPStan\Type\ObjectType;
 use Cake\Upgrade\Rector\ShortClassNameResolver;
+use PhpParser\Node\Stmt;
+use PhpParser\NodeTraverser;
+use Rector\Core\Contract\PhpParser\Node\StmtsAwareInterface;
 use Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\Core\Rector\AbstractRector;
+use Rector\NodeTypeResolver\Node\AttributeKey;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -54,21 +58,21 @@ CODE_SAMPLE
      */
     public function getNodeTypes(): array
     {
-        return [FileWithoutNamespace::class, Namespace_::class];
+        return [StmtsAwareInterface::class];
     }
 
     /**
-     * @param \Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace|\PhpParser\Node\Stmt\Namespace_ $node
+     * @param StmtsAwareInterface $node
      */
     public function refactor(Node $node): ?Node
     {
-        $appUsesStaticCalls = $this->collectAppUseStaticCalls($node);
-        if ($appUsesStaticCalls === []) {
+        if ($node->stmts === null) {
             return null;
         }
 
-        foreach($appUsesStaticCalls as $toBeRemovedNode) {
-            $this->nodeRemover->removeNode($toBeRemovedNode);
+        $appUsesStaticCalls = $this->collectAppUseStaticCalls($node);
+        if ($appUsesStaticCalls === []) {
+            return null;
         }
 
         $names = $this->resolveNamesFromStaticCalls($appUsesStaticCalls);
@@ -78,19 +82,58 @@ CODE_SAMPLE
             $uses[] = new Use_([$useUse]);
         }
 
+        $this->removeCallLikeStmts($node, $node->stmts, $appUsesStaticCalls);
+
         if ($node instanceof Namespace_) {
             $node->stmts = array_merge($uses, $node->stmts);
-
-            return $node;
         }
 
-        return $this->refactorFile($node, $uses);
+        if ($node instanceof FileWithoutNamespace) {
+            $this->refactorFile($node, $uses);
+        }
+
+        return $node;
+    }
+
+    /**
+     * @param Stmt[] $stmts
+     * @param StaticCall[] $appUsesStaticCalls
+     */
+    private function removeCallLikeStmts(StmtsAwareInterface $node, array $stmts, array $appUsesStaticCalls): void
+    {
+        $currentStmt = null;
+        $this->traverseNodesWithCallable(
+            $stmts,
+            function (Node $subNode) use ($node, $appUsesStaticCalls, &$currentStmt) {
+                // only lookup each of current stmts, avoid too deep traversal
+                if ($subNode instanceof StmtsAwareInterface) {
+                    return NodeTraverser::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
+                }
+
+                if ($subNode instanceof Stmt) {
+                    $currentStmt = $subNode;
+                    return null;
+                }
+
+                if (! $subNode instanceof StaticCall) {
+                    return null;
+                }
+
+                if (! in_array($subNode, $appUsesStaticCalls, true)) {
+                    return null;
+                }
+
+                /** @var Stmt $currentStmt */
+                unset($node->stmts[$currentStmt->getAttribute(AttributeKey::STMT_KEY)]);
+                return null;
+            });
     }
 
     /**
      * @return \PhpParser\Node\Expr\StaticCall[]
      */
-    private function collectAppUseStaticCalls(Node $node): array
+
+    private function collectAppUseStaticCalls(StmtsAwareInterface $node): array
     {
         /** @var \PhpParser\Node\Expr\StaticCall[] $appUsesStaticCalls */
         $appUsesStaticCalls = $this->betterNodeFinder->find($node, function (Node $node): bool {
@@ -128,13 +171,7 @@ CODE_SAMPLE
      */
     private function refactorFile(FileWithoutNamespace $fileWithoutNamespace, array $uses): ?FileWithoutNamespace
     {
-        $hasNamespace = $this->betterNodeFinder->findFirstInstanceOf($fileWithoutNamespace, Namespace_::class);
-        // already handled above
-        if ($hasNamespace !== null) {
-            return null;
-        }
-
-        $hasDeclare = $this->betterNodeFinder->findFirstInstanceOf($fileWithoutNamespace, Declare_::class);
+        $hasDeclare = $this->betterNodeFinder->findFirstInstanceOf($fileWithoutNamespace->stmts, Declare_::class);
         if ($hasDeclare !== null) {
             return $this->refactorFileWithDeclare($fileWithoutNamespace, $uses);
         }
@@ -166,16 +203,14 @@ CODE_SAMPLE
         array $uses
     ): FileWithoutNamespace {
         $newStmts = [];
-        foreach ($fileWithoutNamespace->stmts as $stmt) {
-            $newStmts[] = $stmt;
-
+        foreach ($fileWithoutNamespace->stmts as $key => $stmt) {
             if ($stmt instanceof Declare_) {
                 foreach ($uses as $use) {
-                    $newStmts[] = $use;
+                    array_splice($fileWithoutNamespace->stmts, $key + 1, 0, [$use]);
                 }
             }
         }
 
-        return new FileWithoutNamespace($newStmts);
+        return $fileWithoutNamespace;
     }
 }
