@@ -5,5 +5,5 @@ use Cake\Upgrade\Rector\Set\CakePHPSetList;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->sets([CakePHPSetList::CHRONOS_3_DATE]);
+    $rectorConfig->sets([CakePHPSetList::CHRONOS_3]);
 };
