@@ -28,6 +28,7 @@ return static function (RectorConfig $rectorConfig): void {
         [
             new OptionsArrayToNamedParameters('Cake\ORM\Table', ['find']),
             new OptionsArrayToNamedParameters('Cake\ORM\Query', ['find']),
+            new OptionsArrayToNamedParameters('Cake\ORM\Query\SelectQuery', ['find']),
             new OptionsArrayToNamedParameters('Cake\ORM\Association', ['find']),
             new OptionsArrayToNamedParameters('Cake\ORM\Table', ['get', 'rename' => ['key' => 'cacheKey']]),
         ]
