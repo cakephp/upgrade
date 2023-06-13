@@ -16,11 +16,47 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__ . '/../config.php');
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
+        // Date
         'Cake\Chronos\Date' => 'Cake\Chronos\ChronosDate',
         'Cake\Chronos\MutableDate' => 'Cake\Chronos\ChronosDate',
+
+        // DateTime
+        'Cake\Chronos\MutableDateTime' => 'Cake\Chronos\Chronos',
     ]);
 
-    $mutationMethods = [
+    $dateTimeMutationMethods = [
+        'addYear' => 'addYears',
+        'subYear' => 'subYears',
+        'addYearWithOverflow' => 'addYearsWithOverflow',
+        'subYearWithOverflow' => 'subYearsWithOverflow',
+        'addMonth' => 'addMonths',
+        'subMonth' => 'subMonths',
+        'addMonthWithOverflow' => 'addMonthsWithOverflow',
+        'subMonthWithOverflow' => 'subMonthsWithOverflow',
+        'addDay' => 'addDays',
+        'subDay' => 'subDays',
+        'addWeekday' => 'addWeekdays',
+        'subWeekday' => 'subWeekdays',
+        'addWeek' => 'addWeeks',
+        'subWeek' => 'subWeeks',
+
+        // Time specific methods
+        'addHour' => 'addHours',
+        'subHour' => 'subHours',
+        'addMinute' => 'addMinutes',
+        'subMinute' => 'subMinutes',
+        'addSecond' => 'addSeconds',
+        'subSecond' => 'subSeconds',
+    ];
+
+    $renameMethods = $addMethodCallArgs = [];
+
+    foreach ($dateTimeMutationMethods as $oldMethod => $newMethod) {
+        $renameMethods[] = new MethodCallRename('Cake\Chronos\Chronos', $oldMethod, $newMethod);
+        $addMethodCallArgs[] = new AddMethodCallArgs('Cake\Chronos\Chronos', $newMethod, 1);
+    }
+
+    $dateMutationMethods = [
         'addYear' => 'addYears',
         'subYear' => 'subYears',
         'addYearWithOverflow' => 'addYearsWithOverflow',
@@ -37,9 +73,7 @@ return static function (RectorConfig $rectorConfig): void {
         'subWeek' => 'subWeeks',
     ];
 
-    $renameMethods = $addMethodCallArgs = [];
-
-    foreach ($mutationMethods as $oldMethod => $newMethod) {
+    foreach ($dateMutationMethods as $oldMethod => $newMethod) {
         $renameMethods[] = new MethodCallRename('Cake\Chronos\ChronosDate', $oldMethod, $newMethod);
         $addMethodCallArgs[] = new AddMethodCallArgs('Cake\Chronos\ChronosDate', $newMethod, 1);
     }

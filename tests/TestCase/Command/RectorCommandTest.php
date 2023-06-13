@@ -78,17 +78,10 @@ class RectorCommandTest extends TestCase
         $this->assertTestAppUpgraded();
     }
 
-    public function testApplyChronos3Date()
-    {
-        $this->setupTestApp(__FUNCTION__);
-        $this->exec('upgrade rector --rules chronos3-date ' . TEST_APP);
-        $this->assertTestAppUpgraded();
-    }
-
     public function testApplyChronos3DateTime()
     {
         $this->setupTestApp(__FUNCTION__);
-        $this->exec('upgrade rector --rules chronos3-datetime ' . TEST_APP);
+        $this->exec('upgrade rector --rules chronos3 ' . TEST_APP);
         $this->assertTestAppUpgraded();
     }
 
