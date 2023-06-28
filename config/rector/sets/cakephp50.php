@@ -2,7 +2,9 @@
 declare(strict_types=1);
 
 use Cake\Upgrade\Rector\Rector\MethodCall\OptionsArrayToNamedParametersRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\RemoveMethodCallRector;
 use Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters;
+use Cake\Upgrade\Rector\ValueObject\RemoveMethodCall;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\BooleanType;
 use PHPStan\Type\IntegerType;
@@ -97,5 +99,10 @@ return static function (RectorConfig $rectorConfig): void {
         new MethodCallRename('Cake\Database\Query', 'order', 'orderBy'),
         new MethodCallRename('Cake\Database\Query', 'orderAsc', 'orderByAsc'),
         new MethodCallRename('Cake\Database\Query', 'orderDesc', 'orderByDesc'),
+    ]);
+
+    $rectorConfig->ruleWithConfiguration(RemoveMethodCallRector::class, [
+        new RemoveMethodCall('Cake\TestSuite\TestCase', 'useCommandRunner'),
+        new RemoveMethodCall('Cake\TestSuite\TestCase', 'useHttpServer'),
     ]);
 };

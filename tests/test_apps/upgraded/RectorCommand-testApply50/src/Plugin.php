@@ -5,9 +5,6 @@ namespace MyPlugin;
 
 use Cake\Core\BasePlugin;
 
-/**
- * Plugin for AlfredCovid
- */
 class Plugin extends BasePlugin
 {
     /**

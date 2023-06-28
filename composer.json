@@ -18,7 +18,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Cake\\Upgrade\\Test\\": "tests"
+            "Cake\\Upgrade\\Test\\TestCase\\": "tests/TestCase"
         }
     },
     "prefer-stable": true,
