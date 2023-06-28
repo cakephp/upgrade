@@ -67,13 +67,19 @@ return static function (RectorConfig $rectorConfig): void {
             // ORM properties
             new AddPropertyTypeDeclaration('Cake\ORM\Behavior', '_defaultConfig', $arrayType),
 
-            // Controller Properties
+            // Controller properties
             new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'name', $stringType),
             new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'paginate', $arrayType),
             new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'plugin', $stringNull),
             new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'autoRender', $boolType),
             new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'middlewares', $arrayType),
             new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'viewClasses', $arrayType),
+
+            // TestSuite properties
+            new AddPropertyTypeDeclaration('Cake\TestSuite\TestCase', 'fixtures', $arrayType),
+            new AddPropertyTypeDeclaration('Cake\TestSuite\Fixture\TestFixture', 'connection', $stringType),
+            new AddPropertyTypeDeclaration('Cake\TestSuite\Fixture\TestFixture', 'table', $stringType),
+            new AddPropertyTypeDeclaration('Cake\TestSuite\Fixture\TestFixture', 'records', $arrayType),
         ]
     );
 
