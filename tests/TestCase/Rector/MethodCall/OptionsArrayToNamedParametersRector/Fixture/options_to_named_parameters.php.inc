@@ -22,6 +22,7 @@ function optionsToNamedParameters()
         conditions: ['Articles.id' => $value],
         order: ['Articles.id' => 'asc'],
     );
+    $instance->get(1, contain: ['Articles' => ['Categories']]);
 
     // Array values are not spread
     $options = ['conditions' => ['Articles.id' => $value]];
@@ -57,6 +58,7 @@ function optionsToNamedParameters()
         conditions: ['Articles.id' => $value],
         order: ['Articles.id' => 'asc'],
     );
+    $instance->get(1, contain: ['Articles' => ['Categories']]);
 
     // Array values are not spread
     $options = ['conditions' => ['Articles.id' => $value]];
