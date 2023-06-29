@@ -5,7 +5,7 @@
 
 	<testsuites>
 		<testsuite name="Upgrade Test Cases">
-			<directory>./tests/</directory>
+			<directory>./tests/TestCase/</directory>
 		</testsuite>
 	</testsuites>
 

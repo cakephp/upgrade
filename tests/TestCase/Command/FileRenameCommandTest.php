@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Cake\Upgrade\Test\TestCase\Command;
 
 use Cake\Core\Configure;
-use Cake\Upgrade\Test\TestCase;
+use Cake\Upgrade\Test\TestCase\TestCase;
 
 /**
  * FileRenameCommand test.
