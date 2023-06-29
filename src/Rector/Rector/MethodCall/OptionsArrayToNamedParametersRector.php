@@ -106,7 +106,7 @@ CODE_SAMPLE
             return null;
         }
         $optionsParam = $methodCall->args[$argCount - 1];
-        if (!$optionsParam->value instanceof Array_) {
+        if (!$optionsParam->value instanceof Array_ || $optionsParam->name instanceof Identifier) {
             return null;
         }
         // Create a copy of the arguments and remove the options array.
