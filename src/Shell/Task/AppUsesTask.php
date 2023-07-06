@@ -276,7 +276,7 @@ class AppUsesTask extends BaseTask
         foreach ($rename as &$val) {
             $val = substr($val, 4);
         }
-        $regex = '/\bCake(' . implode($rename, '|') . ')\b/';
+        $regex = '/\bCake(' . implode('|', $rename) . ')\b/';
         return preg_replace($regex, '\1', $contents);
     }
 
