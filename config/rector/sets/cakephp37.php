@@ -45,10 +45,10 @@ return static function (RectorConfig $rectorConfig): void {
         new PropertyFetchToMethodCall('Cake\View\View', 'helpers', 'helpers'),
     ]);
 
-    $rectorConfig->ruleWithConfiguration(MethodCallToAnotherMethodCallWithArgumentsRector::class, [
-        new MethodCallToAnotherMethodCallWithArguments('Cake\Database\Query', 'join', 'clause', ['join']),
-        new MethodCallToAnotherMethodCallWithArguments('Cake\Database\Query', 'from', 'clause', ['from']),
-    ]);
+    //$rectorConfig->ruleWithConfiguration(MethodCallToAnotherMethodCallWithArgumentsRector::class, [
+    //    new MethodCallToAnotherMethodCallWithArguments('Cake\Database\Query', 'join', 'clause', ['join']),
+    //    new MethodCallToAnotherMethodCallWithArguments('Cake\Database\Query', 'from', 'clause', ['from']),
+    //]);
 
     $rectorConfig->ruleWithConfiguration(ModalToGetSetRector::class, [
         new ModalToGetSet('Cake\Database\Connection', 'logQueries', 'isQueryLoggingEnabled', 'enableQueryLogging'),
