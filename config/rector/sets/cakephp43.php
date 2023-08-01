@@ -30,18 +30,18 @@ return static function (RectorConfig $rectorConfig): void {
         [new RemoveIntermediaryMethod('getTableLocator', 'get', 'fetchTable')]
     );
 
-    $rectorConfig->ruleWithConfiguration(MethodCallToAnotherMethodCallWithArgumentsRector::class, [
-        new MethodCallToAnotherMethodCallWithArguments(
-            'Cake\Database\DriverInterface',
-            'supportsQuoting',
-            'supports',
-            ['quote'],
-        ),
-        new MethodCallToAnotherMethodCallWithArguments(
-            'Cake\Database\DriverInterface',
-            'supportsSavepoints',
-            'supports',
-            ['savepoint']
-        ),
-    ]);
+    //$rectorConfig->ruleWithConfiguration(MethodCallToAnotherMethodCallWithArgumentsRector::class, [
+    //    new MethodCallToAnotherMethodCallWithArguments(
+    //        'Cake\Database\DriverInterface',
+    //        'supportsQuoting',
+    //        'supports',
+    //        ['quote'],
+    //    ),
+    //    new MethodCallToAnotherMethodCallWithArguments(
+    //        'Cake\Database\DriverInterface',
+    //        'supportsSavepoints',
+    //        'supports',
+    //        ['savepoint']
+    //    ),
+    //]);
 };
