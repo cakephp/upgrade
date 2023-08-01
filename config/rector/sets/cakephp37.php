@@ -45,6 +45,7 @@ return static function (RectorConfig $rectorConfig): void {
         new PropertyFetchToMethodCall('Cake\View\View', 'helpers', 'helpers'),
     ]);
 
+    // These rector rules were removed in rector 0.17 - see https://github.com/rectorphp/rector-src/pull/3777
     //$rectorConfig->ruleWithConfiguration(MethodCallToAnotherMethodCallWithArgumentsRector::class, [
     //    new MethodCallToAnotherMethodCallWithArguments('Cake\Database\Query', 'join', 'clause', ['join']),
     //    new MethodCallToAnotherMethodCallWithArguments('Cake\Database\Query', 'from', 'clause', ['from']),

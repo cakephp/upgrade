@@ -30,6 +30,7 @@ return static function (RectorConfig $rectorConfig): void {
         [new RemoveIntermediaryMethod('getTableLocator', 'get', 'fetchTable')]
     );
 
+    // These rector rules were removed in rector 0.17 - see https://github.com/rectorphp/rector-src/pull/3777
     //$rectorConfig->ruleWithConfiguration(MethodCallToAnotherMethodCallWithArgumentsRector::class, [
     //    new MethodCallToAnotherMethodCallWithArguments(
     //        'Cake\Database\DriverInterface',
