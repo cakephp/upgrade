@@ -37,8 +37,8 @@ be able to be as effective as it cannot infer types.
 ```bash
 cd /path/to/upgrade
 
-# To apply upgrade rules from 4.3 to 4.4
-bin/cake upgrade rector --rules cakephp44 /path/to/your/app/src
+# To apply upgrade rules from 4.4 to 4.5
+bin/cake upgrade rector --rules cakephp45 /path/to/your/app/src
 ```
 
 There are rules included for:
@@ -47,6 +47,7 @@ There are rules included for:
 - cakephp42
 - cakephp43
 - cakephp44
+- cakephp45
 
 ## Upgrading from CakePHP 3.x to CakePHP 4.x
 
