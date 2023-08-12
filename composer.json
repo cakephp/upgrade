@@ -9,7 +9,8 @@
         "cakephp/console": "^4.0",
         "nette/utils": "^3.2",
         "rector/rector": "^0.15",
-        "symfony/string": "^6.0"
+        "symfony/string": "^6.0",
+        "phpstan/phpstan": "1.10.27"
     },
     "autoload": {
         "psr-4": {
