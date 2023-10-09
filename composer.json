@@ -10,7 +10,7 @@
         "nette/utils": "^3.2",
         "rector/rector": "^0.16",
         "symfony/string": "^6.0",
-        "phpstan/phpstan": "1.10.27"
+        "phpstan/phpstan": "1.10.38"
     },
     "autoload": {
         "psr-4": {
