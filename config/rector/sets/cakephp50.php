@@ -76,6 +76,14 @@ return static function (RectorConfig $rectorConfig): void {
             new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'autoRender', $boolType),
             new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'middlewares', $arrayType),
             new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'viewClasses', $arrayType),
+            new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'modelClass', $stringNull),
+            new AddPropertyTypeDeclaration('Cake\Controller\Controller', 'defaultTable', $stringNull),
+
+            // Component properties
+            new AddPropertyTypeDeclaration('Cake\Controller\Component', 'components', $arrayType),
+
+            // View properties
+            new AddPropertyTypeDeclaration('Cake\View\View', 'layout', $stringType),
 
             // TestSuite properties
             new AddPropertyTypeDeclaration('Cake\TestSuite\TestCase', 'fixtures', $arrayType),

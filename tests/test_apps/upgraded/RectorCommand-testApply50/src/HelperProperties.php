@@ -14,8 +14,10 @@ class CustomFormHelper extends FormHelper
     protected array $helpers = [];
 }
 
-class ArticlesController extends Controller 
+class ArticlesController extends Controller
 {
+    use \Cake\Datasource\ModelAwareTrait;
+
     protected string $name = 'Articles';
 
     protected array $paginate = [];
@@ -27,6 +29,10 @@ class ArticlesController extends Controller
     protected array $middlewares = [];
 
     protected array $viewClasses = [];
+
+    protected ?string $modelClass = null;
+
+    protected ?string $defaultTable = null;
 }
 
 class CustomBehavior extends Behavior
