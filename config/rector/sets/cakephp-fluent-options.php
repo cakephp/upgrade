@@ -7,7 +7,6 @@ use Cake\Upgrade\Rector\ValueObject\FactoryMethod;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../config.php');
     $rectorConfig->ruleWithConfiguration(ArrayToFluentCallRector::class, [
         ArrayToFluentCallRector::ARRAYS_TO_FLUENT_CALLS => [
             new ArrayToFluentCall('Cake\ORM\Association', [

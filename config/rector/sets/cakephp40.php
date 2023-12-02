@@ -31,7 +31,6 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 # source: https://book.cakephp.org/4/en/appendices/4-0-migration-guide.html
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../config.php');
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         'Cake\Database\Type' => 'Cake\Database\TypeFactory',
         'Cake\Console\ConsoleErrorHandler' => 'Cake\Error\ConsoleErrorHandler',

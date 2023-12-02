@@ -8,6 +8,7 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter;
 use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
+use Rector\Core\PhpParser\Node\Value\ValueResolver;
 use Rector\Core\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -29,6 +30,10 @@ final class RenameMethodCallBasedOnParameterRector extends AbstractRector implem
      * @var \Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter[]
      */
     private array $callsWithParamRenames = [];
+
+    public function __construct(private ValueResolver $valueResolver)
+    {
+    }
 
     public function getRuleDefinition(): RuleDefinition
     {

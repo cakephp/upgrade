@@ -14,7 +14,6 @@ use Rector\Transform\ValueObject\PropertyFetchToMethodCall;
 
 # source: https://book.cakephp.org/3.0/en/appendices/3-7-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../config.php');
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
         new MethodCallRename('Cake\Form\Form', 'errors', 'getErrors'),
         new MethodCallRename('Cake\Validation\Validation', 'cc', 'creditCard'),

@@ -7,8 +7,6 @@ use Cake\Upgrade\Test\TestCase\Rector\MethodCall\AddMethodCallArgsRector\Source\
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../../../../../../config/rector/config.php');
-
     $rectorConfig->ruleWithConfiguration(RemoveMethodCallRector::class, [
         new RemoveMethodCall(SomeModelType::class, 'getAttribute'),
     ]);
