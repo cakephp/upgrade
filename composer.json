@@ -13,12 +13,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Cake\\Upgrade\\": "src"
+            "Cake\\Upgrade\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Cake\\Upgrade\\Test\\TestCase\\": "tests/TestCase"
+            "Cake\\Upgrade\\Test\\TestCase\\": "tests/TestCase/"
         }
     },
     "prefer-stable": true,
