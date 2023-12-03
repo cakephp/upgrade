@@ -13,8 +13,6 @@ use Rector\Renaming\ValueObject\MethodCallRename;
  * @see https://github.com/cakephp/chronos/blob/3.x/docs/en/3-x-migration-guide.rst
  */
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../config.php');
-
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         // Date
         'Cake\Chronos\Date' => 'Cake\Chronos\ChronosDate',

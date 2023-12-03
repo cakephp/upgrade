@@ -79,7 +79,7 @@ CODE_SAMPLE
                 continue;
             }
 
-            $values = $methodCallRenameWithAddedArgument->getValues()[0];
+            $values = $methodCallRenameWithAddedArgument->getValues();
             if ($node->args) {
                 $newArgs = [];
                 foreach ($node->args as $arg) {

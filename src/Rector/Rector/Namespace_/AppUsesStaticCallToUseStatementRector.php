@@ -15,7 +15,9 @@ use Cake\Upgrade\Rector\ShortClassNameResolver;
 use PhpParser\Node\Stmt;
 use PhpParser\NodeTraverser;
 use Rector\Core\Contract\PhpParser\Node\StmtsAwareInterface;
+use Rector\Core\PhpParser\Node\BetterNodeFinder;
 use Rector\Core\PhpParser\Node\CustomNode\FileWithoutNamespace;
+use Rector\Core\PhpParser\Node\Value\ValueResolver;
 use Rector\Core\Rector\AbstractRector;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
@@ -30,7 +32,9 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class AppUsesStaticCallToUseStatementRector extends AbstractRector
 {
     public function __construct(
-        private ShortClassNameResolver $shortClassNameResolver
+        private ShortClassNameResolver $shortClassNameResolver,
+        private BetterNodeFinder $betterNodeFinder,
+        private ValueResolver $valueResolver
     ) {
     }
 

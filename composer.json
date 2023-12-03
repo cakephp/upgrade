@@ -8,7 +8,7 @@
         "php": "^8.1",
         "cakephp/console": "5.x-dev",
         "nette/utils": "^3.2",
-        "rector/rector": "0.17.13",
+        "rector/rector": "0.18.11",
         "symfony/string": "^6.0"
     },
     "autoload": {
@@ -33,13 +33,6 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "rector/extension-installer": true
-        }
-    },
-    "extra": {
-        "rector": {
-            "includes": [
-                "config/rector/config.php"
-            ]
         }
     },
     "support": {

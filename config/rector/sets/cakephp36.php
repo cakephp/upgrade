@@ -9,7 +9,6 @@ use Rector\Transform\Rector\Assign\PropertyFetchToMethodCallRector;
 use Rector\Transform\ValueObject\PropertyFetchToMethodCall;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../config.php');
     # source: https://book.cakephp.org/3.0/en/appendices/3-6-migration-guide.html
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
         new MethodCallRename('Cake\ORM\Table', 'association', 'getAssociation'),

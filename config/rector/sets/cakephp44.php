@@ -8,7 +8,6 @@ use Rector\Renaming\ValueObject\MethodCallRename;
 
 # @see https://book.cakephp.org/4/en/appendices/4-4-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../config.php');
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         'Cake\TestSuite\ConsoleIntegrationTestTrait' => 'Cake\Console\TestSuite\ConsoleIntegrationTestTrait',
         'Cake\TestSuite\Stub\ConsoleInput' => 'Cake\Console\TestSuite\StubConsoleInput',

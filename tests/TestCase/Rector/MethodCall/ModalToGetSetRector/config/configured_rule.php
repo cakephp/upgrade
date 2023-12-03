@@ -7,8 +7,6 @@ use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../../../../../../config/rector/config.php');
-
     $rectorConfig->ruleWithConfiguration(ModalToGetSetRector::class, [
 
         new ModalToGetSet(SomeModelType::class, 'config', null, null, 2, 'array'),

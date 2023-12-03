@@ -8,7 +8,6 @@ use Rector\Renaming\ValueObject\MethodCallRename;
 
 # source: https://book.cakephp.org/4/en/appendices/4-2-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../config.php');
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         'Cake\Core\Exception\Exception' => 'Cake\Core\Exception\CakeException',
         'Cake\Database\Exception' => 'Cake\Database\Exception\DatabaseException',

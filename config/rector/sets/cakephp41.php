@@ -9,7 +9,6 @@ use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Renaming\ValueObject\MethodCallRename;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../config.php');
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         'Cake\Routing\Exception\RedirectException' => 'Cake\Http\Exception\RedirectException',
         'Cake\Database\Expression\Comparison' => 'Cake\Database\Expression\ComparisonExpression',

@@ -23,8 +23,6 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 
 # @see https://book.cakephp.org/5/en/appendices/5-0-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->import(__DIR__ . '/../config.php');
-
     $rectorConfig->ruleWithConfiguration(
         OptionsArrayToNamedParametersRector::class,
         [
