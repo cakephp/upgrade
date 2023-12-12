@@ -10,7 +10,7 @@ use Cake\Console\ConsoleIo;
 
 class ExampleCommand extends Command
 {
-    public function execute(Arguments $args, ConsoleIo $io): ?int
+    public function execute(Arguments $args, ConsoleIo $io)
     {
         return self::CODE_SUCCESS;
     }
