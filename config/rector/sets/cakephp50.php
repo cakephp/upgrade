@@ -92,17 +92,15 @@ return static function (RectorConfig $rectorConfig): void {
 
             // Cell properties
             new AddPropertyTypeDeclaration('Cake\View\Cell', '_validCellOptions', $arrayType),
+
+            // Mailer
+            new AddPropertyTypeDeclaration('Cake\Mailer\Mailer', 'name', $stringType),
         ]
     );
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         'Cake\I18n\FrozenDate' => 'Cake\I18n\Date',
         'Cake\I18n\FrozenTime' => 'Cake\I18n\DateTime',
-    ]);
-
-    $intNull = new UnionType([new IntegerType(), new NullType()]);
-    $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclarationRector::class, [
-        new AddReturnTypeDeclaration('Cake\Command\Command', 'execute', $intNull),
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
