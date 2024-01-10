@@ -4,7 +4,7 @@ declare(strict_types=1);
 use Cake\Upgrade\Rector\Rector\MethodCall\ModalToGetSetRector;
 use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
 use Rector\Config\RectorConfig;
-use Rector\Core\ValueObject\Visibility;
+use Rector\ValueObject\Visibility;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Renaming\Rector\PropertyFetch\RenamePropertyRector;
