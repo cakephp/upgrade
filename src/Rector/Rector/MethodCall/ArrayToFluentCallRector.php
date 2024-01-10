@@ -10,8 +10,8 @@ use PhpParser\Node\Scalar\String_;
 use Cake\Upgrade\Rector\ValueObject\ArrayItemsAndFluentClass;
 use Cake\Upgrade\Rector\ValueObject\ArrayToFluentCall;
 use Cake\Upgrade\Rector\ValueObject\FactoryMethod;
-use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Core\Rector\AbstractRector;
+use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 

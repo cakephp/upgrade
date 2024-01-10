@@ -6,8 +6,8 @@ namespace Cake\Upgrade\Rector\Rector\MethodCall;
 use Cake\Upgrade\Rector\ValueObject\AddMethodCallArgs;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
-use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Core\Rector\AbstractRector;
+use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 

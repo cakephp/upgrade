@@ -7,9 +7,9 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter;
-use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Core\PhpParser\Node\Value\ValueResolver;
-use Rector\Core\Rector\AbstractRector;
+use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\PhpParser\Node\Value\ValueResolver;
+use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 

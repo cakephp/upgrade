@@ -9,8 +9,8 @@ use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
 use Cake\Upgrade\Rector\NodeAnalyzer\FluentChainMethodCallNodeAnalyzer;
 use Cake\Upgrade\Rector\ValueObject\RemoveIntermediaryMethod;
-use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Core\Rector\AbstractRector;
+use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
