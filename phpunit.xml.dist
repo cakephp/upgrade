@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         bootstrap="./tests/bootstrap.php"
+         bootstrap="tests/bootstrap.php"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd">
 
 	<testsuites>
-		<testsuite name="Upgrade Test Cases">
-			<directory>./tests/TestCase/</directory>
+		<testsuite name="upgrade">
+			<directory>tests/TestCase/</directory>
 		</testsuite>
 	</testsuites>
 

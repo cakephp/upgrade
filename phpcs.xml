@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="CakePHP Upgrade">
-    <config name="installed_paths" value="../../cakephp/cakephp-codesniffer" />
+    <config name="installed_paths" value="../../cakephp/cakephp-codesniffer"/>
 
-    <rule ref="CakePHP" />
+    <rule ref="CakePHP"/>
 
     <exclude-pattern>src/Rector</exclude-pattern>
     <exclude-pattern>tests/test_apps</exclude-pattern>
