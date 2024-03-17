@@ -9,6 +9,8 @@ class Fixture
         'other_app.tags',
         'plugin.posts',
         'plugin.messages/deleted_messages',
+        'app.Messages',
+        'plugin.Data.Languages',
     ];
 }
 
@@ -25,6 +27,8 @@ class Fixture
         'other_app.Tags',
         'plugin.Posts',
         'plugin.Messages/DeletedMessages',
+        'app.Messages',
+        'plugin.Data.Languages',
     ];
 }
 

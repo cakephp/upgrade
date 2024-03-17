@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\Property;
 
+use Cake\Utility\Inflector;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
@@ -10,7 +11,6 @@ use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\PropertyProperty;
 use Rector\Rector\AbstractRector;
-use Symfony\Component\String\UnicodeString;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -32,6 +32,8 @@ class SomeTest
         'app.posts',
         'app.users',
         'some_plugin.posts/special_posts',
+        'app.Messages',
+        'plugin.Data.Languages',
     ];
 CODE_SAMPLE
                 ,
@@ -42,6 +44,8 @@ class SomeTest
         'app.Posts',
         'app.Users',
         'some_plugin.Posts/SpecialPosts',
+        'app.Messages',
+        'plugin.Data.Languages',
     ];
 CODE_SAMPLE
             ),
@@ -95,15 +99,13 @@ CODE_SAMPLE
 
     private function renameFixtureName(String_ $string): void
     {
-        [$prefix, $table] = explode('.', $string->value);
+        [$prefix, $table] = explode('.', $string->value, 2);
 
         $tableParts = explode('/', $table);
 
         $pascalCaseTableParts = array_map(
             function (string $token): string {
-                $tokenUnicodeString = new UnicodeString($token);
-
-                return ucfirst($tokenUnicodeString->camel()->toString());
+                return Inflector::camelize($token);
             },
             $tableParts
         );
