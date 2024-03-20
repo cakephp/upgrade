@@ -106,6 +106,8 @@ return static function (RectorConfig $rectorConfig): void {
         new ModalToGetSet('Cake\ORM\Table', 'displayField'),
         new ModalToGetSet('Cake\ORM\Table', 'entityClass'),
 
+        new ModalToGetSet('Cake\ORM\Entity', 'source'),
+
         new ModalToGetSet('Cake\Mailer\Email', 'entityClass'),
 
         new ModalToGetSet('Cake\Mailer\Email', 'from'),
