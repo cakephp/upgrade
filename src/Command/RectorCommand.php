@@ -173,21 +173,16 @@ class RectorCommand extends BaseCommand
             ->setDescription([
                 'Apply rector refactoring rules',
                 '',
-                'Run rector rules against `path`. By default the <info>cakephp40</info> ' .
+                'Run rector rules against `path`. By default the <info>cakephp50</info> ' .
                 'rules are run.',
                 '',
-                'You will want to run the <info>cakephp40</info> rules multiple times on ' .
+                'You will want to run the <info>cakephp50</info> rules multiple times on ' .
                 'subdirectories of your application:',
                 '',
                 '<info>bin/cake upgrade rector ~/app/src</info>',
                 '<info>bin/cake upgrade rector ~/app/config</info>',
                 '<info>bin/cake upgrade rector ~/app/templates</info>',
                 '<info>bin/cake upgrade rector ~/app/tests</info>',
-                '',
-                'You should run the <info>phpunit80</info> ruleset to automate ' .
-                'updating your test cases:',
-                '',
-                '<info>bin/cake upgrade rector --rules phpunit80 ~/app/tests</info>',
             ])
             ->addArgument('path', [
                 'help' => 'The path to the application or plugin.',
