@@ -52,10 +52,10 @@ class UpgradeCommand extends BaseCommand
         };
 
         $io->out('<info>Applying cakephp50 Rector rules</info>');
-        $this->mapCommand($io, $paths, fn($directory) => $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp50', $directory]), $io));
+        $this->mapCommand($io, $paths, fn ($directory) => $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp50', $directory]), $io));
 
         $io->out('<info>Applying cakephp51 Rector rules</info>');
-        $this->mapCommand($io, $paths, fn($directory) => $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp51', $directory]), $io));
+        $this->mapCommand($io, $paths, fn ($directory) => $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp51', $directory]), $io));
 
         $io->out('Next upgrade your <info>composer.json</info>.');
         $version = '5.0';
@@ -68,6 +68,7 @@ class UpgradeCommand extends BaseCommand
      * Map a command over a list of paths.
      *
      * Useful for invoking sub-commands like rector.
+     *
      * @param \Cake\Console\ConsoleIo $io The io
      * @param array $paths List of path strings to enumerate
      * @param callable $fn The function to invoke for each directory
