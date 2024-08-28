@@ -46,33 +46,42 @@ class UpgradeCommand extends BaseCommand
         $withDryRun = function (array $params) use ($args): array {
             if ($args->getOption('dry-run')) {
                 array_unshift($params, '--dry-run');
-
-                return $params;
             }
 
             return $params;
         };
 
-        $io->out('<info>Moving templates</info>');
-        $this->executeCommand(FileRenameCommand::class, $withDryRun(['templates', $path]), $io);
+        $io->out('<info>Applying cakephp50 Rector rules</info>');
+        $this->mapCommand($io, $paths, fn($directory) => $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp50', $directory]), $io));
 
-        $io->out('<info>Moving locale files</info>');
-        $this->executeCommand(FileRenameCommand::class, $withDryRun(['locales', $path]), $io);
+        $io->out('<info>Applying cakephp51 Rector rules</info>');
+        $this->mapCommand($io, $paths, fn($directory) => $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp51', $directory]), $io));
 
-        $io->out('<info>Applying cakephp40 Rector rules</info>');
+        $io->out('Next upgrade your <info>composer.json</info>.');
+        $version = '5.0';
+        $io->out("Run <info>composer requires -W 'cakephp/cakephp:^{$version}'</info>.");
+
+        return static::CODE_SUCCESS;
+    }
+
+    /**
+     * Map a command over a list of paths.
+     *
+     * Useful for invoking sub-commands like rector.
+     * @param \Cake\Console\ConsoleIo $io The io
+     * @param array $paths List of path strings to enumerate
+     * @param callable $fn The function to invoke for each directory
+     * @return void
+     */
+    protected function mapCommand(ConsoleIo $io, array $paths, callable $fn): void
+    {
         foreach ($paths as $directory) {
             if (!is_dir($directory)) {
                 $io->warning("{$directory} does not exist, skipping.");
                 continue;
             }
-            $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'cakephp40', $directory]), $io);
+            $fn($directory);
         }
-        $io->out('<info>Applying phpunit80 Rector rules</info>');
-        $this->executeCommand(RectorCommand::class, $withDryRun(['--rules', 'phpunit80', $paths['tests']]), $io);
-
-        $io->out('Next upgrade your <info>composer.json</info>.');
-
-        return static::CODE_SUCCESS;
     }
 
     /**
@@ -85,7 +94,7 @@ class UpgradeCommand extends BaseCommand
     {
         $parser
             ->setDescription([
-                '<question>Upgrade tool for CakePHP 4.0</question>',
+                '<question>Upgrade tool for CakePHP 5.x</question>',
                 '',
                 'Runs all of the sub commands on an application/plugin. The <info>path</info> ' .
                 'argument should be the application or plugin root directory.',
@@ -94,7 +103,6 @@ class UpgradeCommand extends BaseCommand
                 '',
                 '<info>Sub-Commands</info>',
                 '',
-                '- file_rename  Rename template and locale files',
                 '- rector       Apply rector rules for phpunit80 and cakephp40',
             ])
             ->addArgument('path', [
