@@ -33,6 +33,11 @@ class ArticlesController extends Controller
     protected $modelClass = null;
 
     protected $defaultTable = null;
+
+    public function setSerialize(): void
+    {
+        $this->set('_serialize', 'result');
+    }
 }
 
 class CustomBehavior extends Behavior

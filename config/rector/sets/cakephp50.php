@@ -4,8 +4,10 @@ declare(strict_types=1);
 use Cake\Upgrade\Rector\Rector\MethodCall\OptionsArrayToNamedParametersRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\RemoveMethodCallRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\TableRegistryLocatorRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\SetSerializeToViewBuilderRector;
 use Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters;
 use Cake\Upgrade\Rector\ValueObject\RemoveMethodCall;
+use Cake\Upgrade\Rector\ValueObject\SetSerializeToView;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\BooleanType;
 use PHPStan\Type\MixedType;
@@ -116,4 +118,9 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->rule(TableRegistryLocatorRector::class);
+
+    $rectorConfig->ruleWithConfiguration(SetSerializeToViewBuilderRector::class, [
+        new SetSerializeToView('Cake\Controller\Controller'),
+        new SetSerializeToView('Cake\View\Cell'),
+    ]);
 };
