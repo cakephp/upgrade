@@ -1,5 +1,5 @@
 <?php
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\NodeAnalyzer;
 
@@ -20,7 +20,7 @@ final class FluentChainMethodCallNodeAnalyzer
     /**
      * @api doctrine
      */
-    public function resolveRootMethodCall(MethodCall $methodCall) : ?MethodCall
+    public function resolveRootMethodCall(MethodCall $methodCall): ?MethodCall
     {
         $callerNode = $methodCall->var;
         while ($callerNode instanceof MethodCall && $callerNode->var instanceof MethodCall) {
@@ -29,17 +29,20 @@ final class FluentChainMethodCallNodeAnalyzer
         if ($callerNode instanceof MethodCall) {
             return $callerNode;
         }
+
         return null;
     }
+
     /**
      * @return \PhpParser\Node\Expr|\PhpParser\Node\Name
      */
-    public function resolveRootExpr(MethodCall $methodCall)
+    public function resolveRootExpr(MethodCall $methodCall): Expr|Name
     {
         $callerNode = $methodCall->var;
         while ($callerNode instanceof MethodCall || $callerNode instanceof StaticCall) {
             $callerNode = $callerNode instanceof StaticCall ? $callerNode->class : $callerNode->var;
         }
+
         return $callerNode;
     }
 }

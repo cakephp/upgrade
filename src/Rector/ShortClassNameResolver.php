@@ -6,6 +6,7 @@ namespace Cake\Upgrade\Rector;
 use Nette\Utils\Strings;
 use PHPStan\Reflection\ReflectionProvider;
 use Rector\Util\StringUtils;
+use function str_contains;
 
 /**
  * @inspired https://github.com/cakephp/upgrade/blob/756410c8b7d5aff9daec3fa1fe750a3858d422ac/src/Shell/Task/AppUsesTask.php
@@ -33,7 +34,7 @@ final class ShortClassNameResolver
     /**
      * A map of old => new for use statements that are missing
      *
-     * @var string[]
+     * @var array<string>
      */
     private const RENAME_MAP = [
         'App' => 'Cake\Core\App',
@@ -102,7 +103,7 @@ final class ShortClassNameResolver
 
         // C. is not plugin nor lib custom App class?
         if (
-            \str_contains($pseudoNamespace, '\\') && ! StringUtils::isMatch(
+            str_contains($pseudoNamespace, '\\') && ! StringUtils::isMatch(
                 $pseudoNamespace,
                 self::PLUGIN_OR_LIB_REGEX
             )

@@ -1,6 +1,5 @@
 <?php
-
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\MethodCall;
 
@@ -24,9 +23,9 @@ final class RemoveMethodCallRector extends AbstractRector implements Configurabl
     public const REMOVE_METHOD_CALL_ARGS = 'remove_method_call_args';
 
     /**
-     * @var \Cake\Upgrade\Rector\ValueObject\RemoveMethodCall[]
+     * @var array<\Cake\Upgrade\Rector\ValueObject\RemoveMethodCall>
      */
-    private $callsWithRemoveMethodCallArgs = [];
+    private array $callsWithRemoveMethodCallArgs = [];
 
     public function getRuleDefinition(): RuleDefinition
     {
@@ -36,16 +35,18 @@ final class RemoveMethodCallRector extends AbstractRector implements Configurabl
 $obj = new SomeClass();
 $obj->methodCall1();
 $obj->methodCall2();
-CODE_SAMPLE, <<<'CODE_SAMPLE'
+CODE_SAMPLE,
+                <<<'CODE_SAMPLE'
 $obj = new SomeClass();
 $obj->methodCall2();
-CODE_SAMPLE, ['SomeClass', 'methodCall1']
-            )
+CODE_SAMPLE,
+                ['SomeClass', 'methodCall1']
+            ),
         ]);
     }
 
     /**
-     * @return array<class-string<Node>>
+     * @return array<class-string<\PhpParser\Node>>
      */
     public function getNodeTypes(): array
     {
@@ -53,7 +54,7 @@ CODE_SAMPLE, ['SomeClass', 'methodCall1']
     }
 
     /**
-     * @param Expression $node
+     * @param \PhpParser\Node\Stmt\Expression $node
      */
     public function refactor(Node $node): ?int
     {
@@ -77,7 +78,7 @@ CODE_SAMPLE, ['SomeClass', 'methodCall1']
     }
 
     /**
-     * @param mixed[] $configuration
+     * @param array<mixed> $configuration
      */
     public function configure(array $configuration): void
     {

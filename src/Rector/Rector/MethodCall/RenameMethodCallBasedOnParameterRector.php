@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\MethodCall;
 
+use Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
-use Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Rector\Rector\AbstractRector;
@@ -27,7 +27,7 @@ final class RenameMethodCallBasedOnParameterRector extends AbstractRector implem
     public const CALLS_WITH_PARAM_RENAMES = 'calls_with_param_renames';
 
     /**
-     * @var \Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter[]
+     * @var array<\Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter>
      */
     private array $callsWithParamRenames = [];
 
@@ -92,7 +92,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param mixed[] $configuration
+     * @param array<mixed> $configuration
      */
     public function configure(array $configuration): void
     {

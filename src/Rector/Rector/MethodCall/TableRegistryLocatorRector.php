@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\MethodCall;
@@ -23,7 +22,7 @@ CODE_SAMPLE
                 <<<'CODE_SAMPLE'
 TableRegistry::getTableLocator()->get('something');
 CODE_SAMPLE
-            )
+            ),
         ]);
     }
 
@@ -34,7 +33,7 @@ CODE_SAMPLE
 
     public function refactor(Node $node): ?Node
     {
-        if(! $node instanceof StaticCall) {
+        if (! $node instanceof StaticCall) {
             return null;
         }
 

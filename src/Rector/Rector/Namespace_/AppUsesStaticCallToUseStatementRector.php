@@ -3,23 +3,23 @@ declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\Namespace_;
 
+use Cake\Upgrade\Rector\ShortClassNameResolver;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Name;
+use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Declare_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\UseUse;
-use PHPStan\Type\ObjectType;
-use Cake\Upgrade\Rector\ShortClassNameResolver;
-use PhpParser\Node\Stmt;
 use PhpParser\NodeTraverser;
+use PHPStan\Type\ObjectType;
 use Rector\Contract\PhpParser\Node\StmtsAwareInterface;
+use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PhpParser\Node\BetterNodeFinder;
 use Rector\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Rector\Rector\AbstractRector;
-use Rector\NodeTypeResolver\Node\AttributeKey;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
@@ -66,7 +66,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param StmtsAwareInterface $node
+     * @param \Rector\Contract\PhpParser\Node\StmtsAwareInterface $node
      */
     public function refactor(Node $node): ?Node
     {
@@ -100,8 +100,8 @@ CODE_SAMPLE
     }
 
     /**
-     * @param Stmt[] $stmts
-     * @param StaticCall[] $appUsesStaticCalls
+     * @param array<\PhpParser\Node\Stmt> $stmts
+     * @param array<\PhpParser\Node\Expr\StaticCall> $appUsesStaticCalls
      */
     private function removeCallLikeStmts(StmtsAwareInterface $node, array $stmts, array $appUsesStaticCalls): void
     {
@@ -116,6 +116,7 @@ CODE_SAMPLE
 
                 if ($subNode instanceof Stmt) {
                     $currentStmt = $subNode;
+
                     return null;
                 }
 
@@ -127,19 +128,21 @@ CODE_SAMPLE
                     return null;
                 }
 
-                /** @var Stmt $currentStmt */
+                /** @var \PhpParser\Node\Stmt $currentStmt */
                 unset($node->stmts[$currentStmt->getAttribute(AttributeKey::STMT_KEY)]);
+
                 return null;
-            });
+            }
+        );
     }
 
     /**
-     * @return \PhpParser\Node\Expr\StaticCall[]
+     * @return array<\PhpParser\Node\Expr\StaticCall>
      */
 
     private function collectAppUseStaticCalls(StmtsAwareInterface $node): array
     {
-        /** @var \PhpParser\Node\Expr\StaticCall[] $appUsesStaticCalls */
+        /** @var array<\PhpParser\Node\Expr\StaticCall> $appUsesStaticCalls */
         $appUsesStaticCalls = $this->betterNodeFinder->find($node, function (Node $node): bool {
             if (! $node instanceof StaticCall) {
                 return false;
@@ -157,8 +160,8 @@ CODE_SAMPLE
     }
 
     /**
-     * @param \PhpParser\Node\Expr\StaticCall[] $staticCalls
-     * @return string[]
+     * @param array<\PhpParser\Node\Expr\StaticCall> $staticCalls
+     * @return array<string>
      */
     private function resolveNamesFromStaticCalls(array $staticCalls): array
     {
@@ -171,7 +174,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param \PhpParser\Node\Stmt\Use_[] $fileWithoutNamespace
+     * @param array<\PhpParser\Node\Stmt\Use_> $fileWithoutNamespace
      */
     private function refactorFile(FileWithoutNamespace $fileWithoutNamespace, array $uses): ?FileWithoutNamespace
     {
@@ -200,7 +203,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param \PhpParser\Node\Stmt\Use_[] $fileWithoutNamespace
+     * @param array<\PhpParser\Node\Stmt\Use_> $fileWithoutNamespace
      */
     private function refactorFileWithDeclare(
         FileWithoutNamespace $fileWithoutNamespace,

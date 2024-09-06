@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\MethodCall;
 
+use Cake\Upgrade\Rector\ValueObject\ArrayItemsAndFluentClass;
+use Cake\Upgrade\Rector\ValueObject\ArrayToFluentCall;
+use Cake\Upgrade\Rector\ValueObject\FactoryMethod;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Scalar\String_;
-use Cake\Upgrade\Rector\ValueObject\ArrayItemsAndFluentClass;
-use Cake\Upgrade\Rector\ValueObject\ArrayToFluentCall;
-use Cake\Upgrade\Rector\ValueObject\FactoryMethod;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
@@ -31,12 +31,12 @@ final class ArrayToFluentCallRector extends AbstractRector implements Configurab
     public const FACTORY_METHODS = 'factory_methods';
 
     /**
-     * @var \Cake\Upgrade\Rector\ValueObject\ArrayToFluentCall[]
+     * @var array<\Cake\Upgrade\Rector\ValueObject\ArrayToFluentCall>
      */
     private array $arraysToFluentCalls = [];
 
     /**
-     * @var \Cake\Upgrade\Rector\ValueObject\FactoryMethod[]
+     * @var array<\Cake\Upgrade\Rector\ValueObject\FactoryMethod>
      */
     private array $factoryMethods = [];
 
@@ -115,7 +115,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param mixed[] $configuration
+     * @param array<mixed> $configuration
      */
     public function configure(array $configuration): void
     {

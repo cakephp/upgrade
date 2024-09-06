@@ -3,19 +3,16 @@ declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\MethodCall;
 
+use Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters;
 use PhpParser\Node;
+use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\MethodCall;
-use PhpParser\Node\Scalar\String_;
-use Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters;
-use PhpParser\Node\Arg;
 use PhpParser\Node\Identifier;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-
-use function RectorPrefix202304\dump_node;
 
 final class OptionsArrayToNamedParametersRector extends AbstractRector implements ConfigurableRectorInterface
 {
@@ -24,7 +21,7 @@ final class OptionsArrayToNamedParametersRector extends AbstractRector implement
     /**
      * @var \Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters
      */
-    private $optionsToNamed = [];
+    private OptionsArrayToNamedParameters $optionsToNamed = [];
 
     public function getRuleDefinition(): RuleDefinition
     {
@@ -82,9 +79,10 @@ CODE_SAMPLE
             if (!$this->matchTypeAndMethodName($optionsToNamed, $node)) {
                 continue;
             }
-            return $this->replaceMethodCall($optionsToNamed, $node);
 
+            return $this->replaceMethodCall($optionsToNamed, $node);
         }
+
         return null;
     }
 

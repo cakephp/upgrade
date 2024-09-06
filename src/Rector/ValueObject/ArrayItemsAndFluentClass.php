@@ -6,7 +6,7 @@ namespace Cake\Upgrade\Rector\ValueObject;
 final class ArrayItemsAndFluentClass
 {
     /**
-     * @param \PhpParser\Node\Expr\ArrayItem[] $arrayItems
+     * @param array<\PhpParser\Node\Expr\ArrayItem> $arrayItems
      * @param array<string, \PhpParser\Node\Expr> $fluentCalls
      */
     public function __construct(
@@ -16,7 +16,7 @@ final class ArrayItemsAndFluentClass
     }
 
     /**
-     * @return \PhpParser\Node\Expr\ArrayItem[]
+     * @return array<\PhpParser\Node\Expr\ArrayItem>
      */
     public function getArrayItems(): array
     {

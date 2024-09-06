@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\MethodCall;
 
+use Cake\Upgrade\Rector\NodeAnalyzer\FluentChainMethodCallNodeAnalyzer;
+use Cake\Upgrade\Rector\ValueObject\RemoveIntermediaryMethod;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
-use Cake\Upgrade\Rector\NodeAnalyzer\FluentChainMethodCallNodeAnalyzer;
-use Cake\Upgrade\Rector\ValueObject\RemoveIntermediaryMethod;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
@@ -28,7 +28,7 @@ final class RemoveIntermediaryMethodRector extends AbstractRector implements Con
     public const REMOVE_INTERMEDIARY_METHOD = 'remove_intermediary_method';
 
     /**
-     * @var \Cake\Upgrade\Rector\ValueObject\RemoveIntermediaryMethod[]
+     * @var array<\Cake\Upgrade\Rector\ValueObject\RemoveIntermediaryMethod>
      */
     private array $removeIntermediaryMethod = [];
 
@@ -86,7 +86,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param mixed[] $configuration
+     * @param array<mixed> $configuration
      */
     public function configure(array $configuration): void
     {

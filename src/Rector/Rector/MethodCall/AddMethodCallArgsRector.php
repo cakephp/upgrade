@@ -25,7 +25,7 @@ final class AddMethodCallArgsRector extends AbstractRector implements Configurab
     public const ADD_METHOD_CALL_ARGS = 'add_method_call_args';
 
     /**
-     * @var \Cake\Upgrade\Rector\ValueObject\AddMethodCallArgs[]
+     * @var array<\Cake\Upgrade\Rector\ValueObject\AddMethodCallArgs>
      */
     private array $callsWithAddMethodCallArgs = [];
 
@@ -97,7 +97,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param mixed[] $configuration
+     * @param array<mixed> $configuration
      */
     public function configure(array $configuration): void
     {

@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\MethodCall;
 
+use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
-use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
@@ -27,7 +27,7 @@ final class ModalToGetSetRector extends AbstractRector implements ConfigurableRe
     public const UNPREFIXED_METHODS_TO_GET_SET = 'unprefixed_methods_to_get_set';
 
     /**
-     * @var \Cake\Upgrade\Rector\ValueObject\ModalToGetSet[]
+     * @var array<\Cake\Upgrade\Rector\ValueObject\ModalToGetSet>
      */
     private array $unprefixedMethodsToGetSet = [];
 
@@ -92,7 +92,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param mixed[] $configuration
+     * @param array<mixed> $configuration
      */
     public function configure(array $configuration): void
     {

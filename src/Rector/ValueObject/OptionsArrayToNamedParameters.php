@@ -39,6 +39,7 @@ final class OptionsArrayToNamedParameters
         if (isset($this->methods['rename'])) {
             return $this->methods['rename'];
         }
+
         return [];
     }
 }
