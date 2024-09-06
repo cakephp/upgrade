@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Cake\Upgrade\Rector\Rector\MethodCall\OptionsArrayToNamedParametersRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\RemoveMethodCallRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\TableRegistryLocatorRector;
 use Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters;
 use Cake\Upgrade\Rector\ValueObject\RemoveMethodCall;
 use PHPStan\Type\ArrayType;
@@ -114,4 +115,6 @@ return static function (RectorConfig $rectorConfig): void {
         new RemoveMethodCall('Cake\TestSuite\TestCase', 'useCommandRunner'),
         new RemoveMethodCall('Cake\TestSuite\TestCase', 'useHttpServer'),
     ]);
+
+    $rectorConfig->rule(TableRegistryLocatorRector::class);
 };
