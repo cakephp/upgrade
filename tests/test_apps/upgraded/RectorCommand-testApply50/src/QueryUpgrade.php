@@ -9,12 +9,14 @@ class QueryUpgrade {
         $query->find('list', fields: ['id', 'title'])
             ->orderBy('id')
             ->orderByAsc('id')
-            ->orderByDesc('id');
+            ->orderByDesc('id')
+            ->groupBy('id');
 
         $articles->query()
             ->orderBy('id')
             ->orderByAsc('id')
-            ->orderByDesc('id');
+            ->orderByDesc('id')
+            ->groupBy('id');
 
         $article = $articles->get(1, cacheKey: 'cache-key', contain: ['Users']);
     }
