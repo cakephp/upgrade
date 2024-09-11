@@ -19,9 +19,9 @@ final class OptionsArrayToNamedParametersRector extends AbstractRector implement
     public const OPTIONS_TO_NAMED_PARAMETERS = 'options_to_named_parameters';
 
     /**
-     * @var \Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters
+     * @var array<\Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters>
      */
-    private OptionsArrayToNamedParameters $optionsToNamed = [];
+    private array $optionsToNamed = [];
 
     public function getRuleDefinition(): RuleDefinition
     {
