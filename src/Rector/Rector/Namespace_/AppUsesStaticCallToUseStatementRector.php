@@ -139,7 +139,6 @@ CODE_SAMPLE
     /**
      * @return array<\PhpParser\Node\Expr\StaticCall>
      */
-
     private function collectAppUseStaticCalls(StmtsAwareInterface $node): array
     {
         /** @var array<\PhpParser\Node\Expr\StaticCall> $appUsesStaticCalls */
@@ -209,7 +208,6 @@ CODE_SAMPLE
         FileWithoutNamespace $fileWithoutNamespace,
         array $uses
     ): FileWithoutNamespace {
-        $newStmts = [];
         foreach ($fileWithoutNamespace->stmts as $key => $stmt) {
             if ($stmt instanceof Declare_) {
                 foreach ($uses as $use) {

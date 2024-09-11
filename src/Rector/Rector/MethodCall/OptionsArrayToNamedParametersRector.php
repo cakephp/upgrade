@@ -25,33 +25,36 @@ final class OptionsArrayToNamedParametersRector extends AbstractRector implement
 
     public function getRuleDefinition(): RuleDefinition
     {
-        return new RuleDefinition('Converts trailing options arrays into named parameters. Will preserve all other arguments.', [
-            new ConfiguredCodeSample(
-                <<<'CODE_SAMPLE'
-use Cake\ORM\TableRegistry;
+        return new RuleDefinition(
+            'Converts trailing options arrays into named parameters. Will preserve all other arguments.',
+            [
+                new ConfiguredCodeSample(
+                    <<<'CODE_SAMPLE'
+    use Cake\ORM\TableRegistry;
 
-$articles = TableRegistry::get('Articles');
+    $articles = TableRegistry::get('Articles');
 
-$query = $articles->find('list', ['field' => ['title']]);
-$query = $articles->find('all', ['conditions' => ['Articles.title' => $title]]);
-CODE_SAMPLE
-                ,
-                <<<'CODE_SAMPLE'
-use Cake\ORM\TableRegistry;
+    $query = $articles->find('list', ['field' => ['title']]);
+    $query = $articles->find('all', ['conditions' => ['Articles.title' => $title]]);
+    CODE_SAMPLE
+                    ,
+                    <<<'CODE_SAMPLE'
+    use Cake\ORM\TableRegistry;
 
-$articles = TableRegistry::get('Articles');
+    $articles = TableRegistry::get('Articles');
 
-$query = $articles->find('list', field: ['title']]);
-$query = $articles->find('all', conditions: ['Articles.title' => $title]);
-CODE_SAMPLE
-                ,
-                [
+    $query = $articles->find('list', field: ['title']]);
+    $query = $articles->find('all', conditions: ['Articles.title' => $title]);
+    CODE_SAMPLE
+                    ,
                     [
-                        new OptionsArrayToNamedParameters('Table', ['find']),
-                    ],
-                ]
-            ),
-        ]);
+                        [
+                            new OptionsArrayToNamedParameters('Table', ['find']),
+                        ],
+                    ]
+                ),
+            ]
+        );
     }
 
     /**
@@ -86,8 +89,10 @@ CODE_SAMPLE
         return null;
     }
 
-    private function matchtypeAndMethodName(OptionsArrayToNamedParameters $optionsToNamed, MethodCall $methodCall): bool
-    {
+    private function matchtypeAndMethodName(
+        OptionsArrayToNamedParameters $optionsToNamed,
+        MethodCall $methodCall
+    ): bool {
         if (!$this->isObjectType($methodCall->var, $optionsToNamed->getObjectType())) {
             return false;
         }
@@ -95,8 +100,10 @@ CODE_SAMPLE
         return $methodCall->name == $optionsToNamed->getMethod();
     }
 
-    private function replaceMethodCall(OptionsArrayToNamedParameters $optionsToNamed, MethodCall $methodCall): ?MethodCall
-    {
+    private function replaceMethodCall(
+        OptionsArrayToNamedParameters $optionsToNamed,
+        MethodCall $methodCall
+    ): ?MethodCall {
         $argCount = count($methodCall->args);
         // Only modify method calls that have exactly two arguments.
         // This is important for idempotency.
