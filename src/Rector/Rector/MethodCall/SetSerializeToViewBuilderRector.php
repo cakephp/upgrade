@@ -1,31 +1,34 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\MethodCall;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
-use Rector\Rector\AbstractRector;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Config\RectorConfig;
+use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 final class SetSerializeToViewBuilderRector extends AbstractRector implements ConfigurableRectorInterface
 {
-    public function getRuleDefinition(): RuleDefinition {
-        return new RuleDefinition('Change `$this->set(\'_serialize\', \'result\')` to `$this->viewBuilder()->setOption(\'serialize\', \'result\')`.', [
-            new ConfiguredCodeSample(
-                <<<'CODE_SAMPLE'
-$this->set('_serialize', 'result');
-CODE_SAMPLE
-                ,
-                <<<'CODE_SAMPLE'
-$this->viewBuilder()->setOption('serialize', 'result');
-CODE_SAMPLE
-            )
-        ]);
+    public function getRuleDefinition(): RuleDefinition
+    {
+        return new RuleDefinition(
+            'Change `$this->set(\'_serialize\', \'result\')` to ' .
+                '`$this->viewBuilder()->setOption(\'serialize\', \'result\')`.',
+            [
+                new ConfiguredCodeSample(
+                    <<<'CODE_SAMPLE'
+    $this->set('_serialize', 'result');
+    CODE_SAMPLE
+                    ,
+                    <<<'CODE_SAMPLE'
+    $this->viewBuilder()->setOption('serialize', 'result');
+    CODE_SAMPLE
+                ),
+            ]
+        );
     }
 
     public function getNodeTypes(): array
@@ -35,7 +38,7 @@ CODE_SAMPLE
 
     public function refactor(Node $node): ?Node
     {
-        if(! $node instanceof MethodCall) {
+        if (! $node instanceof MethodCall) {
             return null;
         }
 
@@ -63,11 +66,8 @@ CODE_SAMPLE
         return isset($methodCall->args[0]) && $methodCall->args[0]->value->value === $firstArgumentValue;
     }
 
-    public function configure(array $configuration): void {
+    public function configure(array $configuration): void
+    {
         // No configuration options
     }
 }
-
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->rule(SetSerializeToViewBuilderRector::class);
-};
