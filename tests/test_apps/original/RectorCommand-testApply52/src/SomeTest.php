@@ -10,6 +10,6 @@ class SomeTest extends TestCase
     public function testRenames(): void
     {
         $args = new Arguments([], ['a' => [1, 2]], []);
-        $option = $args->getMultipleOption('c');
+        $option = $args->getMultipleOption('a');
     }
 }
