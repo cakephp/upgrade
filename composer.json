@@ -37,8 +37,5 @@
     },
     "support": {
         "source": "https://github.com/cakephp/upgrade"
-    },
-    "require-dev": {
-        "rector/rector-php-parser": "dev-main"
     }
 }
