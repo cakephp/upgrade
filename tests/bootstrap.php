@@ -11,6 +11,8 @@ declare(strict_types=1);
 error_reporting(-1);
 date_default_timezone_set('UTC');
 
+require dirname(__DIR__) . '/vendor/rector/rector/preload.php';
+
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 require dirname(__DIR__) . '/config/bootstrap.php';
