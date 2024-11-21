@@ -37,11 +37,5 @@
     },
     "support": {
         "source": "https://github.com/cakephp/upgrade"
-    },
-    "require-dev": {
-        "cakephp/cakephp": "5.x-dev",
-        "cakephp/cakephp-codesniffer": "^5.0",
-        "mikey179/vfsstream": "^1.6.8",
-        "phpunit/phpunit": "^10.1"
     }
 }
