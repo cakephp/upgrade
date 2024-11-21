@@ -76,7 +76,7 @@ CODE_SAMPLE
         return $node;
     }
 
-    private function refactorPropertyWithArrayDefault(PropertyProperty $propertyProperty): void
+    private function refactorPropertyWithArrayDefault(\PhpParser\Node\PropertyItem $propertyProperty): void
     {
         if (! $propertyProperty->default instanceof Array_) {
             return;
@@ -84,7 +84,7 @@ CODE_SAMPLE
 
         $array = $propertyProperty->default;
         foreach ($array->items as $arrayItem) {
-            if (! $arrayItem instanceof ArrayItem) {
+            if (! $arrayItem instanceof \PhpParser\Node\ArrayItem) {
                 continue;
             }
 

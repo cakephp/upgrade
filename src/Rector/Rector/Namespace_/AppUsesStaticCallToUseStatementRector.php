@@ -82,7 +82,7 @@ CODE_SAMPLE
         $names = $this->resolveNamesFromStaticCalls($appUsesStaticCalls);
         $uses = [];
         foreach ($names as $name) {
-            $useUse = new UseUse(new Name($name));
+            $useUse = new \PhpParser\Node\UseItem(new Name($name));
             $uses[] = new Use_([$useUse]);
         }
 
