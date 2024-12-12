@@ -181,7 +181,7 @@ CODE_SAMPLE
     }
 
     /**
-     * @param array<(\PhpParser\Node\Expr\ArrayItem|null)> $originalArrayItems
+     * @param array<(\PhpParser\Node\ArrayItem | null)> $originalArrayItems
      * @param array<string, string> $arrayMap
      */
     private function extractFluentMethods(array $originalArrayItems, array $arrayMap): ArrayItemsAndFluentClass

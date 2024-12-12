@@ -5,11 +5,11 @@ namespace Cake\Upgrade\Rector\Rector\Property;
 
 use Cake\Utility\Inflector;
 use PhpParser\Node;
+use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Expr\Array_;
-use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\PropertyItem;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Property;
-use PhpParser\Node\Stmt\PropertyProperty;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -76,7 +76,7 @@ CODE_SAMPLE
         return $node;
     }
 
-    private function refactorPropertyWithArrayDefault(PropertyProperty $propertyProperty): void
+    private function refactorPropertyWithArrayDefault(PropertyItem $propertyProperty): void
     {
         if (! $propertyProperty->default instanceof Array_) {
             return;

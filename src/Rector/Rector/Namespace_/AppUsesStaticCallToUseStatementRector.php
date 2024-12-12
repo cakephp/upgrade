@@ -11,7 +11,7 @@ use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Declare_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
-use PhpParser\Node\Stmt\UseUse;
+use PhpParser\Node\UseItem;
 use PhpParser\NodeTraverser;
 use PHPStan\Type\ObjectType;
 use Rector\Contract\PhpParser\Node\StmtsAwareInterface;
@@ -82,7 +82,7 @@ CODE_SAMPLE
         $names = $this->resolveNamesFromStaticCalls($appUsesStaticCalls);
         $uses = [];
         foreach ($names as $name) {
-            $useUse = new UseUse(new Name($name));
+            $useUse = new UseItem(new Name($name));
             $uses[] = new Use_([$useUse]);
         }
 
