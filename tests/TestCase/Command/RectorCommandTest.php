@@ -105,4 +105,11 @@ class RectorCommandTest extends TestCase
         $this->exec('upgrade rector --rules cakephp52 ' . TEST_APP);
         $this->assertTestAppUpgraded();
     }
+
+    public function testApplyMigrations45()
+    {
+        $this->setupTestApp(__FUNCTION__);
+        $this->exec('upgrade rector --rules migrations45 ' . TEST_APP);
+        $this->assertTestAppUpgraded();
+    }
 }

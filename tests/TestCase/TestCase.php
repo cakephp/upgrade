@@ -27,6 +27,8 @@ class TestCase extends BaseTestCase
 {
     use ConsoleIntegrationTestTrait;
 
+    public $appPluginsToLoad = [];
+
     /**
      * @var string
      */
