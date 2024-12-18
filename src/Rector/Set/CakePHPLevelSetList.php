@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Set;
 
-use Rector\Set\Contract\SetListInterface;
-
-final class CakePHPLevelSetList implements SetListInterface
+final class CakePHPLevelSetList
 {
     /**
      * @var string
