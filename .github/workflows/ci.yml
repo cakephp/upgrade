@@ -71,7 +71,7 @@ jobs:
 
     - name: Submit code coverage
       if: matrix.php-version == '8.1'
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
 
   cs-stan:
     name: Coding Standard & Static Analysis
