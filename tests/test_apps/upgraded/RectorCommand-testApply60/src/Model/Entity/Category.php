@@ -9,7 +9,8 @@ class Category extends Entity
 {
     protected array $patchable = [];
 
-    public function setPatchable(array|string $field, bool $set) {
+    public function setPatchable(array|string $field, bool $set): static {
+        return $this;
     }
 
     public function getPatchable(): array {
@@ -18,5 +19,9 @@ class Category extends Entity
 
     public function isPatchable(string $field): bool {
         return true;
+    }
+
+    public function setSource(string $name): static {
+        return parent::setSource($name);
     }
 }

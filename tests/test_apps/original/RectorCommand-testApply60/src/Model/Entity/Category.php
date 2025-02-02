@@ -10,6 +10,7 @@ class Category extends Entity
     protected array $_accessible = [];
 
     public function setAccess(array|string $field, bool $set) {
+        return $this;
     }
 
     public function getAccessible(): array {
@@ -18,5 +19,9 @@ class Category extends Entity
 
     public function isAccessible(string $field): bool {
         return true;
+    }
+
+    public function setSource(string $name) {
+        return parent::setSource($name);
     }
 }
