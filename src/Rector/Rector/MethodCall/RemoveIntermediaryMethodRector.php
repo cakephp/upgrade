@@ -102,7 +102,7 @@ CODE_SAMPLE
         if (! $rootMethodCall->var instanceof Variable) {
             return null;
         }
-        if (! $this->nodeNameResolver->isName($rootMethodCall->var, 'this')) {
+        if (! $this->isName($rootMethodCall->var, 'this')) {
             return null;
         }
         /** @var \PhpParser\Node\Expr\MethodCall $var */
