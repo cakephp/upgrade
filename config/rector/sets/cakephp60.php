@@ -103,4 +103,28 @@ return static function (RectorConfig $rectorConfig): void {
         new AddReturnTypeDeclaration('Cake\View\View', 'setPlugin', new SimpleStaticType('')),
         new AddReturnTypeDeclaration('Cake\View\View', 'setElementCache', new SimpleStaticType('')),
     ]);
+
+    // ===== Remove underscores from method names =====
+
+    $map = [
+        'Cache' => [
+            'Cake\Cache\Cache' => ['_buildEngine'],
+            'Cake\Cache\CacheEngine' => ['_key'],
+            'Cake\Cache\Engine\FileEngine' => ['_clearDirectory', '_setKey', '_active', '_key'],
+            'Cake\Cache\Engine\MemcachedEngine' => ['_setOptions'],
+            'Cake\Cache\Engine\RedisEngine' => [
+                '_connect', '_connectTransient', '_connectPersistent', '_createRedisInstance',
+            ],
+        ],
+    ];
+
+    foreach ($map as $definitions) {
+        foreach ($definitions as $className => $methods) {
+            foreach ($methods as $method) {
+                $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+                    new MethodCallRename($className, $method, substr($method, 1)),
+                ]);
+            }
+        }
+    }
 };
