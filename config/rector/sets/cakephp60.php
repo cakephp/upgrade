@@ -125,6 +125,25 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Collection\Iterator\MapReduce' => ['_execute'],
             'Cake\Collection\Iterator\TreePrinter' => ['_fetchCurrent'],
         ],
+        'Command' => [
+            'Cake\Command\Helper\TreeHelper' => [
+                '_calculateWidths', '_cellWidth', '_rowSeparator', '_render', '_addStyle',
+            ],
+            'Cake\Command\Helper\TableHelper' => [
+                '_calculateWidths', '_cellWidth', '_rowSeparator', '_render', '_addStyle',
+            ],
+            'Cake\Command\RoutesGenerateCommand' => ['_splitArgs'],
+            'Cake\Command\I18nExtractCommand' => [
+                '_getPaths', '_addTranslation', '_extract', '_extractTokens', '_parse',
+                '_buildFiles', '_store', '_writeFiles', '_writeHeader', '_getStrings',
+                '_formatString', '_markerError', '_searchFiles', '_isExtractingApp', '_isPathUsable',
+            ],
+            // Traits don't seem to work this way with rector, needs to be investigated
+            // 'Cake\Command\PluginAssetsTrait' => [
+            //     '_list', '_process', '_remove', '_createDirectory',
+            //     '_createSymlink', '_makeRelativePath', '_copyDirectory',
+            // ],
+        ],
     ];
 
     foreach ($map as $definitions) {
