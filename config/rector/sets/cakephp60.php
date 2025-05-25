@@ -157,6 +157,22 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Controller\Component\FormProtectionComponent' => ['_getSessionId'],
             'Cake\Controller\Controller' => ['_templatePath'],
         ],
+        'Core' => [
+            'Cake\Core\App' => ['_classExistsInBase'],
+            'Cake\Core\Configure' => ['_getEngine'],
+            'Cake\Core\Configure\Engine\IniConfig' => ['_parseNestedValues', '_value'],
+            'Cake\Core\ObjectRegistry' => [
+                '_checkDuplicate', '_resolveClassName', '_throwMissingClassError', '_create',
+            ],
+            // Traits don't seem to work this way with rector, needs to be investigated
+            // 'Cake\Core\ConventionsTrait' => [
+            //     '_fixtureName', '_entityName', '_modelKey', '_modelNameFromKey',
+            //     '_singularName', '_variableName', '_singularHumanName', '_camelize',
+            //     '_pluralHumanName', '_pluginPath', '_pluginNamespace',
+            // ],
+            // 'Cake\Core\Configure\FileConfigTrait' => ['_getFilePath'],
+            // 'Cake\Core\InstanceConfigTrait' => ['_configRead', '_configWrite', '_configDelete'],
+        ],
     ];
 
     foreach ($map as $definitions) {
