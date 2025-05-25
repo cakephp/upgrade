@@ -153,6 +153,10 @@ return static function (RectorConfig $rectorConfig): void {
                 '_parseLongOption', '_parseShortOption', '_parseOption', '_optionExists', '_parseArg', '_nextToken',
             ],
         ],
+        'Controller' => [
+            'Cake\Controller\Component\FormProtectionComponent' => ['_getSessionId'],
+            'Cake\Controller\Controller' => ['_templatePath'],
+        ],
     ];
 
     foreach ($map as $definitions) {
