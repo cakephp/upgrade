@@ -144,6 +144,15 @@ return static function (RectorConfig $rectorConfig): void {
             //     '_createSymlink', '_makeRelativePath', '_copyDirectory',
             // ],
         ],
+        'Console' => [
+            'Cake\Console\HelpFormatter' => ['_generateUsage', '_getMaxLength'],
+            'Cake\Console\ConsoleIo' => ['_getInput'],
+            // _write can't be renamed to write as it conflicts with the ConsoleOutput::write() method
+            'Cake\Console\ConsoleOutput' => ['_replaceTags'],
+            'Cake\Console\ConsoleOptionParser' => [
+                '_parseLongOption', '_parseShortOption', '_parseOption', '_optionExists', '_parseArg', '_nextToken',
+            ],
+        ],
     ];
 
     foreach ($map as $definitions) {
