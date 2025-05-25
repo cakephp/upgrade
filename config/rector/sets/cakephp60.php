@@ -116,6 +116,15 @@ return static function (RectorConfig $rectorConfig): void {
                 '_connect', '_connectTransient', '_connectPersistent', '_createRedisInstance',
             ],
         ],
+        'Collection' => [
+            // Traits don't seem to work this way with rector, needs to be investigated
+            // Also _extract can't be easily renamed to extract as it conflicts with the CollectionTrait::extract() method
+            // 'Cake\Collection\ExtractTrait' => [
+            //     '_propertyExtractor', '_extract', '_simpleExtract', '_createMatcherFilter',
+            // ],
+            'Cake\Collection\Iterator\MapReduce' => ['_execute'],
+            'Cake\Collection\Iterator\TreePrinter' => ['_fetchCurrent'],
+        ],
     ];
 
     foreach ($map as $definitions) {
