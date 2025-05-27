@@ -12,7 +12,7 @@ use PhpParser\Node\Stmt\Declare_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\UseItem;
-use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor;
 use PHPStan\Type\ObjectType;
 use Rector\Contract\PhpParser\Node\StmtsAwareInterface;
 use Rector\NodeTypeResolver\Node\AttributeKey;
@@ -111,7 +111,7 @@ CODE_SAMPLE
             function (Node $subNode) use ($node, $appUsesStaticCalls, &$currentStmt) {
                 // only lookup each of current stmts, avoid too deep traversal
                 if ($subNode instanceof StmtsAwareInterface) {
-                    return NodeTraverser::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
+                    return NodeVisitor::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
                 }
 
                 if ($subNode instanceof Stmt) {
