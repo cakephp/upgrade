@@ -61,9 +61,9 @@ CODE_SAMPLE
                         self::UNPREFIXED_METHODS_TO_GET_SET => [
                             new ModalToGetSet('InstanceConfigTrait', 'config', 'getConfig', 'setConfig'),
                         ],
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
     }
 
@@ -118,7 +118,7 @@ CODE_SAMPLE
 
     private function resolveNewMethodNameByCondition(
         MethodCall $methodCall,
-        ModalToGetSet $modalToGetSet
+        ModalToGetSet $modalToGetSet,
     ): string {
         if (count($methodCall->args) >= $modalToGetSet->getMinimalSetterArgumentCount()) {
             return $modalToGetSet->getSetMethod();

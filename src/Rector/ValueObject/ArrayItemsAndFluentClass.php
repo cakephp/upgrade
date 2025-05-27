@@ -11,7 +11,7 @@ final class ArrayItemsAndFluentClass
      */
     public function __construct(
         private array $arrayItems,
-        private array $fluentCalls
+        private array $fluentCalls,
     ) {
     }
 

@@ -40,7 +40,7 @@ CODE_SAMPLE,
 $obj = new SomeClass();
 $obj->methodCall2();
 CODE_SAMPLE,
-                ['SomeClass', 'methodCall1']
+                ['SomeClass', 'methodCall1'],
             ),
         ]);
     }

@@ -11,7 +11,7 @@ final class FactoryMethod
         private string $type,
         private string $method,
         private string $newClass,
-        private int $position
+        private int $position,
     ) {
     }
 

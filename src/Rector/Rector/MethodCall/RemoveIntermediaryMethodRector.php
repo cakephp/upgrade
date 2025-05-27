@@ -33,7 +33,7 @@ final class RemoveIntermediaryMethodRector extends AbstractRector implements Con
     private array $removeIntermediaryMethod = [];
 
     public function __construct(
-        private FluentChainMethodCallNodeAnalyzer $fluentChainMethodCallNodeAnalyzer
+        private FluentChainMethodCallNodeAnalyzer $fluentChainMethodCallNodeAnalyzer,
     ) {
     }
 
@@ -55,9 +55,9 @@ CODE_SAMPLE
                         self::REMOVE_INTERMEDIARY_METHOD => [
                             new RemoveIntermediaryMethod('getTableLocator', 'get', 'fetchTable'),
                         ],
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
     }
 

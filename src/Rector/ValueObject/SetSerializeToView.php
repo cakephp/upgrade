@@ -8,7 +8,7 @@ use PHPStan\Type\ObjectType;
 final class SetSerializeToView
 {
     public function __construct(
-        private string $class
+        private string $class,
     ) {
     }
 

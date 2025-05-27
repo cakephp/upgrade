@@ -51,9 +51,9 @@ $object = new ServerRequest();
 $config = $object->getParam('paging', 1, true);
 CODE_SAMPLE
                     ,
-                    $configuration
+                    $configuration,
                 ),
-            ]
+            ],
         );
     }
 

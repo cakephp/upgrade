@@ -51,9 +51,9 @@ final class OptionsArrayToNamedParametersRector extends AbstractRector implement
                         [
                             new OptionsArrayToNamedParameters('Table', ['find']),
                         ],
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
     }
 
@@ -91,7 +91,7 @@ final class OptionsArrayToNamedParametersRector extends AbstractRector implement
 
     private function matchtypeAndMethodName(
         OptionsArrayToNamedParameters $optionsToNamed,
-        MethodCall $methodCall
+        MethodCall $methodCall,
     ): bool {
         if (!$this->isObjectType($methodCall->var, $optionsToNamed->getObjectType())) {
             return false;
@@ -102,7 +102,7 @@ final class OptionsArrayToNamedParametersRector extends AbstractRector implement
 
     private function replaceMethodCall(
         OptionsArrayToNamedParameters $optionsToNamed,
-        MethodCall $methodCall
+        MethodCall $methodCall,
     ): ?MethodCall {
         $argCount = count($methodCall->args);
         // Only modify method calls that have exactly two arguments.

@@ -25,9 +25,9 @@ final class SetSerializeToViewBuilderRector extends AbstractRector implements Co
                     ,
                     <<<'CODE_SAMPLE'
     $this->viewBuilder()->setOption('serialize', 'result');
-    CODE_SAMPLE
+    CODE_SAMPLE,
                 ),
-            ]
+            ],
         );
     }
 
@@ -51,7 +51,7 @@ final class SetSerializeToViewBuilderRector extends AbstractRector implements Co
         return $this->nodeFactory->createMethodCall(
             $this->nodeFactory->createMethodCall($node->var, 'viewBuilder'),
             'setOption',
-            ['serialize', $node->args[1]->value]
+            ['serialize', $node->args[1]->value],
         );
     }
 
