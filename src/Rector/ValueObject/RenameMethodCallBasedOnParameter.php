@@ -11,7 +11,7 @@ final class RenameMethodCallBasedOnParameter
         private string $oldClass,
         private string $oldMethod,
         private string $parameterName,
-        private string $newMethod
+        private string $newMethod,
     ) {
     }
 

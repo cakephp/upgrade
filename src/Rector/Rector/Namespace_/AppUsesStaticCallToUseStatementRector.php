@@ -12,7 +12,7 @@ use PhpParser\Node\Stmt\Declare_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\UseItem;
-use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor;
 use PHPStan\Type\ObjectType;
 use Rector\Contract\PhpParser\Node\StmtsAwareInterface;
 use Rector\NodeTypeResolver\Node\AttributeKey;
@@ -34,7 +34,7 @@ final class AppUsesStaticCallToUseStatementRector extends AbstractRector
     public function __construct(
         private ShortClassNameResolver $shortClassNameResolver,
         private BetterNodeFinder $betterNodeFinder,
-        private ValueResolver $valueResolver
+        private ValueResolver $valueResolver,
     ) {
     }
 
@@ -52,7 +52,7 @@ CODE_SAMPLE
 use Event\NotificationListener;
 
 CakeEventManager::instance()->attach(new NotificationListener());
-CODE_SAMPLE
+CODE_SAMPLE,
             ),
         ]);
     }
@@ -111,7 +111,7 @@ CODE_SAMPLE
             function (Node $subNode) use ($node, $appUsesStaticCalls, &$currentStmt) {
                 // only lookup each of current stmts, avoid too deep traversal
                 if ($subNode instanceof StmtsAwareInterface) {
-                    return NodeTraverser::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
+                    return NodeVisitor::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
                 }
 
                 if ($subNode instanceof Stmt) {
@@ -132,7 +132,7 @@ CODE_SAMPLE
                 unset($node->stmts[$currentStmt->getAttribute(AttributeKey::STMT_KEY)]);
 
                 return null;
-            }
+            },
         );
     }
 
@@ -197,7 +197,7 @@ CODE_SAMPLE
 
         return $this->shortClassNameResolver->resolveShortClassName(
             $namespaceName,
-            $shortClassName
+            $shortClassName,
         );
     }
 
@@ -206,7 +206,7 @@ CODE_SAMPLE
      */
     private function refactorFileWithDeclare(
         FileWithoutNamespace $fileWithoutNamespace,
-        array $uses
+        array $uses,
     ): FileWithoutNamespace {
         foreach ($fileWithoutNamespace->stmts as $key => $stmt) {
             if ($stmt instanceof Declare_) {

@@ -33,7 +33,7 @@ CODE_SAMPLE
 ConnectionHelper::runWithoutConstraints($connection, function ($connection) {
     $connection->execute('SELECT * FROM table');
 });
-CODE_SAMPLE
+CODE_SAMPLE,
             ),
         ]);
     }
@@ -66,7 +66,7 @@ CODE_SAMPLE
         return new StaticCall(
             new Node\Name\FullyQualified(ConnectionHelper::class),
             $node->name,
-            $node->args
+            $node->args,
         );
     }
 }

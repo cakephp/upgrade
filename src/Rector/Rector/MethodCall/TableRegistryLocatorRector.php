@@ -21,7 +21,7 @@ CODE_SAMPLE
                 ,
                 <<<'CODE_SAMPLE'
 TableRegistry::getTableLocator()->get('something');
-CODE_SAMPLE
+CODE_SAMPLE,
             ),
         ]);
     }
@@ -46,7 +46,7 @@ CODE_SAMPLE
         return $this->nodeFactory->createMethodCall(
             $this->nodeFactory->createStaticCall('Cake\ORM\TableRegistry', 'getTableLocator'),
             'get',
-            $node->args
+            $node->args,
         );
     }
 

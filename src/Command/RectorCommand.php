@@ -89,7 +89,7 @@ class RectorCommand extends BaseCommand
             $args->getOption('verbose') ? '-vvvv' : '',
             escapeshellarg($autoload),
             escapeshellarg($config),
-            escapeshellarg($path)
+            escapeshellarg($path),
         );
         $io->verbose("Running <info>{$command}</info>");
 
@@ -101,7 +101,7 @@ class RectorCommand extends BaseCommand
         $process = proc_open(
             $command,
             $descriptorSpec,
-            $pipes
+            $pipes,
         );
         if (!is_resource($process)) {
             $io->error('Could not create rector process');

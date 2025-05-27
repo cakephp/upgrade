@@ -122,7 +122,7 @@ class FileRenameCommand extends BaseCommand
         if (is_dir($this->path . 'src/Template')) {
             $this->rename(
                 $this->path . 'src/Template',
-                $this->path . 'templates'
+                $this->path . 'templates',
             );
             $this->renameSubFolders($this->path . 'templates');
             $this->changeExt($this->path . 'templates');
@@ -139,7 +139,7 @@ class FileRenameCommand extends BaseCommand
 
                 $this->rename(
                     $dirPath . '/src/Template',
-                    $dirPath . '/templates'
+                    $dirPath . '/templates',
                 );
                 $this->renameSubFolders($dirPath . '/templates');
                 $this->changeExt($dirPath . '/templates');
@@ -158,7 +158,7 @@ class FileRenameCommand extends BaseCommand
         if (is_dir($this->path . 'src/Locale')) {
             $this->rename(
                 $this->path . 'src/Locale',
-                $this->path . 'resources/locales'
+                $this->path . 'resources/locales',
             );
         }
 
@@ -173,7 +173,7 @@ class FileRenameCommand extends BaseCommand
 
                 $this->rename(
                     $dirPath . '/src/Locale',
-                    $dirPath . '/resources/locales'
+                    $dirPath . '/resources/locales',
                 );
             }
         }
@@ -198,19 +198,19 @@ class FileRenameCommand extends BaseCommand
         foreach ($folders as $folder) {
             $dirIter = new RecursiveDirectoryIterator(
                 $path,
-                RecursiveDirectoryIterator::UNIX_PATHS
+                RecursiveDirectoryIterator::UNIX_PATHS,
             );
             $iterIter = new RecursiveIteratorIterator($dirIter);
             $templateDirs = new RegexIterator(
                 $iterIter,
                 '#/' . $folder . '/\.$#',
-                RecursiveRegexIterator::SPLIT
+                RecursiveRegexIterator::SPLIT,
             );
 
             foreach ($templateDirs as $val) {
                 $this->renameWithCasing(
                     $val[0] . '/' . $folder,
-                    $val[0] . '/' . strtolower($folder)
+                    $val[0] . '/' . strtolower($folder),
                 );
             }
         }
@@ -230,13 +230,13 @@ class FileRenameCommand extends BaseCommand
         }
         $dirIter = new RecursiveDirectoryIterator(
             $path,
-            RecursiveDirectoryIterator::SKIP_DOTS | RecursiveDirectoryIterator::UNIX_PATHS
+            RecursiveDirectoryIterator::SKIP_DOTS | RecursiveDirectoryIterator::UNIX_PATHS,
         );
         $iterIter = new RecursiveIteratorIterator($dirIter);
         $templates = new RegexIterator(
             $iterIter,
             '/\.ctp$/i',
-            RecursiveRegexIterator::REPLACE
+            RecursiveRegexIterator::REPLACE,
         );
 
         foreach ($templates as $val) {
@@ -277,7 +277,7 @@ class FileRenameCommand extends BaseCommand
                     'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
                     $source,
                     $tempDest,
-                    $lastLine
+                    $lastLine,
                 ));
             }
             $gitOutput = [];
@@ -288,7 +288,7 @@ class FileRenameCommand extends BaseCommand
                     'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
                     $tempDest,
                     $dest,
-                    $lastLine
+                    $lastLine,
                 ));
             }
             chdir($restore);
@@ -331,7 +331,7 @@ class FileRenameCommand extends BaseCommand
                     'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
                     $source,
                     $dest,
-                    $lastLine
+                    $lastLine,
                 ));
             }
 
