@@ -9,7 +9,7 @@ final class RemoveMethodCall
 {
     public function __construct(
         private string $class,
-        private string $methodName
+        private string $methodName,
     ) {
     }
 

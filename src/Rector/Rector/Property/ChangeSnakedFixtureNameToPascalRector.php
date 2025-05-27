@@ -47,7 +47,7 @@ class SomeTest
         'app.Messages',
         'plugin.Data.Languages',
     ];
-CODE_SAMPLE
+CODE_SAMPLE,
             ),
         ]);
     }
@@ -107,7 +107,7 @@ CODE_SAMPLE
             function (string $token): string {
                 return Inflector::camelize($token);
             },
-            $tableParts
+            $tableParts,
         );
 
         $table = implode('/', $pascalCaseTableParts);

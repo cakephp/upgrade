@@ -12,7 +12,7 @@ final class AddMethodCallArgs
     public function __construct(
         private string $class,
         private string $methodName,
-        mixed ...$values
+        mixed ...$values,
     ) {
         $this->values = $values;
     }

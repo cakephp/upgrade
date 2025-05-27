@@ -62,9 +62,9 @@ $config = $object->getAttribute('paging');
 $object = $object->withAttribute('paging', ['a value']);
 CODE_SAMPLE
                     ,
-                    $configuration
+                    $configuration,
                 ),
-            ]
+            ],
         );
     }
 

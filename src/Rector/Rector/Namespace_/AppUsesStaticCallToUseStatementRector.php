@@ -34,7 +34,7 @@ final class AppUsesStaticCallToUseStatementRector extends AbstractRector
     public function __construct(
         private ShortClassNameResolver $shortClassNameResolver,
         private BetterNodeFinder $betterNodeFinder,
-        private ValueResolver $valueResolver
+        private ValueResolver $valueResolver,
     ) {
     }
 
@@ -52,7 +52,7 @@ CODE_SAMPLE
 use Event\NotificationListener;
 
 CakeEventManager::instance()->attach(new NotificationListener());
-CODE_SAMPLE
+CODE_SAMPLE,
             ),
         ]);
     }
@@ -132,7 +132,7 @@ CODE_SAMPLE
                 unset($node->stmts[$currentStmt->getAttribute(AttributeKey::STMT_KEY)]);
 
                 return null;
-            }
+            },
         );
     }
 
@@ -197,7 +197,7 @@ CODE_SAMPLE
 
         return $this->shortClassNameResolver->resolveShortClassName(
             $namespaceName,
-            $shortClassName
+            $shortClassName,
         );
     }
 
@@ -206,7 +206,7 @@ CODE_SAMPLE
      */
     private function refactorFileWithDeclare(
         FileWithoutNamespace $fileWithoutNamespace,
-        array $uses
+        array $uses,
     ): FileWithoutNamespace {
         foreach ($fileWithoutNamespace->stmts as $key => $stmt) {
             if ($stmt instanceof Declare_) {

@@ -23,7 +23,7 @@ final class ModalToGetSet
         ?string $getMethod = null,
         ?string $setMethod = null,
         private int $minimalSetterArgumentCount = 1,
-        private ?string $firstArgumentType = null
+        private ?string $firstArgumentType = null,
     ) {
         $this->getMethod = $getMethod ?? 'get' . ucfirst($unprefixedMethod);
         $this->setMethod = $setMethod ?? 'set' . ucfirst($unprefixedMethod);

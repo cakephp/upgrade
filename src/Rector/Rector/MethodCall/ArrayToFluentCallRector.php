@@ -80,7 +80,7 @@ CODE_SAMPLE
                             'propertyName' => 'setProperty',
                         ]),
                     ],
-                ]
+                ],
             ),
         ]);
     }
@@ -143,7 +143,7 @@ CODE_SAMPLE
     private function replaceArrayToFluentMethodCalls(
         MethodCall $methodCall,
         int $argumentPosition,
-        ArrayToFluentCall $arrayToFluentCall
+        ArrayToFluentCall $arrayToFluentCall,
     ): ?MethodCall {
         if (count($methodCall->args) !== $argumentPosition) {
             return null;
@@ -156,7 +156,7 @@ CODE_SAMPLE
 
         $arrayItemsAndFluentClass = $this->extractFluentMethods(
             $argumentValue->items,
-            $arrayToFluentCall->getArrayKeysToFluentCalls()
+            $arrayToFluentCall->getArrayKeysToFluentCalls(),
         );
 
         if ($arrayItemsAndFluentClass->getArrayItems() !== []) {

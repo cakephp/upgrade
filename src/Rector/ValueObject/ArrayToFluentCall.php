@@ -10,7 +10,7 @@ final class ArrayToFluentCall
      */
     public function __construct(
         private string $class,
-        private array $arrayKeysToFluentCalls
+        private array $arrayKeysToFluentCalls,
     ) {
     }
 

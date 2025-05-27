@@ -71,7 +71,7 @@ final class ShortClassNameResolver
     ];
 
     public function __construct(
-        private ReflectionProvider $reflectionProvider
+        private ReflectionProvider $reflectionProvider,
     ) {
     }
 
@@ -105,7 +105,7 @@ final class ShortClassNameResolver
         if (
             str_contains($pseudoNamespace, '\\') && ! StringUtils::isMatch(
                 $pseudoNamespace,
-                self::PLUGIN_OR_LIB_REGEX
+                self::PLUGIN_OR_LIB_REGEX,
             )
         ) {
             return 'App\\' . $pseudoNamespace . '\\' . $shortClass;

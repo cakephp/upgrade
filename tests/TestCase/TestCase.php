@@ -69,9 +69,9 @@ class TestCase extends BaseTestCase
                 $path,
                 RecursiveDirectoryIterator::KEY_AS_PATHNAME |
                 RecursiveDirectoryIterator::CURRENT_AS_FILEINFO |
-                RecursiveDirectoryIterator::SKIP_DOTS
+                RecursiveDirectoryIterator::SKIP_DOTS,
             ),
-            RecursiveIteratorIterator::SELF_FIRST
+            RecursiveIteratorIterator::SELF_FIRST,
         );
 
         $tree = [];
