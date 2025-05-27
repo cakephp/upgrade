@@ -81,11 +81,10 @@ return static function (RectorConfig $rectorConfig): void {
             ],
         ],
         'Collection' => [
-            // Traits don't seem to work this way with rector, needs to be investigated
-            // Also _extract can't be easily renamed to extract as it conflicts with the CollectionTrait::extract() method
-            // 'Cake\Collection\ExtractTrait' => [
-            //     '_propertyExtractor', '_extract', '_simpleExtract', '_createMatcherFilter',
-            // ],
+            // _extract can't be easily renamed to extract as it conflicts with the CollectionTrait::extract() method
+            'Cake\Collection\ExtractTrait' => [
+                '_propertyExtractor', '_simpleExtract', '_createMatcherFilter',
+            ],
             'Cake\Collection\Iterator\MapReduce' => ['_execute'],
             'Cake\Collection\Iterator\TreePrinter' => ['_fetchCurrent'],
         ],
@@ -102,11 +101,10 @@ return static function (RectorConfig $rectorConfig): void {
                 '_buildFiles', '_store', '_writeFiles', '_writeHeader', '_getStrings',
                 '_formatString', '_markerError', '_searchFiles', '_isExtractingApp', '_isPathUsable',
             ],
-            // Traits don't seem to work this way with rector, needs to be investigated
-            // 'Cake\Command\PluginAssetsTrait' => [
-            //     '_list', '_process', '_remove', '_createDirectory',
-            //     '_createSymlink', '_makeRelativePath', '_copyDirectory',
-            // ],
+            'Cake\Command\PluginAssetsTrait' => [
+                '_list', '_process', '_remove', '_createDirectory',
+                '_createSymlink', '_makeRelativePath', '_copyDirectory',
+            ],
         ],
         'Console' => [
             'Cake\Console\HelpFormatter' => ['_generateUsage', '_getMaxLength'],
@@ -128,14 +126,13 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Core\ObjectRegistry' => [
                 '_checkDuplicate', '_resolveClassName', '_throwMissingClassError', '_create',
             ],
-            // Traits don't seem to work this way with rector, needs to be investigated
-            // 'Cake\Core\ConventionsTrait' => [
-            //     '_fixtureName', '_entityName', '_modelKey', '_modelNameFromKey',
-            //     '_singularName', '_variableName', '_singularHumanName', '_camelize',
-            //     '_pluralHumanName', '_pluginPath', '_pluginNamespace',
-            // ],
-            // 'Cake\Core\Configure\FileConfigTrait' => ['_getFilePath'],
-            // 'Cake\Core\InstanceConfigTrait' => ['_configRead', '_configWrite', '_configDelete'],
+            'Cake\Core\ConventionsTrait' => [
+                '_fixtureName', '_entityName', '_modelKey', '_modelNameFromKey',
+                '_singularName', '_variableName', '_singularHumanName', '_camelize',
+                '_pluralHumanName', '_pluginPath', '_pluginNamespace',
+            ],
+            'Cake\Core\Configure\FileConfigTrait' => ['_getFilePath'],
+            'Cake\Core\InstanceConfigTrait' => ['_configRead', '_configWrite', '_configDelete'],
         ],
     ];
 
