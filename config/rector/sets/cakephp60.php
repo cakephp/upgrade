@@ -235,6 +235,14 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Error\Debugger' => ['_highlight'],
         ],
 
+        'Event' => [
+            'Cake\Event\Decorator\AbstractDecorator' => ['_call'],
+            'Cake\Event\Decorator\ConditionDecorator' => ['_evaluateCondition'],
+            'Cake\Event\EventManager' => [
+                '_attachSubscriber', '_detachSubscriber', '_callListener',
+            ],
+        ],
+
         'ORM' => [
             'Cake\ORM\Query\SelectQuery' => [
                 // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
