@@ -226,6 +226,15 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Datasource\RulesChecker' => ['_checkRules', '_addError'],
         ],
 
+        'Error' => [
+            'Cake\Error\Renderer\WebExceptionRenderer' => [
+                '_getController', '_customMethod', '_method',
+                '_message', '_template', '_outputMessage',
+                '_outputMessageSafe', '_shutdown',
+            ],
+            'Cake\Error\Debugger' => ['_highlight'],
+        ],
+
         'ORM' => [
             'Cake\ORM\Query\SelectQuery' => [
                 // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
