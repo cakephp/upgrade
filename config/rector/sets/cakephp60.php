@@ -216,6 +216,16 @@ return static function (RectorConfig $rectorConfig): void {
             ],
         ],
 
+        'Datasource' => [
+            'Cake\Datasource\QueryCacher' => ['_resolveKey', '_resolveCacher'],
+            'Cake\Datasource\EntityTrait' => [
+                '_accessor', '_nestedErrors', '_readHasErrors', '_readError',
+            ],
+            'Cake\Datasource\ModelAwareTrait' => ['_setModelClass'],
+            'Cake\Datasource\Paging\NumericPaginator' => ['_removeAliases', '_prefix'],
+            'Cake\Datasource\RulesChecker' => ['_checkRules', '_addError'],
+        ],
+
         'ORM' => [
             'Cake\ORM\Query\SelectQuery' => [
                 // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
@@ -224,6 +234,7 @@ return static function (RectorConfig $rectorConfig): void {
                 '_performCount', '_transformQuery',
                 '_addDefaultFields', '_addDefaultSelectTypes',
             ],
+            'Cake\ORM\RulesChecker' => ['_addLinkConstraintRule', '_addError'],
         ],
     ];
 
