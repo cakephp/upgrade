@@ -63,7 +63,7 @@ return static function (RectorConfig $rectorConfig): void {
     foreach ($staticReturnTypeMap as $className => $methods) {
         foreach ($methods as $method) {
             $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclarationRector::class, [
-                new AddReturnTypeDeclaration($className, $method, new SimpleStaticType('')),
+                new AddReturnTypeDeclaration($className, $method, new SimpleStaticType($className)),
             ]);
         }
     }
