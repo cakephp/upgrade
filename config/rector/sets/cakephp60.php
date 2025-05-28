@@ -243,6 +243,12 @@ return static function (RectorConfig $rectorConfig): void {
             ],
         ],
 
+        'Form' => [
+            // Can't rename _execute as it conflicts with the Form::execute() method
+            'Cake\Form\Form' => ['_buildSchema'],
+            'Cake\Form\Schema' => ['_addField'],
+        ],
+
         'ORM' => [
             'Cake\ORM\Query\SelectQuery' => [
                 // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
