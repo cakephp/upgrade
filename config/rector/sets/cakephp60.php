@@ -301,6 +301,16 @@ return static function (RectorConfig $rectorConfig): void {
             ],
         ],
 
+        'I18n' => [
+            // Can't rename _parseDateTime as it conflicts with the DateTime::parseDateTime() method
+            'Cake\I18n\DateFormatTrait' => ['_formatObject'],
+            'Cake\I18n\Number' => ['_setAttributes'],
+            'Cake\I18n\RelativeTimeFormatter' => ['_options', '_diffData'],
+            'Cake\I18n\TranslatorRegistry' => ['_getTranslator'],
+            'Cake\I18n\Parser\MoFileParser' => ['_readLong'],
+            'Cake\I18n\Parser\PoFileParser' => ['_addMessage'],
+        ],
+
         'ORM' => [
             'Cake\ORM\Query\SelectQuery' => [
                 // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
