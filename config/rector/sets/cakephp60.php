@@ -134,6 +134,97 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Core\Configure\FileConfigTrait' => ['_getFilePath'],
             'Cake\Core\InstanceConfigTrait' => ['_configRead', '_configWrite', '_configDelete'],
         ],
+        'Database' => [
+            'Cake\Database\IdentifierQuoter' => [
+                '_quoteParts', '_basicQuoter',
+                '_quoteJoins', '_quoteSelect',
+                '_quoteDelete', '_quoteInsert',
+                '_quoteUpdate', '_quoteComparison',
+                '_quoteOrderBy', '_quoteIdentifierExpression',
+            ],
+            'Cake\Database\Query' => [
+                '_makeJoin', '_expressionsVisitor', '_conjugate', '_dirty',
+            ],
+
+            // Expressions
+            'Cake\Database\Expression\BetweenExpression' => ['_bindValue'],
+            'Cake\Database\Expression\ComparisonExpression' => [
+                '_stringExpression', '_bindValue', '_flattenValue', '_collectExpressions',
+            ],
+            'Cake\Database\Expression\TupleComparison' => ['_stringifyValues', '_traverseValue'],
+            'Cake\Database\Expression\QueryExpression' => [
+                '_addConditions', '_parseCondition', '_calculateType',
+            ],
+            'Cake\Database\Expression\ValuesExpression' => ['_columnNames', '_processExpressions'],
+
+            // Drivers
+            'Cake\Database\Driver' => [
+                '_expressionTranslators', '_selectQueryTranslator',
+                '_transformDistinct', '_deleteQueryTranslator',
+                '_updateQueryTranslator', '_removeAliasesFromConditions',
+                '_insertQueryTranslator',
+            ],
+            'Cake\Database\Driver\Postgres' => [
+                '_transformIdentifierExpression', '_transformFunctionExpression',
+                '_transformStringExpression',
+            ],
+            'Cake\Database\Driver\Sqlite' => ['_transformFunctionExpression'],
+            'Cake\Database\Driver\Sqlserver' => [
+                '_pagingSubquery', '_transformFunctionExpression',
+            ],
+            'Cake\Database\Driver\TupleComparisonTranslatorTrait' => [
+                '_transformTupleComparison',
+            ],
+
+            // Compilers
+            'Cake\Database\QueryCompiler' => [
+                '_sqlCompiler', '_buildWithPart', '_buildSelectPart',
+                '_buildFromPart', '_buildJoinPart', '_buildWindowPart',
+                '_buildSetPart', '_buildSetOperationPart',
+                '_buildIntersectPart', '_buildUnionPart', '_buildInsertPart',
+                '_buildValuesPart', '_buildUpdatePart', '_buildModifierPart',
+                '_stringifyExpressions',
+            ],
+            'Cake\Database\PostgresCompiler' => ['_buildHavingPart'],
+            'Cake\Database\SqlserverCompiler' => ['_buildLimitPart', '_buildHavingPart'],
+
+            // Types
+            'Cake\Database\Type\ExpressionTypeCasterTrait' => ['_castToExpression', '_requiresToExpressionCasting'],
+            'Cake\Database\Type\FloatType' => ['_parseValue'],
+            'Cake\Database\Type\DateType' => ['_parseValue', '_parseLocaleValue'],
+            'Cake\Database\Type\DateTimeType' => ['_parseValue', '_parseLocaleValue'],
+            'Cake\Database\Type\DecimalType' => ['_parseValue', '_parseLocaleValue'],
+            'Cake\Database\Type\TimeType' => ['_parseTimeValue', '_parseLocalTimeValue'],
+
+            // Schema
+            'Cake\Database\Schema\TableSchema' => ['_checkForeignKey'],
+            'Cake\Database\Schema\SchemaDialect' => [
+                '_foreignOnClause', '_convertOnClause', '_convertConstraintColumns',
+                '_getTypeSpecificColumnSql', '_applyTypeSpecificColumnConversion',
+            ],
+            'Cake\Database\Schema\SqliteSchemaDialect' => [
+                '_convertColumn', '_defaultValue',
+            ],
+            'Cake\Database\Schema\SqlserverSchemaDialect' => [
+                '_convertColumn', '_defaultValue', '_keySql',
+            ],
+            'Cake\Database\Schema\MysqlSchemaDialect' => [
+                '_convertColumn', '_keySql',
+            ],
+            'Cake\Database\Schema\PostgresSchemaDialect' => [
+                '_convertColumn', '_keySql', '_defaultValue', '_convertConstraint',
+            ],
+        ],
+
+        'ORM' => [
+            'Cake\ORM\Query\SelectQuery' => [
+                // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
+                // Can't rename _execute as it conflicts with the DB\Query::execute() method
+                '_dirty', '_addAssociationsToTypeMap',
+                '_performCount', '_transformQuery',
+                '_addDefaultFields', '_addDefaultSelectTypes',
+            ],
+        ],
     ];
 
     foreach ($map as $definitions) {
