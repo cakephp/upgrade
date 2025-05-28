@@ -311,6 +311,11 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\I18n\Parser\PoFileParser' => ['_addMessage'],
         ],
 
+        'Log' => [
+            'Cake\Log\Engine\FileLog' => ['_getFilename', '_rotateFile'],
+            'Cake\Log\Engine\SyslogLog' => ['_open', '_write'],
+        ],
+
         'ORM' => [
             'Cake\ORM\Query\SelectQuery' => [
                 // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
