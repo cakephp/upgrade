@@ -249,6 +249,58 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Form\Schema' => ['_addField'],
         ],
 
+        'Http' => [
+            'Cake\Http\CorsBuilder' => ['_normalizeDomains'],
+            'Cake\Http\Session' => ['_defaultConfig', '_overwrite', '_hasSession', '_timedOut'],
+            // Can't rename _sendRequest as it conflicts with the Client::sendRequest() method
+            'Cake\Http\Client' => [
+                '_doRequest', '_mergeOptions', '_createRequest', '_typeHeaders',
+                '_addAuthentication', '_addProxy', '_createAuth',
+            ],
+
+            // Can't rename _is as it conflicts with the ServerRequest::is() method
+            'Cake\Http\ServerRequest' => [
+                '_setConfig', '_acceptHeaderDetector', '_headerDetector',
+                '_paramDetector', '_environmentDetector',
+            ],
+
+            'Cake\Http\Response' => [
+                '_createStream', '_setContentType', '_setHeader', '_clearHeader',
+                '_setStatus', '_setCacheControl', '_getUTCDate', '_fileRange',
+            ],
+
+            'Cake\Http\Cookie\Cookie' => ['_setValue', '_flatten', '_expand'],
+
+            // Can't rename _getHeaders as it conflicts with the MessageTrait::getHeaders() method
+            // Can't rename _getBody as it conflicts with the MessageTrait::getBody() method
+            // Can't rename _getCookies as it conflicts with the Response::getCookies() method
+            // Can't rename _getJson as it conflicts with the Response::getJson() method
+            // Can't rename _getXml as it conflicts with the Response::getXml() method
+            'Cake\Http\Client\Response' => [
+                '_decodeGzipBody', '_parseHeaders',
+            ],
+
+            'Cake\Http\Client\FormDataPart' => ['_headerParameterToString'],
+            'Cake\Http\Client\Auth\Basic' => ['_generateHeader'],
+            'Cake\Http\Client\Auth\Digest' => ['_generateHeader', '_getServerInfo'],
+            'Cake\Http\Client\Auth\Oauth' => [
+                '_plaintext', '_hmacSha1', '_rsaSha1', '_normalizedUrl',
+                '_normalizedParams', '_normalizeData', '_buildAuth',
+                '_encode',
+            ],
+
+            // Can't rename _send as it conflicts with the Stream::send() method
+            'Cake\Http\Client\Adapter\Stream' => [
+                '_buildContext', '_buildHeaders', '_buildContent', '_buildOptions',
+                '_buildSslContext', '_buildResponse', '_open',
+            ],
+
+            'Cake\Http\Middleware\CsrfProtectionMiddleware' => [
+                '_unsetTokenField', '_verifyToken', '_addTokenCookie',
+                '_validateToken', '_createCookie',
+            ],
+        ],
+
         'ORM' => [
             'Cake\ORM\Query\SelectQuery' => [
                 // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
@@ -258,6 +310,13 @@ return static function (RectorConfig $rectorConfig): void {
                 '_addDefaultFields', '_addDefaultSelectTypes',
             ],
             'Cake\ORM\RulesChecker' => ['_addLinkConstraintRule', '_addError'],
+        ],
+
+        'Utility' => [
+            'Cake\Utility\CookieCryptTrait' => [
+                '_getCookieEncryptionKey', '_encrypt', '_checkCipher',
+                '_decrypt', '_decode', '_implode', '_explode',
+            ],
         ],
     ];
 
