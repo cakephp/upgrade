@@ -316,6 +316,20 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Log\Engine\SyslogLog' => ['_open', '_write'],
         ],
 
+        'Mailer' => [
+            'Cake\Mailer\TransportFactory' => ['_buildTransport'],
+            'Cake\Mailer\Transport\MailTransport' => ['_mail'],
+            // Can't rename _connect as it conflicts with the SmtpTransport::connect() method
+            // Can't rename _disconnect as it conflicts with the SmtpTransport::disconnect() method
+            'Cake\Mailer\Transport\SmtpTransport' => [
+                '_bufferResponseLines', '_parseAuthType',
+                '_auth', '_authPlain', '_authLogin', '_authXoauth2',
+                '_prepareFromCmd', '_prepareRcptCmd', '_prepareFromAddress',
+                '_prepareRecipientAddresses', '_prepareMessage',
+                '_sendRcpt', '_sendData', '_generateSocket', '_smtpSend',
+            ],
+        ],
+
         'ORM' => [
             'Cake\ORM\Query\SelectQuery' => [
                 // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
