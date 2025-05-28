@@ -330,6 +330,10 @@ return static function (RectorConfig $rectorConfig): void {
             ],
         ],
 
+        'Network' => [
+            'Cake\Network\Socket' => ['_getStreamSocketClient', '_setSslContext', '_connectionErrorHandler'],
+        ],
+
         'ORM' => [
             'Cake\ORM\Query\SelectQuery' => [
                 // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
