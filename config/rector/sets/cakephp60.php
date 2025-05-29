@@ -470,6 +470,58 @@ return static function (RectorConfig $rectorConfig): void {
                 '_convertValidatorToArray', '_checkPresence', '_canBeEmpty', '_processRules',
             ],
         ],
+
+        'View' => [
+            'Cake\View\View' => [
+                // Can't rename _render as it conflicts with the View::render() method
+                '_evaluate', '_getTemplateFileName', '_inflectTemplateFileName',
+                '_checkFilePath', '_getLayoutFileName', '_getElementFileName', '_getSubPaths',
+                '_paths', '_elementCache', '_renderElement',
+            ],
+            'Cake\View\Cell' => ['_cacheConfig'],
+            'Cake\View\CellTrait' => ['_createCell'],
+            'Cake\View\ViewBuilder' => ['_checkViewVars'],
+            'Cake\View\JsonView' => ['_dataToSerialize'],
+            'Cake\View\SerializedView' => ['_serialize'],
+            'Cake\View\StringTemplate' => ['_compileTemplates', '_formatAttribute'],
+
+            // Helpers
+            'Cake\View\Helper' => ['_confirm'],
+            'Cake\View\Helper\FormHelper' => [
+                '_formUrl', '_lastAction', '_csrfField', '_getFormProtectorSessionId',
+                '_groupTemplate', '_inputContainerTemplate', '_getInput', '_parseOptions',
+                '_inputType', '_optionsOptions', '_magicOptions', '_getLabel',
+                '_extractOption', '_inputLabel', '_initInputField', '_isDisabled', '_getContext',
+            ],
+            'Cake\View\Helper\HtmlHelper' => ['_renderCells', '_nestedListItem'],
+            'Cake\View\Helper\PaginatorHelper' => [
+                // Can't rename _numbers as it conflicts with the PaginatorHelper::numbers() method
+                '_toggledLink', '_removeAlias', '_getNumbersStartAndEnd', '_formatNumber',
+                '_modulusNumbers', '_firstNumber', '_lastNumber',
+            ],
+            'Cake\View\Helper\TextHelper' => [
+                '_insertPlaceHolder', '_linkUrls', '_prepareLinkLabel', '_linkEmails',
+            ],
+            'Cake\View\Helper\TimeHelper' => ['_getTimezone'],
+            'Cake\View\Helper\IdGeneratorTrait' => ['_clearIds', '_id', '_idSuffix', '_domId'],
+
+            // Form Context
+            'Cake\View\Form\EntityContext' => [
+                '_prepare', '_schemaDefault', '_extractMultiple',
+                '_getProp', '_getValidator', '_getTable',
+            ],
+            'Cake\View\Form\FormContext' => ['_schemaDefault'],
+
+            // Widgets
+            'Cake\View\Widget\SelectBoxWidget' => [
+                '_renderContent', '_emptyValue', '_renderOptgroup',
+                '_renderOptions', '_isSelected', '_isDisabled',
+            ],
+            'Cake\View\Widget\MultiCheckboxWidget' => ['_renderInputs', '_renderInput', '_isSelected', '_isDisabled'],
+            'Cake\View\Widget\RadioWidget' => ['_renderInput', '_renderLabel', '_isDisabled'],
+            'Cake\View\Widget\CheckboxWidget' => ['_isChecked'],
+            'Cake\View\Widget\WidgetLocator' => ['_resolveWidget'],
+        ],
     ];
 
     foreach ($map as $definitions) {
