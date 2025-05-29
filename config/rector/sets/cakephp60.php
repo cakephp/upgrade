@@ -448,6 +448,19 @@ return static function (RectorConfig $rectorConfig): void {
                 '_getCookieEncryptionKey', '_encrypt', '_checkCipher',
                 '_decrypt', '_decode', '_implode', '_explode',
             ],
+            'Cake\Utility\Hash' => [
+                // Can't rename _filter as it conflicts with the Hash::filter() method
+                // Can't rename _merge as it conflicts with the Hash::merge() method
+                '_splitConditions', '_matchToken', '_matches', '_simpleOp', '_squash',
+            ],
+            // Can't rename _wordWrap as it conflicts with the Text::wordWrap() method
+            'Cake\Utility\Text' => ['_strlen', '_substr', '_removeLastWord'],
+            // Can't rename _fromArray as it conflicts with the Xml::fromArray() method
+            // Can't rename _toArray as it conflicts with the Xml::toArray() method
+            'Cake\Utility\Xml' => ['_loadXml', '_createChild'],
+            'Cake\Utility\MergeVariablesTrait' => ['_mergeVars', '_mergeProperty', '_mergePropertyData'],
+            'Cake\Utility\Inflector' => ['_cache'],
+            'Cake\Utility\Security' => ['_checkKey'],
         ],
     ];
 
