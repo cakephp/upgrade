@@ -430,6 +430,19 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Routing\Middleware\AssetMiddleware' => ['_getAssetFile'],
         ],
 
+        'TestSuite' => [
+            'Cake\TestSuite\IntegrationTestTrait' => [
+                '_sendRequest', '_makeDispatcher', '_handleError',
+                '_buildRequest', '_addTokens', '_castToString',
+                '_url', '_getBodyAsString',
+            ],
+            'Cake\TestSuite\MiddlewareDispatcher' => ['_createRequest'],
+            'Cake\TestSuite\TestCase' => ['_assertAttributes', '_normalizePath', '_getTableClassName'],
+            'Cake\TestSuite\Fixture\TestFixture' => ['_tableFromClass', '_schemaFromReflection', '_getRecords'],
+            'Cake\TestSuite\Constraint\Response\ResponseBase' => ['_getBodyAsString'],
+            'Cake\TestSuite\LogTestTrait' => ['_expectLogMessage'],
+        ],
+
         'Utility' => [
             'Cake\Utility\CookieCryptTrait' => [
                 '_getCookieEncryptionKey', '_encrypt', '_checkCipher',
