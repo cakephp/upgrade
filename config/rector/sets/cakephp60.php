@@ -462,6 +462,14 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Utility\Inflector' => ['_cache'],
             'Cake\Utility\Security' => ['_checkKey'],
         ],
+
+        'Validation' => [
+            'Cake\Validation\ValidationRule' => ['_skip'],
+            'Cake\Validation\Validation' => ['_check', '_getDateString', '_populateIp', '_reset'],
+            'Cake\Validation\Validator' => [
+                '_convertValidatorToArray', '_checkPresence', '_canBeEmpty', '_processRules',
+            ],
+        ],
     ];
 
     foreach ($map as $definitions) {
