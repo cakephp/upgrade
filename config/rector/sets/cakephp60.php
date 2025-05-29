@@ -335,6 +335,71 @@ return static function (RectorConfig $rectorConfig): void {
         ],
 
         'ORM' => [
+            'Cake\ORM\AssociationsNormalizerTrait' => ['_normalizeAssociations'],
+            'Cake\ORM\AssociationCollection' => ['_saveAssociations', '_save'],
+            'Cake\ORM\EagerLoader' => [
+                '_reformatContain', '_normalizeContain', '_fixStrategies',
+                '_correctStrategy', '_resolveJoins', '_buildAssociationsMap',
+                '_collectKeys', '_groupKeys',
+            ],
+            'Cake\ORM\LazyEagerLoader' => ['_getQuery', '_getPropertyMap', '_injectResults'],
+            'Cake\ORM\Marshaller' => [
+                '_buildPropertyMap', '_validate', '_prepareDataAndOptions', '_marshalAssociation',
+                '_belongsToMany', '_loadAssociatedByIds', '_mergeAssociation', '_mergeBelongsToMany',
+                '_mergeJoinData',
+            ],
+            'Cake\ORM\Table' => [
+                // Can't rename _saveMany as it conflicts with the Table::saveMany() method
+                // Can't rename _deleteMany as it conflicts with the Table::deleteMany() method
+                '_setFieldMatchers', '_executeTransaction', '_transactionCommitted',
+                '_processFindOrCreate', '_getFindOrCreateQuery', '_processSave',
+                '_onSaveSuccess', '_insert', '_newId', '_update', '_processDelete', '_dynamicFinder',
+            ],
+
+            // Behaviors
+            'Cake\ORM\Behavior' => ['_resolveMethodAliases', '_reflectionCache'],
+            'Cake\ORM\Behavior\TreeBehavior' => [
+                // Can't rename _moveUp/_moveDown as it conflicts with the TreeBehavior::moveUp()/moveDown() methods
+                // Can't rename _removeFromTree as it conflicts with the TreeBehavior::removeFromTree() method
+                '_setChildrenLevel', '_setParent', '_setAsRoot', '_unmarkInternalTree',
+                '_removeFromTree', '_getNode', '_recoverTree', '_getMax',
+                '_sync', '_scope', '_ensureFields', '_getPrimaryKey',
+            ],
+            'Cake\ORM\Behavior\CounterCacheBehavior' => [
+                '_processAssociations', '_processAssociation', '_shouldUpdateCount', '_getCount',
+            ],
+            'Cake\ORM\Behavior\TimestampBehavior' => ['_updateField'],
+
+            // Associations
+            'Cake\ORM\Association' => [
+                '_propertyName', '_options', '_appendNotMatching',
+                '_dispatchBeforeFind', '_appendFields', '_formatAssociationResults',
+                '_bindNewAssociations', '_joinCondition', '_extractFinder',
+            ],
+            'Cake\ORM\Association\HasMany' => [
+                // Can't rename _unlink as it conflicts with the HasMany::unlink() method
+                '_saveTarget', '_unlinkAssociated', '_foreignKeyAcceptsNull',
+            ],
+            'Cake\ORM\Association\BelongsToMany' => [
+                '_generateTargetAssociations', '_generateSourceAssociations',
+                '_generateJunctionAssociations', '_saveTarget', '_saveLinks',
+                '_appendJunctionJoin', '_diffLinks', '_checkPersistenceStatus',
+                '_collectJointEntities', '_junctionAssociationName', '_junctionTableName',
+            ],
+
+            // Loaders
+            'Cake\ORM\Association\Loader\SelectLoader' => [
+                '_defaultOptions', '_buildQuery', '_extractFinder',
+                '_assertFieldsPresent', '_addFilteringJoin', '_addFilteringCondition',
+                '_createTupleCondition', '_linkField', '_buildSubquery',
+                '_subqueryFields', '_buildResultMap', '_resultInjector',
+                '_multiKeysInjector',
+            ],
+
+            // Locators
+            'Cake\ORM\Locator\TableLocator' => ['_getClassName', '_create'],
+
+            // Query
             'Cake\ORM\Query\SelectQuery' => [
                 // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
                 // Can't rename _execute as it conflicts with the DB\Query::execute() method
@@ -342,7 +407,13 @@ return static function (RectorConfig $rectorConfig): void {
                 '_performCount', '_transformQuery',
                 '_addDefaultFields', '_addDefaultSelectTypes',
             ],
+
+            // Rules
             'Cake\ORM\RulesChecker' => ['_addLinkConstraintRule', '_addError'],
+            'Cake\ORM\Rule\LinkConstraint' => ['_aliasFields', '_buildConditions', '_countLinks'],
+            'Cake\ORM\Rule\IsUnique' => ['_alias'],
+            'Cake\ORM\Rule\ExistsIn' => ['_fieldsAreNull'],
+
         ],
 
         'Utility' => [
