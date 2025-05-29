@@ -416,6 +416,20 @@ return static function (RectorConfig $rectorConfig): void {
 
         ],
 
+        'Routing' => [
+            'Cake\Routing\Router' => ['_methodRoute', '_makeRoute', '_applyUrlFilters'],
+            'Cake\Routing\RouteBuilder' => ['_methodRoute', '_makeRoute'],
+            'Cake\Routing\RouteCollection' => ['_getNames'],
+            'Cake\Routing\Route\Route' => [
+                '_writeRoute', '_parseExtension', '_parseArgs',
+                '_persistParams', '_matchMethod', '_writeUrl',
+            ],
+            'Cake\Routing\Route\DashedRoute' => ['_camelizePlugin' ,'_dasherize'],
+            'Cake\Routing\Route\EntityRoute' => ['_checkEntity'],
+            'Cake\Routing\Route\InflectedRoute' => ['_underscore'],
+            'Cake\Routing\Middleware\AssetMiddleware' => ['_getAssetFile'],
+        ],
+
         'Utility' => [
             'Cake\Utility\CookieCryptTrait' => [
                 '_getCookieEncryptionKey', '_encrypt', '_checkCipher',
