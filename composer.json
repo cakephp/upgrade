@@ -9,6 +9,7 @@
         "cakephp/console": "^5.1.5",
         "nette/utils": "^4.0",
         "rector/rector": "dev-main",
+        "symfony/process": "^5.4|^6.0|^7.0",
         "symfony/string": "^6.0 || ^7.0"
     },
     "autoload": {

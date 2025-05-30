@@ -362,8 +362,7 @@ return static function (RectorConfig $rectorConfig): void {
                 // Can't rename _moveUp/_moveDown as it conflicts with the TreeBehavior::moveUp()/moveDown() methods
                 // Can't rename _removeFromTree as it conflicts with the TreeBehavior::removeFromTree() method
                 '_setChildrenLevel', '_setParent', '_setAsRoot', '_unmarkInternalTree',
-                '_removeFromTree', '_getNode', '_recoverTree', '_getMax',
-                '_sync', '_scope', '_ensureFields', '_getPrimaryKey',
+                '_getNode', '_recoverTree', '_getMax', '_sync', '_scope', '_ensureFields', '_getPrimaryKey',
             ],
             'Cake\ORM\Behavior\CounterCacheBehavior' => [
                 '_processAssociations', '_processAssociation', '_shouldUpdateCount', '_getCount',
