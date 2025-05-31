@@ -20,6 +20,7 @@ use Cake\Console\Arguments;
 use Cake\Console\BaseCommand;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Symfony\Component\Process\Process;
 
 /**
  * Runs rector rulesets against the provided path.
@@ -59,11 +60,11 @@ class RectorCommand extends BaseCommand
 
         $result = $this->runRector($io, $args, $autoload);
         if ($result === false) {
-            $io->error('Could not run rector. Ensure that `php` is on your PATH.');
+            $io->error('Something went wrong while running rector. Ensure that `php` is on your PATH.');
 
             return static::CODE_ERROR;
         }
-        $io->success('Rector applied successfully');
+        $io->success('🎉 Upgrade complete! 🎉');
 
         return static::CODE_SUCCESS;
     }
@@ -93,39 +94,28 @@ class RectorCommand extends BaseCommand
         );
         $io->verbose("Running <info>{$command}</info>");
 
-        $descriptorSpec = [
-            0 => ['pipe', 'r'],
-            1 => ['pipe', 'w'],
-            2 => ['pipe', 'w'],
-        ];
-        $process = proc_open(
-            $command,
-            $descriptorSpec,
-            $pipes,
-        );
-        if (!is_resource($process)) {
-            $io->error('Could not create rector process');
+        $io->info('Starting rector at ' . date('Y-m-d H:i:s'));
+
+        $process = Process::fromShellCommandline($command);
+        $process->setEnv($_ENV);
+        $process->setTimeout(null);
+        $process->start();
+
+        foreach ($process as $type => $data) {
+            if ($type === Process::OUT) {
+                $io->out($data);
+            } elseif ($type === Process::ERR) {
+                $io->err($data);
+            }
+        }
+
+        if (!$process->isSuccessful()) {
+            $io->error('Something went wrong while running rector.');
 
             return false;
         }
 
-        while (true) {
-            if (feof($pipes[1]) && feof($pipes[2])) {
-                break;
-            }
-            $output = fread($pipes[1], 1024);
-            if ($output) {
-                $io->out($output);
-            }
-            $error = fread($pipes[2], 1024);
-            if ($error) {
-                $io->err($error);
-            }
-        }
-
-        fclose($pipes[1]);
-        fclose($pipes[2]);
-        proc_close($process);
+        $io->info('Rector completed successfully at ' . date('Y-m-d H:i:s'));
 
         return true;
     }
