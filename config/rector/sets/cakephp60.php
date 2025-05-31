@@ -578,10 +578,10 @@ return static function (RectorConfig $rectorConfig): void {
         ],
         'View' => [
             'Cake\View\View' => [
-                '_render' => 'doRender',
+                '_render' => 'renderFile',
             ],
             'Cake\View\Helper\PaginatorHelper' => [
-                '_numbers' => 'doNumbers',
+                '_numbers' => 'buildNumbers',
             ],
         ],
     ];
