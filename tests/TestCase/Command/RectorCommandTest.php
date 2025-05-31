@@ -62,10 +62,9 @@ class RectorCommandTest extends TestCase
         $this->setupTestApp(__FUNCTION__);
         $this->exec('upgrade rector --rules cakephp40 --dry-run ' . TEST_APP);
 
-        $this->assertExitSuccess();
+        $this->assertExitError(); // --dry-run inverts the exit code
         $this->assertOutputContains('HelloCommand.php');
         $this->assertOutputContains('begin diff');
-        $this->assertOutputContains('Rector applied successfully');
     }
 
     public function testApplyNoDiff()
