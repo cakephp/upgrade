@@ -7,6 +7,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
+use PHPStan\Type\ObjectType;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -54,6 +55,20 @@ CODE_SAMPLE,
 
         $firstArg = $node->args[0]->value;
         if (! $firstArg instanceof Array_) {
+            return null;
+        }
+
+        // Make sure the method is called on an object that uses EntityTrait
+        $callerType = $this->getType($node->var);
+        if (! $callerType instanceof ObjectType) {
+            return null;
+        }
+
+        $classReflection = $callerType->getClassReflection();
+        if ($classReflection === null) {
+            return null;
+        }
+        if (! $classReflection->hasTraitUse('Cake\Datasource\EntityTrait')) {
             return null;
         }
 

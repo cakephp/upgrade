@@ -3,6 +3,7 @@
 namespace Cake\Upgrade\Test\TestCase\Rector\MethodCall\AddMethodCallArgsRectorTest\Fixture;
 
 use Cake\ORM\Entity;
+use Cake\Upgrade\Test\TestCase\Rector\MethodCall\ChangeEntityTraitSetArrayToPatch\Source\OtherClassWithSetMethod;
 
 function mymethod()
 {
@@ -11,6 +12,10 @@ function mymethod()
     $object->set(['paging' => 'test']);
     // This should not be changed
     $object->set('paging', 'test');
+
+    $otherObject = new OtherClassWithSetMethod();
+    // This should not be changed as well
+    $otherObject->set(['paging' => 'test']);
 }
 
 ?>
@@ -20,6 +25,7 @@ function mymethod()
 namespace Cake\Upgrade\Test\TestCase\Rector\MethodCall\AddMethodCallArgsRectorTest\Fixture;
 
 use Cake\ORM\Entity;
+use Cake\Upgrade\Test\TestCase\Rector\MethodCall\ChangeEntityTraitSetArrayToPatch\Source\OtherClassWithSetMethod;
 
 function mymethod()
 {
@@ -28,6 +34,10 @@ function mymethod()
     $object->patch(['paging' => 'test']);
     // This should not be changed
     $object->set('paging', 'test');
+
+    $otherObject = new OtherClassWithSetMethod();
+    // This should not be changed as well
+    $otherObject->set(['paging' => 'test']);
 }
 
 ?>
