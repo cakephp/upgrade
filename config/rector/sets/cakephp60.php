@@ -81,7 +81,6 @@ return static function (RectorConfig $rectorConfig): void {
             ],
         ],
         'Collection' => [
-            // _extract can't be easily renamed to extract as it conflicts with the CollectionTrait::extract() method
             'Cake\Collection\ExtractTrait' => [
                 '_propertyExtractor', '_simpleExtract', '_createMatcherFilter',
             ],
@@ -109,7 +108,6 @@ return static function (RectorConfig $rectorConfig): void {
         'Console' => [
             'Cake\Console\HelpFormatter' => ['_generateUsage', '_getMaxLength'],
             'Cake\Console\ConsoleIo' => ['_getInput'],
-            // _write can't be renamed to write as it conflicts with the ConsoleOutput::write() method
             'Cake\Console\ConsoleOutput' => ['_replaceTags'],
             'Cake\Console\ConsoleOptionParser' => [
                 '_parseLongOption', '_parseShortOption', '_parseOption', '_optionExists', '_parseArg', '_nextToken',
@@ -244,7 +242,6 @@ return static function (RectorConfig $rectorConfig): void {
         ],
 
         'Form' => [
-            // Can't rename _execute as it conflicts with the Form::execute() method
             'Cake\Form\Form' => ['_buildSchema'],
             'Cake\Form\Schema' => ['_addField'],
         ],
@@ -252,13 +249,11 @@ return static function (RectorConfig $rectorConfig): void {
         'Http' => [
             'Cake\Http\CorsBuilder' => ['_normalizeDomains'],
             'Cake\Http\Session' => ['_defaultConfig', '_overwrite', '_hasSession', '_timedOut'],
-            // Can't rename _sendRequest as it conflicts with the Client::sendRequest() method
             'Cake\Http\Client' => [
                 '_doRequest', '_mergeOptions', '_createRequest', '_typeHeaders',
                 '_addAuthentication', '_addProxy', '_createAuth',
             ],
 
-            // Can't rename _is as it conflicts with the ServerRequest::is() method
             'Cake\Http\ServerRequest' => [
                 '_setConfig', '_acceptHeaderDetector', '_headerDetector',
                 '_paramDetector', '_environmentDetector',
@@ -289,7 +284,6 @@ return static function (RectorConfig $rectorConfig): void {
                 '_encode',
             ],
 
-            // Can't rename _send as it conflicts with the Stream::send() method
             'Cake\Http\Client\Adapter\Stream' => [
                 '_buildContext', '_buildHeaders', '_buildContent', '_buildOptions',
                 '_buildSslContext', '_buildResponse', '_open',
@@ -302,7 +296,6 @@ return static function (RectorConfig $rectorConfig): void {
         ],
 
         'I18n' => [
-            // Can't rename _parseDateTime as it conflicts with the DateTime::parseDateTime() method
             'Cake\I18n\DateFormatTrait' => ['_formatObject'],
             'Cake\I18n\Number' => ['_setAttributes'],
             'Cake\I18n\RelativeTimeFormatter' => ['_options', '_diffData'],
@@ -319,8 +312,6 @@ return static function (RectorConfig $rectorConfig): void {
         'Mailer' => [
             'Cake\Mailer\TransportFactory' => ['_buildTransport'],
             'Cake\Mailer\Transport\MailTransport' => ['_mail'],
-            // Can't rename _connect as it conflicts with the SmtpTransport::connect() method
-            // Can't rename _disconnect as it conflicts with the SmtpTransport::disconnect() method
             'Cake\Mailer\Transport\SmtpTransport' => [
                 '_bufferResponseLines', '_parseAuthType',
                 '_auth', '_authPlain', '_authLogin', '_authXoauth2',
@@ -349,8 +340,6 @@ return static function (RectorConfig $rectorConfig): void {
                 '_mergeJoinData',
             ],
             'Cake\ORM\Table' => [
-                // Can't rename _saveMany as it conflicts with the Table::saveMany() method
-                // Can't rename _deleteMany as it conflicts with the Table::deleteMany() method
                 '_setFieldMatchers', '_executeTransaction', '_transactionCommitted',
                 '_processFindOrCreate', '_getFindOrCreateQuery', '_processSave',
                 '_onSaveSuccess', '_insert', '_newId', '_update', '_processDelete', '_dynamicFinder',
@@ -359,8 +348,6 @@ return static function (RectorConfig $rectorConfig): void {
             // Behaviors
             'Cake\ORM\Behavior' => ['_resolveMethodAliases', '_reflectionCache'],
             'Cake\ORM\Behavior\TreeBehavior' => [
-                // Can't rename _moveUp/_moveDown as it conflicts with the TreeBehavior::moveUp()/moveDown() methods
-                // Can't rename _removeFromTree as it conflicts with the TreeBehavior::removeFromTree() method
                 '_setChildrenLevel', '_setParent', '_setAsRoot', '_unmarkInternalTree',
                 '_getNode', '_recoverTree', '_getMax', '_sync', '_scope', '_ensureFields', '_getPrimaryKey',
             ],
@@ -376,7 +363,6 @@ return static function (RectorConfig $rectorConfig): void {
                 '_bindNewAssociations', '_joinCondition', '_extractFinder',
             ],
             'Cake\ORM\Association\HasMany' => [
-                // Can't rename _unlink as it conflicts with the HasMany::unlink() method
                 '_saveTarget', '_unlinkAssociated', '_foreignKeyAcceptsNull',
             ],
             'Cake\ORM\Association\BelongsToMany' => [
@@ -400,8 +386,6 @@ return static function (RectorConfig $rectorConfig): void {
 
             // Query
             'Cake\ORM\Query\SelectQuery' => [
-                // Can't rename _decorateResults as it conflicts with the DB\SelectQuery::decorateResults() method
-                // Can't rename _execute as it conflicts with the DB\Query::execute() method
                 '_dirty', '_addAssociationsToTypeMap',
                 '_performCount', '_transformQuery',
                 '_addDefaultFields', '_addDefaultSelectTypes',
@@ -448,14 +432,9 @@ return static function (RectorConfig $rectorConfig): void {
                 '_decrypt', '_decode', '_implode', '_explode',
             ],
             'Cake\Utility\Hash' => [
-                // Can't rename _filter as it conflicts with the Hash::filter() method
-                // Can't rename _merge as it conflicts with the Hash::merge() method
                 '_splitConditions', '_matchToken', '_matches', '_simpleOp', '_squash',
             ],
-            // Can't rename _wordWrap as it conflicts with the Text::wordWrap() method
             'Cake\Utility\Text' => ['_strlen', '_substr', '_removeLastWord'],
-            // Can't rename _fromArray as it conflicts with the Xml::fromArray() method
-            // Can't rename _toArray as it conflicts with the Xml::toArray() method
             'Cake\Utility\Xml' => ['_loadXml', '_createChild'],
             'Cake\Utility\MergeVariablesTrait' => ['_mergeVars', '_mergeProperty', '_mergePropertyData'],
             'Cake\Utility\Inflector' => ['_cache'],
@@ -472,7 +451,6 @@ return static function (RectorConfig $rectorConfig): void {
 
         'View' => [
             'Cake\View\View' => [
-                // Can't rename _render as it conflicts with the View::render() method
                 '_evaluate', '_getTemplateFileName', '_inflectTemplateFileName',
                 '_checkFilePath', '_getLayoutFileName', '_getElementFileName', '_getSubPaths',
                 '_paths', '_elementCache', '_renderElement',
@@ -494,7 +472,6 @@ return static function (RectorConfig $rectorConfig): void {
             ],
             'Cake\View\Helper\HtmlHelper' => ['_renderCells', '_nestedListItem'],
             'Cake\View\Helper\PaginatorHelper' => [
-                // Can't rename _numbers as it conflicts with the PaginatorHelper::numbers() method
                 '_toggledLink', '_removeAlias', '_getNumbersStartAndEnd', '_formatNumber',
                 '_modulusNumbers', '_firstNumber', '_lastNumber',
             ],
@@ -528,6 +505,92 @@ return static function (RectorConfig $rectorConfig): void {
             foreach ($methods as $method) {
                 $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
                     new MethodCallRename($className, $method, substr($method, 1)),
+                ]);
+            }
+        }
+    }
+
+    // Rename methods that start with an underscore to a new, non-conflicting name.
+
+    $map = [
+        'Console' => [
+            'Cake\Console\ConsoleOutput' => [
+                '_write' => 'writeStream',
+            ],
+        ],
+        'Form' => [
+            'Cake\Form\Form' => [
+                '_execute' => 'process',
+            ],
+        ],
+        'Http' => [
+            'Cake\Http\Client' => [
+                '_sendRequest' => 'processRequest',
+            ],
+            'Cake\Http\ServerRequest' => [
+                '_is' => 'isType',
+            ],
+            'Cake\Http\Client\Adapter\Stream' => [
+                '_send' => 'processRequest',
+            ],
+        ],
+        'I18n' => [
+            'Cake\I18n\DateFormatTrait' => [
+                '_parseDateTime' => 'processDateTime',
+            ],
+        ],
+        'Mailer' => [
+            'Cake\Mailer\Transport\SmtpTransport' => [
+                '_connect' => 'connectSmtp',
+                '_disconnect' => 'disconnectSmtp',
+            ],
+        ],
+        'ORM' => [
+            'Cake\ORM\Table' => [
+                '_saveMany' => 'doSaveMany',
+                '_deleteMany' => 'doDeleteMany',
+            ],
+            'Cake\ORM\Behavior\TreeBehavior' => [
+                '_moveUp' => 'doMoveUp',
+                '_moveDown' => 'doMoveDown',
+                '_removeFromTree' => 'doRemoveFromTree',
+            ],
+            'Cake\ORM\Association\HasMany' => [
+                '_unlink' => 'doUnlink',
+            ],
+            'Cake\ORM\Query\SelectQuery' => [
+                '_decorateResults' => 'ormDecorateResults',
+                '_execute' => 'ormExecute',
+            ],
+        ],
+        'Utility' => [
+            'Cake\Utility\Hash' => [
+                '_filter' => 'doFilter',
+                '_merge' => 'doMerge',
+            ],
+            'Cake\Utility\Text' => [
+                '_wordWrap' => 'doWordWrap',
+            ],
+            'Cake\Utility\Xml' => [
+                '_fromArray' => 'doFromArray',
+                '_toArray' => 'doToArray',
+            ],
+        ],
+        'View' => [
+            'Cake\View\View' => [
+                '_render' => 'renderFile',
+            ],
+            'Cake\View\Helper\PaginatorHelper' => [
+                '_numbers' => 'buildNumbers',
+            ],
+        ],
+    ];
+
+    foreach ($map as $definitions) {
+        foreach ($definitions as $className => $methods) {
+            foreach ($methods as $oldMethod => $newMethod) {
+                $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+                    new MethodCallRename($className, $oldMethod, $newMethod),
                 ]);
             }
         }
