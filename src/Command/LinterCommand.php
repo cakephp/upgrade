@@ -47,7 +47,7 @@ class LinterCommand extends BaseCommand
     public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         $dirs = [];
-        foreach (static::$defaultDirectories as $dir) {
+        foreach ($this->defaultDirectories() as $dir) {
             $dirs[] = '`' . $dir . '`';
         }
 
@@ -72,7 +72,7 @@ class LinterCommand extends BaseCommand
      */
     public function execute(Arguments $args, ConsoleIo $io): int
     {
-        $directories = $args->getArgument('path') ?: static::$defaultDirectories;
+        $directories = $args->getArgument('path') ?: $this->defaultDirectories();
         if (is_string($directories) && str_contains($directories, ',')) {
             $directories = explode(',', $directories);
         }
@@ -122,6 +122,22 @@ class LinterCommand extends BaseCommand
             $io->success('All files are valid.');
         } else {
             $io->error('Some files have errors. Please check the output above.');
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function defaultDirectories(): array
+    {
+        $result = [];
+        foreach (static::$defaultDirectories as $directory) {
+            if (!is_dir($directory)) {
+                continue;
+            }
+            $result[] = $directory;
         }
 
         return $result;
