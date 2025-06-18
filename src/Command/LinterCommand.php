@@ -11,6 +11,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RegexIterator;
 use SplFileInfo;
+use Symfony\Component\Process\Process;
 
 class LinterCommand extends BaseCommand
 {
@@ -78,6 +79,7 @@ class LinterCommand extends BaseCommand
         }
 
         $result = static::CODE_SUCCESS;
+        $errors = [];
         foreach ((array)$directories as $directory) {
             if (!file_exists($directory)) {
                 $io->warning('Not exists: ' . $directory . ' - skipping.');
@@ -103,9 +105,12 @@ class LinterCommand extends BaseCommand
             foreach ($phpFiles as $file) {
                 $io->verbose('Checking ' . $file->getPathname());
 
-                exec('php -l ' . escapeshellarg($file->getPathname()), $output, $returnVar);
-                if ($returnVar !== 0) {
-                    $io->err('Error in ' . $file->getPathname() . ': ' . implode("\n", $output));
+                $command = 'php -l ' . $file->getPathname();
+                $process = Process::fromShellCommandline($command);
+                $process->run();
+
+                if ($process->getExitCode() !== 0) {
+                    $errors[] = $file->getPathname() . ': ' . $process->getErrorOutput();
                     $result = self::CODE_ERROR;
 
                     continue;
@@ -116,6 +121,10 @@ class LinterCommand extends BaseCommand
             }
 
             $io->out('');
+        }
+
+        if ($errors) {
+            $io->err($errors);
         }
 
         if ($result === self::CODE_SUCCESS) {
