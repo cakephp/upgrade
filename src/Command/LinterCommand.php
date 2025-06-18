@@ -82,7 +82,7 @@ class LinterCommand extends BaseCommand
         $errors = [];
         foreach ((array)$directories as $directory) {
             if (!file_exists($directory)) {
-                $io->warning('Not exists: ' . $directory . ' - skipping.');
+                $io->warning('Does not exist: ' . $directory . ' - skipping.');
 
                 continue;
             }
