@@ -105,4 +105,4 @@ jobs:
       run: make install-dev
 
     - name: Run PHP CodeSniffer
-      run: vendor/bin/phpcs --report=checkstyle src/ tests/
+      run: vendor/bin/phpcs --report=checkstyle
