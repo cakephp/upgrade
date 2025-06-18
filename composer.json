@@ -28,9 +28,8 @@
     "prefer-stable": true,
     "minimum-stability": "dev",
     "scripts": {
-        "stan":  "phpstan analyze",
-        "cs-check": "phpcs --colors --parallel=16 -p -s src/ tests/",
-        "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
+        "cs-check": "phpcs --colors --parallel=16 -p -s",
+        "cs-fix": "phpcbf --colors --parallel=16 -p",
         "test": "phpunit"
     },
     "config": {
