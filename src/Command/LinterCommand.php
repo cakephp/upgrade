@@ -97,6 +97,7 @@ class LinterCommand extends BaseCommand
 
             $fileCount = iterator_count($phpFiles);
             $io->helper('Progress')->init(['total' => $fileCount]);
+            $io->out('', 0);
 
             /** @var \SplFileInfo $file */
             foreach ($phpFiles as $file) {
