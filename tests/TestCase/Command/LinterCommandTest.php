@@ -38,11 +38,24 @@ class LinterCommandTest extends TestCase
     /**
      * @return void
      */
-    public function testLinter()
+    public function testLinterSuccess()
     {
         $this->exec('linter');
 
         $this->assertExitSuccess();
         $this->assertOutputContains('All files are valid.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testLinterFail()
+    {
+        mkdir(TMP . 'linter', 0777, true);
+        file_put_contents(TMP . 'linter/BrokenExample.php', '<?php class X }');
+        $this->exec('linter tmp/linter/ -v');
+
+        $this->assertExitError();
+        $this->assertErrorContains('Some files have errors.');
     }
 }

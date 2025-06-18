@@ -109,7 +109,7 @@ class LinterCommand extends BaseCommand
                 $process = Process::fromShellCommandline($command);
                 $process->run();
 
-                if ($process->getExitCode() !== 0) {
+                if ($process->getExitCode() !== static::CODE_SUCCESS) {
                     $errors[] = $file->getPathname() . ': ' . $process->getErrorOutput();
                     $result = self::CODE_ERROR;
 
