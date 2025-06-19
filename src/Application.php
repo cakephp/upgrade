@@ -19,6 +19,7 @@ namespace Cake\Upgrade;
 use Cake\Console\CommandCollection;
 use Cake\Core\ConsoleApplicationInterface;
 use Cake\Upgrade\Command\FileRenameCommand;
+use Cake\Upgrade\Command\LinterCommand;
 use Cake\Upgrade\Command\RectorCommand;
 use Cake\Upgrade\Command\UpgradeCommand;
 
@@ -51,6 +52,7 @@ class Application implements ConsoleApplicationInterface
         $commands->add('upgrade', UpgradeCommand::class);
         $commands->add('upgrade file_rename', FileRenameCommand::class);
         $commands->add('upgrade rector', RectorCommand::class);
+        $commands->add('linter', LinterCommand::class);
 
         return $commands;
     }
