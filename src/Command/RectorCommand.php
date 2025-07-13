@@ -20,6 +20,10 @@ use Cake\Console\Arguments;
 use Cake\Console\BaseCommand;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RegexIterator;
+use SplFileInfo;
 use Symfony\Component\Process\Process;
 
 /**
@@ -27,6 +31,8 @@ use Symfony\Component\Process\Process;
  */
 class RectorCommand extends BaseCommand
 {
+    protected const CODE_CHANGES = 2;
+
     /**
      * Execute.
      *
@@ -64,7 +70,12 @@ class RectorCommand extends BaseCommand
 
             return static::CODE_ERROR;
         }
-        $io->success('🎉 Upgrade complete! 🎉');
+
+        $success = '🎉 Upgrade complete! 🎉';
+        if ($args->getOption('dry-run')) {
+            $success .= ' [DRY-RUN]';
+        }
+        $io->success($success);
 
         return static::CODE_SUCCESS;
     }
@@ -79,38 +90,15 @@ class RectorCommand extends BaseCommand
      */
     protected function runRector(ConsoleIo $io, Arguments $args, string $autoload): bool
     {
-        $config = ROOT . '/config/rector/' . basename((string)$args->getOption('rules')) . '.php';
-        $path = realpath((string)$args->getArgument('path'));
-
-        $cmdPath = ROOT . '/vendor/bin/rector process';
-        $command = sprintf(
-            '%s %s %s %s --autoload-file=%s --config=%s %s --clear-cache',
-            $cmdPath,
-            $args->getOption('dry-run') ? '--dry-run' : '',
-            $args->getOption('verbose') ? '--debug' : '',
-            $args->getOption('no-diff') ? '--no-diff' : '',
-            escapeshellarg($autoload),
-            escapeshellarg($config),
-            escapeshellarg($path),
-        );
-        $io->verbose("Running <info>{$command}</info>");
-
         $io->info('Starting rector at ' . date('Y-m-d H:i:s'));
 
-        $process = Process::fromShellCommandline($command);
-        $process->setEnv($_ENV);
-        $process->setTimeout(null);
-        $process->start();
-
-        foreach ($process as $type => $data) {
-            if ($type === Process::OUT) {
-                $io->out($data);
-            } elseif ($type === Process::ERR) {
-                $io->err($data);
-            }
+        if ($args->getOption('per-file')) {
+            $result = $this->processPerFile($io, $args, $autoload);
+        } else {
+            $result = $this->processDirectory($io, $args, $autoload);
         }
 
-        if (!$process->isSuccessful()) {
+        if (!$result) {
             $io->error('Something went wrong while running rector.');
 
             return false;
@@ -152,6 +140,80 @@ class RectorCommand extends BaseCommand
         return null;
     }
 
+    protected function processDirectory(ConsoleIo $io, Arguments $args, string $autoload): bool
+    {
+        $config = ROOT . '/config/rector/' . basename((string)$args->getOption('rules')) . '.php';
+        $path = realpath((string)$args->getArgument('path'));
+
+        $command = $this->buildCommand($args, $autoload, $config, $path);
+        $io->verbose("Running <info>{$command}</info>");
+
+        $process = Process::fromShellCommandline($command);
+        $process->setEnv($_ENV);
+        $process->setTimeout(null);
+        $process->start();
+
+        foreach ($process as $type => $data) {
+            if ($type === Process::OUT) {
+                $io->out($data);
+            } elseif ($type === Process::ERR) {
+                $io->err($data);
+            }
+        }
+
+        return $process->getExitCode() !== static::CODE_ERROR;
+    }
+
+    protected function processPerFile(ConsoleIo $io, Arguments $args, string $autoload): bool
+    {
+        $config = ROOT . '/config/rector/' . basename((string)$args->getOption('rules')) . '.php';
+        $path = realpath((string)$args->getArgument('path'));
+
+        if (is_file($path)) {
+            $phpFiles = [
+                new SplFileInfo($path),
+            ];
+        } else {
+            $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+            $phpFiles = new RegexIterator($files, '/\.php|\.ctp$/');
+        }
+
+        $result = true;
+        $totalFiles = $changedFiles = 0;
+
+        /** @var \SplFileInfo $file */
+        foreach ($phpFiles as $file) {
+            $io->out('Processing ' . $file->getPathname());
+
+            $command = $this->buildCommand($args, $autoload, $config, $file->getPathname());
+            $io->verbose("Running <info>{$command}</info>");
+
+            $process = Process::fromShellCommandline($command);
+            $process->setEnv($_ENV);
+            $process->setTimeout(null);
+            $process->start();
+
+            foreach ($process as $type => $data) {
+                if ($type === Process::OUT) {
+                    $io->out($data);
+                } elseif ($type === Process::ERR) {
+                    $io->err($data);
+                }
+            }
+
+            if ($process->getExitCode() === static::CODE_ERROR) {
+                $result = false;
+            } elseif ($process->getExitCode() === static::CODE_CHANGES) {
+                $changedFiles++;
+            }
+            $totalFiles++;
+        }
+
+        $io->out("{$changedFiles}/{$totalFiles} files changed.");
+
+        return $result;
+    }
+
     /**
      * Gets the option parser instance and configures it.
      *
@@ -187,9 +249,14 @@ class RectorCommand extends BaseCommand
                 'help' => 'The path to the application/plugin autoload if one cannot be auto-detected, ' .
                     'or is detected incorrectly.',
             ])
+            ->addOption('per-file', [
+                'help' => 'Run rector on a per-file basis instead of the whole directory.',
+                'boolean' => true,
+            ])
             ->addOption('dry-run', [
                 'help' => 'Enable to get a preview of what modifications will be applied.',
                 'boolean' => true,
+                'short' => 'd',
             ])
             ->addOption('no-diff', [
                 'help' => 'Disable rector diff output which can cause issues with large files.',
@@ -197,5 +264,28 @@ class RectorCommand extends BaseCommand
             ]);
 
         return $parser;
+    }
+
+    /**
+     * @param \Cake\Console\Arguments $args
+     * @param string $autoload
+     * @param string $config
+     * @param string|bool $path
+     * @return string
+     */
+    protected function buildCommand(Arguments $args, string $autoload, string $config, bool|string $path): string
+    {
+        $cmdPath = ROOT . '/vendor/bin/rector process';
+
+        return sprintf(
+            '%s %s %s %s --autoload-file=%s --config=%s %s --clear-cache',
+            $cmdPath,
+            $args->getOption('dry-run') ? '--dry-run' : '',
+            $args->getOption('verbose') ? '-vvvv' : '',
+            $args->getOption('no-diff') ? '--no-diff' : '',
+            escapeshellarg($autoload),
+            escapeshellarg($config),
+            escapeshellarg($path),
+        );
     }
 }
