@@ -2,6 +2,9 @@
 <ruleset name="CakePHP Upgrade">
     <config name="installed_paths" value="../../cakephp/cakephp-codesniffer"/>
 
+    <file>src/</file>
+    <file>tests/</file>
+
     <rule ref="CakePHP"/>
 
     <exclude-pattern>tests/test_apps</exclude-pattern>
