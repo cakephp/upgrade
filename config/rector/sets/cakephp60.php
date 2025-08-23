@@ -21,7 +21,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(RenamePropertyRector::class, [
         new RenameProperty('Cake\ORM\Entity', '_accessible', 'patchable'),
-        new RenameProperty('Cake\Utility\Inflector', '_plural', '_plural'),
+        new RenameProperty('Cake\Utility\Inflector', '_plural', 'plural'),
         new RenameProperty('Cake\Utility\Inflector', '_singular', 'singular'),
         new RenameProperty('Cake\Utility\Inflector', '_irregular', 'irregular'),
         new RenameProperty('Cake\Utility\Inflector', '_uninflected', 'uninflected'),
