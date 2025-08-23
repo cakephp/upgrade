@@ -21,6 +21,16 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(RenamePropertyRector::class, [
         new RenameProperty('Cake\ORM\Entity', '_accessible', 'patchable'),
+        new RenameProperty('Cake\Utility\Inflector', 'plural', 'plural__'),
+        new RenameProperty('Cake\Utility\Inflector', '_singular', 'singular'),
+        new RenameProperty('Cake\Utility\Inflector', '_irregular', 'irregular'),
+        new RenameProperty('Cake\Utility\Inflector', '_uninflected', 'uninflected'),
+        new RenameProperty('Cake\Utility\Inflector', '_cache', 'cache'),
+        new RenameProperty('Cake\Utility\Inflector', '_initialState', 'initialState'),
+        new RenameProperty('Cake\Utility\Security', '_hashType', 'hashType'),
+        new RenameProperty('Cake\Utility\Security', '_salt', 'salt'),
+        new RenameProperty('Cake\Utility\Security', '_instance', 'instance'),
+        new RenameProperty('Cake\Utility\CookieCryptTrait', '_validCiphers', 'validCiphers'),
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameStringRector::class, [
