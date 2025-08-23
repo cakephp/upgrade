@@ -31,6 +31,7 @@ return static function (RectorConfig $rectorConfig): void {
         new RenameProperty('Cake\Utility\Security', '_salt', 'salt'),
         new RenameProperty('Cake\Utility\Security', '_instance', 'instance'),
         new RenameProperty('Cake\Utility\CookieCryptTrait', '_validCiphers', 'validCiphers'),
+        new RenameProperty('Cake\Utility\Text', '_defaultTransliterator', 'defaultTransliterator'),
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameStringRector::class, [
