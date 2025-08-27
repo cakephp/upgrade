@@ -32,6 +32,18 @@ return static function (RectorConfig $rectorConfig): void {
         new RenameProperty('Cake\Utility\Security', '_instance', 'instance'),
         new RenameProperty('Cake\Utility\CookieCryptTrait', '_validCiphers', 'validCiphers'),
         new RenameProperty('Cake\Utility\Text', '_defaultTransliterator', 'defaultTransliterator'),
+        new RenameProperty('Cake\Validation\Validator', '_fields', 'fields'),
+        new RenameProperty('Cake\Validation\Validator', '_providers', 'providers'),
+        new RenameProperty('Cake\Validation\Validator', '_defaultProviders', 'defaultProviders'),
+        new RenameProperty('Cake\Validation\Validator', '_presenceMessages', 'presenceMessages'),
+        new RenameProperty('Cake\Validation\Validator', '_useI18n', 'useI18n'),
+        new RenameProperty('Cake\Validation\Validator', '_allowEmptyMessages', 'allowEmptyMessages'),
+        new RenameProperty('Cake\Validation\Validator', '_allowEmptyFlags', 'allowEmptyFlags'),
+        new RenameProperty('Cake\Validation\Validator', '_stopOnFailure', 'stopOnFailure'),
+        new RenameProperty('Cake\Validation\ValidationSet', '_rules', 'rules'),
+        new RenameProperty('Cake\Validation\ValidationSet', '_validatePresent', 'validatePresent'),
+        new RenameProperty('Cake\Validation\ValidationSet', '_allowEmpty', 'allowEmpty'),
+        new RenameProperty('Cake\Validation\Validation', '_pattern', 'pattern'),
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameStringRector::class, [
