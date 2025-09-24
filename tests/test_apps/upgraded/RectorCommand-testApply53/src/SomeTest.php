@@ -5,6 +5,7 @@ namespace MyPlugin;
 
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
+use Cake\ORM\Query;
 
 class SomeTest
 {
@@ -17,5 +18,9 @@ class SomeTest
 
         $table = $this->fetchTable('Articles');
         $expr = $table->find()->expr();
+    }
+
+    public function findSomething(\Cake\ORM\Query\SelectQuery $query, array $options): \Cake\ORM\Query\SelectQuery {
+        return $query;
     }
 }
