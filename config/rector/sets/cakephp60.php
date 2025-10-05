@@ -66,6 +66,27 @@ return static function (RectorConfig $rectorConfig): void {
             ],
             'Cake\Command\ServerCommand' => ['_host', '_port', '_documentRoot', '_iniPath'],
         ],
+        'Console' => [
+            'Cake\Console\TestSuite\ConsoleIntegrationTestTrait' => ['_exitCode', '_out', '_err', '_in'],
+            'Cake\Console\TestSuite\StubConsoleOutput' => ['_out'],
+            'Cake\Console\ConsoleInput' => ['_input', '_canReadline'],
+            'Cake\Console\ConsoleInputArgument' => [
+                '_name', '_help', '_required', '_choices', '_default', '_separator',
+            ],
+            'Cake\Console\ConsoleInputOption' => [
+                '_name', '_short', '_help', '_boolean', '_default', '_multiple', '_choices', '_separator',
+            ],
+            'Cake\Console\ConsoleIo' => ['_out', '_err', '_in', '_helpers', '_level', '_lastWritten'],
+            'Cake\Console\ConsoleOptionParser' => [
+                '_description', '_epilog', '_options', '_shortOptions', '_args', '_command', '_tokens',
+            ],
+            'Cake\Console\ConsoleOutput' => [
+                '_output', '_outputAs', '_foregroundColors', '_backgroundColors', '_options', '_styles',
+            ],
+            'Cake\Console\Helper' => ['_io'],
+            'Cake\Console\HelperRegistry' => ['_io'],
+            'Cake\Console\HelpFormatter' => ['_maxArgs', '_maxOptions', '_parser', '_alias'],
+        ],
         'Core' => [
             'Cake\Core\StaticConfigTrait' => ['_config', '_dsnClassMap', '_registry'],
         ],
