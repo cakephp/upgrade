@@ -13,6 +13,8 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 
 # @see https://book.cakephp.org/6/en/appendices/6-0-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
+
+    // Changes related to the accessible => patchable rename
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
         new MethodCallRename('Cake\ORM\Entity', 'setAccess', 'setPatchable'),
         new MethodCallRename('Cake\ORM\Entity', 'getAccessible', 'getPatchable'),
@@ -21,34 +23,46 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(RenamePropertyRector::class, [
         new RenameProperty('Cake\ORM\Entity', '_accessible', 'patchable'),
-        new RenameProperty('Cake\Utility\Inflector', '_plural', 'plural'),
-        new RenameProperty('Cake\Utility\Inflector', '_singular', 'singular'),
-        new RenameProperty('Cake\Utility\Inflector', '_irregular', 'irregular'),
-        new RenameProperty('Cake\Utility\Inflector', '_uninflected', 'uninflected'),
-        new RenameProperty('Cake\Utility\Inflector', '_cache', 'cache'),
-        new RenameProperty('Cake\Utility\Inflector', '_initialState', 'initialState'),
-        new RenameProperty('Cake\Utility\Security', '_hashType', 'hashType'),
-        new RenameProperty('Cake\Utility\Security', '_salt', 'salt'),
-        new RenameProperty('Cake\Utility\Security', '_instance', 'instance'),
-        new RenameProperty('Cake\Utility\CookieCryptTrait', '_validCiphers', 'validCiphers'),
-        new RenameProperty('Cake\Utility\Text', '_defaultTransliterator', 'defaultTransliterator'),
-        new RenameProperty('Cake\Validation\Validator', '_fields', 'fields'),
-        new RenameProperty('Cake\Validation\Validator', '_providers', 'providers'),
-        new RenameProperty('Cake\Validation\Validator', '_defaultProviders', 'defaultProviders'),
-        new RenameProperty('Cake\Validation\Validator', '_presenceMessages', 'presenceMessages'),
-        new RenameProperty('Cake\Validation\Validator', '_useI18n', 'useI18n'),
-        new RenameProperty('Cake\Validation\Validator', '_allowEmptyMessages', 'allowEmptyMessages'),
-        new RenameProperty('Cake\Validation\Validator', '_allowEmptyFlags', 'allowEmptyFlags'),
-        new RenameProperty('Cake\Validation\Validator', '_stopOnFailure', 'stopOnFailure'),
-        new RenameProperty('Cake\Validation\ValidationSet', '_rules', 'rules'),
-        new RenameProperty('Cake\Validation\ValidationSet', '_validatePresent', 'validatePresent'),
-        new RenameProperty('Cake\Validation\ValidationSet', '_allowEmpty', 'allowEmpty'),
-        new RenameProperty('Cake\Validation\Validation', '_pattern', 'pattern'),
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameStringRector::class, [
         'accessibleFields' => 'patchableFields',
     ]);
+
+    // ===== Remove underscores from property names =====
+
+    $map = [
+        'Utility' => [
+            'Cake\Utility\Inflector' => [
+                '_plural', '_singular', '_irregular', '_uninflected', '_cache', '_initialState',
+            ],
+            'Cake\Utility\Security' => ['_hashType', '_salt', '_instance'],
+            'Cake\Utility\CookieCryptTrait' => ['_validCiphers'],
+            'Cake\Utility\Text' => ['_defaultTransliterator'],
+        ],
+        'Validation' => [
+            'Cake\Validation\Validator' => [
+                '_fields', '_providers', '_defaultProviders', '_presenceMessages',
+                '_useI18n', '_allowEmptyMessages', '_allowEmptyFlags', '_stopOnFailure',
+            ],
+            'Cake\Validation\ValidationSet' => [
+                '_rules', '_validatePresent', '_allowEmpty',
+            ],
+            'Cake\Validation\Validation' => ['_pattern'],
+        ],
+    ];
+
+    foreach ($map as $definitions) {
+        foreach ($definitions as $className => $methods) {
+            foreach ($methods as $method) {
+                $rectorConfig->ruleWithConfiguration(RenamePropertyRector::class, [
+                    new RenameProperty($className, $method, substr($method, 1)),
+                ]);
+            }
+        }
+    }
+
+    // ===== Add static return types =====
 
     $staticReturnTypeMap = [
         'Cake\Console\BaseCommand' => ['setName'],
