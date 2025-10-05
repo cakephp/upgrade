@@ -83,6 +83,11 @@ final class CakePHPSetList
     /**
      * @var string
      */
+    public const CAKEPHP_53 = __DIR__ . '/../../../config/rector/sets/cakephp53.php';
+
+    /**
+     * @var string
+     */
     public const CAKEPHP_60 = __DIR__ . '/../../../config/rector/sets/cakephp60.php';
 
     /**
