@@ -32,6 +32,17 @@ return static function (RectorConfig $rectorConfig): void {
     // ===== Remove underscores from property names =====
 
     $map = [
+        'Cache' => [
+            'Cake\Cache\Cache\ApcuEngine' => ['_compiledGroupNames'],
+            'Cake\Cache\Cache\FileEngine' => ['_File', '_init'],
+            'Cake\Cache\Cache\MemcachedEngine' => ['_Memcached', '_serializers', '_compiledGroupNames'],
+            'Cake\Cache\Cache\RedisEngine' => ['_Redis'],
+            'Cake\Cache\Cache' => ['_enabled', '_groups'],
+            'Cake\Cache\CacheEngine' => ['_groupPrefix'],
+        ],
+        'Core' => [
+            'Cake\Core\StaticConfigTrait' => ['_config', '_dsnClassMap', '_registry'],
+        ],
         'Utility' => [
             'Cake\Utility\Inflector' => [
                 '_plural', '_singular', '_irregular', '_uninflected', '_cache', '_initialState',
