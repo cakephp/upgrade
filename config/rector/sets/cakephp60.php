@@ -40,9 +40,6 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Cache\Cache' => ['_enabled', '_groups'],
             'Cake\Cache\CacheEngine' => ['_groupPrefix'],
         ],
-        'Core' => [
-            'Cake\Core\StaticConfigTrait' => ['_config', '_dsnClassMap', '_registry'],
-        ],
         'Collection' => [
             'Cake\Collection\Iterator\BufferedIterator' => [
                 '_buffer', '_index', '_current', '_key', '_started', '_finished',
@@ -60,6 +57,17 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Collection\Iterator\TreePrinter' => ['_key', '_value', '_current', '_spacer'],
             'Cake\Collection\Iterator\UnfoldIterator' => ['_unfolder', '_innerIterator'],
             'Cake\Collection\Iterator\ZipIterator' => ['_callback', '_iterators'],
+        ],
+        'Command' => [
+            'Cake\Command\Helper\ProgressHelper' => ['_progress', '_total', '_width'],
+            'Cake\Command\I18nExtractCommand' => [
+                '_paths', '_files', '_merge', '_file', '_storage', '_tokens', '_translations',
+                '_output', '_exclude', '_extractCore', '_markerError', '_countMarkerError',
+            ],
+            'Cake\Command\ServerCommand' => ['_host', '_port', '_documentRoot', '_iniPath'],
+        ],
+        'Core' => [
+            'Cake\Core\StaticConfigTrait' => ['_config', '_dsnClassMap', '_registry'],
         ],
         'Utility' => [
             'Cake\Utility\Inflector' => [
