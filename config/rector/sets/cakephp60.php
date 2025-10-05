@@ -43,6 +43,24 @@ return static function (RectorConfig $rectorConfig): void {
         'Core' => [
             'Cake\Core\StaticConfigTrait' => ['_config', '_dsnClassMap', '_registry'],
         ],
+        'Collection' => [
+            'Cake\Collection\Iterator\BufferedIterator' => [
+                '_buffer', '_index', '_current', '_key', '_started', '_finished',
+            ],
+            'Cake\Collection\Iterator\ExtractIterator' => ['_extractor'],
+            'Cake\Collection\Iterator\FilterIterator' => ['_callback'],
+            'Cake\Collection\Iterator\InsertIterator' => ['_values', '_validValues', '_path', '_target'],
+            'Cake\Collection\Iterator\MapReduce' => [
+                '_intermediate', '_result', '_executed', '_data', '_mapper', '_reducer', '_counter',
+            ],
+            'Cake\Collection\Iterator\NestIterator' => ['_nestKey'],
+            'Cake\Collection\Iterator\ReplaceIterator' => ['_callback', '_innerIterator'],
+            'Cake\Collection\Iterator\StoppableIterator' => ['_condition', '_innerIterator'],
+            'Cake\Collection\Iterator\TreeIterator' => ['_mode'],
+            'Cake\Collection\Iterator\TreePrinter' => ['_key', '_value', '_current', '_spacer'],
+            'Cake\Collection\Iterator\UnfoldIterator' => ['_unfolder', '_innerIterator'],
+            'Cake\Collection\Iterator\ZipIterator' => ['_callback', '_iterators'],
+        ],
         'Utility' => [
             'Cake\Utility\Inflector' => [
                 '_plural', '_singular', '_irregular', '_uninflected', '_cache', '_initialState',
