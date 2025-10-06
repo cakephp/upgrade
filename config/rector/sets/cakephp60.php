@@ -92,6 +92,15 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Controller\Controller' => ['_components'],
         ],
         'Core' => [
+            'Cake\Core\Configure\Engine\IniConfig' => ['_extension', '_section'],
+            'Cake\Core\Configure\Engine\JsonConfig' => ['_extension'],
+            'Cake\Core\Configure\Engine\PhpConfig' => ['_extension'],
+            'Cake\Core\Configure\FileConfigTrait' => ['_path'],
+            'Cake\Core\Exception\CakeException' => ['_attributes', '_messageTemplate', '_defaultCode'],
+            'Cake\Core\TestSuite\ContainerStubTrait' => ['_appClass', '_appArgs'],
+            'Cake\Core\Configure' => ['_values', '_engines', '_hasIniSet'],
+            'Cake\Core\InstanceConfigTrait' => ['_config', '_configInitialized', '_defaultConfig'],
+            'Cake\Core\ObjectRegistry' => ['_loaded'],
             'Cake\Core\StaticConfigTrait' => ['_config', '_dsnClassMap', '_registry'],
         ],
         'Utility' => [
