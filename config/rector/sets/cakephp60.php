@@ -87,6 +87,10 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Console\HelperRegistry' => ['_io'],
             'Cake\Console\HelpFormatter' => ['_maxArgs', '_maxOptions', '_parser', '_alias'],
         ],
+        'Controller' => [
+            'Cake\Controller\ComponentRegistry' => ['_Controller'],
+            'Cake\Controller\Controller' => ['_components'],
+        ],
         'Core' => [
             'Cake\Core\StaticConfigTrait' => ['_config', '_dsnClassMap', '_registry'],
         ],
