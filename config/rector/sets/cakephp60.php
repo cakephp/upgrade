@@ -103,6 +103,123 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Core\ObjectRegistry' => ['_loaded'],
             'Cake\Core\StaticConfigTrait' => ['_config', '_dsnClassMap', '_registry'],
         ],
+        'Database' => [
+            'Cake\Database\Connection' => [
+                '_config', '_transactionLevel', '_transactionStarted', '_useSavePoints', '_schemaCollection',
+            ],
+
+            'Cake\Database\Driver' => [
+                '_config', '_baseConfig', '_autoQuoting', '_startQuote', '_endQuote', '_version', '_schemaDialect',
+            ],
+            'Cake\Database\Driver\Sqlite' => ['_supportsWindowFunctions', '_dateParts'],
+
+            'Cake\Database\Expression\BetweenExpression' => ['_from', '_to', '_type'],
+            'Cake\Database\Expression\ComparisonExpression' => [
+                '_value', '_type', '_operator', '_isMultiple', '_valueExpressions',
+            ],
+            'Cake\Database\Expression\FieldTrait' => ['_field'],
+            'Cake\Database\Expression\FunctionExpression' => ['_name'],
+            'Cake\Database\Expression\IdentifierExpression' => ['_identifier'],
+            'Cake\Database\Expression\OrderClauseExpression' => ['_direction'],
+            'Cake\Database\Expression\QueryExpression' => ['_conjunction', '_conditions'],
+            'Cake\Database\Expression\UnaryExpression' => ['_operator', '_value'],
+            'Cake\Database\Expression\ValuesExpression' => ['_values', '_columns', '_query', '_castedExpressions'],
+            'Cake\Database\Expression\WhenThenExpression' => ['_typeMap'],
+
+            'Cake\Database\TypeMapTrait' => ['_typeMap'],
+            'Cake\Database\Query' => [
+                '_connection', '_type', '_parts', '_dirty', '_statement', '_valueBinder', '_functionsBuilder',
+            ],
+
+            'Cake\Database\SchemaCache' => ['_schema'],
+            'Cake\Database\Schema\Collection' => ['_connection', '_dialect'],
+            'Cake\Database\Schema\SchemaDialect' => ['_driver'],
+            'Cake\Database\Schema\SqliteSchemaDialect' => ['_hasSequences'],
+            'Cake\Database\Schema\TableSchema' => [
+                '_table', '_columns', '_typeMap', '_indexes', '_constraints', '_options', '_temporary', '_columnKeys',
+                '_columnExtras', '_indexKeys', '_validIndexTypes', '_validConstraintTypes', '_validForeignKeyActions',
+            ],
+
+            'Cake\Database\Statement\Statement' => ['_driver'],
+
+            'Cake\Database\TypeFactory' => ['_types', '_builtTypes'],
+            'Cake\Database\TypeMap' => ['_defaults', '_types'],
+
+            'Cake\Database\Type\BaseType' => ['_name'],
+            'Cake\Database\Type\DateTimeType' => [
+                '_format', '_marshalFormats', '_useLocaleMarshal', '_localeMarshalFormat', '_className',
+            ],
+            'Cake\Database\Type\DateType' => [
+                '_format', '_marshalFormats', '_useLocaleMarshal', '_localeMarshalFormat', '_className',
+            ],
+            'Cake\Database\Type\DecimalType' => ['_useLocaleParser'],
+            'Cake\Database\Type\FloatType' => ['_useLocaleParser'],
+            'Cake\Database\Type\JsonType' => ['_encodingOptions', '_decodingOptions'],
+            'Cake\Database\Type\TimeType' => ['_format', '_useLocaleMarshal', '_localeMarshalFormat', '_className'],
+
+            'Cake\Database\QueryCompiler' => [
+                '_templates', '_selectParts', '_updateParts', '_deleteParts', '_insertParts', '_quotedSelectAliases',
+            ],
+
+            'Cake\Database\Query\SelectQuery' => ['_resultDecorators', '_results', '_selectTypeMap'],
+
+            'Cake\Database\TypedResultTrait' => ['_returnType'],
+            'Cake\Database\ValueBinder' => ['_bindings', '_bindingsCount'],
+
+        ],
+        'ORM' => [
+            'Cake\ORM\Association' => [
+                '_name', '_className', '_bindingKey', '_foreignKey', '_conditions',
+                '_dependent', '_cascadeCallbacks', '_sourceTable', '_targetTable',
+                '_joinType', '_propertyName', '_strategy', '_finder', '_validStrategies',
+            ],
+            'Cake\ORM\Association\BelongsToMany' => [
+                '_junctionTable', '_junctionTableName', '_junctionAssociationName', '_junctionProperty',
+                '_targetConditions', '_junctionConditions', '_saveStrategy', '_targetForeignKey',
+                '_through', '_validStrategies', '_junctionConditions', '_sort',
+            ],
+            'Cake\ORM\Association\HasMany' => ['_saveStrategy', '_sort'],
+
+            'Cake\ORM\AssociationCollection' => ['_items'],
+
+            'Cake\ORM\Behavior' => ['_table', '_reflectionCache'],
+            'Cake\ORM\BehaviorRegistry' => ['_table', '_finderMap'],
+            'Cake\ORM\Behavior\CounterCacheBehavior' => ['_ignoreDirty'],
+            'Cake\ORM\Behavior\TimestampBehavior' => ['_ts'],
+            'Cake\ORM\Behavior\TreeBehavior' => ['_primaryKey'],
+
+            'Cake\ORM\EagerLoadable' => [
+                '_name', '_associations', '_instance', '_config', '_aliasPath',
+                '_propertyPath', '_canBeJoined', '_forMatching', '_targetProperty',
+            ],
+            'Cake\ORM\EagerLoader' => [
+                '_containments', '_normalized', '_containOptions', '_loadExternal',
+                '_aliasList', '_matching', '_joinsMap', '_autoFields',
+            ],
+
+            'Cake\ORM\Exception\PersistenceFailedException' => ['_entity'],
+
+            'Cake\ORM\Locator\LocatorAwareTrait' => ['_tableLocator'],
+            'Cake\ORM\Locator\TableLocator' => ['_config', '_fallbacked'],
+
+            'Cake\ORM\Marshaller' => ['_table'],
+
+            'Cake\ORM\Query\CommonQueryTrait' => ['_repository'],
+            'Cake\ORM\Query\SelectQuery' => [
+                '_results', '_hasFields', '_autoFields', '_hydrate', '_counter', '_eagerLoader', '_eagerLoaded',
+                '_beforeFindFired', '_resultsCount', '_mapReduce', '_formatters', '_cache', '_options',
+            ],
+
+            'Cake\ORM\Rule\ExistsIn' => ['_fields', '_repository', '_options'],
+            'Cake\ORM\Rule\IsUnique' => ['_fields', '_options'],
+            'Cake\ORM\Rule\LinkConstraint' => ['_association', '_requiredLinkState'],
+            'Cake\ORM\Rule\ValidCount' => ['_field'],
+
+            'Cake\ORM\Table' => [
+                '_table', '_alias', '_connection', '_schema', '_primaryKey', '_displayField',
+                '_associations', '_behaviors', '_entityClass', '_registryAlias',
+            ],
+        ],
         'Utility' => [
             'Cake\Utility\Inflector' => [
                 '_plural', '_singular', '_irregular', '_uninflected', '_cache', '_initialState',
