@@ -15,6 +15,10 @@ class SomeTest
     {
         $entity = new Entity();
         $result = !$entity->hasValue('test');
+        $entity->set('test', 'value'); // This should stay as is
+        $entity->set('test', 'value', ['asOriginal' => 'true']); // This should stay as is
+        $entity->patch(['test' => 'value']); // This should be changed to patch
+        $entity->patch(['test' => 'value'], ['asOriginal' => 'true']); // This should be changed to patch
 
         $table = $this->fetchTable('Articles');
         $expr = $table->find()->expr();
