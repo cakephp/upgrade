@@ -51,7 +51,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     foreach ($dateTimeMutationMethods as $oldMethod => $newMethod) {
         $renameMethods[] = new MethodCallRename('Cake\Chronos\Chronos', $oldMethod, $newMethod);
-        $addMethodCallArgs[] = new AddMethodCallArgs('Cake\Chronos\Chronos', $newMethod, 1);
+        $addMethodCallArgs[] = new AddMethodCallArgs('Cake\Chronos\Chronos', $oldMethod, 1);
     }
 
     $dateMutationMethods = [
@@ -73,9 +73,9 @@ return static function (RectorConfig $rectorConfig): void {
 
     foreach ($dateMutationMethods as $oldMethod => $newMethod) {
         $renameMethods[] = new MethodCallRename('Cake\Chronos\ChronosDate', $oldMethod, $newMethod);
-        $addMethodCallArgs[] = new AddMethodCallArgs('Cake\Chronos\ChronosDate', $newMethod, 1);
+        $addMethodCallArgs[] = new AddMethodCallArgs('Cake\Chronos\ChronosDate', $oldMethod, 1);
     }
 
-    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, $renameMethods);
     $rectorConfig->ruleWithConfiguration(AddMethodCallArgsRector::class, $addMethodCallArgs);
+    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, $renameMethods);
 };
