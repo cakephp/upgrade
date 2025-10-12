@@ -6,6 +6,8 @@ namespace MyPlugin;
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\RouteCollection;
 
 class SomeTest
 {
@@ -26,5 +28,22 @@ class SomeTest
 
     public function findSomething(Query $query, array $options): Query {
         return $query;
+    }
+
+    public function routes(): void
+    {
+        $routes = new RouteBuilder(new RouteCollection(), '/');
+
+        $routes->scope('/api', function ($routes): void {});
+        $routes->scope('/api', ['something'], function ($routes): void {});
+
+        $routes->resources('/api', function ($routes): void {});
+        $routes->resources('/api', ['something'], function ($routes): void {});
+
+        $routes->prefix('/api', function ($routes): void {});
+        $routes->prefix('/api', ['something'], function ($routes): void {});
+
+        $routes->plugin('/api', function ($routes): void {});
+        $routes->plugin('/api', ['something'], function ($routes): void {});
     }
 }
