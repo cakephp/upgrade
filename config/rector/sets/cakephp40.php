@@ -6,7 +6,6 @@ use Cake\Upgrade\Rector\Rector\MethodCall\ModalToGetSetRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\NewEntityToNewEmptyEntityRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\PaginatorCounterFormatRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\RenameMethodCallBasedOnParameterRector;
-use Cake\Upgrade\Rector\Rector\Property\PaginateOrderArrayRector;
 use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
 use Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter;
 use PHPStan\Type\BooleanType;
@@ -147,5 +146,4 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(NewEntityToNewEmptyEntityRector::class);
     $rectorConfig->rule(PaginatorCounterFormatRector::class);
     $rectorConfig->rule(FormBuildValidatorRector::class);
-    $rectorConfig->rule(PaginateOrderArrayRector::class);
 };
