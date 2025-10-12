@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Cake\Upgrade\Rector\Rector\MethodCall\EntityIsEmptyRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\EntityPatchRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
@@ -16,4 +17,5 @@ return static function (RectorConfig $rectorConfig): void {
         'Cake\ORM\Query' => 'Cake\ORM\Query\SelectQuery',
     ]);
     $rectorConfig->rule(EntityIsEmptyRector::class);
+    $rectorConfig->rule(EntityPatchRector::class);
 };
