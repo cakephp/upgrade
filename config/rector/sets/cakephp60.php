@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Upgrade\Rector\Rector\MethodCall\RequestQueryParamRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\TextInsertPlaceholderRector;
+use Cake\Upgrade\Rector\Rector\String_\RenameFormHelperTemplateKeyRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\PropertyFetch\RenamePropertyRector;
@@ -13,6 +16,15 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 
 # @see https://book.cakephp.org/6/en/appendices/6-0-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
+
+    // Replace $request->getParam('?') with $request->getQueryParams()
+    $rectorConfig->rule(RequestQueryParamRector::class);
+
+    // Replace :placeholder with {placeholder} in Text::insert() calls
+    $rectorConfig->rule(TextInsertPlaceholderRector::class);
+
+    // Rename 'multicheckboxTitle' to 'multicheckboxLabel' in FormHelper templates
+    $rectorConfig->rule(RenameFormHelperTemplateKeyRector::class);
 
     // Changes related to the accessible => patchable rename
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
