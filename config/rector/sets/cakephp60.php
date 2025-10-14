@@ -167,6 +167,22 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Database\ValueBinder' => ['_bindings', '_bindingsCount'],
 
         ],
+
+        'Datasource' => [
+            'Cake\Datasource\FactoryLocator' => ['_modelFactories'],
+            'Cake\Datasource\RulesAwareTrait' => ['_rulesChecker'],
+            'Cake\Datasource\RulesChecker' => [
+                '_rules', '_createRules', '_updateRules', '_deleteRules', '_options', '_useI18n',
+            ],
+            'Cake\Datasource\QueryCacher' => ['_key', '_config'],
+            'Cake\Datasource\ModelAwareTrait' => ['_modelFactories', '_modelType'],
+            'Cake\Datasource\ConnectionManager' => ['_aliasMap'],
+            'Cake\Datasource\EntityTrait' => [
+                '_fields', '_original', '_originalFields', '_hidden', '_virtual', '_dirty',
+                '_accessors', '_new', '_errors', '_invalid', '_registryAlias', '_hasBeenVisited',
+            ],
+        ],
+
         'ORM' => [
             'Cake\ORM\Association' => [
                 '_name', '_className', '_bindingKey', '_foreignKey', '_conditions',
