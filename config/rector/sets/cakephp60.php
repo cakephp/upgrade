@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use PHPStan\Type\ObjectType;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\PropertyFetch\RenamePropertyRector;
@@ -8,7 +9,9 @@ use Rector\Renaming\Rector\String_\RenameStringRector;
 use Rector\Renaming\ValueObject\MethodCallRename;
 use Rector\Renaming\ValueObject\RenameProperty;
 use Rector\StaticTypeMapper\ValueObject\Type\SimpleStaticType;
+use Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationRector;
+use Rector\TypeDeclaration\ValueObject\AddParamTypeDeclaration;
 use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 
 # @see https://book.cakephp.org/6/en/appendices/6-0-migration-guide.html
@@ -308,6 +311,24 @@ return static function (RectorConfig $rectorConfig): void {
             ]);
         }
     }
+
+    // ===== Change parameter types to interfaces =====
+
+    // For cakephp/cakephp#18963 - Change ConsoleIo to ConsoleIoInterface in execute()
+    $rectorConfig->ruleWithConfiguration(AddParamTypeDeclarationRector::class, [
+        new AddParamTypeDeclaration(
+            'Cake\Command\Command',
+            'execute',
+            1,
+            new ObjectType('Cake\Console\ConsoleIoInterface'),
+        ),
+        new AddParamTypeDeclaration(
+            'Cake\Console\BaseCommand',
+            'execute',
+            1,
+            new ObjectType('Cake\Console\ConsoleIoInterface'),
+        ),
+    ]);
 
     // ===== Remove underscores from method names =====
 
