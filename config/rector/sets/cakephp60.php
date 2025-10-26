@@ -186,6 +186,18 @@ return static function (RectorConfig $rectorConfig): void {
             ],
         ],
 
+        // There are no properties in the Error package
+
+        'Event' => [
+            'Cake\Event\Decorator\AbstractDecorator' => ['_callable', '_options'],
+            'Cake\Event\Event' => ['_name', '_subject', '_data', '_stopped'],
+            'Cake\Event\EventDispatcherTrait' => ['_eventManager', '_eventClass'],
+            'Cake\Event\EventList' => ['_events'],
+            'Cake\Event\EventManager' => [
+                '_generalManager', '_listeners', '_isGlobal', '_eventList', '_trackEvents',
+            ],
+        ],
+
         'ORM' => [
             'Cake\ORM\Association' => [
                 '_name', '_className', '_bindingKey', '_foreignKey', '_conditions',
