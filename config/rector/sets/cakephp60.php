@@ -203,6 +203,27 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Form\Form' => ['_schemaClass', '_schema', '_errors', '_data'],
         ],
 
+        'Http' => [
+            'Cake\Http\CorsBuilder' => ['_response', '_origin', '_isSsl', '_headers'],
+            'Cake\Http\Client' => ['_cookies', '_mockAdapter', '_adapter'],
+            'Cake\Http\Client\Adapter\Stream' => [
+                '_context', '_contextOptions', '_sslContextOptions', '_stream', '_connectionErrors',
+            ],
+            'Cake\Http\Client\FormData' => ['_boundary', '_hasFile', '_hasComplexPart', '_parts'],
+            'Cake\Http\Client\Auth\Digest' => ['_client'],
+            'Cake\Http\Client\Response' => ['_xml', '_json'],
+            'Cake\Http\Middleware\CsrfProtectionMiddleware' => ['_config'],
+            'Cake\Http\Middleware\SessionCsrfProtectionMiddleware' => ['_config'],
+            'Cake\Http\Response' => [
+                '_statusCodes', '_status', '_file', '_fileRange', '_charset', '_cacheDirectives',
+                '_cookies', '_reasonPhrase', '_streamMode', '_streamTarget',
+            ],
+            'Cake\Http\ServerRequest' => ['_environment', '_detectors', '_detectorCache'],
+            'Cake\Http\Session' => ['_engine', '_started', '_lifetime', '_isCLI'],
+            'Cake\Http\Session\DatabaseSession' => ['_table', '_timeout'],
+            'Cake\Http\Session\CacheSession' => ['_options'],
+        ],
+
         'ORM' => [
             'Cake\ORM\Association' => [
                 '_name', '_className', '_bindingKey', '_foreignKey', '_conditions',
