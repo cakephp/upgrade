@@ -198,6 +198,11 @@ return static function (RectorConfig $rectorConfig): void {
             ],
         ],
 
+        'Form' => [
+            'Cake\Form\Schema' => ['_fields', '_fieldDefaults'],
+            'Cake\Form\Form' => ['_schemaClass', '_schema', '_errors', '_data'],
+        ],
+
         'ORM' => [
             'Cake\ORM\Association' => [
                 '_name', '_className', '_bindingKey', '_foreignKey', '_conditions',
