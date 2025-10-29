@@ -13,6 +13,14 @@ class TestCommand extends Command
     {
         $io->out('Hello World');
 
+        $this->someMethod($args, $io);
+
         return static::CODE_SUCCESS;
+    }
+
+    protected function someMethod(Arguments $args, ConsoleIo $io): void
+    {
+        $someArg = $args->getArgument('some');
+        $io->warning('Warning');
     }
 }
