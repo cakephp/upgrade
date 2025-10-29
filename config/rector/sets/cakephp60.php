@@ -18,7 +18,7 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 # @see https://book.cakephp.org/6/en/appendices/6-0-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
 
-    $rectorConfig->rule(ReplaceCommandArgsIoWithPropertiesRector::class);
+//    $rectorConfig->rule(ReplaceCommandArgsIoWithPropertiesRector::class);
 
     // Changes related to the accessible => patchable rename
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
