@@ -12,9 +12,7 @@ class TestCommand extends Command
     public function execute()
     {
         $this->io->out('Hello World');
-
         $this->someMethod();
-
         return static::CODE_SUCCESS;
     }
 

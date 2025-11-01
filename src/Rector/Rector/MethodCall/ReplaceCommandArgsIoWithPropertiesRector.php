@@ -3,14 +3,16 @@ declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\MethodCall;
 
+use Cake\Command\Command;
 use PhpParser\Node;
+use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Param;
-use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
-use PHPStan\Type\ObjectType;
+use PHPStan\Reflection\ReflectionProvider;
 use Rector\PhpParser\Node\BetterNodeFinder;
+use Rector\PHPStan\ScopeFetcher;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -19,6 +21,7 @@ final class ReplaceCommandArgsIoWithPropertiesRector extends AbstractRector
 {
     public function __construct(
         protected BetterNodeFinder $betterNodeFinder,
+        protected ReflectionProvider $reflectionProvider,
     ) {
     }
 
@@ -76,9 +79,16 @@ CODE_SAMPLE,
             return null;
         }
 
+        // Make sure we are in a class
+        $scope = ScopeFetcher::fetch($node);
+        if (!$scope->isInClass()) {
+            return null;
+        }
+        $class = $scope->getClassReflection();
+
         // Skip if class doesn't extend Command (you can expand to check parent name)
-        $class = $this->betterNodeFinder->findFirstInstanceOf($node, Class_::class);
-        if (! $this->isObjectType($class, new ObjectType('Cake\Command\Command'))) {
+        $baseCommandClass = $this->reflectionProvider->getClass(Command::class);
+        if ($class->getName() === Command::class || $class->isSubclassOfClass($baseCommandClass) === false) {
             return null;
         }
 
@@ -92,6 +102,7 @@ CODE_SAMPLE,
 
         // Replace all `$args` and `$io` usages inside the method body
         $this->traverseNodesWithCallable($node->stmts ?? [], function (Node $innerNode) use ($argsParam, $ioParam) {
+            // Replace `$args` and `$io` variables
             if ($innerNode instanceof Variable) {
                 if ($argsParam && $innerNode->name === 'args') {
                     return new PropertyFetch(new Variable('this'), 'args');
@@ -102,10 +113,25 @@ CODE_SAMPLE,
                 }
             }
 
+            // Remove `$args` / `$io` from method calls on `$this`
+            if (
+                $innerNode instanceof MethodCall
+                && $innerNode->var instanceof Variable
+                && $innerNode->var->name === 'this'
+            ) {
+                $innerNode->args = array_values(array_filter(
+                    $innerNode->args,
+                    fn(Node\Arg $arg) => !($arg->value instanceof Variable &&
+                        in_array($arg->value->name, ['args', 'io'], true)),
+                ));
+
+                return $innerNode;
+            }
+
             return null;
         });
 
-        // Remove the params
+        // Remove the parameters themselves
         $node->params = array_filter($node->params, function (Param $param) {
             return !in_array($this->getName($param), ['args', 'io'], true);
         });
