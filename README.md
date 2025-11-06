@@ -1,4 +1,4 @@
-# CakePHP Upgrade tool 
+# CakePHP Upgrade tool
 
 [![CI](https://github.com/cakephp/upgrade/actions/workflows/ci.yml/badge.svg)](https://github.com/cakephp/upgrade/actions/workflows/ci.yml)
 
@@ -82,6 +82,7 @@ To ease installation & usage, this package does not
 use `require-dev` in `composer.json` as the installed PHPUnit and
 CakePHP packages cause conflicts with the rector tasks.
 
-To install dev-dependencies use `make install-dev`. Then you will be able to
-run `vendor/bin/phpunit`. You can also use `make test` to install dependencies
-and run tests.
+To install dev-dependencies use `composer setup`. Then you will be able to
+run `composer test` and `composer cs-check` etc.
+
+See also `Makefile` for more shortcut commands.
