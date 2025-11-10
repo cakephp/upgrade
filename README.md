@@ -37,6 +37,9 @@ The upgrade tool provides a standalone application that can be used to upgrade
 other applications or cakephp plugins. Each of the subcommands accepts a path
 that points to the application you want to upgrade.
 
+Note: Don't point the tool directly to your ROOT, as this will most likely cause memory fails.
+Instead, always point it to the respective sub-directories, e.g. `src`, `tests` and `config`.
+
 ## Upgrading between CakePHP 4.x versions
 
 When upgrading between CakePHP 4.x versions the `rector` command can automate
