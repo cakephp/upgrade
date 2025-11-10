@@ -15,6 +15,8 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         'Cake\ORM\Query' => 'Cake\ORM\Query\SelectQuery',
+        'Cake\TestSuite\Fixture\TransactionFixtureStrategy' => 'Cake\TestSuite\Fixture\TransactionStrategy',
+        'Cake\TestSuite\Fixture\TruncateFixtureStrategy' => 'Cake\TestSuite\Fixture\TruncateStrategy',
     ]);
     $rectorConfig->rule(EntityIsEmptyRector::class);
     $rectorConfig->rule(EntityPatchRector::class);
