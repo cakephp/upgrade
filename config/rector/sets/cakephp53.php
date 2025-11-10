@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Upgrade\Rector\Rector\ClassMethod\FormExecuteToProcessRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\EntityIsEmptyRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\EntityPatchRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\NewExprToFuncRector;
@@ -24,4 +25,5 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
     $rectorConfig->rule(EntityIsEmptyRector::class);
     $rectorConfig->rule(EntityPatchRector::class);
+    $rectorConfig->rule(FormExecuteToProcessRector::class);
 };
