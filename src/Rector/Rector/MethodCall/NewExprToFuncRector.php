@@ -8,6 +8,7 @@ use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Scalar\String_;
+use PHPStan\Type\ObjectType;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -112,6 +113,10 @@ CODE_SAMPLE,
 
         // Check if the caller is a Query object (Cake\Database\Query or similar)
         $callerType = $this->getType($innerMethodCall->var);
+        if (!$callerType instanceof ObjectType) {
+            return null;
+        }
+
         if (
             !$callerType->isInstanceOf('Cake\Database\Query')->yes() &&
             !$callerType->isInstanceOf('Cake\ORM\Query')->yes()
