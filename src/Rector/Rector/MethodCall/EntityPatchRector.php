@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace Cake\Upgrade\Rector\Rector\MethodCall;
 
+use Cake\ORM\Entity;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
+use PHPStan\Type\ObjectType;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -56,6 +58,15 @@ CODE_SAMPLE,
 
         // only change if first argument is an array literal
         if (!$firstArg instanceof Array_) {
+            return null;
+        }
+
+        $callerType = $this->getType($node->var);
+        if (!$callerType instanceof ObjectType) {
+            return null;
+        }
+
+        if (!$callerType->isInstanceOf(Entity::class)->yes()) {
             return null;
         }
 

@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Upgrade\Rector\Rector\MethodCall\NewExprToFuncRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
@@ -16,8 +17,11 @@ return static function (RectorConfig $rectorConfig): void {
         'Cake\TestSuite\HttpClientTrait' => 'Cake\Http\TestSuite\HttpClientTrait',
     ]);
 
+    // Apply newExpr()->count() -> func()->count('*') transformation before general newExpr rename
+    $rectorConfig->rule(NewExprToFuncRector::class);
+
     $rectorConfig->ruleWithConfiguration(
         RenameMethodRector::class,
-        [new MethodCallRename('Cake\Database\Query', 'newExpr', 'expr')]
+        [new MethodCallRename('Cake\Database\Query', 'newExpr', 'expr')],
     );
 };
