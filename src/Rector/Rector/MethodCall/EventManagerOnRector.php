@@ -54,8 +54,8 @@ CODE_SAMPLE
             return null;
         }
 
-        // Check if the object is an EventManager
-        if (!$this->isObjectType($node->var, new ObjectType('Cake\Event\EventManager'))) {
+        // Check if the object implements EventManagerInterface
+        if (!$this->isObjectType($node->var, new ObjectType('Cake\Event\EventManagerInterface'))) {
             return null;
         }
 
