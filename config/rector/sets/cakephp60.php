@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Upgrade\Rector\Rector\MethodCall\EventManagerOnRector;
 use PHPStan\Type\ObjectType;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
@@ -16,6 +17,9 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 
 # @see https://book.cakephp.org/6/en/appendices/6-0-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
+
+    // EventManager::on() signature change
+    $rectorConfig->rule(EventManagerOnRector::class);
 
     // Changes related to the accessible => patchable rename
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
