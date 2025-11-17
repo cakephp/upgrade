@@ -1,21 +1,19 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\RemoveIntermediaryMethodRector;
-use Cake\Upgrade\Rector\ValueObject\RemoveIntermediaryMethod;
+use Cake\Upgrade\Rector\Cake4\RemoveIntermediaryMethod\RemoveIntermediaryMethod;
+use Cake\Upgrade\Rector\Cake4\RemoveIntermediaryMethod\RemoveIntermediaryMethodRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\ValueObject\MethodCallRename;
 use Rector\Transform\Rector\Assign\PropertyFetchToMethodCallRector;
-use Rector\Transform\Rector\MethodCall\MethodCallToAnotherMethodCallWithArgumentsRector;
-use Rector\Transform\ValueObject\MethodCallToAnotherMethodCallWithArguments;
 use Rector\Transform\ValueObject\PropertyFetchToMethodCall;
 
 # source: https://book.cakephp.org/4.next/en/appendices/4-3-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(
         RenameMethodRector::class,
-        [new MethodCallRename('Cake\Controller\Component', 'shutdown', 'afterFilter')]
+        [new MethodCallRename('Cake\Controller\Component', 'shutdown', 'afterFilter')],
     );
 
     $rectorConfig->ruleWithConfiguration(PropertyFetchToMethodCallRector::class, [
@@ -26,7 +24,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(
         RemoveIntermediaryMethodRector::class,
-        [new RemoveIntermediaryMethod('getTableLocator', 'get', 'fetchTable')]
+        [new RemoveIntermediaryMethod('getTableLocator', 'get', 'fetchTable')],
     );
 
     // These rector rules were removed in rector 0.17 - see https://github.com/rectorphp/rector-src/pull/3777

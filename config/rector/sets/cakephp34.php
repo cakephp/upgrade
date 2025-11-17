@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\ModalToGetSetRector;
-use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
+use Cake\Upgrade\Rector\Cake3\ModalToGetSet\ModalToGetSet;
+use Cake\Upgrade\Rector\Cake3\ModalToGetSet\ModalToGetSetRector;
 use Rector\Config\RectorConfig;
-use Rector\ValueObject\Visibility;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Renaming\Rector\PropertyFetch\RenamePropertyRector;
@@ -12,6 +11,7 @@ use Rector\Renaming\ValueObject\MethodCallRename;
 use Rector\Renaming\ValueObject\RenameProperty;
 use Rector\Transform\Rector\Assign\PropertyFetchToMethodCallRector;
 use Rector\Transform\ValueObject\PropertyFetchToMethodCall;
+use Rector\ValueObject\Visibility;
 use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
 use Rector\Visibility\ValueObject\ChangeMethodVisibility;
 
@@ -29,7 +29,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(
         RenamePropertyRector::class,
-        [new RenameProperty('Cake\Network\Request', '_session', 'session')]
+        [new RenameProperty('Cake\Network\Request', '_session', 'session')],
     );
 
     $rectorConfig->ruleWithConfiguration(ModalToGetSetRector::class, [
@@ -47,7 +47,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Database\Expression\QueryExpression',
             'tieWith',
             'getConjunction',
-            'setConjunction'
+            'setConjunction',
         ),
         new ModalToGetSet('Cake\Database\Expression\ValuesExpression', 'columns'),
         new ModalToGetSet('Cake\Database\Expression\ValuesExpression', 'values'),
@@ -58,7 +58,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Database\Query',
             'bufferResults',
             'isBufferedResultsEnabled',
-            'enableBufferedResults'
+            'enableBufferedResults',
         ),
         new ModalToGetSet('Cake\Database\Schema\CachedCollection', 'cacheMetadata'),
         new ModalToGetSet('Cake\Database\Schema\TableSchema', 'options'),

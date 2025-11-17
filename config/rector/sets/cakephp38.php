@@ -10,6 +10,6 @@ use Rector\Renaming\ValueObject\MethodCallRename;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(
         RenameMethodRector::class,
-        [new MethodCallRename('Cake\ORM\Entity', 'visibleProperties', 'getVisible')]
+        [new MethodCallRename('Cake\ORM\Entity', 'visibleProperties', 'getVisible')],
     );
 };

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\RenameMethodCallBasedOnParameterRector;
+use Cake\Upgrade\Rector\Cake4\RenameMethodCallBasedOnParameter\RenameMethodCallBasedOnParameter;
+use Cake\Upgrade\Rector\Cake4\RenameMethodCallBasedOnParameter\RenameMethodCallBasedOnParameterRector;
 use Cake\Upgrade\Rector\Tests\Rector\MethodCall\RenameMethodCallBasedOnParameterRector\Source\SomeModelType;
-use Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {

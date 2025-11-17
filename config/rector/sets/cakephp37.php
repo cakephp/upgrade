@@ -1,15 +1,13 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\ModalToGetSetRector;
-use Cake\Upgrade\Rector\Rector\Property\ChangeSnakedFixtureNameToPascalRector;
-use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
+use Cake\Upgrade\Rector\Cake3\ChangeSnakedFixtureNameToPascalRector;
+use Cake\Upgrade\Rector\Cake3\ModalToGetSet\ModalToGetSet;
+use Cake\Upgrade\Rector\Cake3\ModalToGetSet\ModalToGetSetRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\ValueObject\MethodCallRename;
 use Rector\Transform\Rector\Assign\PropertyFetchToMethodCallRector;
-use Rector\Transform\Rector\MethodCall\MethodCallToAnotherMethodCallWithArgumentsRector;
-use Rector\Transform\ValueObject\MethodCallToAnotherMethodCallWithArguments;
 use Rector\Transform\ValueObject\PropertyFetchToMethodCall;
 
 # source: https://book.cakephp.org/3.0/en/appendices/3-7-migration-guide.html

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\ArrayToFluentCallRector;
+use Cake\Upgrade\Rector\Cake3\ArrayToFluentCall\ArrayToFluentCall;
+use Cake\Upgrade\Rector\Cake3\ArrayToFluentCall\ArrayToFluentCallRector;
+use Cake\Upgrade\Rector\Cake3\ArrayToFluentCall\FactoryMethod;
 use Cake\Upgrade\Rector\Tests\Rector\MethodCall\ArrayToFluentCallRector\Source\ConfigurableClass;
 use Cake\Upgrade\Rector\Tests\Rector\MethodCall\ArrayToFluentCallRector\Source\FactoryClass;
-use Cake\Upgrade\Rector\ValueObject\ArrayToFluentCall;
-use Cake\Upgrade\Rector\ValueObject\FactoryMethod;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
