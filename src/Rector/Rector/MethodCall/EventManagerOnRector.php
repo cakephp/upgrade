@@ -11,9 +11,7 @@ use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
- * Swaps the 2nd and 3rd arguments of EventManager::on() when called with 3 arguments.
- *
- * @see https://github.com/cakephp/cakephp/issues/19068
+ * Swaps the 2nd and 3rd arguments of EventManagerInterface::on() when called with 3 arguments.
  *
  * @see \Cake\Upgrade\Test\TestCase\Rector\MethodCall\EventManagerOnRector\EventManagerOnRectorTest
  */
@@ -22,7 +20,7 @@ final class EventManagerOnRector extends AbstractRector
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
-            'Swaps the 2nd and 3rd arguments of EventManager::on() to match new signature',
+            'Swaps the 2nd and 3rd arguments of EventManagerInterface::on() to match new signature',
             [
                 new CodeSample(
                     <<<'CODE_SAMPLE'
@@ -31,9 +29,9 @@ CODE_SAMPLE
                     ,
                     <<<'CODE_SAMPLE'
 $eventManager->on('Model.beforeSave', $callable, ['priority' => 90]);
-CODE_SAMPLE
+CODE_SAMPLE,
                 ),
-            ]
+            ],
         );
     }
 
