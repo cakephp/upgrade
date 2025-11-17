@@ -67,7 +67,7 @@ CODE_SAMPLE
         // Swap the 2nd and 3rd arguments
         $secondArg = $node->args[1];
         $thirdArg = $node->args[2];
-        
+
         $node->args[1] = $thirdArg;
         $node->args[2] = $secondArg;
 
