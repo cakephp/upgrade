@@ -14,6 +14,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  * Swaps the 2nd and 3rd arguments of EventManager::on() when called with 3 arguments.
  *
  * @see https://github.com/cakephp/cakephp/issues/19068
+ *
  * @see \Cake\Upgrade\Test\TestCase\Rector\MethodCall\EventManagerOnRector\EventManagerOnRectorTest
  */
 final class EventManagerOnRector extends AbstractRector
