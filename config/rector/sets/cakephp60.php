@@ -17,7 +17,6 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 
 # @see https://book.cakephp.org/6/en/appendices/6-0-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
-
     // EventManager::on() signature change
     $rectorConfig->rule(EventManagerOnRector::class);
 
