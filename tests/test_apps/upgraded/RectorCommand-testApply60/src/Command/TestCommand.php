@@ -9,10 +9,16 @@ use Cake\Console\ConsoleIo;
 
 class TestCommand extends Command
 {
-    public function execute(Arguments $args, \Cake\Console\ConsoleIoInterface $io)
+    public function execute()
     {
-        $io->out('Hello World');
-
+        $this->io->out('Hello World');
+        $this->someMethod();
         return static::CODE_SUCCESS;
+    }
+
+    protected function someMethod(): void
+    {
+        $someArg = $this->args->getArgument('some');
+        $this->io->warning('Warning');
     }
 }

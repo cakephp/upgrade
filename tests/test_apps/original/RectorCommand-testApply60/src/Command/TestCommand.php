@@ -12,7 +12,13 @@ class TestCommand extends Command
     public function execute(Arguments $args, ConsoleIo $io)
     {
         $io->out('Hello World');
-
+        $this->someMethod($args, $io);
         return static::CODE_SUCCESS;
+    }
+
+    protected function someMethod(Arguments $args, ConsoleIo $io): void
+    {
+        $someArg = $args->getArgument('some');
+        $io->warning('Warning');
     }
 }
