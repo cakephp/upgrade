@@ -85,6 +85,7 @@ jobs:
       with:
         php-version: '8.1'
         extensions: mbstring, intl
+        tools: cs2pr
         coverage: none
 
     - name: Get composer cache directory
@@ -105,4 +106,4 @@ jobs:
       run: make install-dev
 
     - name: Run PHP CodeSniffer
-      run: vendor/bin/phpcs --report=checkstyle
+      run: vendor/bin/phpcs --report=checkstyle | cs2pr
