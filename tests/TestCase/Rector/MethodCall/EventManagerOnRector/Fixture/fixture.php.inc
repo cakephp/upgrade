@@ -10,7 +10,7 @@ class Fixture
     {
         $eventManager = EventManager::instance();
         
-        // Should be transformed - 3 arguments
+        // Should be transformed - 3 arguments with array literal
         $eventManager->on('Model.beforeSave', ['priority' => 90], $callable);
         
         // Should be transformed - 3 arguments with different options
@@ -44,7 +44,7 @@ class Fixture
     {
         $eventManager = EventManager::instance();
         
-        // Should be transformed - 3 arguments
+        // Should be transformed - 3 arguments with array literal
         $eventManager->on('Model.beforeSave', $callable, ['priority' => 90]);
         
         // Should be transformed - 3 arguments with different options
