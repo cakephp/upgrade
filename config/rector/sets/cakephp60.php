@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Cake\Upgrade\Rector\Rector\MethodCall\EventManagerOnRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\ReplaceCommandArgsIoWithPropertiesRector;
 use PHPStan\Type\ObjectType;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
@@ -19,6 +20,8 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 return static function (RectorConfig $rectorConfig): void {
     // EventManager::on() signature change
     $rectorConfig->rule(EventManagerOnRector::class);
+
+    $rectorConfig->rule(ReplaceCommandArgsIoWithPropertiesRector::class);
 
     // Changes related to the accessible => patchable rename
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
