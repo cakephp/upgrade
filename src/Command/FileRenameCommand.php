@@ -27,6 +27,7 @@ use RecursiveIteratorIterator;
 use RecursiveRegexIterator;
 use RegexIterator;
 use RuntimeException;
+use UnexpectedValueException;
 
 /**
  * Rename and move files
@@ -207,11 +208,15 @@ class FileRenameCommand extends BaseCommand
                 RecursiveRegexIterator::SPLIT,
             );
 
-            foreach ($templateDirs as $val) {
-                $this->renameWithCasing(
-                    $val[0] . '/' . $folder,
-                    $val[0] . '/' . strtolower($folder),
-                );
+            try {
+                foreach ($templateDirs as $val) {
+                    $this->renameWithCasing(
+                        $val[0] . '/' . $folder,
+                        $val[0] . '/' . strtolower($folder),
+                    );
+                }
+            } catch (UnexpectedValueException) {
+                // No matching folders found
             }
         }
     }
