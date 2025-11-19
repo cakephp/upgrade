@@ -28,6 +28,7 @@
     "prefer-stable": true,
     "minimum-stability": "dev",
     "scripts": {
+        "setup": "cp composer.json composer.backup && make install-dev && mv composer.backup composer.json",
         "cs-check": "phpcs --colors --parallel=16 -p -s",
         "cs-fix": "phpcbf --colors --parallel=16 -p",
         "test": "phpunit"

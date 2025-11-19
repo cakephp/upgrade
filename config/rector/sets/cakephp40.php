@@ -1,6 +1,13 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Upgrade\Rector\Rector\ClassMethod\FormBuildValidatorRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\ModalToGetSetRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\NewEntityToNewEmptyEntityRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\PaginatorCounterFormatRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\RenameMethodCallBasedOnParameterRector;
+use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
+use Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter;
 use PHPStan\Type\BooleanType;
 use PHPStan\Type\IntegerType;
 use PHPStan\Type\NullType;
@@ -8,10 +15,6 @@ use PHPStan\Type\ObjectType;
 use PHPStan\Type\StringType;
 use PHPStan\Type\UnionType;
 use PHPStan\Type\VoidType;
-use Cake\Upgrade\Rector\Rector\MethodCall\ModalToGetSetRector;
-use Cake\Upgrade\Rector\Rector\MethodCall\RenameMethodCallBasedOnParameterRector;
-use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
-use Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\ClassConstFetch\RenameClassConstFetchRector;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
@@ -29,6 +32,7 @@ use Rector\TypeDeclaration\ValueObject\AddParamTypeDeclaration;
 use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 
 # source: https://book.cakephp.org/4/en/appendices/4-0-migration-guide.html
+# see also: https://github.com/cakephp/upgrade/issues/143
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
@@ -63,14 +67,14 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(
         RenamePropertyRector::class,
-        [new RenameProperty('Cake\ORM\Entity', '_properties', '_fields')]
+        [new RenameProperty('Cake\ORM\Entity', '_properties', '_fields')],
     );
 
     $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclarationRector::class, [
         new AddReturnTypeDeclaration('Cake\Http\BaseApplication', 'bootstrap', new VoidType()),
         new AddReturnTypeDeclaration('Cake\Http\BaseApplication', 'bootstrapCli', new VoidType()),
         new AddReturnTypeDeclaration('Cake\Http\BaseApplication', 'middleware', new ObjectType(
-            'Cake\Http\MiddlewareQueue'
+            'Cake\Http\MiddlewareQueue',
         )),
         new AddReturnTypeDeclaration('Cake\Console\Shell', 'initialize', new VoidType()),
         new AddReturnTypeDeclaration('Cake\Controller\Component', 'initialize', new VoidType()),
@@ -83,7 +87,7 @@ return static function (RectorConfig $rectorConfig): void {
         new AddReturnTypeDeclaration('Cake\ORM\Table', 'updateAll', new IntegerType()),
         new AddReturnTypeDeclaration('Cake\ORM\Table', 'deleteAll', new IntegerType()),
         new AddReturnTypeDeclaration('Cake\ORM\Table', 'validationDefault', new ObjectType(
-            'Cake\Validation\Validator'
+            'Cake\Validation\Validator',
         )),
         new AddReturnTypeDeclaration('Cake\ORM\Table', 'buildRules', new ObjectType('Cake\ORM\RulesChecker')),
         new AddReturnTypeDeclaration('Cake\View\Helper', 'initialize', new VoidType()),
@@ -96,7 +100,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Form\Form',
             'getData',
             0,
-            new UnionType([new StringType(), new NullType()])
+            new UnionType([new StringType(), new NullType()]),
         ),
         new AddParamTypeDeclaration('Cake\ORM\Behavior', 'beforeFind', 0, $eventInterfaceObjectType),
         new AddParamTypeDeclaration('Cake\ORM\Behavior', 'buildValidator', 0, $eventInterfaceObjectType),
@@ -137,4 +141,9 @@ return static function (RectorConfig $rectorConfig): void {
         new ModalToGetSet('Cake\Console\ConsoleOutput', 'styles', 'setStyle', 'getStyle'),
         new ModalToGetSet('Cake\ORM\EntityInterface', 'isNew', 'setNew', 'isNew'),
     ]);
+
+    // Additional rules for issue #143
+    $rectorConfig->rule(NewEntityToNewEmptyEntityRector::class);
+    $rectorConfig->rule(PaginatorCounterFormatRector::class);
+    $rectorConfig->rule(FormBuildValidatorRector::class);
 };
