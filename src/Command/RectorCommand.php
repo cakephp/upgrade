@@ -83,10 +83,11 @@ class RectorCommand extends BaseCommand
 
         $cmdPath = ROOT . '/vendor/bin/rector process';
         $command = sprintf(
-            '%s %s %s --autoload-file=%s --config=%s %s --clear-cache',
+            '%s %s %s %s --autoload-file=%s --config=%s %s --clear-cache',
             $cmdPath,
             $args->getOption('dry-run') ? '--dry-run' : '',
             $args->getOption('verbose') ? '--debug' : '',
+            $args->getOption('no-diff') ? '--no-diff' : '',
             escapeshellarg($autoload),
             escapeshellarg($config),
             escapeshellarg($path),
@@ -198,6 +199,10 @@ class RectorCommand extends BaseCommand
             ])
             ->addOption('dry-run', [
                 'help' => 'Enable to get a preview of what modifications will be applied.',
+                'boolean' => true,
+            ])
+            ->addOption('no-diff', [
+                'help' => 'Disable rector diff output which can cause issues with large files.',
                 'boolean' => true,
             ]);
 
