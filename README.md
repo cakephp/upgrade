@@ -103,6 +103,7 @@ The upgrade tool also includes rulesets for related tools and libraries:
 
 - **chronos3** - Upgrade to Chronos 3.x
 - **migrations45** - Upgrade to Migrations 4.5
+- **migrations50** - Upgrade to Migrations 5.0
 - **phpunit80** - Upgrade to PHPUnit 8.0
 
 ```bash
@@ -113,6 +114,9 @@ bin/cake upgrade rector --rules chronos3 /path/to/your/app/src
 
 # Apply Migrations 4.5 upgrade rules
 bin/cake upgrade rector --rules migrations45 /path/to/your/app/config
+
+# Apply Migrations 5.0 upgrade rules
+bin/cake upgrade rector --rules migrations50 /path/to/your/app/config
 
 # Apply PHPUnit 8.0 upgrade rules
 bin/cake upgrade rector --rules phpunit80 /path/to/your/app/tests
