@@ -86,7 +86,7 @@ class RectorCommand extends BaseCommand
             '%s %s %s --autoload-file=%s --config=%s %s --clear-cache',
             $cmdPath,
             $args->getOption('dry-run') ? '--dry-run' : '',
-            $args->getOption('verbose') ? '-vvvv' : '',
+            $args->getOption('verbose') ? '--debug' : '',
             escapeshellarg($autoload),
             escapeshellarg($config),
             escapeshellarg($path),
