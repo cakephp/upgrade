@@ -130,6 +130,7 @@ CODE_SAMPLE,
                 foreach ($node->stmts as $key => $stmt) {
                     if ($stmt === $currentStmt) {
                         unset($node->stmts[$key]);
+
                         return null;
                     }
                 }
