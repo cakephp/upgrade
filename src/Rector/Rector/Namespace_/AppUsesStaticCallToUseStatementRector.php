@@ -15,7 +15,6 @@ use PhpParser\Node\UseItem;
 use PhpParser\NodeVisitor;
 use PHPStan\Type\ObjectType;
 use Rector\Contract\PhpParser\Node\StmtsAwareInterface;
-use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PhpParser\Node\BetterNodeFinder;
 use Rector\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\PhpParser\Node\Value\ValueResolver;
@@ -128,8 +127,13 @@ CODE_SAMPLE,
                     return null;
                 }
 
-                /** @var \PhpParser\Node\Stmt $currentStmt */
-                unset($node->stmts[$currentStmt->getAttribute(AttributeKey::STMT_KEY)]);
+                foreach ($node->stmts as $key => $stmt) {
+                    if ($stmt === $currentStmt) {
+                        unset($node->stmts[$key]);
+
+                        return null;
+                    }
+                }
 
                 return null;
             },
