@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\OptionsArrayToNamedParametersRector;
+use Cake\Upgrade\Rector\Cake5\OptionsArrayToNamedParameters\OptionsArrayToNamedParameters;
+use Cake\Upgrade\Rector\Cake5\OptionsArrayToNamedParameters\OptionsArrayToNamedParametersRector;
 use Cake\Upgrade\Rector\Tests\Rector\MethodCall\OptionsArrayToNamedParametersRector\Source\ConfigurableClass;
-use Cake\Upgrade\Rector\ValueObject\OptionsArrayToNamedParameters;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {

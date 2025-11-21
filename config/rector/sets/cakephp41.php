@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\ModalToGetSetRector;
-use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
+use Cake\Upgrade\Rector\Cake3\ModalToGetSet\ModalToGetSet;
+use Cake\Upgrade\Rector\Cake3\ModalToGetSet\ModalToGetSetRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
@@ -23,7 +23,7 @@ return static function (RectorConfig $rectorConfig): void {
         new MethodCallRename(
             'Cake\Http\Middleware\CsrfProtectionMiddleware',
             'whitelistCallback',
-            'skipCheckCallback'
+            'skipCheckCallback',
         ),
     ]);
 

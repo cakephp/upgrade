@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\EntityPatchRector;
+use Cake\Upgrade\Rector\Cake5\EntityPatchRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {

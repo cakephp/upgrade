@@ -15,6 +15,6 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(
         RenameMethodRector::class,
-        [new MethodCallRename('Cake\ORM\Behavior', 'getTable', 'table')]
+        [new MethodCallRename('Cake\ORM\Behavior', 'getTable', 'table')],
     );
 };

@@ -2,6 +2,7 @@
 <ruleset name="CakePHP Upgrade">
     <rule ref="CakePHP"/>
 
+    <file>config/</file>
     <file>src/</file>
     <file>tests/</file>
 

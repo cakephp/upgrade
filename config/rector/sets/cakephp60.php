@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\EventManagerOnRector;
-use Cake\Upgrade\Rector\Rector\MethodCall\ReplaceCommandArgsIoWithPropertiesRector;
+use Cake\Upgrade\Rector\Cake6\EventManagerOnRector;
+use Cake\Upgrade\Rector\Cake6\ReplaceCommandArgsIoWithPropertiesRector;
 use PHPStan\Type\ObjectType;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;

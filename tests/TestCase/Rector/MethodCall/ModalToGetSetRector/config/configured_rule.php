@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\ModalToGetSetRector;
+use Cake\Upgrade\Rector\Cake3\ModalToGetSet\ModalToGetSet;
+use Cake\Upgrade\Rector\Cake3\ModalToGetSet\ModalToGetSetRector;
 use Cake\Upgrade\Rector\Tests\Rector\MethodCall\ModalToGetSetRector\Source\SomeModelType;
-use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
