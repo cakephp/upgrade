@@ -1,0 +1,87 @@
+<?php
+declare(strict_types=1);
+
+namespace Cake\Upgrade\Rector\Cake5\RemoveMethodCall;
+
+use PhpParser\Node;
+use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\Stmt\Expression;
+use PhpParser\NodeVisitor;
+use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\Rector\AbstractRector;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
+use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+
+/**
+ * @see \Rector\Tests\Removing\Rector\FuncCall\RemoveFuncCallRector\RemoveFuncCallRectorTest
+ */
+final class RemoveMethodCallRector extends AbstractRector implements ConfigurableRectorInterface
+{
+    /**
+     * @var string
+     */
+    public const REMOVE_METHOD_CALL_ARGS = 'remove_method_call_args';
+
+    /**
+     * @var array<\Cake\Upgrade\Rector\Cake5\RemoveMethodCall\RemoveMethodCall>
+     */
+    private array $callsWithRemoveMethodCallArgs = [];
+
+    public function getRuleDefinition(): RuleDefinition
+    {
+        return new RuleDefinition('Remove method call', [
+            new ConfiguredCodeSample(
+                <<<'CODE_SAMPLE'
+$obj = new SomeClass();
+$obj->methodCall1();
+$obj->methodCall2();
+CODE_SAMPLE,
+                <<<'CODE_SAMPLE'
+$obj = new SomeClass();
+$obj->methodCall2();
+CODE_SAMPLE,
+                ['SomeClass', 'methodCall1'],
+            ),
+        ]);
+    }
+
+    /**
+     * @return array<class-string<\PhpParser\Node>>
+     */
+    public function getNodeTypes(): array
+    {
+        return [Expression::class];
+    }
+
+    /**
+     * @param \PhpParser\Node\Stmt\Expression $node
+     */
+    public function refactor(Node $node): ?int
+    {
+        if (! $node->expr instanceof MethodCall) {
+            return null;
+        }
+
+        foreach ($this->callsWithRemoveMethodCallArgs as $removedFunction) {
+            if (! $this->isObjectType($node->expr->var, $removedFunction->getObjectType())) {
+                continue;
+            }
+
+            if (! $this->isName($node->expr->name, $removedFunction->getMethodName())) {
+                continue;
+            }
+
+            return NodeVisitor::REMOVE_NODE;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array<mixed> $configuration
+     */
+    public function configure(array $configuration): void
+    {
+        $this->callsWithRemoveMethodCallArgs = $configuration[self::REMOVE_METHOD_CALL_ARGS] ?? $configuration;
+    }
+}

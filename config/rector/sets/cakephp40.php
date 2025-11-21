@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\ClassMethod\FormBuildValidatorRector;
-use Cake\Upgrade\Rector\Rector\MethodCall\ModalToGetSetRector;
-use Cake\Upgrade\Rector\Rector\MethodCall\NewEntityToNewEmptyEntityRector;
-use Cake\Upgrade\Rector\Rector\MethodCall\PaginatorCounterFormatRector;
-use Cake\Upgrade\Rector\Rector\MethodCall\RenameMethodCallBasedOnParameterRector;
-use Cake\Upgrade\Rector\ValueObject\ModalToGetSet;
-use Cake\Upgrade\Rector\ValueObject\RenameMethodCallBasedOnParameter;
+use Cake\Upgrade\Rector\Cake3\ModalToGetSet\ModalToGetSet;
+use Cake\Upgrade\Rector\Cake3\ModalToGetSet\ModalToGetSetRector;
+use Cake\Upgrade\Rector\Cake4\FormBuildValidatorRector;
+use Cake\Upgrade\Rector\Cake4\NewEntityToNewEmptyEntityRector;
+use Cake\Upgrade\Rector\Cake4\PaginatorCounterFormatRector;
+use Cake\Upgrade\Rector\Cake4\RenameMethodCallBasedOnParameter\RenameMethodCallBasedOnParameter;
+use Cake\Upgrade\Rector\Cake4\RenameMethodCallBasedOnParameter\RenameMethodCallBasedOnParameterRector;
 use PHPStan\Type\BooleanType;
 use PHPStan\Type\IntegerType;
 use PHPStan\Type\NullType;

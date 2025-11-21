@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\ClassMethod\FormBuildValidatorRector;
+use Cake\Upgrade\Rector\Cake4\FormBuildValidatorRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\ClassMethod\FormExecuteToProcessRector;
-use Cake\Upgrade\Rector\Rector\MethodCall\EntityIsEmptyRector;
-use Cake\Upgrade\Rector\Rector\MethodCall\EntityPatchRector;
-use Cake\Upgrade\Rector\Rector\MethodCall\NewExprToFuncRector;
-use Cake\Upgrade\Rector\Rector\MethodCall\QueryParamAccessRector;
+use Cake\Upgrade\Rector\Cake5\EntityIsEmptyRector;
+use Cake\Upgrade\Rector\Cake5\EntityPatchRector;
+use Cake\Upgrade\Rector\Cake5\FormExecuteToProcessRector;
+use Cake\Upgrade\Rector\Cake5\NewExprToFuncRector;
+use Cake\Upgrade\Rector\Cake5\QueryParamAccessRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;

@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\MethodCall\AddMethodCallArgsRector;
-use Cake\Upgrade\Rector\ValueObject\AddMethodCallArgs;
+use Cake\Upgrade\Rector\Cake5\AddMethodCallArgs\AddMethodCallArgs;
+use Cake\Upgrade\Rector\Cake5\AddMethodCallArgs\AddMethodCallArgsRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
