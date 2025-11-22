@@ -51,10 +51,10 @@ CODE_SAMPLE,
                 $parent = $node->getAttribute(AttributeKey::PARENT_NODE);
                 if ($parent instanceof Expression) {
                     $this->removeNode($parent);
-
-                    return null;
                 }
             }
+
+            return null;
         }
 
         // Ensure the node is a method call on the ConnectionHelper instance
