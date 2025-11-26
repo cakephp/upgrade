@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Cake\Upgrade\Rector\Cake6\EventManagerOnRector;
 use Cake\Upgrade\Rector\Cake6\ReplaceCommandArgsIoWithPropertiesRector;
+use Cake\Upgrade\Rector\Cake6\RouteBuilderToCallbackFirstRector;
 use PHPStan\Type\ObjectType;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
@@ -22,6 +23,9 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(EventManagerOnRector::class);
 
     $rectorConfig->rule(ReplaceCommandArgsIoWithPropertiesRector::class);
+
+    // RouteBuilder argument reordering
+    $rectorConfig->rule(RouteBuilderToCallbackFirstRector::class);
 
     // Changes related to the accessible => patchable rename
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
