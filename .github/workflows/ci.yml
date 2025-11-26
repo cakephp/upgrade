@@ -31,7 +31,7 @@ jobs:
       with:
         php-version: ${{ matrix.php-version }}
         extensions: mbstring, intl
-        coverage: pcov
+        coverage: none
 
     - name: Get composer cache directory
       id: composer-cache
@@ -62,16 +62,7 @@ jobs:
       run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
     - name: Run PHPUnit
-      run: |
-        if [[ ${{ matrix.php-version }} == '8.1' ]]; then
-          export CODECOVERAGE=1 && vendor/bin/phpunit --display-incomplete --display-skipped --coverage-clover=coverage.xml
-        else
-          vendor/bin/phpunit
-        fi
-
-    - name: Submit code coverage
-      if: matrix.php-version == '8.1'
-      uses: codecov/codecov-action@v5
+      run: vendor/bin/phpunit --display-incomplete --display-skipped
 
   cs-stan:
     name: Coding Standard & Static Analysis
