@@ -103,5 +103,10 @@ final class CakePHPSetList
     /**
      * @var string
      */
+    public const MIGRATIONS_50 = __DIR__ . '/../../config/rector/sets/migrations50.php';
+
+    /**
+     * @var string
+     */
     public const CAKEPHP_FLUENT_OPTIONS = __DIR__ . '/../../config/rector/sets/cakephp-fluent-options.php';
 }

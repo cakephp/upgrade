@@ -282,7 +282,7 @@ class RectorCommand extends BaseCommand
             $cmdPath,
             $args->getOption('dry-run') ? '--dry-run' : '',
             $args->getOption('verbose') ? '-vvvv' : '',
-            $args->getOption('no-diff') ? '--no-diff' : '',
+            $args->getOption('no-diff') ? '--no-diffs' : '',
             escapeshellarg($autoload),
             escapeshellarg($config),
             escapeshellarg($path),
