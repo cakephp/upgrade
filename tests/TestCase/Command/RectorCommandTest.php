@@ -67,6 +67,16 @@ class RectorCommandTest extends TestCase
         $this->assertOutputContains('begin diff');
     }
 
+    public function testApplyNoDiff()
+    {
+        $this->setupTestApp(__FUNCTION__);
+        $this->exec('upgrade rector --rules cakephp40 --dry-run --no-diff ' . TEST_APP);
+
+        $this->assertExitSuccess();
+        $this->assertOutputNotContains('begin diff');
+        $this->assertOutputContains('Rector applied successfully');
+    }
+
     /**
      * @return void
      */

@@ -21,13 +21,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, intl
-          coverage: pcov
+          coverage: none
 
       - name: Cache composer dependencies
         id: composer-cache
@@ -53,24 +54,14 @@ jobs:
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Run PHPUnit
-        run: |
-          if [[ "${{ matrix.php-version }}" == "8.1" && "${{ matrix.prefer-lowest }}" != "prefer-lowest" ]]; then
-            export CODECOVERAGE=1
-            vendor/bin/phpunit --display-incomplete --display-skipped --coverage-clover=coverage.xml
-          else
-            vendor/bin/phpunit
-          fi
-
-      - name: Submit code coverage
-        if: matrix.php-version == '8.1' && matrix.prefer-lowest != 'prefer-lowest'
-        uses: codecov/codecov-action@v5
+        run: vendor/bin/phpunit --display-incomplete --display-skipped
 
   cs-stan:
     name: Coding Standard & Static Analysis
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2

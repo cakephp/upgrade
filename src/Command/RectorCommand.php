@@ -257,6 +257,10 @@ class RectorCommand extends BaseCommand
                 'help' => 'Enable to get a preview of what modifications will be applied.',
                 'boolean' => true,
                 'short' => 'd',
+            ])
+            ->addOption('no-diff', [
+                'help' => 'Disable rector diff output which can cause issues with large files.',
+                'boolean' => true,
             ]);
 
         return $parser;
@@ -278,6 +282,7 @@ class RectorCommand extends BaseCommand
             $cmdPath,
             $args->getOption('dry-run') ? '--dry-run' : '',
             $args->getOption('verbose') ? '--debug' : '',
+            $args->getOption('no-diff') ? '--no-diff' : '',
             escapeshellarg($autoload),
             escapeshellarg($config),
             escapeshellarg($path),
