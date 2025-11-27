@@ -74,7 +74,7 @@ class RectorCommandTest extends TestCase
 
         $this->assertExitSuccess();
         $this->assertOutputNotContains('begin diff');
-        $this->assertOutputContains('Rector applied successfully');
+        $this->assertOutputContains('Rector completed successfully');
     }
 
     /**
