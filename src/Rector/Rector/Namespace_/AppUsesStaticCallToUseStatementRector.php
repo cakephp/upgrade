@@ -14,7 +14,7 @@ use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\UseItem;
 use PhpParser\NodeVisitor;
 use PHPStan\Type\ObjectType;
-use Rector\Contract\PhpParser\Node\StmtsAwareInterface;
+use Rector\PhpParser\Enum\NodeGroup;
 use Rector\PhpParser\Node\BetterNodeFinder;
 use Rector\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\PhpParser\Node\Value\ValueResolver;
@@ -61,12 +61,9 @@ CODE_SAMPLE,
      */
     public function getNodeTypes(): array
     {
-        return [StmtsAwareInterface::class];
+        return NodeGroup::STMTS_AWARE;
     }
 
-    /**
-     * @param \Rector\Contract\PhpParser\Node\StmtsAwareInterface $node
-     */
     public function refactor(Node $node): ?Node
     {
         if ($node->stmts === null) {
@@ -102,14 +99,14 @@ CODE_SAMPLE,
      * @param array<\PhpParser\Node\Stmt> $stmts
      * @param array<\PhpParser\Node\Expr\StaticCall> $appUsesStaticCalls
      */
-    private function removeCallLikeStmts(StmtsAwareInterface $node, array $stmts, array $appUsesStaticCalls): void
+    private function removeCallLikeStmts(Node $node, array $stmts, array $appUsesStaticCalls): void
     {
         $currentStmt = null;
         $this->traverseNodesWithCallable(
             $stmts,
             function (Node $subNode) use ($node, $appUsesStaticCalls, &$currentStmt) {
                 // only lookup each of current stmts, avoid too deep traversal
-                if ($subNode instanceof StmtsAwareInterface) {
+                if (NodeGroup::isStmtAwareNode($subNode)) {
                     return NodeVisitor::DONT_TRAVERSE_CURRENT_AND_CHILDREN;
                 }
 
@@ -143,7 +140,7 @@ CODE_SAMPLE,
     /**
      * @return array<\PhpParser\Node\Expr\StaticCall>
      */
-    private function collectAppUseStaticCalls(StmtsAwareInterface $node): array
+    private function collectAppUseStaticCalls(Node $node): array
     {
         /** @var array<\PhpParser\Node\Expr\StaticCall> $appUsesStaticCalls */
         $appUsesStaticCalls = $this->betterNodeFinder->find($node, function (Node $node): bool {
