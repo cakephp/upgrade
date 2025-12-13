@@ -104,4 +104,9 @@ final class CakePHPSetList
      * @var string
      */
     public const CAKEPHP_FLUENT_OPTIONS = __DIR__ . '/../../../config/rector/sets/cakephp-fluent-options.php';
+
+    /**
+     * @var string
+     */
+    public const AUTHENTICATION_40 = __DIR__ . '/../../../config/rector/sets/authentication40.php';
 }
