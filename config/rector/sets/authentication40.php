@@ -11,11 +11,11 @@ use Rector\Renaming\Rector\Name\RenameClassRector;
  */
 return static function (RectorConfig $rectorConfig): void {
     // URL checker class renames
-    // Note: Order matters - GenericUrlChecker rename must come first to avoid
-    // CakeRouterUrlChecker -> DefaultUrlChecker -> GenericUrlChecker chain
+    // Note: Order matters - StringUrlChecker rename must come first to avoid
+    // CakeRouterUrlChecker -> DefaultUrlChecker -> StringUrlChecker chain
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
-        // Old framework-agnostic DefaultUrlChecker renamed to GenericUrlChecker
-        'Authentication\UrlChecker\DefaultUrlChecker' => 'Authentication\UrlChecker\GenericUrlChecker',
+        // Old DefaultUrlChecker renamed to StringUrlChecker
+        'Authentication\UrlChecker\DefaultUrlChecker' => 'Authentication\UrlChecker\StringUrlChecker',
         // CakeRouterUrlChecker renamed to DefaultUrlChecker
         'Authentication\UrlChecker\CakeRouterUrlChecker' => 'Authentication\UrlChecker\DefaultUrlChecker',
         // Plugin class renamed
