@@ -16,7 +16,7 @@ use PhpParser\NodeVisitor;
 use PHPStan\Type\ObjectType;
 use Rector\PhpParser\Enum\NodeGroup;
 use Rector\PhpParser\Node\BetterNodeFinder;
-use Rector\PhpParser\Node\CustomNode\FileWithoutNamespace;
+use Rector\PhpParser\Node\FileNode;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
@@ -86,9 +86,11 @@ CODE_SAMPLE,
 
         if ($node instanceof Namespace_) {
             $node->stmts = array_merge($uses, $node->stmts);
+
+            return $node;
         }
 
-        if ($node instanceof FileWithoutNamespace) {
+        if ($node instanceof FileNode) {
             $this->refactorFile($node, $uses);
         }
 
@@ -174,18 +176,22 @@ CODE_SAMPLE,
     }
 
     /**
-     * @param array<\PhpParser\Node\Stmt\Use_> $fileWithoutNamespace
+     * @param array<\PhpParser\Node\Stmt\Use_> $uses
      */
-    private function refactorFile(FileWithoutNamespace $fileWithoutNamespace, array $uses): ?FileWithoutNamespace
+    private function refactorFile(FileNode $fileNode, array $uses): ?FileNode
     {
-        $hasDeclare = $this->betterNodeFinder->findFirstInstanceOf($fileWithoutNamespace->stmts, Declare_::class);
-        if ($hasDeclare !== null) {
-            return $this->refactorFileWithDeclare($fileWithoutNamespace, $uses);
+        if ($fileNode->isNamespaced()) {
+            return null;
         }
 
-        $fileWithoutNamespace->stmts = array_merge($uses, $fileWithoutNamespace->stmts);
+        $hasDeclare = $this->betterNodeFinder->findFirstInstanceOf($fileNode->stmts, Declare_::class);
+        if ($hasDeclare !== null) {
+            return $this->refactorFileWithDeclare($fileNode, $uses);
+        }
 
-        return $fileWithoutNamespace;
+        $fileNode->stmts = array_merge($uses, $fileNode->stmts);
+
+        return $fileNode;
     }
 
     private function createFullyQualifiedNameFromAppUsesStaticCall(StaticCall $staticCall): string
@@ -203,20 +209,20 @@ CODE_SAMPLE,
     }
 
     /**
-     * @param array<\PhpParser\Node\Stmt\Use_> $fileWithoutNamespace
+     * @param array<\PhpParser\Node\Stmt\Use_> $uses
      */
     private function refactorFileWithDeclare(
-        FileWithoutNamespace $fileWithoutNamespace,
+        FileNode $fileNode,
         array $uses,
-    ): FileWithoutNamespace {
-        foreach ($fileWithoutNamespace->stmts as $key => $stmt) {
+    ): FileNode {
+        foreach ($fileNode->stmts as $key => $stmt) {
             if ($stmt instanceof Declare_) {
                 foreach ($uses as $use) {
-                    array_splice($fileWithoutNamespace->stmts, $key + 1, 0, [$use]);
+                    array_splice($fileNode->stmts, $key + 1, 0, [$use]);
                 }
             }
         }
 
-        return $fileWithoutNamespace;
+        return $fileNode;
     }
 }
