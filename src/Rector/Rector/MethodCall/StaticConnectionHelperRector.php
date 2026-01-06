@@ -43,7 +43,7 @@ CODE_SAMPLE,
         return [Expression::class, MethodCall::class];
     }
 
-    public function refactor(Node $node): null|int|Node
+    public function refactor(Node $node): int|Node|null
     {
         if ($node instanceof Expression) {
             if ($node->expr instanceof Assign && $node->expr->expr instanceof New_ && $this->isName($node->expr->expr->class, 'ConnectionHelper')) {
