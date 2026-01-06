@@ -10,8 +10,8 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Stmt\Expression;
+use PhpParser\NodeVisitor;
 use PHPStan\Type\ObjectType;
-use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -40,25 +40,24 @@ CODE_SAMPLE,
 
     public function getNodeTypes(): array
     {
-        return [MethodCall::class, Assign::class];
+        return [Expression::class, MethodCall::class];
     }
 
-    public function refactor(Node $node): ?Node
+    /**
+     * @return null|NodeVisitor::REMOVE_NODE|Node
+     */
+    public function refactor(Node $node): null|int|Node
     {
-        if ($node instanceof Assign) {
-            if ($node->expr instanceof New_ && $this->isName($node->expr->class, 'ConnectionHelper')) {
-                // Remove the instantiation statement
-                $parent = $node->getAttribute(AttributeKey::PARENT_NODE);
-                if ($parent instanceof Expression) {
-                    $this->removeNode($parent);
-                }
+        if ($node instanceof Expression) {
+            if ($node->expr instanceof Assign && $node->expr->expr instanceof New_ && $this->isName($node->expr->expr->class, 'ConnectionHelper')) {
+                return NodeVisitor::REMOVE_NODE;
             }
 
             return null;
         }
 
         // Ensure the node is a method call on the ConnectionHelper instance
-        if (! $this->isObjectType($node->var, new ObjectType(ConnectionHelper::class))) {
+        if (! $this->isObjectType($node->var, new ObjectType('ConnectionHelper'))) {
             return null;
         }
 
