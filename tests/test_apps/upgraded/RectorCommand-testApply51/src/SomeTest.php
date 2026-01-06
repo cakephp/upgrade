@@ -27,7 +27,6 @@ class SomeTest extends TestCase
 
     public function testConnectionHelper()
     {
-        $connectionHelper = new ConnectionHelper();
         $connection = ConnectionManager::get('test');
         \Cake\TestSuite\ConnectionHelper::runWithoutConstraints($connection, function ($connection) {
             $connection->execute('SELECT * FROM table');

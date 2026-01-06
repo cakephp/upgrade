@@ -10,8 +10,8 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Stmt\Expression;
+use PhpParser\NodeVisitor;
 use PHPStan\Type\ObjectType;
-use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -40,18 +40,18 @@ CODE_SAMPLE,
 
     public function getNodeTypes(): array
     {
-        return [MethodCall::class, Assign::class];
+        return [Expression::class, MethodCall::class];
     }
 
-    public function refactor(Node $node): ?Node
+    public function refactor(Node $node): int|Node|null
     {
-        if ($node instanceof Assign) {
-            if ($node->expr instanceof New_ && $this->isName($node->expr->class, 'ConnectionHelper')) {
-                // Remove the instantiation statement
-                $parent = $node->getAttribute(AttributeKey::PARENT_NODE);
-                if ($parent instanceof Expression) {
-                    $this->removeNode($parent);
-                }
+        if ($node instanceof Expression) {
+            if (
+                $node->expr instanceof Assign &&
+                $node->expr->expr instanceof New_ &&
+                $this->isName($node->expr->expr->class, ConnectionHelper::class)
+            ) {
+                return NodeVisitor::REMOVE_NODE;
             }
 
             return null;
