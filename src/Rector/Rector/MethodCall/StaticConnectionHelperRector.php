@@ -46,7 +46,11 @@ CODE_SAMPLE,
     public function refactor(Node $node): int|Node|null
     {
         if ($node instanceof Expression) {
-            if ($node->expr instanceof Assign && $node->expr->expr instanceof New_ && $this->isName($node->expr->expr->class, 'ConnectionHelper')) {
+            if (
+                $node->expr instanceof Assign &&
+                $node->expr->expr instanceof New_ &&
+                $this->isName($node->expr->expr->class, 'ConnectionHelper')
+            ) {
                 return NodeVisitor::REMOVE_NODE;
             }
 
