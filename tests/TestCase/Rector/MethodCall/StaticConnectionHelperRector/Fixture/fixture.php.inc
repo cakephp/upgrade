@@ -6,7 +6,7 @@ class Fixture
 {
     public function run()
     {
-        $connectionHelper = new \ConnectionHelper();
+        $connectionHelper = new \Cake\TestSuite\ConnectionHelper();
         $connection = $connectionHelper->getConnection('default');
 
         return $connection;

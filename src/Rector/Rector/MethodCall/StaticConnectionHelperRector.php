@@ -49,7 +49,7 @@ CODE_SAMPLE,
             if (
                 $node->expr instanceof Assign &&
                 $node->expr->expr instanceof New_ &&
-                $this->isName($node->expr->expr->class, 'ConnectionHelper')
+                $this->isName($node->expr->expr->class, ConnectionHelper::class)
             ) {
                 return NodeVisitor::REMOVE_NODE;
             }
@@ -58,7 +58,7 @@ CODE_SAMPLE,
         }
 
         // Ensure the node is a method call on the ConnectionHelper instance
-        if (! $this->isObjectType($node->var, new ObjectType('ConnectionHelper'))) {
+        if (! $this->isObjectType($node->var, new ObjectType(ConnectionHelper::class))) {
             return null;
         }
 
