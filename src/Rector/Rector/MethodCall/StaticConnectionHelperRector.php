@@ -43,9 +43,6 @@ CODE_SAMPLE,
         return [Expression::class, MethodCall::class];
     }
 
-    /**
-     * @return null|NodeVisitor::REMOVE_NODE|Node
-     */
     public function refactor(Node $node): null|int|Node
     {
         if ($node instanceof Expression) {
