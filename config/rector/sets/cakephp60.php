@@ -103,6 +103,7 @@ return static function (RectorConfig $rectorConfig): void {
         'Controller' => [
             'Cake\Controller\ComponentRegistry' => ['_Controller'],
             'Cake\Controller\Controller' => ['_components'],
+            'Cake\Controller\Component' => ['_registry'],
         ],
         'Core' => [
             'Cake\Core\Configure\Engine\IniConfig' => ['_extension', '_section'],
@@ -232,6 +233,20 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Http\Session' => ['_engine', '_started', '_lifetime', '_isCLI'],
             'Cake\Http\Session\DatabaseSession' => ['_table', '_timeout'],
             'Cake\Http\Session\CacheSession' => ['_options'],
+        ],
+
+        'I18n' => [
+            'Cake\I18n\MessagesFileLoader' => ['_name', '_plugin', '_locale', '_extension'],
+            'Cake\I18n\ChainMessagesLoader' => ['_loaders'],
+            // Can't rename _toStringFormat as it conflicts with ChronosDate::toStringFormat
+            'Cake\I18n\Date' => ['_jsonEncodeFormat'],
+            // Can't rename _toStringFormat as it conflicts with Chronos::toStringFormat
+            'Cake\I18n\DateTime' => ['_jsonEncodeFormat'],
+            // Can't rename _toStringFormat as it conflicts with ChronosTime::toStringFormat
+            'Cake\I18n\Time' => ['_jsonEncodeFormat'],
+            'Cake\I18n\I18n' => ['_collection', '_defaultLocale'],
+            'Cake\I18n\Number' => ['_formatters', '_defaultCurrency', '_defaultCurrencyFormat'],
+            'Cake\I18n\TranslatorRegistry' => ['_loaders', '_defaultFormatter', '_useFallback', '_cacher'],
         ],
 
         'ORM' => [

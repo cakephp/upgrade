@@ -13,10 +13,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.1', '8.2', '8.3', '8.4']
+        php-version: ['8.2', '8.3', '8.4']
         prefer-lowest: ['']
         include:
-          - php-version: '8.1'
+          - php-version: '8.2'
             prefer-lowest: 'prefer-lowest'
 
     steps:
@@ -47,19 +47,19 @@ jobs:
       run: |
         if ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
           make install-dev-lowest
-        elif ${{ matrix.php-version == '8.1' }}; then
+        elif ${{ matrix.php-version == '8.2' }}; then
           make install-dev-ignore-reqs
         else
           make install-dev
         fi
 
     - name: Setup problem matchers for PHPUnit
-      if: matrix.php-version == '8.1'
+      if: matrix.php-version == '8.2'
       run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
     - name: Run PHPUnit
       run: |
-        if [[ "${{ matrix.php-version }}" == "8.1" && "${{ matrix.prefer-lowest }}" != "prefer-lowest" ]]; then
+        if [[ "${{ matrix.php-version }}" == "8.2" && "${{ matrix.prefer-lowest }}" != "prefer-lowest" ]]; then
           export CODECOVERAGE=1
           vendor/bin/phpunit --display-incomplete --display-skipped --coverage-clover=coverage.xml
         else
@@ -67,7 +67,7 @@ jobs:
         fi
 
     - name: Submit code coverage
-      if: matrix.php-version == '8.1' && matrix.prefer-lowest != 'prefer-lowest'
+      if: matrix.php-version == '8.2' && matrix.prefer-lowest != 'prefer-lowest'
       uses: codecov/codecov-action@v5
 
   cs-stan:
@@ -80,7 +80,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
           extensions: mbstring, intl
           tools: cs2pr
           coverage: none
