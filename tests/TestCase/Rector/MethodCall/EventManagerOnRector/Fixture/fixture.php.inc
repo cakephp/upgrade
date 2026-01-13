@@ -27,6 +27,9 @@ class Fixture
         // Should be transformed - 3 arguments with variable
         $options = ['priority' => 100];
         $eventManager->on('Model.beforeFind', $options, $handler);
+
+        // Should be transformed - 3 arguments with arrow function as 3rd arg
+        $eventManager->on('Model.beforeValidate', ['priority' => 50], fn($event) => true);
     }
 }
 
@@ -61,6 +64,9 @@ class Fixture
         // Should be transformed - 3 arguments with variable
         $options = ['priority' => 100];
         $eventManager->on('Model.beforeFind', $handler, $options);
+
+        // Should be transformed - 3 arguments with arrow function as 3rd arg
+        $eventManager->on('Model.beforeValidate', fn($event) => true, ['priority' => 50]);
     }
 }
 

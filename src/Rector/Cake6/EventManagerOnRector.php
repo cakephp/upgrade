@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace Cake\Upgrade\Rector\Cake6;
 
 use PhpParser\Node;
+use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Expr\ArrowFunction;
+use PhpParser\Node\Expr\Closure;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Type\ObjectType;
 use Rector\Rector\AbstractRector;
@@ -63,6 +66,19 @@ CODE_SAMPLE,
             return null;
         }
 
+        $secondArgValue = $node->args[1]->value;
+        $thirdArgValue = $node->args[2]->value;
+
+        // Skip if already transformed - 2nd arg is a callable expression (new format)
+        if ($this->isCallableExpression($secondArgValue)) {
+            return null;
+        }
+
+        // Skip if already transformed - 3rd arg is array literal (new format)
+        if ($thirdArgValue instanceof Array_) {
+            return null;
+        }
+
         // Swap the 2nd and 3rd arguments
         $secondArg = $node->args[1];
         $thirdArg = $node->args[2];
@@ -71,5 +87,13 @@ CODE_SAMPLE,
         $node->args[2] = $secondArg;
 
         return $node;
+    }
+
+    /**
+     * Check if the expression is a callable (Closure or ArrowFunction).
+     */
+    private function isCallableExpression(Node\Expr $expr): bool
+    {
+        return $expr instanceof Closure || $expr instanceof ArrowFunction;
     }
 }
