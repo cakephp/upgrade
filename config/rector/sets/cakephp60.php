@@ -181,7 +181,6 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Database\ValueBinder' => ['_bindings', '_bindingsCount'],
 
         ],
-
         'Datasource' => [
             'Cake\Datasource\FactoryLocator' => ['_modelFactories'],
             'Cake\Datasource\RulesAwareTrait' => ['_rulesChecker'],
@@ -196,9 +195,7 @@ return static function (RectorConfig $rectorConfig): void {
                 '_accessors', '_new', '_errors', '_invalid', '_registryAlias', '_hasBeenVisited',
             ],
         ],
-
         // There are no properties in the Error package
-
         'Event' => [
             'Cake\Event\Decorator\AbstractDecorator' => ['_callable', '_options'],
             'Cake\Event\Event' => ['_name', '_subject', '_data', '_stopped'],
@@ -208,12 +205,10 @@ return static function (RectorConfig $rectorConfig): void {
                 '_generalManager', '_listeners', '_isGlobal', '_eventList', '_trackEvents',
             ],
         ],
-
         'Form' => [
             'Cake\Form\Schema' => ['_fields', '_fieldDefaults'],
             'Cake\Form\Form' => ['_schemaClass', '_schema', '_errors', '_data'],
         ],
-
         'Http' => [
             'Cake\Http\CorsBuilder' => ['_response', '_origin', '_isSsl', '_headers'],
             'Cake\Http\Client' => ['_cookies', '_mockAdapter', '_adapter'],
@@ -234,7 +229,6 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Http\Session\DatabaseSession' => ['_table', '_timeout'],
             'Cake\Http\Session\CacheSession' => ['_options'],
         ],
-
         'I18n' => [
             'Cake\I18n\MessagesFileLoader' => ['_name', '_plugin', '_locale', '_extension'],
             'Cake\I18n\ChainMessagesLoader' => ['_loaders'],
@@ -248,26 +242,22 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\I18n\Number' => ['_formatters', '_defaultCurrency', '_defaultCurrencyFormat'],
             'Cake\I18n\TranslatorRegistry' => ['_loaders', '_defaultFormatter', '_useFallback', '_cacher'],
         ],
-
         'Log' => [
             'Cake\Log\Log' => ['_dirtyConfig', '_levels', '_levelMap'],
             'Cake\Log\Engine\ConsoleLog' => ['_output'],
             'Cake\Log\Engine\SyslogLog' => ['_open'],
             'Cake\Log\Engine\FileLog' => ['_path', '_file', '_size'],
         ],
-
         'Mailer' => [
             'Cake\Mailer\Transport\SmtpTransport' => [
                 '_socket', '_content', '_lastResponse',
             ],
         ],
-
         'Network' => [
             'Cake\Network\Socket' => [
                 '_encryptMethods', '_connectionErrors',
             ],
         ],
-
         'ORM' => [
             'Cake\ORM\Association' => [
                 '_name', '_className', '_bindingKey', '_foreignKey', '_conditions',
@@ -320,6 +310,25 @@ return static function (RectorConfig $rectorConfig): void {
                 '_table', '_alias', '_connection', '_schema', '_primaryKey', '_displayField',
                 '_associations', '_behaviors', '_entityClass', '_registryAlias',
             ],
+        ],
+        'Routing' => [
+            'Cake\Routing\Router' => [
+                '_defaultRouteClass', '_fullBaseUrl', '_collection', '_requestContext', '_namedExpressions',
+                '_request', '_initialState', '_urlFilters', '_defaultExtensions', '_routePaths',
+            ],
+            'Cake\Routing\RouteCollection' => [
+                '_routeTable', '_named', '_paths', '_middleware', '_middlewareGroups', '_extensions',
+            ],
+            'Cake\Routing\RouteBuilder' => [
+                '_resourceMap', '_routeClass', '_extensions',
+                '_path', '_params', '_namePrefix', '_collection',
+            ],
+            'Cake\Routing\Route\Route' => [
+                '_greedy', '_compiledRoute', '_name', '_extensions',
+            ],
+            'Cake\Routing\Route\DashedRoute' => ['_inflectedDefaults'],
+            'Cake\Routing\Route\InflectedRoute' => ['_inflectedDefaults'],
+            'Cake\Routing\Exception\MissingRouteException' => ['_messageTemplateWithMethod'],
         ],
         'Utility' => [
             'Cake\Utility\Inflector' => [
