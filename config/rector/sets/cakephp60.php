@@ -262,6 +262,12 @@ return static function (RectorConfig $rectorConfig): void {
             ],
         ],
 
+        'Network' => [
+            'Cake\Network\Socket' => [
+                '_encryptMethods', '_connectionErrors',
+            ],
+        ],
+
         'ORM' => [
             'Cake\ORM\Association' => [
                 '_name', '_className', '_bindingKey', '_foreignKey', '_conditions',
