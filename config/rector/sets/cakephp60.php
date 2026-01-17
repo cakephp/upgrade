@@ -249,6 +249,13 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\I18n\TranslatorRegistry' => ['_loaders', '_defaultFormatter', '_useFallback', '_cacher'],
         ],
 
+        'Log' => [
+            'Cake\Log\Log' => ['_dirtyConfig', '_levels', '_levelMap'],
+            'Cake\Log\Engine\ConsoleLog' => ['_output'],
+            'Cake\Log\Engine\SyslogLog' => ['_open'],
+            'Cake\Log\Engine\FileLog' => ['_path', '_file', '_size'],
+        ],
+
         'ORM' => [
             'Cake\ORM\Association' => [
                 '_name', '_className', '_bindingKey', '_foreignKey', '_conditions',
