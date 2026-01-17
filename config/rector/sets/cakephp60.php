@@ -256,6 +256,12 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Log\Engine\FileLog' => ['_path', '_file', '_size'],
         ],
 
+        'Mailer' => [
+            'Cake\Mailer\Transport\SmtpTransport' => [
+                '_socket', '_content', '_lastResponse',
+            ],
+        ],
+
         'ORM' => [
             'Cake\ORM\Association' => [
                 '_name', '_className', '_bindingKey', '_foreignKey', '_conditions',
