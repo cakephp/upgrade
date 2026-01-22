@@ -7,6 +7,7 @@ use Cake\Upgrade\Rector\Rector\MethodCall\EntityIsEmptyRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\EntityPatchRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\NewExprToFuncRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\QueryParamAccessRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\TypeFactoryGetMappedRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
@@ -30,4 +31,5 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(EntityPatchRector::class);
     $rectorConfig->rule(FormExecuteToProcessRector::class);
     $rectorConfig->rule(QueryParamAccessRector::class);
+    $rectorConfig->rule(TypeFactoryGetMappedRector::class);
 };
