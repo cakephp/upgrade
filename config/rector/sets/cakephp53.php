@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Cake\Upgrade\Rector\Rector\ClassMethod\FormExecuteToProcessRector;
+use Cake\Upgrade\Rector\Rector\MethodCall\BreadcrumbsHelperAddManyRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\EntityIsEmptyRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\EntityPatchRector;
 use Cake\Upgrade\Rector\Rector\MethodCall\NewExprToFuncRector;
@@ -25,6 +26,7 @@ return static function (RectorConfig $rectorConfig): void {
         'Cake\TestSuite\Fixture\TransactionFixtureStrategy' => 'Cake\TestSuite\Fixture\TransactionStrategy',
         'Cake\TestSuite\Fixture\TruncateFixtureStrategy' => 'Cake\TestSuite\Fixture\TruncateStrategy',
     ]);
+    $rectorConfig->rule(BreadcrumbsHelperAddManyRector::class);
     $rectorConfig->rule(EntityIsEmptyRector::class);
     $rectorConfig->rule(EntityPatchRector::class);
     $rectorConfig->rule(FormExecuteToProcessRector::class);
