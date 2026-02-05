@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Upgrade\Rector\Cake6\BreadcrumbsHelperTitleToContentRector;
 use Cake\Upgrade\Rector\Cake6\EventManagerOnRector;
 use Cake\Upgrade\Rector\Cake6\RemoveAssignmentFromVoidMethodRector;
 use Cake\Upgrade\Rector\Cake6\ReplaceCommandArgsIoWithPropertiesRector;
@@ -983,4 +984,8 @@ return static function (RectorConfig $rectorConfig): void {
         // ConsoleInputOption::validateChoice() - returns void or throws ConsoleException
         new VoidMethod('Cake\Console\ConsoleInputOption', 'validateChoice'),
     ]);
+
+    // BreadcrumbsHelper 'title' key/parameter renamed to 'content'
+    // @see https://github.com/cakephp/cakephp/pull/18334
+    $rectorConfig->rule(BreadcrumbsHelperTitleToContentRector::class);
 };
