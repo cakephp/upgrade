@@ -2,8 +2,10 @@
 declare(strict_types=1);
 
 use Cake\Upgrade\Rector\Cake6\EventManagerOnRector;
+use Cake\Upgrade\Rector\Cake6\RemoveAssignmentFromVoidMethodRector;
 use Cake\Upgrade\Rector\Cake6\ReplaceCommandArgsIoWithPropertiesRector;
 use Cake\Upgrade\Rector\Cake6\RouteBuilderToCallbackFirstRector;
+use Cake\Upgrade\Rector\Cake6\VoidMethod;
 use PHPStan\Type\ObjectType;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
@@ -948,4 +950,37 @@ return static function (RectorConfig $rectorConfig): void {
             }
         }
     }
+
+    // Rename validChoice() to validateChoice() for console input classes
+    // @see https://github.com/cakephp/cakephp/pull/19220
+    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+        new MethodCallRename('Cake\Console\ConsoleInputArgument', 'validChoice', 'validateChoice'),
+        new MethodCallRename('Cake\Console\ConsoleInputOption', 'validChoice', 'validateChoice'),
+    ]);
+
+    // Remove assignments from methods that now return void instead of bool
+    // @see https://github.com/cakephp/cakephp/pull/19220
+    // @see https://github.com/cakephp/cakephp/pull/19243
+    $rectorConfig->ruleWithConfiguration(RemoveAssignmentFromVoidMethodRector::class, [
+        // ServerRequest::allowMethod() - returns void or throws MethodNotAllowedException
+        new VoidMethod('Cake\Http\ServerRequest', 'allowMethod'),
+        // Configure::load() - returns void or throws CakeException
+        new VoidMethod('Cake\Core\Configure', 'load'),
+        // ResponseEmitter::emit() - returns void
+        new VoidMethod('Cake\Http\ResponseEmitter', 'emit'),
+        // Session::close() - returns void or throws RuntimeException
+        new VoidMethod('Cake\Http\Session', 'close'),
+        // Table::deleteOrFail() - returns void or throws PersistenceFailedException
+        new VoidMethod('Cake\ORM\Table', 'deleteOrFail'),
+        // FixtureInterface::insert() - returns void
+        new VoidMethod('Cake\Datasource\FixtureInterface', 'insert'),
+        new VoidMethod('Cake\TestSuite\Fixture\TestFixture', 'insert'),
+        // FixtureInterface::truncate() - returns void
+        new VoidMethod('Cake\Datasource\FixtureInterface', 'truncate'),
+        new VoidMethod('Cake\TestSuite\Fixture\TestFixture', 'truncate'),
+        // ConsoleInputArgument::validateChoice() - returns void or throws ConsoleException
+        new VoidMethod('Cake\Console\ConsoleInputArgument', 'validateChoice'),
+        // ConsoleInputOption::validateChoice() - returns void or throws ConsoleException
+        new VoidMethod('Cake\Console\ConsoleInputOption', 'validateChoice'),
+    ]);
 };
