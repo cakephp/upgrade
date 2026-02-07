@@ -243,11 +243,12 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\I18n\I18n' => ['_collection', '_defaultLocale'],
             'Cake\I18n\Number' => ['_formatters', '_defaultCurrency', '_defaultCurrencyFormat'],
             'Cake\I18n\TranslatorRegistry' => ['_loaders', '_defaultFormatter', '_useFallback', '_cacher'],
+            'Cake\I18n\PluralsRules' => ['_rulesMap'],
         ],
         'Log' => [
             'Cake\Log\Log' => ['_dirtyConfig', '_levels', '_levelMap'],
             'Cake\Log\Engine\ConsoleLog' => ['_output'],
-            'Cake\Log\Engine\SyslogLog' => ['_open'],
+            'Cake\Log\Engine\SyslogLog' => ['_open', '_levelMap'],
             'Cake\Log\Engine\FileLog' => ['_path', '_file', '_size'],
         ],
         'Mailer' => [
@@ -349,6 +350,7 @@ return static function (RectorConfig $rectorConfig): void {
                 '_rules', '_validatePresent', '_allowEmpty',
             ],
             'Cake\Validation\Validation' => ['_pattern'],
+            'Cake\Validation\ValidatorAwareTrait' => ['_validatorClass', '_validators'],
         ],
     ];
 
