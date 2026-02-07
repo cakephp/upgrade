@@ -38,6 +38,8 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(RenamePropertyRector::class, [
         new RenameProperty('Cake\ORM\Entity', '_accessible', 'patchable'),
+        // View::$_helpers conflicts with View::$helpers (config array), so rename to $helperRegistry
+        new RenameProperty('Cake\View\View', '_helpers', 'helperRegistry'),
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameStringRector::class, [
@@ -242,6 +244,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\I18n\Time' => ['_jsonEncodeFormat'],
             'Cake\I18n\I18n' => ['_collection', '_defaultLocale'],
             'Cake\I18n\Number' => ['_formatters', '_defaultCurrency', '_defaultCurrencyFormat'],
+            'Cake\I18n\PluralRules' => ['_rulesMap'],
             'Cake\I18n\TranslatorRegistry' => ['_loaders', '_defaultFormatter', '_useFallback', '_cacher'],
             'Cake\I18n\PluralsRules' => ['_rulesMap'],
         ],
@@ -346,11 +349,68 @@ return static function (RectorConfig $rectorConfig): void {
                 '_fields', '_providers', '_defaultProviders', '_presenceMessages',
                 '_useI18n', '_allowEmptyMessages', '_allowEmptyFlags', '_stopOnFailure',
             ],
+            'Cake\Validation\ValidatorAwareTrait' => ['_validatorClass', '_validators'],
             'Cake\Validation\ValidationSet' => [
                 '_rules', '_validatePresent', '_allowEmpty',
             ],
             'Cake\Validation\Validation' => ['_pattern'],
             'Cake\Validation\ValidatorAwareTrait' => ['_validatorClass', '_validators'],
+        ],
+        'View' => [
+            'Cake\View\Cell' => ['_validCellOptions', '_cache'],
+            'Cake\View\Helper' => ['_View'],
+            'Cake\View\HelperRegistry' => ['_View'],
+            'Cake\View\StringTemplate' => ['_compactAttributes', '_configStack', '_compiled'],
+            'Cake\View\StringTemplateTrait' => ['_templater'],
+            // Can't rename _helpers as it conflicts with View::$helpers (config array)
+            'Cake\View\View' => [
+                '_ext', '_passedVars', '_paths', '_pathsForPlugin',
+                '_parents', '_current', '_currentType', '_stack', '_viewBlockClass',
+            ],
+            'Cake\View\ViewBlock' => ['_blocks', '_active', '_discardActiveBufferOnEnd'],
+            'Cake\View\ViewBuilder' => [
+                '_templatePath', '_template', '_plugin', '_theme', '_layout',
+                '_autoLayout', '_layoutPath', '_name', '_className', '_options',
+                '_configMergeStrategy', '_vars',
+            ],
+            'Cake\View\ViewVarsTrait' => ['_viewBuilder'],
+
+            'Cake\View\Form\ArrayContext' => ['_context'],
+            'Cake\View\Form\EntityContext' => [
+                '_context', '_rootName', '_isCollection', '_tables', '_validator',
+            ],
+            'Cake\View\Form\FormContext' => ['_form', '_validator'],
+
+            'Cake\View\Helper\FormHelper' => [
+                '_defaultWidgets', '_locator', '_context', '_contextFactory',
+                '_lastAction', '_valueSources', '_groupedInputTypes',
+            ],
+            'Cake\View\Helper\HtmlHelper' => ['_includedAssets', '_scriptBlockOptions'],
+            'Cake\View\Helper\IdGeneratorTrait' => ['_idPrefix', '_idSuffixes'],
+            'Cake\View\Helper\TextHelper' => ['_placeholders'],
+            'Cake\View\Helper\UrlHelper' => ['_assetUrlClassName'],
+
+            'Cake\View\Widget\BasicWidget' => ['_templates'],
+            'Cake\View\Widget\ButtonWidget' => ['_templates'],
+            'Cake\View\Widget\DateTimeWidget' => ['_templates'],
+            'Cake\View\Widget\LabelWidget' => ['_templates', '_labelTemplate'],
+            'Cake\View\Widget\MultiCheckboxWidget' => ['_label'],
+            'Cake\View\Widget\NestingLabelWidget' => ['_labelTemplate'],
+            'Cake\View\Widget\RadioWidget' => ['_label'],
+            'Cake\View\Widget\WidgetLocator' => ['_widgets', '_templates', '_view'],
+            'Cake\View\Widget\YearWidget' => ['_select'],
+        ],
+        'TestSuite' => [
+            'Cake\TestSuite\Constraint\EventFired' => ['_eventManager'],
+            'Cake\TestSuite\Constraint\EventFiredWith' => ['_eventManager', '_dataKey', '_dataValue'],
+            'Cake\TestSuite\IntegrationTestTrait' => [
+                '_request', '_response', '_exception', '_session', '_cookie',
+                '_controller', '_viewName', '_layoutName', '_requestSession',
+                '_securityToken', '_csrfToken', '_retainFlashMessages', '_flashMessages',
+                '_cookieEncryptionKey', '_unlockedFields', '_csrfKeyName',
+            ],
+            'Cake\TestSuite\StringCompareTrait' => ['_compareBasePath', '_updateComparisons'],
+            'Cake\TestSuite\TestCase' => ['_configure', '_capturedError'],
         ],
     ];
 
