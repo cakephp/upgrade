@@ -7,6 +7,7 @@ use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Scalar\String_;
@@ -135,7 +136,8 @@ CODE_SAMPLE,
             if (
                 $item->key instanceof String_ &&
                 $item->key->value === 'fixed' &&
-                $this->valueResolver->isTrue($item->value)
+                $item->value instanceof ConstFetch &&
+                strtolower($item->value->name->toString()) === 'true'
             ) {
                 return true;
             }
