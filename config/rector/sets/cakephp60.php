@@ -243,12 +243,9 @@ return static function (RectorConfig $rectorConfig): void {
         'I18n' => [
             'Cake\I18n\MessagesFileLoader' => ['_name', '_plugin', '_locale', '_extension'],
             'Cake\I18n\ChainMessagesLoader' => ['_loaders'],
-            // Can't rename _toStringFormat as it conflicts with ChronosDate::toStringFormat
-            'Cake\I18n\Date' => ['_jsonEncodeFormat'],
-            // Can't rename _toStringFormat as it conflicts with Chronos::toStringFormat
-            'Cake\I18n\DateTime' => ['_jsonEncodeFormat'],
-            // Can't rename _toStringFormat as it conflicts with ChronosTime::toStringFormat
-            'Cake\I18n\Time' => ['_jsonEncodeFormat'],
+            'Cake\I18n\Date' => ['_toStringFormat', '_jsonEncodeFormat'],
+            'Cake\I18n\DateTime' => ['_toStringFormat', '_jsonEncodeFormat'],
+            'Cake\I18n\Time' => ['_toStringFormat', '_jsonEncodeFormat'],
             'Cake\I18n\I18n' => ['_collection', '_defaultLocale'],
             'Cake\I18n\Number' => ['_formatters', '_defaultCurrency', '_defaultCurrencyFormat'],
             'Cake\I18n\PluralRules' => ['_rulesMap'],
