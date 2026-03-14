@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Upgrade\Rector\Cake6\BinaryColumnToVarbinaryRector;
 use Cake\Upgrade\Rector\Cake6\BreadcrumbsHelperTitleToContentRector;
 use Cake\Upgrade\Rector\Cake6\EventManagerOnRector;
 use Cake\Upgrade\Rector\Cake6\RemoveAssignmentFromVoidMethodRector;
@@ -1050,4 +1051,10 @@ return static function (RectorConfig $rectorConfig): void {
     // BreadcrumbsHelper 'title' key/parameter renamed to 'content'
     // @see https://github.com/cakephp/cakephp/pull/18334
     $rectorConfig->rule(BreadcrumbsHelperTitleToContentRector::class);
+
+    // Binary column type changes for TYPE_VARBINARY support
+    // 'binary' with 'fixed' => true becomes 'binary' (remove fixed)
+    // 'binary' without 'fixed' becomes 'varbinary'
+    // @see https://github.com/cakephp/cakephp/pull/19258
+    $rectorConfig->rule(BinaryColumnToVarbinaryRector::class);
 };
