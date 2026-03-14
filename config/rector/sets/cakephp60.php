@@ -7,6 +7,7 @@ use Cake\Upgrade\Rector\Cake6\EventManagerOnRector;
 use Cake\Upgrade\Rector\Cake6\RemoveAssignmentFromVoidMethodRector;
 use Cake\Upgrade\Rector\Cake6\ReplaceCommandArgsIoWithPropertiesRector;
 use Cake\Upgrade\Rector\Cake6\RouteBuilderToCallbackFirstRector;
+use Cake\Upgrade\Rector\Cake6\TranslationToGetOrCreateTranslationRector;
 use Cake\Upgrade\Rector\Cake6\VoidMethod;
 use PHPStan\Type\ObjectType;
 use Rector\Config\RectorConfig;
@@ -30,6 +31,10 @@ return static function (RectorConfig $rectorConfig): void {
 
     // RouteBuilder argument reordering
     $rectorConfig->rule(RouteBuilderToCallbackFirstRector::class);
+
+    // TranslateTrait::translation() became a pure getter, use getOrCreateTranslation() for create-on-access
+    // @see https://github.com/cakephp/cakephp/pull/19251
+    $rectorConfig->rule(TranslationToGetOrCreateTranslationRector::class);
 
     // Changes related to the accessible => patchable rename
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
