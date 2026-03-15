@@ -5,4 +5,5 @@
 /plugins/DebugKit
 /phpunit.phar
 .phpunit*
+.phpcs.cache
 /.idea/
