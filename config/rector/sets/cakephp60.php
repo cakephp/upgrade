@@ -62,6 +62,11 @@ return static function (RectorConfig $rectorConfig): void {
         'Cake\Http\Cookie\SameSiteEnum' => 'Cake\Http\Cookie\Enum\SameSite',
     ]);
 
+    // Related method rename for SameSite enum
+    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+        new MethodCallRename('Cake\Http\Cookie\Cookie', 'resolveSameSiteEnum', 'resolveSameSite'),
+    ]);
+
     // ===== Remove underscores from property names =====
 
     $map = [
