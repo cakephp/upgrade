@@ -12,6 +12,7 @@ use Cake\Upgrade\Rector\Cake6\VoidMethod;
 use PHPStan\Type\ObjectType;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
+use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Renaming\Rector\PropertyFetch\RenamePropertyRector;
 use Rector\Renaming\Rector\String_\RenameStringRector;
 use Rector\Renaming\ValueObject\MethodCallRename;
@@ -51,6 +52,19 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(RenameStringRector::class, [
         'accessibleFields' => 'patchableFields',
+    ]);
+
+    // Move enums to Enum namespace without suffix
+    // @see https://github.com/cakephp/cakephp/pull/19330
+    // @see https://github.com/cakephp/cakephp/pull/19348
+    $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
+        'Cake\Database\DriverFeatureEnum' => 'Cake\Database\Enum\DriverFeature',
+        'Cake\Http\Cookie\SameSiteEnum' => 'Cake\Http\Cookie\Enum\SameSite',
+    ]);
+
+    // Related method rename for SameSite enum
+    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+        new MethodCallRename('Cake\Http\Cookie\Cookie', 'resolveSameSiteEnum', 'resolveSameSite'),
     ]);
 
     // ===== Remove underscores from property names =====
