@@ -3,13 +3,17 @@ declare(strict_types=1);
 
 namespace MyPlugin;
 
+use Cake\Database\TypeFactory;
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Query;
+use Cake\View\Helper\BreadcrumbsHelper;
 
 class SomeTest
 {
     use LocatorAwareTrait;
+
+    private BreadcrumbsHelper $Breadcrumbs;
 
     public function testRenames(): void
     {
@@ -22,6 +26,17 @@ class SomeTest
 
         $table = $this->fetchTable('Articles');
         $expr = $table->find()->expr();
+
+        // BreadcrumbsHelper::add(array) should be changed to addMany()
+        $this->Breadcrumbs->addMany([
+            ['title' => 'Home', 'url' => '/'],
+        ]);
+        // Single crumb should stay as is
+        $this->Breadcrumbs->add('Articles', '/articles');
+
+        // TypeFactory::getMap($type) should be changed to getMapped($type)
+        $class = TypeFactory::getMapped('datetime');
+        $allTypes = TypeFactory::getMap(); // This should stay as is
     }
 
     public function findSomething(\Cake\ORM\Query\SelectQuery $query, array $options): \Cake\ORM\Query\SelectQuery {

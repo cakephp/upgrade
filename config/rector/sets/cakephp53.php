@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Upgrade\Rector\Cake5\BreadcrumbsHelperAddManyRector;
 use Cake\Upgrade\Rector\Cake5\EntityIsEmptyRector;
 use Cake\Upgrade\Rector\Cake5\EntityPatchRector;
 use Cake\Upgrade\Rector\Cake5\FormExecuteToProcessRector;
 use Cake\Upgrade\Rector\Cake5\NewExprToFuncRector;
 use Cake\Upgrade\Rector\Cake5\QueryParamAccessRector;
+use Cake\Upgrade\Rector\Cake5\TypeFactoryGetMappedRector;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
@@ -24,8 +26,10 @@ return static function (RectorConfig $rectorConfig): void {
         'Cake\TestSuite\Fixture\TransactionFixtureStrategy' => 'Cake\TestSuite\Fixture\TransactionStrategy',
         'Cake\TestSuite\Fixture\TruncateFixtureStrategy' => 'Cake\TestSuite\Fixture\TruncateStrategy',
     ]);
+    $rectorConfig->rule(BreadcrumbsHelperAddManyRector::class);
     $rectorConfig->rule(EntityIsEmptyRector::class);
     $rectorConfig->rule(EntityPatchRector::class);
     $rectorConfig->rule(FormExecuteToProcessRector::class);
     $rectorConfig->rule(QueryParamAccessRector::class);
+    $rectorConfig->rule(TypeFactoryGetMappedRector::class);
 };
