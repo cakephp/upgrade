@@ -1073,4 +1073,61 @@ return static function (RectorConfig $rectorConfig): void {
     // 'binary' without 'fixed' becomes 'varbinary'
     // @see https://github.com/cakephp/cakephp/pull/19258
     $rectorConfig->rule(BinaryColumnToVarbinaryRector::class);
+
+    // ===== callable to Closure type changes =====
+    // These methods now use Closure instead of callable for more precise typing
+    // @see https://github.com/cakephp/cakephp/pull/19368
+    $rectorConfig->ruleWithConfiguration(AddParamTypeDeclarationRector::class, [
+        // CsrfProtectionMiddleware::skipCheckCallback()
+        new AddParamTypeDeclaration(
+            'Cake\Http\Middleware\CsrfProtectionMiddleware',
+            'skipCheckCallback',
+            0,
+            new ObjectType('Closure'),
+        ),
+        // SessionCsrfProtectionMiddleware::skipCheckCallback()
+        new AddParamTypeDeclaration(
+            'Cake\Http\Middleware\SessionCsrfProtectionMiddleware',
+            'skipCheckCallback',
+            0,
+            new ObjectType('Closure'),
+        ),
+        // View::cache()
+        new AddParamTypeDeclaration(
+            'Cake\View\View',
+            'cache',
+            0,
+            new ObjectType('Closure'),
+        ),
+        // TestCase::withErrorReporting()
+        new AddParamTypeDeclaration(
+            'Cake\TestSuite\TestCase',
+            'withErrorReporting',
+            1,
+            new ObjectType('Closure'),
+        ),
+        // Table::executeTransaction()
+        new AddParamTypeDeclaration(
+            'Cake\ORM\Table',
+            'executeTransaction',
+            0,
+            new ObjectType('Closure'),
+        ),
+        // AttributeCollection::filter()
+        new AddParamTypeDeclaration(
+            'Cake\AttributeResolver\AttributeCollection',
+            'filter',
+            0,
+            new ObjectType('Closure'),
+        ),
+    ]);
+
+    // ResultSetFactory::getDtoHydrator() return type
+    $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclarationRector::class, [
+        new AddReturnTypeDeclaration(
+            'Cake\ORM\ResultSetFactory',
+            'getDtoHydrator',
+            new ObjectType('Closure'),
+        ),
+    ]);
 };
