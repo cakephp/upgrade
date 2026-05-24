@@ -41,8 +41,5 @@
     },
     "support": {
         "source": "https://github.com/cakephp/upgrade"
-    },
-    "require-dev": {
-        "boundwize/structarmed": "^0.7.7"
     }
 }
