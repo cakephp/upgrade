@@ -96,3 +96,6 @@ jobs:
 
     - name: Run PHP CodeSniffer
       run: vendor/bin/phpcs --report=checkstyle | cs2pr
+
+    - name: Run StructArmed
+      run: vendor/bin/structarmed analyze
