@@ -1,10 +1,10 @@
 <?php
 
-namespace Cake\Upgrade\Test\TestCase\Rector\MethodCall\AddMethodCallArgsRectorTest\Fixture;
+namespace Cake\Upgrade\Test\TestCase\Rector\MethodCall\RemoveMethodCallArgsRector\Fixture;
 
-use Cake\Upgrade\Test\TestCase\Rector\MethodCall\AddMethodCallArgsRector\Source\SomeModelType;
+use Cake\Upgrade\Test\TestCase\Rector\MethodCall\RemoveMethodCallArgsRector\Source\SomeModelType;
 
-function addMethodCallArgs()
+function removeMethodCallArgs()
 {
     $object = new SomeModelType();
     $object->getAttribute('paging');
@@ -15,11 +15,11 @@ function addMethodCallArgs()
 -----
 <?php
 
-namespace Cake\Upgrade\Test\TestCase\Rector\MethodCall\AddMethodCallArgsRectorTest\Fixture;
+namespace Cake\Upgrade\Test\TestCase\Rector\MethodCall\RemoveMethodCallArgsRector\Fixture;
 
-use Cake\Upgrade\Test\TestCase\Rector\MethodCall\AddMethodCallArgsRector\Source\SomeModelType;
+use Cake\Upgrade\Test\TestCase\Rector\MethodCall\RemoveMethodCallArgsRector\Source\SomeModelType;
 
-function addMethodCallArgs()
+function removeMethodCallArgs()
 {
     $object = new SomeModelType();
     $object->setAttribute('paging', []);
