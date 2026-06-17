@@ -21,6 +21,7 @@ use Cake\Console\BaseCommand;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
+use Cake\Core\Exception\CakeException;
 use DirectoryIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -309,7 +310,7 @@ class FileRenameCommand extends BaseCommand
      * @param string $source Source path.
      * @param string $dest Destination path.
      * @return void
-     * @throws \Cake\Error\FatalErrorException When we're unable to move the folder via git.
+     * @throws \Cake\Core\Exception\CakeException When we're unable to move the folder via git.
      */
     protected function rename(string $source, string $dest): void
     {
@@ -332,7 +333,7 @@ class FileRenameCommand extends BaseCommand
             $returnVar = null;
             $lastLine = exec("git mv $source $dest", $gitOutput, $returnVar);
             if ($returnVar) {
-                throw new FatalErrorException(sprintf(
+                throw new CakeException(sprintf(
                     'Unable to move: %s to : %s - Reason: %s - Hint: Maybe you have uncommited changes in git.',
                     $source,
                     $dest,
