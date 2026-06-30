@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [3.x, 4.x, 5.x, 6.x]
+    branches: [6.x]
   pull_request:
     branches: ['*']
   workflow_dispatch:
@@ -13,10 +13,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.2', '8.3', '8.4']
+        php-version: ['8.3', '8.4', '8.5']
         prefer-lowest: ['']
         include:
-          - php-version: '8.2'
+          - php-version: '8.3'
             prefer-lowest: 'prefer-lowest'
 
     steps:
@@ -27,7 +27,7 @@ jobs:
       with:
         php-version: ${{ matrix.php-version }}
         extensions: mbstring, intl
-        coverage: none
+        coverage: pcov
 
     - name: Get composer cache directory
       id: composer-cache
@@ -52,12 +52,12 @@ jobs:
         fi
 
     - name: Setup problem matchers for PHPUnit
-      if: matrix.php-version == '8.2'
+      if: matrix.php-version == '8.3'
       run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
     - name: Run PHPUnit
       run: |
-        if [[ "${{ matrix.php-version }}" == "8.2" && "${{ matrix.prefer-lowest }}" != "prefer-lowest" ]]; then
+        if [[ "${{ matrix.php-version }}" == "8.3" && "${{ matrix.prefer-lowest }}" != "prefer-lowest" ]]; then
           export CODECOVERAGE=1
           vendor/bin/phpunit --display-incomplete --display-skipped --coverage-clover=coverage.xml
         else
@@ -65,7 +65,7 @@ jobs:
         fi
 
     - name: Submit code coverage
-      if: matrix.php-version == '8.2' && matrix.prefer-lowest != 'prefer-lowest'
+      if: matrix.php-version == '8.3' && matrix.prefer-lowest != 'prefer-lowest'
       uses: codecov/codecov-action@v5
 
   cs-stan:
@@ -78,7 +78,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           extensions: mbstring, intl
           tools: cs2pr
           coverage: none
