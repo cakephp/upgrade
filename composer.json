@@ -31,7 +31,7 @@
         "setup": "cp composer.json composer.backup && make install-dev && mv composer.backup composer.json",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "test": "phpunit"
+        "test": "phpunit --display-all-issues"
     },
     "config": {
         "sort-packages": true,

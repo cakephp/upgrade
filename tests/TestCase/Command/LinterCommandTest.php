@@ -51,7 +51,9 @@ class LinterCommandTest extends TestCase
      */
     public function testLinterFail()
     {
-        mkdir(TMP . 'linter', 0777, true);
+        if (!file_exists(TMP . 'linter')) {
+            mkdir(TMP . 'linter', 0777, true);
+        }
         file_put_contents(TMP . 'linter/BrokenExample.php', '<?php class X }');
         $this->exec('linter tmp/linter/ -v');
 

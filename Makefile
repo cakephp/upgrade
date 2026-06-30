@@ -3,7 +3,7 @@
 DEV_DEPENDENCIES = cakephp/cakephp:5.x-dev \
   cakephp/cakephp-codesniffer:^5.0 \
   mikey179/vfsstream:^1.6.8 \
-  phpunit/phpunit:^10.5.38 \
+  phpunit/phpunit:^12.1.3 \
   cakephp/migrations:^5.0.0
 
 install-dev:

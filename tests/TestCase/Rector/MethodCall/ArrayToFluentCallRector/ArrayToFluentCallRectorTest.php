@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Cake\Upgrade\Test\TestCase\Rector\MethodCall\ArrayToFluentCallRector;
 
 use Iterator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
 final class ArrayToFluentCallRectorTest extends AbstractRectorTestCase
 {
-    /**
-     * @dataProvider provideData()
-     */
+    #[DataProvider('provideData')]
     public function test(string $filePath): void
     {
         $this->doTestFile($filePath);
