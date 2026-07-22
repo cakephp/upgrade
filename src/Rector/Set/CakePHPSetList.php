@@ -88,6 +88,11 @@ final class CakePHPSetList
     /**
      * @var string
      */
+    public const CAKEPHP_54 = __DIR__ . '/../../../config/rector/sets/cakephp54.php';
+
+    /**
+     * @var string
+     */
     public const CHRONOS_3 = __DIR__ . '/../../../config/rector/sets/chronos3.php';
 
     /**
