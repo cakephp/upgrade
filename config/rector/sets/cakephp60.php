@@ -60,6 +60,11 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         'Cake\Database\DriverFeatureEnum' => 'Cake\Database\Enum\DriverFeature',
         'Cake\Http\Cookie\SameSiteEnum' => 'Cake\Http\Cookie\Enum\SameSite',
+        // Console helpers moved namespace in 5.4, the Cake\Command\Helper namespace is gone in 6.0
+        'Cake\Command\Helper\BannerHelper' => 'Cake\Console\Helper\BannerHelper',
+        'Cake\Command\Helper\ProgressHelper' => 'Cake\Console\Helper\ProgressHelper',
+        'Cake\Command\Helper\TableHelper' => 'Cake\Console\Helper\TableHelper',
+        'Cake\Command\Helper\TreeHelper' => 'Cake\Console\Helper\TreeHelper',
     ]);
 
     // Related method rename for SameSite enum
@@ -97,6 +102,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Collection\Iterator\ZipIterator' => ['_callback', '_iterators'],
         ],
         'Command' => [
+            // Pre 5.4 location, kept for apps upgrading straight from 5.3 or older
             'Cake\Command\Helper\ProgressHelper' => ['_progress', '_total', '_width'],
             'Cake\Command\I18nExtractCommand' => [
                 '_paths', '_files', '_merge', '_file', '_storage', '_tokens', '_translations',
@@ -105,6 +111,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Command\ServerCommand' => ['_host', '_port', '_documentRoot', '_iniPath'],
         ],
         'Console' => [
+            'Cake\Console\Helper\ProgressHelper' => ['_progress', '_total', '_width'],
             'Cake\Console\TestSuite\ConsoleIntegrationTestTrait' => ['_exitCode', '_out', '_err', '_in'],
             'Cake\Console\TestSuite\StubConsoleOutput' => ['_out'],
             'Cake\Console\ConsoleInput' => ['_input', '_canReadline'],
@@ -523,6 +530,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Collection\Iterator\TreePrinter' => ['_fetchCurrent'],
         ],
         'Command' => [
+            // Pre 5.4 location, kept for apps upgrading straight from 5.3 or older
             'Cake\Command\Helper\TreeHelper' => [
                 '_calculateWidths', '_cellWidth', '_rowSeparator', '_render', '_addStyle',
             ],
@@ -541,6 +549,12 @@ return static function (RectorConfig $rectorConfig): void {
             ],
         ],
         'Console' => [
+            'Cake\Console\Helper\TreeHelper' => [
+                '_calculateWidths', '_cellWidth', '_rowSeparator', '_render', '_addStyle',
+            ],
+            'Cake\Console\Helper\TableHelper' => [
+                '_calculateWidths', '_cellWidth', '_rowSeparator', '_render', '_addStyle',
+            ],
             'Cake\Console\HelpFormatter' => ['_generateUsage', '_getMaxLength'],
             'Cake\Console\ConsoleIo' => ['_getInput'],
             'Cake\Console\ConsoleOutput' => ['_replaceTags'],
