@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Cake\Upgrade\Rector\Rector\MethodCall;
+namespace Cake\Upgrade\Rector\Cake5;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
