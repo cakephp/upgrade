@@ -90,6 +90,9 @@ cd /path/to/upgrade
 
 # To apply upgrade rules from 5.2 to 5.3
 bin/cake upgrade rector --rules cakephp53 /path/to/your/app/src
+
+# To apply upgrade rules from 5.3 to 5.4
+bin/cake upgrade rector --rules cakephp54 /path/to/your/app/src
 ```
 
 There are rules included for:
@@ -98,6 +101,7 @@ There are rules included for:
 - cakephp51
 - cakephp52
 - cakephp53
+- cakephp54
 
 ## Additional Rulesets
 
