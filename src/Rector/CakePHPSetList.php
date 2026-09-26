@@ -8,6 +8,11 @@ final class CakePHPSetList
     /**
      * @var string
      */
+    public const AUTHENTICATION_40 = __DIR__ . '/../../config/rector/sets/authentication40.php';
+
+    /**
+     * @var string
+     */
     public const CAKEPHP_30 = __DIR__ . '/../../config/rector/sets/cakephp30.php';
 
     /**
