@@ -76,12 +76,14 @@ return static function (RectorConfig $rectorConfig): void {
 
     $map = [
         'Cache' => [
-            'Cake\Cache\Cache\ApcuEngine' => ['_compiledGroupNames'],
-            'Cake\Cache\Cache\FileEngine' => ['_File', '_init'],
-            'Cake\Cache\Cache\MemcachedEngine' => ['_Memcached', '_serializers', '_compiledGroupNames'],
-            'Cake\Cache\Cache\RedisEngine' => ['_Redis'],
-            'Cake\Cache\Cache' => ['_enabled', '_groups'],
-            'Cake\Cache\CacheEngine' => ['_groupPrefix'],
+            'Cake\Cache\Cache' => ['_enabled', '_groups', '_registry', '_dsnClassMap'],
+            'Cake\Cache\CacheEngine' => ['_groupPrefix', '_defaultConfig'],
+            'Cake\Cache\Engine\ApcuEngine' => ['_compiledGroupNames'],
+            'Cake\Cache\Engine\FileEngine' => ['_File', '_init', '_defaultConfig'],
+            'Cake\Cache\Engine\MemcachedEngine' => [
+                '_Memcached', '_serializers', '_compiledGroupNames', '_defaultConfig',
+            ],
+            'Cake\Cache\Engine\RedisEngine' => ['_Redis', '_defaultConfig'],
         ],
         'Collection' => [
             'Cake\Collection\Iterator\BufferedIterator' => [
@@ -111,6 +113,8 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Command\ServerCommand' => ['_host', '_port', '_documentRoot', '_iniPath'],
         ],
         'Console' => [
+            'Cake\Console\Helper\TableHelper' => ['_defaultConfig'],
+            'Cake\Console\Helper\TreeHelper' => ['_defaultConfig'],
             'Cake\Console\Helper\ProgressHelper' => ['_progress', '_total', '_width'],
             'Cake\Console\TestSuite\ConsoleIntegrationTestTrait' => ['_exitCode', '_out', '_err', '_in'],
             'Cake\Console\TestSuite\StubConsoleOutput' => ['_out'],
@@ -128,14 +132,16 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Console\ConsoleOutput' => [
                 '_output', '_outputAs', '_foregroundColors', '_backgroundColors', '_options', '_styles',
             ],
-            'Cake\Console\Helper' => ['_io'],
+            'Cake\Console\Helper' => ['_io', '_defaultConfig'],
             'Cake\Console\HelperRegistry' => ['_io'],
             'Cake\Console\HelpFormatter' => ['_maxArgs', '_maxOptions', '_parser', '_alias'],
         ],
         'Controller' => [
+            'Cake\Controller\Component\FlashComponent' => ['_defaultConfig'],
+            'Cake\Controller\Component\FormProtectionComponent' => ['_defaultConfig'],
             'Cake\Controller\ComponentRegistry' => ['_Controller'],
             'Cake\Controller\Controller' => ['_components'],
-            'Cake\Controller\Component' => ['_registry'],
+            'Cake\Controller\Component' => ['_registry', '_defaultConfig'],
         ],
         'Core' => [
             'Cake\Core\Configure\Engine\IniConfig' => ['_extension', '_section'],
@@ -159,7 +165,7 @@ return static function (RectorConfig $rectorConfig): void {
             ],
             'Cake\Database\Driver\Sqlite' => ['_supportsWindowFunctions', '_dateParts'],
 
-            'Cake\Database\Expression\BetweenExpression' => ['_from', '_to', '_type'],
+            'Cake\Database\Expression\BetweenExpression' => ['_from', '_to', '_type', '_not'],
             'Cake\Database\Expression\ComparisonExpression' => [
                 '_value', '_type', '_operator', '_isMultiple', '_valueExpressions',
             ],
@@ -214,6 +220,7 @@ return static function (RectorConfig $rectorConfig): void {
 
         ],
         'Datasource' => [
+            'Cake\Datasource\Paging\NumericPaginator' => ['_defaultConfig'],
             'Cake\Datasource\FactoryLocator' => ['_modelFactories'],
             'Cake\Datasource\RulesAwareTrait' => ['_rulesChecker'],
             'Cake\Datasource\RulesChecker' => [
@@ -221,13 +228,19 @@ return static function (RectorConfig $rectorConfig): void {
             ],
             'Cake\Datasource\QueryCacher' => ['_key', '_config'],
             'Cake\Datasource\ModelAwareTrait' => ['_modelFactories', '_modelType'],
-            'Cake\Datasource\ConnectionManager' => ['_aliasMap'],
+            'Cake\Datasource\ConnectionManager' => ['_dsnClassMap', '_registry', '_aliasMap'],
             'Cake\Datasource\EntityTrait' => [
                 '_fields', '_original', '_originalFields', '_hidden', '_virtual', '_dirty',
                 '_accessors', '_new', '_errors', '_invalid', '_registryAlias', '_hasBeenVisited',
             ],
         ],
-        // There are no properties in the Error package
+        'Error' => [
+            'Cake\Error\Debugger' => ['_defaultConfig', '_data'],
+            'Cake\Error\ErrorLogger' => ['_defaultConfig'],
+            'Cake\Error\ErrorTrap' => ['_defaultConfig'],
+            'Cake\Error\ExceptionTrap' => ['_defaultConfig'],
+            'Cake\Error\Middleware\ErrorHandlerMiddleware' => ['_defaultConfig'],
+        ],
         'Event' => [
             'Cake\Event\Decorator\AbstractDecorator' => ['_callable', '_options'],
             'Cake\Event\Event' => ['_name', '_subject', '_data', '_stopped'],
@@ -243,7 +256,11 @@ return static function (RectorConfig $rectorConfig): void {
         ],
         'Http' => [
             'Cake\Http\CorsBuilder' => ['_response', '_origin', '_isSsl', '_headers'],
-            'Cake\Http\Client' => ['_cookies', '_mockAdapter', '_adapter'],
+            'Cake\Http\Client' => ['_cookies', '_mockAdapter', '_adapter', '_defaultConfig'],
+            'Cake\Http\FlashMessage' => ['_defaultConfig'],
+            'Cake\Http\Middleware\CspMiddleware' => ['_defaultConfig'],
+            'Cake\Http\Response\AbstractStreamResponse' => ['_defaultConfig'],
+            'Cake\Http\Response\JsonStreamResponse' => ['_defaultConfig'],
             'Cake\Http\Client\Adapter\Stream' => [
                 '_context', '_contextOptions', '_sslContextOptions', '_stream', '_connectionErrors',
             ],
@@ -273,20 +290,35 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\I18n\TranslatorRegistry' => ['_loaders', '_defaultFormatter', '_useFallback', '_cacher'],
             'Cake\I18n\PluralsRules' => ['_rulesMap'],
         ],
+        'Lock' => [
+            'Cake\Lock\Lock' => ['_dsnClassMap', '_registry'],
+            'Cake\Lock\LockEngine' => ['_defaultConfig'],
+            'Cake\Lock\Engine\FileLockEngine' => ['_defaultConfig', '_handles'],
+            'Cake\Lock\Engine\MemcachedLockEngine' => ['_defaultConfig', '_memcached'],
+            'Cake\Lock\Engine\RedisLockEngine' => ['_defaultConfig', '_redis'],
+        ],
         'Log' => [
-            'Cake\Log\Log' => ['_dirtyConfig', '_levels', '_levelMap'],
-            'Cake\Log\Engine\ConsoleLog' => ['_output'],
-            'Cake\Log\Engine\SyslogLog' => ['_open', '_levelMap'],
-            'Cake\Log\Engine\FileLog' => ['_path', '_file', '_size'],
+            'Cake\Log\Log' => ['_dirtyConfig', '_levels', '_levelMap', '_dsnClassMap', '_registry'],
+            'Cake\Log\Engine\ArrayLog' => ['_defaultConfig'],
+            'Cake\Log\Engine\BaseLog' => ['_defaultConfig'],
+            'Cake\Log\Engine\ConsoleLog' => ['_output', '_defaultConfig'],
+            'Cake\Log\Engine\SyslogLog' => ['_open', '_levelMap', '_defaultConfig'],
+            'Cake\Log\Engine\FileLog' => ['_path', '_file', '_size', '_defaultConfig'],
+            'Cake\Log\Formatter\AbstractFormatter' => ['_defaultConfig'],
+            'Cake\Log\Formatter\DefaultFormatter' => ['_defaultConfig'],
+            'Cake\Log\Formatter\JsonFormatter' => ['_defaultConfig'],
         ],
         'Mailer' => [
+            'Cake\Mailer\AbstractTransport' => ['_defaultConfig'],
+            'Cake\Mailer\Mailer' => ['_dsnClassMap'],
             'Cake\Mailer\Transport\SmtpTransport' => [
-                '_socket', '_content', '_lastResponse',
+                '_socket', '_content', '_lastResponse', '_defaultConfig',
             ],
+            'Cake\Mailer\TransportFactory' => ['_dsnClassMap', '_registry'],
         ],
         'Network' => [
             'Cake\Network\Socket' => [
-                '_encryptMethods', '_connectionErrors',
+                '_encryptMethods', '_connectionErrors', '_defaultConfig',
             ],
         ],
         'ORM' => [
@@ -304,11 +336,13 @@ return static function (RectorConfig $rectorConfig): void {
 
             'Cake\ORM\AssociationCollection' => ['_items'],
 
-            'Cake\ORM\Behavior' => ['_table', '_reflectionCache'],
-            'Cake\ORM\BehaviorRegistry' => ['_table', '_finderMap'],
+            'Cake\ORM\Behavior' => ['_table', '_reflectionCache', '_defaultConfig'],
+            'Cake\ORM\BehaviorRegistry' => ['_table', '_finderMap', '_methodMap'],
             'Cake\ORM\Behavior\CounterCacheBehavior' => ['_ignoreDirty'],
             'Cake\ORM\Behavior\TimestampBehavior' => ['_ts'],
             'Cake\ORM\Behavior\TreeBehavior' => ['_primaryKey'],
+            'Cake\ORM\Behavior\Translate\EavStrategy' => ['_defaultConfig'],
+            'Cake\ORM\Behavior\Translate\ShadowTableStrategy' => ['_defaultConfig'],
 
             'Cake\ORM\EagerLoadable' => [
                 '_name', '_associations', '_instance', '_config', '_aliasPath',
@@ -367,36 +401,43 @@ return static function (RectorConfig $rectorConfig): void {
             ],
             'Cake\Utility\Security' => ['_hashType', '_salt', '_instance'],
             'Cake\Utility\CookieCryptTrait' => ['_validCiphers'],
-            'Cake\Utility\Text' => ['_defaultTransliterator'],
+            'Cake\Utility\Text' => ['_defaultTransliterator', '_defaultTransliteratorId', '_defaultHtmlNoCount'],
         ],
         'Validation' => [
+            'Cake\Validation\RulesProvider' => ['_class', '_reflection'],
             'Cake\Validation\Validator' => [
                 '_fields', '_providers', '_defaultProviders', '_presenceMessages',
                 '_useI18n', '_allowEmptyMessages', '_allowEmptyFlags', '_stopOnFailure',
             ],
             'Cake\Validation\ValidatorAwareTrait' => ['_validatorClass', '_validators'],
+            'Cake\Validation\ValidationRule' => [
+                '_rule', '_on', '_last', '_message', '_provider', '_pass',
+            ],
             'Cake\Validation\ValidationSet' => [
                 '_rules', '_validatePresent', '_allowEmpty',
             ],
             'Cake\Validation\Validation' => ['_pattern'],
-            'Cake\Validation\ValidatorAwareTrait' => ['_validatorClass', '_validators'],
         ],
         'View' => [
             'Cake\View\Cell' => ['_validCellOptions', '_cache'],
-            'Cake\View\Helper' => ['_View'],
+            'Cake\View\Helper' => ['_View', '_defaultConfig'],
             'Cake\View\HelperRegistry' => ['_View'],
-            'Cake\View\StringTemplate' => ['_compactAttributes', '_configStack', '_compiled'],
+            'Cake\View\StringTemplate' => ['_compactAttributes', '_configStack', '_compiled', '_defaultConfig'],
             'Cake\View\StringTemplateTrait' => ['_templater'],
             // Can't rename _helpers as it conflicts with View::$helpers (config array)
             'Cake\View\View' => [
                 '_ext', '_passedVars', '_paths', '_pathsForPlugin',
                 '_parents', '_current', '_currentType', '_stack', '_viewBlockClass',
+                '_defaultConfig',
             ],
+            'Cake\View\JsonView' => ['_defaultConfig'],
+            'Cake\View\SerializedView' => ['_defaultConfig'],
+            'Cake\View\XmlView' => ['_defaultConfig'],
             'Cake\View\ViewBlock' => ['_blocks', '_active', '_discardActiveBufferOnEnd'],
             'Cake\View\ViewBuilder' => [
                 '_templatePath', '_template', '_plugin', '_theme', '_layout',
                 '_autoLayout', '_layoutPath', '_name', '_className', '_options',
-                '_configMergeStrategy', '_vars',
+                '_configMergeStrategy', '_helpers', '_vars',
             ],
             'Cake\View\ViewVarsTrait' => ['_viewBuilder'],
 
@@ -407,13 +448,16 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\View\Form\FormContext' => ['_form', '_validator'],
 
             'Cake\View\Helper\FormHelper' => [
-                '_defaultWidgets', '_locator', '_context', '_contextFactory',
+                '_defaultWidgets', '_locator', '_context', '_contextFactory', '_defaultConfig',
                 '_lastAction', '_valueSources', '_groupedInputTypes',
             ],
-            'Cake\View\Helper\HtmlHelper' => ['_includedAssets', '_scriptBlockOptions'],
+            'Cake\View\Helper\BreadcrumbsHelper' => ['_defaultConfig'],
+            'Cake\View\Helper\HtmlHelper' => ['_includedAssets', '_scriptBlockOptions', '_defaultConfig'],
             'Cake\View\Helper\IdGeneratorTrait' => ['_idPrefix', '_idSuffixes'],
+            'Cake\View\Helper\PaginatorHelper' => ['_defaultConfig'],
             'Cake\View\Helper\TextHelper' => ['_placeholders'],
-            'Cake\View\Helper\UrlHelper' => ['_assetUrlClassName'],
+            'Cake\View\Helper\TimeHelper' => ['_defaultConfig'],
+            'Cake\View\Helper\UrlHelper' => ['_assetUrlClassName', '_defaultConfig'],
 
             'Cake\View\Widget\BasicWidget' => ['_templates'],
             'Cake\View\Widget\ButtonWidget' => ['_templates'],
@@ -428,6 +472,7 @@ return static function (RectorConfig $rectorConfig): void {
         'TestSuite' => [
             'Cake\TestSuite\Constraint\EventFired' => ['_eventManager'],
             'Cake\TestSuite\Constraint\EventFiredWith' => ['_eventManager', '_dataKey', '_dataValue'],
+            'Cake\TestSuite\Fixture\TestFixture' => ['_schema'],
             'Cake\TestSuite\IntegrationTestTrait' => [
                 '_request', '_response', '_exception', '_session', '_cookie',
                 '_controller', '_viewName', '_layoutName', '_requestSession',
@@ -546,6 +591,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\Command\PluginAssetsTrait' => [
                 '_list', '_process', '_remove', '_createDirectory',
                 '_createSymlink', '_makeRelativePath', '_copyDirectory',
+                '_isSymlinkValid',
             ],
         ],
         'Console' => [
@@ -613,11 +659,12 @@ return static function (RectorConfig $rectorConfig): void {
             ],
             'Cake\Database\Driver\Postgres' => [
                 '_transformIdentifierExpression', '_transformFunctionExpression',
-                '_transformStringExpression',
+                '_transformStringExpression', '_transformStringAggExpression',
+
             ],
-            'Cake\Database\Driver\Sqlite' => ['_transformFunctionExpression'],
+            'Cake\Database\Driver\Sqlite' => ['_transformFunctionExpression', '_transformStringAggExpression'],
             'Cake\Database\Driver\Sqlserver' => [
-                '_pagingSubquery', '_transformFunctionExpression',
+                '_pagingSubquery', '_transformFunctionExpression', '_transformStringAggExpression',
             ],
             'Cake\Database\Driver\TupleComparisonTranslatorTrait' => [
                 '_transformTupleComparison',
@@ -630,7 +677,7 @@ return static function (RectorConfig $rectorConfig): void {
                 '_buildSetPart', '_buildSetOperationPart',
                 '_buildIntersectPart', '_buildUnionPart', '_buildInsertPart',
                 '_buildValuesPart', '_buildUpdatePart', '_buildModifierPart',
-                '_stringifyExpressions',
+                '_stringifyExpressions', '_buildExceptPart', '_buildOptimizerHintPart',
             ],
             'Cake\Database\PostgresCompiler' => ['_buildHavingPart'],
             'Cake\Database\SqlserverCompiler' => ['_buildLimitPart', '_buildHavingPart'],
@@ -753,6 +800,12 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\I18n\Parser\PoFileParser' => ['_addMessage'],
         ],
 
+        'Lock' => [
+            'Cake\Lock\Lock' => ['_buildEngine'],
+            'Cake\Lock\Engine\MemcachedLockEngine' => ['_connect'],
+            'Cake\Lock\Engine\RedisLockEngine' => ['_connect'],
+        ],
+
         'Log' => [
             'Cake\Log\Engine\FileLog' => ['_getFilename', '_rotateFile'],
             'Cake\Log\Engine\SyslogLog' => ['_open', '_write'],
@@ -775,7 +828,7 @@ return static function (RectorConfig $rectorConfig): void {
         ],
 
         'ORM' => [
-            'Cake\ORM\AssociationsNormalizerTrait' => ['_normalizeAssociations'],
+            'Cake\ORM\AssociationsNormalizerTrait' => ['_normalizeAssociations', '_shouldExtractAssociations', '_extractAssociations'],
             'Cake\ORM\AssociationCollection' => ['_saveAssociations', '_save'],
             'Cake\ORM\EagerLoader' => [
                 '_reformatContain', '_normalizeContain', '_fixStrategies',
@@ -796,6 +849,7 @@ return static function (RectorConfig $rectorConfig): void {
 
             // Behaviors
             'Cake\ORM\Behavior' => ['_resolveMethodAliases', '_reflectionCache'],
+            'Cake\ORM\BehaviorRegistry' => ['_getMethods'],
             'Cake\ORM\Behavior\TreeBehavior' => [
                 '_setChildrenLevel', '_setParent', '_setAsRoot', '_unmarkInternalTree',
                 '_getNode', '_recoverTree', '_getMax', '_sync', '_scope', '_ensureFields', '_getPrimaryKey',
@@ -827,7 +881,7 @@ return static function (RectorConfig $rectorConfig): void {
                 '_assertFieldsPresent', '_addFilteringJoin', '_addFilteringCondition',
                 '_createTupleCondition', '_linkField', '_buildSubquery',
                 '_subqueryFields', '_buildResultMap', '_resultInjector',
-                '_multiKeysInjector',
+                '_multiKeysInjector', '_rewriteJoinIdentifier',
             ],
 
             // Locators
@@ -870,7 +924,9 @@ return static function (RectorConfig $rectorConfig): void {
             ],
             'Cake\TestSuite\MiddlewareDispatcher' => ['_createRequest'],
             'Cake\TestSuite\TestCase' => ['_assertAttributes', '_normalizePath', '_getTableClassName'],
-            'Cake\TestSuite\Fixture\TestFixture' => ['_tableFromClass', '_schemaFromReflection', '_getRecords'],
+            'Cake\TestSuite\Fixture\TestFixture' => [
+                '_tableFromClass', '_schemaFromReflection', '_getRecords', '_aliasFromClass',
+            ],
             'Cake\TestSuite\Constraint\Response\ResponseBase' => ['_getBodyAsString'],
             'Cake\TestSuite\LogTestTrait' => ['_expectLogMessage'],
         ],
@@ -891,7 +947,7 @@ return static function (RectorConfig $rectorConfig): void {
         ],
 
         'Validation' => [
-            'Cake\Validation\ValidationRule' => ['_skip'],
+            'Cake\Validation\ValidationRule' => ['_skip', '_addValidatorProps'],
             'Cake\Validation\Validation' => ['_check', '_getDateString', '_populateIp', '_reset'],
             'Cake\Validation\Validator' => [
                 '_convertValidatorToArray', '_checkPresence', '_canBeEmpty', '_processRules',
@@ -916,7 +972,7 @@ return static function (RectorConfig $rectorConfig): void {
             'Cake\View\Helper\FormHelper' => [
                 '_formUrl', '_lastAction', '_csrfField', '_getFormProtectorSessionId',
                 '_groupTemplate', '_inputContainerTemplate', '_getInput', '_parseOptions',
-                '_inputType', '_optionsOptions', '_magicOptions', '_getLabel',
+                '_inputType', '_optionsOptions', '_magicOptions', '_getLabel', '_fieldName',
                 '_extractOption', '_inputLabel', '_initInputField', '_isDisabled', '_getContext',
             ],
             'Cake\View\Helper\HtmlHelper' => ['_renderCells', '_nestedListItem'],
@@ -962,6 +1018,11 @@ return static function (RectorConfig $rectorConfig): void {
     // Rename methods that start with an underscore to a new, non-conflicting name.
 
     $map = [
+        'Collection' => [
+            'Cake\Collection\ExtractTrait' => [
+                '_extract' => 'extractColumn',
+            ],
+        ],
         'Console' => [
             'Cake\Console\ConsoleOutput' => [
                 '_write' => 'writeStream',
