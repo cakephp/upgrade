@@ -34,26 +34,26 @@ use Cake\Database\Expression\AggregateExpression;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Query\SelectQuery;
 use Cake\ORM\Table;
-use function Cake\Database\Expression\{comparison, gt, gte, in, is, isNot, isNotDistinctFrom, like, lt, lte, notEq};
-use function Cake\Database\Expression\{notIn, notLike};
+use function Cake\Database\Expression\{comparison, equals, greaterThan, greaterThanOrEquals, in, isNotDistinctFrom};
+use function Cake\Database\Expression\{lessThan, lessThanOrEquals, like, notEquals, notIn, notLike};
 
 function conditions(SelectQuery $query, QueryExpression $exp, AggregateExpression $aggregate, Table $table, Connection $connection, $value)
 {
-    $query->where([['id' => gt($value)], ['id' => lt(100)], 'OR' => ['title' => like('%cake%'), 'deleted' => is($value)]]);
-    $query->having(['COUNT(id)' => gte(2)]);
-    $query->innerJoin('authors', ['authors.active' => isNot(null)]);
-    $query->join(['a' => ['table' => 'authors', 'conditions' => ['a.id' => notEq(0)]]]);
+    $query->where([['id' => greaterThan($value)], ['id' => lessThan(100)], 'OR' => ['title' => like('%cake%'), 'deleted' => equals($value)]]);
+    $query->having(['COUNT(id)' => greaterThanOrEquals(2)]);
+    $query->innerJoin('authors', ['authors.active' => notEquals(null)]);
+    $query->join(['a' => ['table' => 'authors', 'conditions' => ['a.id' => notEquals(0)]]]);
     $exp->add(['id' => in([1, 2]), 'data' => comparison('@>', $value)]);
-    $aggregate->filter(['rating' => gte(3)]);
-    new QueryExpression(['id' => notEq($value)]);
+    $aggregate->filter(['rating' => greaterThanOrEquals(3)]);
+    new QueryExpression(['id' => notEquals($value)]);
     $table->exists(['name' => isNotDistinctFrom($value)]);
     $table->find('all', conditions: ['name' => notLike('%spam%')]);
     $table->updateAll(['title' => 'title'], ['id' => notIn([3, 4])]);
-    $query->where(fn () => ['id' => lte($value)]);
-    new QueryExpression(types: ['id' => 'integer'], conditions: ['id' => gt($value)]);
-    $query->where(types: ['id' => 'integer'], conditions: ['id' => gt($value)]);
-    $connection->update('articles', ['title' => 'updated'], ['id' => gt($value)]);
-    $connection->delete('articles', ['id' => lt($value)]);
-    $conditions = ['id' => gt($value)];
+    $query->where(fn () => ['id' => lessThanOrEquals($value)]);
+    new QueryExpression(types: ['id' => 'integer'], conditions: ['id' => greaterThan($value)]);
+    $query->where(types: ['id' => 'integer'], conditions: ['id' => greaterThan($value)]);
+    $connection->update('articles', ['title' => 'updated'], ['id' => greaterThan($value)]);
+    $connection->delete('articles', ['id' => lessThan($value)]);
+    $conditions = ['id' => greaterThan($value)];
     $query->where($conditions);
 }

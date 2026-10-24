@@ -52,10 +52,10 @@ final class ConditionOperatorsToPredicatesRector extends AbstractRector
      * @var array<string, string>
      */
     private const HELPERS = [
-        '=' => 'eq', '!=' => 'notEq', '<>' => 'notEq',
-        '>' => 'gt', '>=' => 'gte', '<' => 'lt', '<=' => 'lte',
+        '=' => 'equals', '!=' => 'notEquals', '<>' => 'notEquals',
+        '>' => 'greaterThan', '>=' => 'greaterThanOrEquals', '<' => 'lessThan', '<=' => 'lessThanOrEquals',
         'IN' => 'in', 'NOT IN' => 'notIn', 'LIKE' => 'like', 'NOT LIKE' => 'notLike',
-        'IS' => 'is', 'IS NOT' => 'isNot',
+        'IS' => 'equals', 'IS NOT' => 'notEquals',
         'IS DISTINCT FROM' => 'isDistinctFrom', 'IS NOT DISTINCT FROM' => 'isNotDistinctFrom',
     ];
 
@@ -79,9 +79,9 @@ final class ConditionOperatorsToPredicatesRector extends AbstractRector
             new CodeSample(
                 '$query->where([\'id >\' => $minimum]);',
                 <<<'CODE'
-use function Cake\Database\Expression\gt;
+use function Cake\Database\Expression\greaterThan;
 
-$query->where(['id' => gt($minimum)]);
+$query->where(['id' => greaterThan($minimum)]);
 CODE,
             ),
         ]);

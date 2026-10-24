@@ -15,5 +15,5 @@ function unchanged(SelectQuery $query, \Cake\Database\Expression\FunctionExpress
     $query->where(['id >' => $value, $key => $value]);
     $query->where(['id >' => $value, ...$data]);
     $query->where(['data' => ['id >' => $value]]);
-    $query->where(['id' => \Cake\Database\Expression\gt($value)]);
+    $query->where(['id' => \Cake\Database\Expression\greaterThan($value)]);
 }

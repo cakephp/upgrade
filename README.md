@@ -171,13 +171,13 @@ See also `Makefile` for more shortcut commands.
 
 The `cakephp60` ruleset replaces operator-bearing query condition keys with
 namespaced predicates, for example `'id >' => $minimum` becomes
-`'id' => gt($minimum)` with a grouped `use function` declaration. Plain equality and boolean
+`'id' => greaterThan($minimum)` with a grouped `use function` declaration. Plain equality and boolean
 arrays remain supported, as does the fluent expression builder.
 
 Conversions are limited to known CakePHP condition consumers. Inline conditions,
 callback return arrays, and local arrays whose reads are exclusively condition
 arguments can be converted. Repeated fields are kept in separate nested arrays.
-Nullable `IS` and `IS NOT` use `is()` and `isNot()`, preserving their runtime choice
+Nullable `IS` and `IS NOT` use `equals()` and `notEquals()`, preserving their runtime choice
 between a null check and an ordinary comparison. Custom recognized operators use
 `comparison()`, whose operator argument remains trusted SQL.
 

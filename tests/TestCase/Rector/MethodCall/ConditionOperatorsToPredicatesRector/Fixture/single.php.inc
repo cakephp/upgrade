@@ -14,9 +14,9 @@ function filterOne(SelectQuery $query, $minimum)
 namespace App;
 
 use Cake\Database\Query\SelectQuery;
-use function Cake\Database\Expression\gt;
+use function Cake\Database\Expression\greaterThan;
 
 function filterOne(SelectQuery $query, $minimum)
 {
-    return $query->where(['id' => gt($minimum)]);
+    return $query->where(['id' => greaterThan($minimum)]);
 }

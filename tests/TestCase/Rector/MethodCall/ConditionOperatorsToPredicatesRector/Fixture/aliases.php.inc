@@ -3,13 +3,13 @@
 namespace App;
 
 use Cake\Database\Query\SelectQuery;
-use function App\Filters\gt;
-use function Cake\Database\Expression\lt as less;
+use function App\Filters\greaterThan;
+use function Cake\Database\Expression\lessThan as less;
 
 function filterArticles(SelectQuery $query, $value)
 {
     $query->where(['id >' => $value, 'id <' => 100, 'title LIKE' => '%cake%']);
-    gt($value);
+    greaterThan($value);
 }
 
 function like()
@@ -21,13 +21,13 @@ function like()
 namespace App;
 
 use Cake\Database\Query\SelectQuery;
-use function App\Filters\gt;
-use function Cake\Database\Expression\{gt as cakeGt, like as cakeLike, lt as less};
+use function App\Filters\greaterThan;
+use function Cake\Database\Expression\{greaterThan as cakeGreaterThan, lessThan as less, like as cakeLike};
 
 function filterArticles(SelectQuery $query, $value)
 {
-    $query->where([['id' => cakeGt($value)], ['id' => less(100)], 'title' => cakeLike('%cake%')]);
-    gt($value);
+    $query->where([['id' => cakeGreaterThan($value)], ['id' => less(100)], 'title' => cakeLike('%cake%')]);
+    greaterThan($value);
 }
 
 function like()
