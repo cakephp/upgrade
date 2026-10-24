@@ -498,14 +498,14 @@ CODE,
     private function parseKey(string $key): ?array
     {
         $key = trim($key);
-        if (!str_contains($key, ' ')) {
-            return null;
-        }
-        if (!preg_match('/^(.*?)\\s+(IS NOT DISTINCT FROM|IS DISTINCT FROM|IS NOT|(?:NOT )?SIMILAR TO|NOT \\w+|[^\\s]+)$/i', $key, $matches)) {
+        $isOperators = 'IS(?:\\s+NOT)?(?:\\s+DISTINCT\\s+FROM)?';
+        $wordOperators = '(?:NOT\\s+)?SIMILAR\\s+TO|NOT\\s+\\w+';
+        $operatorPattern = '/^(.*?)\\s+(' . $isOperators . '|' . $wordOperators . '|[^\\s]+)$/i';
+        if (!preg_match($operatorPattern, $key, $matches)) {
             return null;
         }
         $field = trim($matches[1]);
-        $operator = strtoupper(trim($matches[2]));
+        $operator = strtoupper((string)preg_replace('/\\s+/', ' ', $matches[2]));
         if ($field === '' || str_ends_with($key, ')') || str_ends_with($key, "'") || str_ends_with($key, '"')) {
             return null;
         }
