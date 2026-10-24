@@ -166,3 +166,22 @@ To install dev-dependencies use `composer setup`. Then you will be able to
 run `composer test` and `composer cs-check` etc.
 
 See also `Makefile` for more shortcut commands.
+
+### CakePHP 6 condition predicates
+
+The `cakephp60` ruleset replaces operator-bearing query condition keys with
+namespaced predicates, for example `'id >' => $minimum` becomes
+`'id' => gt($minimum)` with a grouped `use function` declaration. Plain equality and boolean
+arrays remain supported, as does the fluent expression builder.
+
+Conversions are limited to known CakePHP condition consumers. Inline conditions,
+callback return arrays, and local arrays whose reads are exclusively condition
+arguments can be converted. Repeated fields are kept in separate nested arrays.
+Nullable `IS` and `IS NOT` use `is()` and `isNot()`, preserving their runtime choice
+between a null check and an ordinary comparison. Custom recognized operators use
+`comparison()`, whose operator argument remains trusted SQL.
+
+Review dynamically constructed keys, shared condition/configuration arrays,
+arrays assembled incrementally, and custom condition consumers manually. The rule
+leaves ambiguous arrays unchanged rather than changing unrelated application data.
+Run the tool before upgrading application dependencies to CakePHP 6.

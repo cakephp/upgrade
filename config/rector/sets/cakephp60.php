@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Cake\Upgrade\Rector\Cake6\BinaryColumnToVarbinaryRector;
 use Cake\Upgrade\Rector\Cake6\BreadcrumbsHelperTitleToContentRector;
+use Cake\Upgrade\Rector\Cake6\ConditionOperatorsToPredicatesRector;
 use Cake\Upgrade\Rector\Cake6\EventManagerOnRector;
 use Cake\Upgrade\Rector\Cake6\RemoveAssignmentFromVoidMethodRector;
 use Cake\Upgrade\Rector\Cake6\ReplaceCommandArgsIoWithPropertiesRector;
@@ -25,6 +26,8 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 
 # @see https://book.cakephp.org/6/en/appendices/6-0-migration-guide.html
 return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->rule(ConditionOperatorsToPredicatesRector::class);
+
     // EventManager::on() signature change
     $rectorConfig->rule(EventManagerOnRector::class);
 
