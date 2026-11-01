@@ -9,7 +9,16 @@ use Cake\Upgrade\Rector\Cake6\ReplaceCommandArgsIoWithPropertiesRector;
 use Cake\Upgrade\Rector\Cake6\RouteBuilderToCallbackFirstRector;
 use Cake\Upgrade\Rector\Cake6\TranslationToGetOrCreateTranslationRector;
 use Cake\Upgrade\Rector\Cake6\VoidMethod;
+use PHPStan\Type\ArrayType;
+use PHPStan\Type\BooleanType;
+use PHPStan\Type\MixedType;
+use PHPStan\Type\NullType;
 use PHPStan\Type\ObjectType;
+use PHPStan\Type\StringType;
+use PHPStan\Type\UnionType;
+use Rector\Arguments\NodeAnalyzer\ArgumentAddingScope;
+use Rector\Arguments\Rector\ClassMethod\ArgumentAdderRector;
+use Rector\Arguments\ValueObject\ArgumentAdder;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
@@ -70,6 +79,81 @@ return static function (RectorConfig $rectorConfig): void {
     // Related method rename for SameSite enum
     $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
         new MethodCallRename('Cake\Http\Cookie\Cookie', 'resolveSameSiteEnum', 'resolveSameSite'),
+    ]);
+
+    // ===== Http package: CakePHP's own PSR-7 implementations replace laminas/diactoros =====
+    // @see https://github.com/cakephp/cakephp/pull/19691
+    $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
+        'Laminas\Diactoros\Uri' => 'Cake\Http\Uri',
+        'Laminas\Diactoros\Stream' => 'Cake\Http\Stream',
+        'Laminas\Diactoros\UploadedFile' => 'Cake\Http\UploadedFile',
+        'Laminas\Diactoros\Response\RedirectResponse' => 'Cake\Http\Response\RedirectResponse',
+        'Laminas\Diactoros\MessageTrait' => 'Cake\Http\MessageTrait',
+    ]);
+
+    // PSR-17 factories, the HTTP client and messages now declare narrower return types.
+    // Overriding methods need compatible return types.
+    $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclarationRector::class, [
+        new AddReturnTypeDeclaration('Cake\Http\RequestFactory', 'createRequest', new ObjectType('Cake\Http\Client\Request')),
+        new AddReturnTypeDeclaration('Cake\Http\ResponseFactory', 'createResponse', new ObjectType('Cake\Http\Response')),
+        new AddReturnTypeDeclaration('Cake\Http\ServerRequestFactory', 'createServerRequest', new ObjectType('Cake\Http\ServerRequest')),
+        new AddReturnTypeDeclaration('Cake\Http\StreamFactory', 'createStream', new ObjectType('Cake\Http\Stream')),
+        new AddReturnTypeDeclaration('Cake\Http\StreamFactory', 'createStreamFromFile', new ObjectType('Cake\Http\Stream')),
+        new AddReturnTypeDeclaration('Cake\Http\StreamFactory', 'createStreamFromResource', new ObjectType('Cake\Http\Stream')),
+        new AddReturnTypeDeclaration('Cake\Http\UploadedFileFactory', 'createUploadedFile', new ObjectType('Cake\Http\UploadedFile')),
+        new AddReturnTypeDeclaration('Cake\Http\UriFactory', 'createUri', new ObjectType('Cake\Http\Uri')),
+        new AddReturnTypeDeclaration('Cake\Http\Client', 'sendRequest', new ObjectType('Cake\Http\Client\Response')),
+        new AddReturnTypeDeclaration('Cake\Http\Client', 'createAuth', new ObjectType('Cake\Http\Client\Auth\AuthenticationInterface')),
+    ]);
+
+    // MessageTrait / request methods of the CakePHP messages now return static instead of the PSR interfaces
+    $httpMessageStaticMethods = [
+        'Cake\Http\Response' => ['withProtocolVersion', 'withHeader', 'withAddedHeader', 'withoutHeader', 'withBody'],
+        'Cake\Http\Client\Response' => ['withProtocolVersion', 'withHeader', 'withAddedHeader', 'withoutHeader', 'withBody'],
+        'Cake\Http\Client\Request' => [
+            'withProtocolVersion', 'withHeader', 'withAddedHeader', 'withoutHeader', 'withBody',
+            'withRequestTarget', 'withMethod', 'withUri',
+        ],
+    ];
+    foreach ($httpMessageStaticMethods as $className => $methods) {
+        foreach ($methods as $method) {
+            $rectorConfig->ruleWithConfiguration(AddReturnTypeDeclarationRector::class, [
+                new AddReturnTypeDeclaration($className, $method, new SimpleStaticType($className)),
+            ]);
+        }
+    }
+
+    // Client request data is now limited to array|string|null
+    $clientDataType = new UnionType([new ArrayType(new MixedType(), new MixedType()), new StringType(), new NullType()]);
+    $rectorConfig->ruleWithConfiguration(AddParamTypeDeclarationRector::class, [
+        new AddParamTypeDeclaration('Cake\Http\Client', 'createRequest', 2, $clientDataType),
+        new AddParamTypeDeclaration('Cake\Http\Client', 'doRequest', 2, $clientDataType),
+        // The stream adapter now also accepts live response streams
+        new AddParamTypeDeclaration(
+            'Cake\Http\Client\Adapter\Stream',
+            'createResponses',
+            1,
+            new UnionType([new StringType(), new ObjectType('Psr\Http\Message\StreamInterface')]),
+        ),
+        new AddParamTypeDeclaration(
+            'Cake\Http\Client\Adapter\Stream',
+            'buildResponse',
+            1,
+            new UnionType([new StringType(), new ObjectType('Psr\Http\Message\StreamInterface')]),
+        ),
+    ]);
+
+    // ResponseEmitter::emit() got a new optional $bodyIsRange parameter, add it to overriding methods
+    $rectorConfig->ruleWithConfiguration(ArgumentAdderRector::class, [
+        new ArgumentAdder(
+            'Cake\Http\ResponseEmitter',
+            'emit',
+            1,
+            'bodyIsRange',
+            null,
+            new UnionType([new BooleanType(), new NullType()]),
+            ArgumentAddingScope::SCOPE_CLASS_METHOD,
+        ),
     ]);
 
     // ===== Remove underscores from property names =====
