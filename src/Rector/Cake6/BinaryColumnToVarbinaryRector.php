@@ -61,6 +61,10 @@ CODE_SAMPLE,
      */
     public function refactor(Node $node): ?Node
     {
+        if ($node->getAttribute(self::class) === true) {
+            return null;
+        }
+
         if (!$node->name instanceof Identifier) {
             return null;
         }
@@ -119,6 +123,9 @@ CODE_SAMPLE,
         if (!$hasFixed) {
             $typeArg->value = new String_('varbinary');
         }
+
+        // A fixed binary column must not become varbinary on a later pass.
+        $node->setAttribute(self::class, true);
 
         return $node;
     }

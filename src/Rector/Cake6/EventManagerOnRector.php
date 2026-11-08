@@ -51,6 +51,10 @@ CODE_SAMPLE,
      */
     public function refactor(Node $node): ?Node
     {
+        if ($node->getAttribute(self::class) === true) {
+            return null;
+        }
+
         // Check if this is a call to the 'on' method
         if (!$this->isName($node->name, 'on')) {
             return null;
@@ -74,8 +78,8 @@ CODE_SAMPLE,
             return null;
         }
 
-        // Skip if already transformed - 3rd arg is array literal (new format)
-        if ($thirdArgValue instanceof Array_) {
+        // Skip if already transformed - 3rd arg is an array (new format).
+        if ($thirdArgValue instanceof Array_ || $this->getType($thirdArgValue)->isArray()->yes()) {
             return null;
         }
 
@@ -85,6 +89,7 @@ CODE_SAMPLE,
 
         $node->args[1] = $thirdArg;
         $node->args[2] = $secondArg;
+        $node->setAttribute(self::class, true);
 
         return $node;
     }

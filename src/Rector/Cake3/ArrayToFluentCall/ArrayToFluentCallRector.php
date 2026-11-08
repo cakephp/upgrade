@@ -164,7 +164,7 @@ CODE_SAMPLE
         }
 
         if ($arrayItemsAndFluentClass->getFluentCalls() === []) {
-            return null;
+            return $argumentValue->items === [] ? $methodCall : null;
         }
 
         $node = $methodCall;

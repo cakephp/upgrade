@@ -79,6 +79,15 @@ CODE_SAMPLE
             }
 
             $values = $methodCallRenameWithAddedArgument->getValues();
+            $addedArgs = $this->nodeFactory->createArgs($values);
+            if (
+                $addedArgs === [] ||
+                $this->nodeComparator->printWithoutComments(array_slice($node->args, -count($addedArgs))) ===
+                $this->nodeComparator->printWithoutComments($addedArgs)
+            ) {
+                continue;
+            }
+
             if ($node->args) {
                 $newArgs = [];
                 foreach ($node->args as $arg) {
