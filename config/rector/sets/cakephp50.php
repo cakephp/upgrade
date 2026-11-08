@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Upgrade\Rector\Cake5\AddPropertyTypeDeclarationRector;
 use Cake\Upgrade\Rector\Cake5\OptionsArrayToNamedParameters\OptionsArrayToNamedParameters;
 use Cake\Upgrade\Rector\Cake5\OptionsArrayToNamedParameters\OptionsArrayToNamedParametersRector;
 use Cake\Upgrade\Rector\Cake5\RemoveMethodCall\RemoveMethodCall;
@@ -18,7 +19,6 @@ use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Renaming\ValueObject\MethodCallRename;
-use Rector\TypeDeclaration\Rector\Property\AddPropertyTypeDeclarationRector;
 use Rector\TypeDeclaration\ValueObject\AddPropertyTypeDeclaration;
 
 # @see https://book.cakephp.org/5/en/appendices/5-0-migration-guide.html
