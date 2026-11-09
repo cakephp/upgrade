@@ -16,6 +16,9 @@ use Rector\RuleDoc\RuleDefinition;
 use Rector\StaticTypeMapper\StaticTypeMapper;
 use Rector\TypeDeclaration\ValueObject\AddPropertyTypeDeclaration;
 
+/**
+ * Adds property types required by CakePHP to matching declarations.
+ */
 final class AddPropertyTypeDeclarationRector extends AbstractRector implements ConfigurableRectorInterface
 {
     /**
@@ -23,10 +26,16 @@ final class AddPropertyTypeDeclarationRector extends AbstractRector implements C
      */
     private array $declarations = [];
 
+    /**
+     * Creates the rule with its property type mapper.
+     */
     public function __construct(private StaticTypeMapper $staticTypeMapper)
     {
     }
 
+    /**
+     * Describes the configured property type conversion.
+     */
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Add property types required by CakePHP 5', [
@@ -39,6 +48,8 @@ final class AddPropertyTypeDeclarationRector extends AbstractRector implements C
     }
 
     /**
+     * Returns the property nodes handled by this rule.
+     *
      * @return array<class-string<\PhpParser\Node>>
      */
     public function getNodeTypes(): array
@@ -47,11 +58,13 @@ final class AddPropertyTypeDeclarationRector extends AbstractRector implements C
     }
 
     /**
+     * Adds a configured type to an untyped, individual property.
+     *
      * @param \PhpParser\Node\Stmt\Property $node
      */
     public function refactor(Node $node): ?Node
     {
-        if ($node->type !== null) {
+        if ($node->type !== null || count($node->props) !== 1) {
             return null;
         }
 
@@ -80,6 +93,8 @@ final class AddPropertyTypeDeclarationRector extends AbstractRector implements C
     }
 
     /**
+     * Sets the property types to add for matching classes.
+     *
      * @param array<\Rector\TypeDeclaration\ValueObject\AddPropertyTypeDeclaration> $configuration
      */
     public function configure(array $configuration): void

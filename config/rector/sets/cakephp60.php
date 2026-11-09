@@ -37,6 +37,15 @@ use Rector\TypeDeclaration\ValueObject\AddReturnTypeDeclaration;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(ConditionOperatorsToPredicatesRector::class);
 
+    $rectorConfig->ruleWithConfiguration(RenameMethodRector::class, [
+        new MethodCallRename('Cake\Database\Expression\QueryExpression', 'eq', 'equals'),
+        new MethodCallRename('Cake\Database\Expression\QueryExpression', 'notEq', 'notEquals'),
+        new MethodCallRename('Cake\Database\Expression\QueryExpression', 'gt', 'greaterThan'),
+        new MethodCallRename('Cake\Database\Expression\QueryExpression', 'gte', 'greaterThanOrEquals'),
+        new MethodCallRename('Cake\Database\Expression\QueryExpression', 'lt', 'lessThan'),
+        new MethodCallRename('Cake\Database\Expression\QueryExpression', 'lte', 'lessThanOrEquals'),
+    ]);
+
     // EventManager::on() signature change
     $rectorConfig->rule(EventManagerOnRector::class);
 
