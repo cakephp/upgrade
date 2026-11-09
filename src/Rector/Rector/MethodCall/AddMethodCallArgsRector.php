@@ -80,15 +80,26 @@ CODE_SAMPLE
             }
 
             $values = $methodCallRenameWithAddedArgument->getValues();
-            if ($node->args) {
-                $newArgs = [];
-                foreach ($node->args as $arg) {
-                    $newArgs[] = $arg->value;
-                }
-                $node->args = $this->nodeFactory->createArgs([...$newArgs, ...$values]);
-            } else {
-                $node->args = $this->nodeFactory->createArgs($values);
+            if ($values === []) {
+                continue;
             }
+
+            $addedArgs = $this->nodeFactory->createArgs($values);
+            $existingArgs = array_slice($node->args, -count($addedArgs));
+            if (count($existingArgs) === count($addedArgs)) {
+                $alreadyAdded = true;
+                foreach ($addedArgs as $index => $arg) {
+                    if (!$this->nodeComparator->areNodesEqual($existingArgs[$index], $arg)) {
+                        $alreadyAdded = false;
+                        break;
+                    }
+                }
+                if ($alreadyAdded) {
+                    continue;
+                }
+            }
+
+            $node->args = [...$node->args, ...$addedArgs];
 
             return $node;
         }
