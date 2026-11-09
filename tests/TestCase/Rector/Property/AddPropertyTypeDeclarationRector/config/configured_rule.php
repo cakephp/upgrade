@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Cake\Upgrade\Rector\Rector\Property\AddPropertyTypeDeclarationRector;
+use Cake\Upgrade\Rector\Cake5\AddPropertyTypeDeclarationRector;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\MixedType;
 use Rector\Config\RectorConfig;
