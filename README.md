@@ -185,3 +185,27 @@ Review dynamically constructed keys, shared condition/configuration arrays,
 arrays assembled incrementally, and custom condition consumers manually. The rule
 leaves ambiguous arrays unchanged rather than changing unrelated application data.
 Run the tool before upgrading application dependencies to CakePHP 6.
+
+### CakePHP 6 expression comparison names
+
+The `cakephp60` ruleset also renames the fluent `QueryExpression` comparison
+methods to match the predicate functions:
+
+| Before | After |
+| --- | --- |
+| `eq()` | `equals()` |
+| `notEq()` | `notEquals()` |
+| `gt()` | `greaterThan()` |
+| `gte()` | `greaterThanOrEquals()` |
+| `lt()` | `lessThan()` |
+| `lte()` | `lessThanOrEquals()` |
+
+```bash
+bin/cake upgrade rector --rules cakephp60 /path/to/your/app/src
+bin/cake upgrade rector --rules cakephp60 /path/to/your/app/tests
+```
+
+Calls keep their arguments, binding types, and chaining. The rules apply to typed
+`QueryExpression` receivers and subclasses, including overrides and parent calls.
+Unrelated classes and receivers whose type cannot be determined are left unchanged.
+Run the migration while the old CakePHP dependency is still installed.
