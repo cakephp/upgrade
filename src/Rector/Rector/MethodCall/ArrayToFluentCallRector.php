@@ -154,6 +154,12 @@ CODE_SAMPLE
             return null;
         }
 
+        if ($argumentValue->items === []) {
+            unset($methodCall->args[$argumentPosition - 1]);
+
+            return $methodCall;
+        }
+
         $arrayItemsAndFluentClass = $this->extractFluentMethods(
             $argumentValue->items,
             $arrayToFluentCall->getArrayKeysToFluentCalls(),
